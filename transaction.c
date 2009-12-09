@@ -185,9 +185,10 @@ void end_sub_transaction(char *transaction_name, int status)
 // Generates the transaction name prefixed with a user defined action prefix and a transaction number.
 // The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
 //
-// To use this scripts need to call setup_autonumbering() - see below - once at the start of each action and
-// put the next three lines somewhere convenient - globals.h or the top of any action section will do.
+// To use this scripts need to call start_action_block() - once at the start of each action.
+//
 // 
+// Dirty trick that no longer needs to be used:
 //#define lr_start_transaction(transaction_name) start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
 //                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
 //#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
@@ -252,8 +253,6 @@ void y_set_action_prefix(char *action_prefix)
     _action_prefix = action_prefix;
 }
 
-
-
 int y_get_transaction_nr()
 {
     return _transaction_nr;
@@ -269,7 +268,6 @@ void y_set_transaction_nr(int trans_nr)
 {
     _transaction_nr = trans_nr;
 }
-
 
 int y_get_sub_transaction_nr()
 {
