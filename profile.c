@@ -102,8 +102,19 @@ void y_exec_profile(y_profile *chosenProfile)
         lr_log_message("Warning: Cannot execute NULL profile.");
         return;
     }
-    else
+    else if(chosenProfile->name == NULL)
     {
+        lr_log_message("Warning: Cannot execute profile without a name!");
+        return;
+    }
+    else if(chosenProfile->profileFunc == NULL)
+    {
+        lr_log_message("Warning: Cannot execute NULL profile function for profile %s", 
+            chosenProfile->name);
+    	return;
+    }
+    else
+    {   	
         y_profile_func *profile_function = chosenProfile->profileFunc;
         char *savedTransactionName;
 
