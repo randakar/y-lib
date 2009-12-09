@@ -29,7 +29,7 @@
 // This is a function pointer to the profile to execute.
 // Or at least, the type definition of such.
 // This matches the prototype for Action() blocks for a reason, btw.
-typedef int (profileFuncPtr)();
+typedef int (y_profile_func)();
 
 // Wrap the function pointer in a structure that 
 // gives the profile a name and a weight - how much chance it 
@@ -47,17 +47,17 @@ typedef int (profileFuncPtr)();
 // it to the list. ;-)
 //
 // (Note to self: Implement time accounting)
-struct sProfile
+struct y_struct_profile
 {
     int number; // position in the profile list, if applicable.
     char *name;
-    profileFuncPtr *profileFunc;
+    y_profile_func *profileFunc;
     int chance;
 };
 
 // For clarity purposes we hide the exact type of a profile with 
 // a typedef
-typedef struct sProfile profile;
+typedef struct y_struct_profile y_profile;
 
 //
 // Choose a profile from a list of profiles. 
@@ -67,9 +67,9 @@ typedef struct sProfile profile;
 // The profile_count argument should exactly match the number of profiles
 // in the array or the script might blow up with MEMORY_ACCESS_VIOLATION errors.
 //
-profile *chooseProfile(profile *profile_list[], int profile_count)
+y_profile *y_choose_profile(y_profile *profile_list[], int profile_count)
 {
-    //profile **profile_list = profile_list_ptr;
+    //y_profile **profile_list = profile_list_ptr;
     int i, lowerbound = 0;
     int cursor = 0;
     int roll = rand() % 100;
@@ -78,7 +78,7 @@ profile *chooseProfile(profile *profile_list[], int profile_count)
 
     for(i=0; i < profile_count; i++)
     {
-        profile *prof = profile_list[i];
+        y_profile *prof = profile_list[i];
         int profileChance = prof->chance;
         cursor += profileChance;
 
@@ -95,7 +95,7 @@ profile *chooseProfile(profile *profile_list[], int profile_count)
 // Execute a chosen profile, provided the pointer to the profile passed in is not NULL.
 // This will setup a transaction to measure the duration of the transaction as well.
 //
-void executeProfile(profile *chosenProfile)
+void y_exec_profile(y_profile *chosenProfile)
 {
     if(chosenProfile == NULL)
     {
@@ -104,7 +104,7 @@ void executeProfile(profile *chosenProfile)
     }
     else
     {
-        profileFuncPtr *profile_function = chosenProfile->profileFunc;
+        y_profile_func *profile_function = chosenProfile->profileFunc;
         char *savedTransactionName;
 
         // Start a "profile" transaction to enable measuring how long
@@ -114,9 +114,9 @@ void executeProfile(profile *chosenProfile)
         // not quite like regular transactions. We use the profile number
         // instead of the transaction number - profile transactions are 
         // singular anyway.
-        start_action_block("__Profiel_");
-        set_transaction_nr(chosenProfile->number);
-        start_transaction(chosenProfile->name);
+        y_start_action_block("__Profiel_");
+        y_set_transaction_nr(chosenProfile->number);
+        y_start_transaction(chosenProfile->name);
 
         // The current transaction name is likely to get overwritten
         // as the profile starts running it's own set of transactions.
@@ -127,12 +127,11 @@ void executeProfile(profile *chosenProfile)
         profile_function();
 
         // Restore the saved transaction name.
-        set_current_transaction_name(savedTransactionName);
+        y_set_current_transaction_name(savedTransactionName);
 
         // End the transaction
-        end_transaction(chosenProfile->name, LR_AUTO);
-
-        end_action_block();
+        y_end_transaction(chosenProfile->name, LR_AUTO);
+        y_end_action_block();
     }
 }
 
@@ -148,12 +147,12 @@ Profiel()
     #define PROFILE_COUNT 5
     
     // Define the weights
-    static profile fo_pwm  = { "FO_PWM",  Profiel_FO_PWM,  37 };
-    static profile fo_pam  = { "FO_PAM",  Profiel_FO_PAM,  21 };
-    static profile fo_sead = { "FO_SEAD", Profiel_FO_SEAD,  2 };
-    static profile mo      = { "MO",      Profiel_MO,      25 };
-    static profile staff   = { "STAFF",   Profiel_Staff,   15 };
-    static profile* profile_list[PROFILE_COUNT];
+    static y_profile fo_pwm  = { "FO_PWM",  Profiel_FO_PWM,  37 };
+    static y_profile fo_pam  = { "FO_PAM",  Profiel_FO_PAM,  21 };
+    static y_profile fo_sead = { "FO_SEAD", Profiel_FO_SEAD,  2 };
+    static y_profile mo      = { "MO",      Profiel_MO,      25 };
+    static y_profile staff   = { "STAFF",   Profiel_Staff,   15 };
+    static y_profile* profile_list[PROFILE_COUNT];
 
     profile_list[0] = &fo_pwm;
     profile_list[1] = &fo_pam;
@@ -162,10 +161,10 @@ Profiel()
     profile_list[4] = &staff;
 
     // Choose a profile to execute
-    profile *chosenProfile = chooseProfile(profile_list, PROFILE_COUNT);
+    y_profile *chosenProfile = y_choose_profile(profile_list, PROFILE_COUNT);
     
     // Execute the chosen profile.
-    executeProfile(chosenProfile);
+    y_exec_profile(chosenProfile);
     
     return 0;
 }
