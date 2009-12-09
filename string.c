@@ -23,7 +23,7 @@
 #ifndef _STRING_C
 #define _STRING_C
 
-extern char *strupr ( char *string ); 		// used in function "y_uppercase_parameter()"
+extern char *strupr ( char *string );         // used in function "y_uppercase_parameter()"
 // --------------------------------------------------------------------------------------------------
 
 
@@ -32,30 +32,30 @@ extern char *strupr ( char *string ); 		// used in function "y_uppercase_paramet
 // Allocates a block of memory for a string
 // Adds some simple checks to catch common errors.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			char *test = y_mem_alloc(999);
-//			..
-//			free(test);
+//        example usage:
+//            char *test = y_mem_alloc(999);
+//            ..
+//            free(test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char *y_mem_alloc(int size)
 {
-	char *buff;
-	int mem = size * sizeof(char);
-	
-	if(mem <= 0)
-	{
-		lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
-		return NULL;
-	}
-	//lr_output_message("Dynamic allocation of %d bytes of memory", mem);
-	
-	if ((buff = (char *)malloc(mem)) == NULL) 
-	{
-		// Fixme: implement some generic error handling facility to send this stuff to.
-		// Just for the record though: If this happens you're pretty much screwed anyway.
-		lr_error_message("Insufficient memory available, requested %d", mem);
-	}
-	return buff;
+    char *buff;
+    int mem = size * sizeof(char);
+    
+    if(mem <= 0)
+    {
+        lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
+        return NULL;
+    }
+    //lr_output_message("Dynamic allocation of %d bytes of memory", mem);
+    
+    if ((buff = (char *)malloc(mem)) == NULL) 
+    {
+        // Fixme: implement some generic error handling facility to send this stuff to.
+        // Just for the record though: If this happens you're pretty much screwed anyway.
+        lr_error_message("Insufficient memory available, requested %d", mem);
+    }
+    return buff;
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -65,28 +65,28 @@ char *y_mem_alloc(int size)
 // Allocates a character array and initializes all elements to zero
 // Adds some simple checks to catch common errors.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			
+//        example usage:
+//            
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char *y_array_alloc(int length, int bytesPerChar)
 {
-	char *buff;
-	int size = bytesPerChar ; // * sizeof(char);
-	int mem = length * size;
+    char *buff;
+    int size = bytesPerChar ; // * sizeof(char);
+    int mem = length * size;
 
-	if(mem <= 0)
-	{
-		lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
-		return NULL;
-	}
-	//lr_output_message("Dynamic allocation of %d bytes of memory", mem);
-	
-	if ((buff = (char *)calloc(length, size)) == NULL)
-	{
-		// Fixme: implement some generic error handling facility to send this stuff to.
-		lr_error_message("Insufficient memory available, requested %d", mem);
-	}
-	return buff;
+    if(mem <= 0)
+    {
+        lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
+        return NULL;
+    }
+    //lr_output_message("Dynamic allocation of %d bytes of memory", mem);
+    
+    if ((buff = (char *)calloc(length, size)) == NULL)
+    {
+        // Fixme: implement some generic error handling facility to send this stuff to.
+        lr_error_message("Insufficient memory available, requested %d", mem);
+    }
+    return buff;
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -96,17 +96,17 @@ char *y_array_alloc(int length, int bytesPerChar)
 // Convert a *single* character 0-9 to an int
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//				int i;
-//		    i=y_get_int_from_char('9');
-//				lr_message("i = %d", i + 1);		// result is "i = 10"
+//        example usage:
+//                int i;
+//            i=y_get_int_from_char('9');
+//                lr_message("i = %d", i + 1);        // result is "i = 10"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 int y_get_int_from_char(char character)
 {
-	char tmp[2];
-	tmp[0] = character;
-	tmp[1] = '\0';
-	return atoi(tmp);	
+    char tmp[2];
+    tmp[0] = character;
+    tmp[1] = '\0';
+    return atoi(tmp);    
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -125,11 +125,11 @@ int y_get_int_from_char(char character)
 //
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//				char *test;
-//				lr_save_string("test123", "TestParam");		// save the string "test123" into parameter {TestParam}
-//				test=y_get_parameter("TestParam");
-//				lr_message("Test: %s", test);
+//        example usage:
+//                char *test;
+//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+//                test=y_get_parameter("TestParam");
+//                lr_message("Test: %s", test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char* y_get_parameter(const char* paramName)
 {
@@ -154,14 +154,14 @@ char* y_get_parameter(const char* paramName)
 // Since this changes existing parameters be careful what types of parameters 
 // you use this on.But when no null-character is found, the result is unaltered.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			char *test;
-//			web_reg_save_param("TestParam", "LB=\"name=LastName\" Value=\"", "RB=\"", LAST);
-//			web_submit_data(...);					// will fail, obiously.									
-//			lr_message(lr_eval_string("TestParam: {TestParam}\n"));			
-//			y_cleanse_parameter("TestParam");
-//			test=y_get_parameter("TestParam");
-//			lr_message("\nTest: >%s<\n", test);
+//        example usage:
+//            char *test;
+//            web_reg_save_param("TestParam", "LB=\"name=LastName\" Value=\"", "RB=\"", LAST);
+//            web_submit_data(...);                    // will fail, obiously.                                    
+//            lr_message(lr_eval_string("TestParam: {TestParam}\n"));            
+//            y_cleanse_parameter("TestParam");
+//            test=y_get_parameter("TestParam");
+//            lr_message("\nTest: >%s<\n", test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_cleanse_parameter(const char* paramName)
 {
@@ -181,10 +181,10 @@ void y_cleanse_parameter(const char* paramName)
 
    // replace NULL bytes (\x00) in the input with something else..
    for( resultStrlen = strlen(result);
-		resultStrlen < resultLen;
-		resultStrlen = strlen(result))
+        resultStrlen < resultLen;
+        resultStrlen = strlen(result))
    {
-	   result[resultStrlen] = ' ';
+       result[resultStrlen] = ' ';
    }
 
    // Put the result back into the original parameter.
@@ -203,17 +203,17 @@ void y_cleanse_parameter(const char* paramName)
 // Convert the content of a parameter to UPPERCASE. Does not affect non-alphabetic characters.
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("aBcDeFgHiJ &*45#$@#)!({}", "Test");
-//			lr_message(lr_eval_string("Original: {Test}\n"));
-//			y_uppercase_parameter("Test");
-//			lr_message(lr_eval_string("Altered: {Test}\n"));
+//        example usage:
+//            lr_save_string("aBcDeFgHiJ &*45#$@#)!({}", "Test");
+//            lr_message(lr_eval_string("Original: {Test}\n"));
+//            y_uppercase_parameter("Test");
+//            lr_message(lr_eval_string("Altered: {Test}\n"));
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_uppercase_parameter(const char* paramName)
 {
    char *result = y_get_parameter(paramName);
    //strupper(result);
-   strupr(result);				// Note that in Vugen files, you need to explicitly declare C functions that do not return integers
+   strupr(result);                // Note that in Vugen files, you need to explicitly declare C functions that do not return integers
    lr_save_string(result, paramName);
 }
 // --------------------------------------------------------------------------------------------------
@@ -227,13 +227,13 @@ y_uppercase_parameter(const char* paramName)
 // into the resultParameter.
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("AstrixObelixIdefix", "Test");
-//			lr_message(lr_eval_string("Original: {Test}\n"));	// {Test}=AstrixObelixIdefix
-//			y_left( "Test", "Obelix", "Test2" );
-//			lr_message(lr_eval_string("New Param: {Test2}\n"));	// {Test2}=Astrix
+//        example usage:
+//            lr_save_string("AstrixObelixIdefix", "Test");
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
+//            y_left( "Test", "Obelix", "Test2" );
+//            lr_message(lr_eval_string("New Param: {Test2}\n"));    // {Test2}=Astrix
 //
-//	note: the previous name of this function was: head() and y_head()
+//    note: the previous name of this function was: head() and y_head()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_left( const char *originalParameter, const char *search, const char *resultParameter )
@@ -269,34 +269,34 @@ y_left( const char *originalParameter, const char *search, const char *resultPar
 // into the resultParameter.
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("AstrixObelixIdefix", "Test");
-//			lr_message(lr_eval_string("Original: {Test}\n"));	// {Test}=AstrixObelixIdefix
-//			y_right( "Test", "Obelix", "Test4" );
-//			lr_message(lr_eval_string("New Param: {Test4}\n"));	//	{Test4}=Idefix
+//        example usage:
+//            lr_save_string("AstrixObelixIdefix", "Test");
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
+//            y_right( "Test", "Obelix", "Test4" );
+//            lr_message(lr_eval_string("New Param: {Test4}\n"));    //    {Test4}=Idefix
 //
-//	note: previous name: head() and  y_head()
+//    note: previous name: head() and  y_head()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_right( const char *originalParameter, const char *search, const char *resultParameter)
 {
-	char *original = y_get_parameter(originalParameter);
+    char *original = y_get_parameter(originalParameter);
 
-	char *posPtr = (char *)strstr(original, search);
-	int pos = (int)(posPtr - original);
+    char *posPtr = (char *)strstr(original, search);
+    int pos = (int)(posPtr - original);
 
-	//lr_log_message("y_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
+    //lr_log_message("y_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
 
-	if( posPtr == NULL )
-	{
-		lr_save_string(original, resultParameter);
-		return;
-	}
+    if( posPtr == NULL )
+    {
+        lr_save_string(original, resultParameter);
+        return;
+    }
 
-	//lr_log_message("pos = %d", pos);
+    //lr_log_message("pos = %d", pos);
 
-	posPtr = posPtr + strlen(search);
-	lr_save_string(posPtr, resultParameter);
+    posPtr = posPtr + strlen(search);
+    lr_save_string(posPtr, resultParameter);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -306,46 +306,46 @@ y_right( const char *originalParameter, const char *search, const char *resultPa
 // Same as y_right(), but don't stop at the first match, rather use the last match instead.
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("WackoYackoDotWarner", "Test");
-//			lr_message(lr_eval_string("Original: {Test}\n"));	// {Test}=WackoYackoDotWarner
-//			y_last_right( "Test", "ot", "Test2" );
-//			lr_message(lr_eval_string("New Param: {Test2}\n"));
+//        example usage:
+//            lr_save_string("WackoYackoDotWarner", "Test");
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=WackoYackoDotWarner
+//            y_last_right( "Test", "ot", "Test2" );
+//            lr_message(lr_eval_string("New Param: {Test2}\n"));
 //
-//	note: previous name: tail_tail()
+//    note: previous name: tail_tail()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_last_right( const char *originalParameter, const char *search, const char *resultParameter)
 {
-	char *result = y_get_parameter(originalParameter);
-	char *posPtr;
-	//int pos;
+    char *result = y_get_parameter(originalParameter);
+    char *posPtr;
+    //int pos;
 
-	if( search == NULL || strlen(search) == 0 )
-	{
-		lr_save_string(result, resultParameter);
-		//lr_log_message("Warning: Empty search parameter passed to y_last_right()");
-		return;
-	}
+    if( search == NULL || strlen(search) == 0 )
+    {
+        lr_save_string(result, resultParameter);
+        //lr_log_message("Warning: Empty search parameter passed to y_last_right()");
+        return;
+    }
 
-	//lr_log_message("y_last_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
+    //lr_log_message("y_last_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
 
-	do 
-	{
-		posPtr = (char *)strstr(result, search);
-		//pos = (int)(posPtr - result);
-		//lr_log_message("pos = %d", pos);
+    do 
+    {
+        posPtr = (char *)strstr(result, search);
+        //pos = (int)(posPtr - result);
+        //lr_log_message("pos = %d", pos);
 
-		// not found, save what we have as the result.
-		if( posPtr == NULL )
-		{
-			lr_save_string(result, resultParameter);
-			return;
-		}
-		// found, update the result pointer and go find more..
-		result = posPtr + strlen(search);
-	} 
-	while(1);
+        // not found, save what we have as the result.
+        if( posPtr == NULL )
+        {
+            lr_save_string(result, resultParameter);
+            return;
+        }
+        // found, update the result pointer and go find more..
+        result = posPtr + strlen(search);
+    } 
+    while(1);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -364,27 +364,27 @@ y_last_right( const char *originalParameter, const char *search, const char *res
 //
 y_split_str( const char *original, const char *separator, char *left, char *right)
 {
-	char *buffer;
-	char *posPtr = (char *)strstr(original, separator);
-	int pos = (int)(posPtr - original);;
+    char *buffer;
+    char *posPtr = (char *)strstr(original, separator);
+    int pos = (int)(posPtr - original);;
 
-	//lr_log_message("y_split_str: original=%s, search=%s", original, search);
+    //lr_log_message("y_split_str: original=%s, search=%s", original, search);
 
-	if( posPtr == NULL )
-	{
-		// Copy the original to the left hand output buffer.
-		strcpy(left, original);
-		return;
-	}
-	//lr_log_message("pos = %d", pos);
+    if( posPtr == NULL )
+    {
+        // Copy the original to the left hand output buffer.
+        strcpy(left, original);
+        return;
+    }
+    //lr_log_message("pos = %d", pos);
 
-	// Copy the left hand using pos bytes from the original
-	strncpy(left, original, pos);
-	left[pos] = '\0'; // make the cut by putting a null character at the end.
+    // Copy the left hand using pos bytes from the original
+    strncpy(left, original, pos);
+    left[pos] = '\0'; // make the cut by putting a null character at the end.
 
-	// Copy the right hand side starting from the position 
-	// just after the found string.
-	strcpy(right, posPtr+strlen(separator));
+    // Copy the right hand side starting from the position 
+    // just after the found string.
+    strcpy(right, posPtr+strlen(separator));
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -394,55 +394,55 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
 // y_split a string in two based on a seperating string.
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("WackoYackoDotWarner", "Test");
-//			lr_message(lr_eval_string("Original: {Test}\n"));	// {Test}=WackoYackoDotWarner
-//			y_split("Test", "Yacko", "Left", "Right");			// Use "Yacko" as the separator
-//			lr_message(lr_eval_string("Original: {Test}\n"));	// {Test}	= WackoYackoDot
-//			lr_message(lr_eval_string("Left    : {Left}\n"));	// {Left}	= Wacko
-//			lr_message(lr_eval_string("Right   : {Right}\n"));	// {Right}	= Warner
+//        example usage:
+//            lr_save_string("WackoYackoDotWarner", "Test");
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=WackoYackoDotWarner
+//            y_split("Test", "Yacko", "Left", "Right");            // Use "Yacko" as the separator
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDot
+//            lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
+//            lr_message(lr_eval_string("Right   : {Right}\n"));    // {Right}    = Warner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
 {
     char *item = y_get_parameter(originalParameter);
-	int len = strlen(item);
+    int len = strlen(item);
 
-	if( len < strlen(separator) )
-	{
-		// Since the separator doesn't even fit in the item, searching is pointless.
-		// Store the original in the left hand parameter, the right hand is empty.
-		lr_save_string(originalParameter, leftParameter);
-		lr_save_string("", rightParameter);
-		return;
+    if( len < strlen(separator) )
+    {
+        // Since the separator doesn't even fit in the item, searching is pointless.
+        // Store the original in the left hand parameter, the right hand is empty.
+        lr_save_string(originalParameter, leftParameter);
+        lr_save_string("", rightParameter);
+        return;
 
-	}
-	else
-	{
+    }
+    else
+    {
 
-		// Left hand side
-		// If the separator isn't found the full original string gets stored here.
-		// Don't forget the 0 byte at the end though..
-		char *left = y_mem_alloc(len+1);
+        // Left hand side
+        // If the separator isn't found the full original string gets stored here.
+        // Don't forget the 0 byte at the end though..
+        char *left = y_mem_alloc(len+1);
 
-		// Right hand side
-		// If the separator gets found in position 1 the remainder of the
-		// original string gets stored here (and left gets a zero-length string).
-		char *right = y_mem_alloc(len-strlen(separator)+1);
+        // Right hand side
+        // If the separator gets found in position 1 the remainder of the
+        // original string gets stored here (and left gets a zero-length string).
+        char *right = y_mem_alloc(len-strlen(separator)+1);
 
-		// Start off with zero-length strings. We can safely assume
-		// both variables contain garbage when freshly allocated.
-		left[0] = '\0';
-		right[0] = '\0';
+        // Start off with zero-length strings. We can safely assume
+        // both variables contain garbage when freshly allocated.
+        left[0] = '\0';
+        right[0] = '\0';
 
-		// This is where the magic happens.
-		y_split_str(item, separator, left, right);
+        // This is where the magic happens.
+        y_split_str(item, separator, left, right);
 
-		// Store the results in parameters.
-		lr_save_string(left, leftParameter);
-		free(left);
-		lr_save_string(right, rightParameter);
-		free(right);
-	}
+        // Store the results in parameters.
+        lr_save_string(left, leftParameter);
+        free(left);
+        lr_save_string(right, rightParameter);
+        free(right);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -450,48 +450,48 @@ y_split( const char *originalParameter, const char *separator, const char *leftP
 
 // --------------------------------------------------------------------------------------------------
 // Remove leading and trailing whitespace from a parameter. Does not support Unicode so use with care.
-//	Whitespace can be: " "(=space)		"\r"(=carrige return)	"\n"(=line feed)	"\t"(=tab)
+//    Whitespace can be: " "(=space)        "\r"(=carrige return)    "\n"(=line feed)    "\t"(=tab)
 // @author: Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage:
-//			lr_save_string("  WackoYackoDot ", "Test");
-//			lr_message(lr_eval_string("Original: >{Test}<\n"));	// {Test}="  WackoYackoDot "
-//			y_chop("Test");
-//			lr_message(lr_eval_string("Original: >{Test}<\n"));	// {Test}	= "WackoYackoDot"
+//        example usage:
+//            lr_save_string("  WackoYackoDot ", "Test");
+//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}="  WackoYackoDot "
+//            y_chop("Test");
+//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}    = "WackoYackoDot"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_chop( const char* parameter )
 {
-	char *result;
-	int i = 0;
-	char character;
-	
-	//lr_output_message( "y_chop(%s)", parameter);	
-	result = y_get_parameter(parameter);
+    char *result;
+    int i = 0;
+    char character;
+    
+    //lr_output_message( "y_chop(%s)", parameter);    
+    result = y_get_parameter(parameter);
 
-	// y_chop leading whitespace
-	character = result[i];
-	while( (character == ' ') || (character == '\r') || (character == '\n') || (character == '\t') )
-	{
-		character = result[++i];
-	}
-	result += i;
-	
-	//lr_output_message("result after removal of leading whitespace: %s", result);
-	
-	// y_chop trailing whitespace
-	i = strlen(result)-1;	
-	character = result[i];
-	while( (i >= 0) &&
-	       (  (character == ' ' ) ||
-		      (character == '\r') ||
-			  (character == '\n') ||
-			  (character == '\t') ) )
-	{
-		character = result[--i];
-	}
-	result[i+1] = '\0';
-	
-	lr_save_string(result, parameter);
+    // y_chop leading whitespace
+    character = result[i];
+    while( (character == ' ') || (character == '\r') || (character == '\n') || (character == '\t') )
+    {
+        character = result[++i];
+    }
+    result += i;
+    
+    //lr_output_message("result after removal of leading whitespace: %s", result);
+    
+    // y_chop trailing whitespace
+    i = strlen(result)-1;    
+    character = result[i];
+    while( (i >= 0) &&
+           (  (character == ' ' ) ||
+              (character == '\r') ||
+              (character == '\n') ||
+              (character == '\t') ) )
+    {
+        character = result[--i];
+    }
+    result[i+1] = '\0';
+    
+    lr_save_string(result, parameter);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -507,9 +507,9 @@ y_chop( const char* parameter )
 //
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage: 	
-// 			lr_save_string("test123", "par1");
-//          y_replace("par1", "1", "ing1");		// {par1} now has the value testing123
+//        example usage:     
+//             lr_save_string("test123", "par1");
+//          y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_replace( const char *parameter, const char *search, const char *y_replace)
 {
@@ -523,8 +523,8 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
    char *buffer;              // buffer voor bewerkingen
    char *string;              // originele string waar we in zoeken
 
-   if ((search == NULL) 	|| (strlen(search) <1))     return;		// added by Ray
-																// 
+   if ((search == NULL)     || (strlen(search) <1))     return;        // added by Ray
+                                                                // 
    if (!search || !y_replace)      return;   // ongeldige search of y_replace
    if (!strcmp(search, y_replace)) return;   // search == y_replace: geen wijziging
 
@@ -535,7 +535,7 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
    plen = strlen(string);
 
    //lr_log_message("y_replace(%s, %s, %s) - slen %d, rlen %d, plen %d", parameter, search, y_replace, slen, rlen, plen);
-	
+    
    if ( rlen > slen)
    {
       // Reserve memory for -limit- replacements.
@@ -587,9 +587,9 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
 // Remove all occorrances of 'removeMe' in the parameter named 'paramName'
 // stores the result in the original parameter
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage: 	
-// 			lr_save_string("test123", "par1");
-//          y_remove_string_from_parameter("par1", "1");		// {par1} now has the value test23
+//        example usage:     
+//             lr_save_string("test123", "par1");
+//          y_remove_string_from_parameter("par1", "1");        // {par1} now has the value test23
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 {
@@ -599,7 +599,7 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 
    lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
 
-   if ((removeMe == NULL) || (strlen(removeMe) <1))     return;		// added by Ray
+   if ((removeMe == NULL) || (strlen(removeMe) <1))     return;        // added by Ray
 
    // fetch the contents of the parameter to change
    parameter = y_get_parameter(paramName);
@@ -630,9 +630,9 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 // To make it look like real sentences, this function inserts spaces at random.
 // The "words" will be minimal 1 character long, and max. 8 characters.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		example usage: 	
-//			y_random_string_buffer("par1", 10,10);	// creates a string of exactly 10 characters and save it into string {par1}
-//			y_random_string_buffer("par1", 5,10);	// creates a string of min 5 and max 10 char and save it into string {par1}	
+//        example usage:     
+//            y_random_string_buffer("par1", 10,10);    // creates a string of exactly 10 characters and save it into string {par1}
+//            y_random_string_buffer("par1", 5,10);    // creates a string of min 5 and max 10 char and save it into string {par1}    
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
 {
@@ -708,9 +708,9 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
       }
 
       if (length!=max)
-	  {
-		  buffer[length++] = ' ';
-	  }
+      {
+          buffer[length++] = ' ';
+      }
    }
 
    buffer[length++] = '\0';
