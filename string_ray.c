@@ -1,9 +1,25 @@
 /*
- * LoadRunLib Loadrunner function library.
- * 
- * Copyright (c) 2005-2009 Floris Kraak
+ * Ylib Loadrunner function library.
+ * Copyright (C) 2005-2009 Floris Kraak
  *
+ * Last modified     : 2009-11-09
+ * Last modified by  : Raymond de Jongh
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 #ifndef _STRING_C
 #define _STRING_C
 
@@ -201,6 +217,7 @@ y_uppercase_parameter(const char* paramName)
    lr_save_string(result, paramName);
 }
 // --------------------------------------------------------------------------------------------------
+
 
 
 
@@ -633,7 +650,7 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
                      */
 
    char *buffer;
-   int charSetSize = 68; // length of the above array
+   int charSetSize = 52; // length of the above array (actually, that is longer, but we only want A..z
    int length = 0;
    int max = 0;
 

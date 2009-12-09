@@ -1,9 +1,25 @@
 /*
- * LoadRunLib Loadrunner function library.
- * 
- * Copyright (c) 2005-2009 Floris Kraak
- * test
+ * Ylib Loadrunner function library.
+ * Copyright (C) 2005-2009 Floris Kraak
+ *
+ * Last modified     : 2009-12-08
+ * Last modified by  : Raymond de Jongh
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 #ifndef _LOADRUNNER_UTILS_C
 #define _LOADRUNNER_UTILS_C
 
@@ -57,6 +73,8 @@ int y_array_count( const char *pArrayName )
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Get a specific element from a parameter list.
 //
@@ -104,6 +122,8 @@ char *y_array_get( const char *pArray, const int pIndex )
 	return result;
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -157,6 +177,8 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Save a string value in array pArray at index pIndex.
 // This does not update the count value (size) of the array.
@@ -187,6 +209,8 @@ y_array_save( const char* pArray, const int pIndex, const char* value )
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Update the array count (size).
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -202,6 +226,8 @@ y_array_save_count( const char *pArray , const int count)
 	free(result);
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -225,6 +251,8 @@ y_array_add( const char* pArray, const char* value )
 	y_array_save_count(pArray, size);
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -260,6 +288,8 @@ char *y_array_get_random( const char *pArray )
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // 	example usage:
@@ -288,6 +318,8 @@ char *y_array_get_random_no_zeroes( const char *pArray )
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Choose an element at random from a saved parameter list and store it in
 // a parameter with the same name.
@@ -309,6 +341,8 @@ y_array_pick_random( const char *pArray )
 	}
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -335,6 +369,8 @@ y_array_dump( const char *pArrayName )
 	}
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -384,6 +420,8 @@ y_array_save_param_list(const char *sourceParam, const char *destArrayParam, con
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Search array 'pArrayName' for string 'search' and build a new result array
 // containing only parameters containing the string.
@@ -420,6 +458,8 @@ y_array_grep( const char *pArrayName, const char *resultArrayName, const char *s
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // Search array 'pArrayName' for string 'search' and build a new result array
 // containing only parameters that do NOT contain the string.
@@ -453,6 +493,8 @@ y_array_filter( const char *pArrayName, const char *resultArrayName, const char 
 	y_array_save_count(resultArrayName, j-1);
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -518,6 +560,8 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
 
 
 
+
+
 // --------------------------------------------------------------------------------------------------
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // 	example usage:
@@ -556,6 +600,86 @@ void array_split(const char *pInputArray, const char *separator, const char *pAr
 
 
 
+
+
+// --------------------------------------------------------------------------------------------------
+// Shuffle the array of parameters and stores the result in a new array of parameters.
+// The original array of parameters is untouched.
+// 
+// * Please note: the source parameter must not be the same as the destination parameter. * 
+// 
+// Arguments:
+// 		1. source parameter array		2. destination parameter array
+// @author: Raymond de Jongh
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//	example usage: 	
+//		web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+//		web_url("www.google.nl", 
+// 		...
+//		y_shuffle_parameter_array("TAG", "SHUFFLE_TAG");
+// 		
+//	now, suppose {TAG_1}="cow", {TAG_2}="chicken", {TAG_3}="boneless", {TAG_4}="redguy"
+//  then this could be the result: 
+// 		{SHUFFLE_TAG_1} = "chicken", {SHUFFLE_TAG_2}="redguy", {SHUFFLE_TAG_3} = "cow", {SHUFFLE_TAG_4}="boneless".
+// 	to do: remove Dunglish.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void y_shuffle_parameter_array(char *source_param_array_name, char *dest_param_array_name)
+{
+	int source_length;
+	int dest_length;
+	int i;
+	int r;
+	int *shuffle;
+	int temp;
+	char *destination_length;
+
+	if (strcmp(source_param_array_name, dest_param_array_name) == 0)
+	{
+		lr_error_message("Source and Destination parameter name can not be equal!");
+	}
+
+	source_length=lr_paramarr_len(source_param_array_name);
+	shuffle=(int *)calloc(source_length+1, sizeof(int));
+	destination_length=(char *)calloc(strlen(dest_param_array_name)+9); 
+
+	lr_message("source_length: %d", source_length);
+	for (i=1; i<=source_length; i++)
+	{
+		lr_message("i: %d", i);	
+		shuffle[i]=i;
+	}
+
+	for(i=1; i<=source_length; i++)
+	{
+		r=y_rand(1,source_length);
+		temp = shuffle[i];
+		shuffle[i] = shuffle[r];
+		shuffle[r] = temp;
+	}
+	
+//	random_array_start_at_1(array, source_length);
+
+	for(i=1; i<=source_length; i++)
+	{
+		// something like: 'dest_param_array'_name_i = 'source_param_array_name'_array[i];
+		//y_array_save( const char* pArray, const int pIndex, const char* value )
+		// char *y_array_get( const char *pArray, const int pIndex )
+		y_array_save(dest_param_array_name, i, y_array_get(source_param_array_name, shuffle[i]));
+
+	}
+
+	sprintf(destination_length, "%s_count", dest_param_array_name);		// moet nog iets maken wat lijkt op "{DEST_count}"
+	lr_save_int(source_length, destination_length);						
+	free (shuffle);
+	free(destination_length);
+
+}
+// --------------------------------------------------------------------------------------------------
+
+
+
+
+
 // --------------------------------------------------------------------------------------------------
 //// Time/date/stamp functions
 
@@ -566,6 +690,8 @@ time_t timestamp()
 	return time(NULL);
 }
 // --------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -591,13 +717,8 @@ int y_rand_between(int lowerbound, int upperbound, int randMax)
 {
 	int roll;
 
-	if( 
-		(0 > lowerbound ) ||
-		(lowerbound > upperbound) ||
-		(upperbound > randMax) ||
-		(randMax <= 0)
-	  )
-	{
+	if( (0>lowerbound) || (lowerbound>upperbound) || (upperbound > randMax) || (randMax <= 0))
+    {
 		lr_error_message("y_rand_between called with nonsensical arguments: ( 0 <= %d < %d <= %d ) == FALSE",
 						lowerbound, upperbound, randMax);
 		return -1;
@@ -690,5 +811,177 @@ y_save_attribute_to_parameter( char* attrib, char* param )
 
 
 // --------------------------------------------------------------------------------------------------
+// y_breadcrum();
+// 		Adds a string to the parameter {Breadcrum}.
+//      Use this to keep track of the steps taken by the script. Very useful is you have a script which
+//      does things in a random order and you want to know (in the end) which order it used.
+//      You can, ofcourse, write this to a (log)file.
+//      Don't forget to use y_breadcrum_reset() to clear the parameter at the start of the script.
+// @author: Raymond de Jongh
+// Example:
+//        y_breadcrum_reset();	// clean the breadcrum-variable. (previous data in {Breadcrum} is deleted.
+//        y_breadcrum("start");
+//        .... some code....
+//        y_breadcrum("processing data")
+//        ... some code ....
+//        y_breadcrum("finished")
+//      The result is that {Breadcrum} contains "start;processing data;finished"
+// --------------------------------------------------------------------------------------------------
+void y_breadcrum(char *breadcrum)
+{
+	lr_message("---------------------------------------------------------------------------------");
+
+	if ((strcmp(lr_eval_string("{Breadcrum}"), "{Breadcrum}") == 0) || ((strcmp(breadcrum, "") == 0)))
+	{
+		lr_save_string("", "Breadcrum");
+		lr_save_string(breadcrum, "y_breadcrum_temp");
+		lr_save_string(lr_eval_string("{y_breadcrum_temp}"), "Breadcrum");
+	}
+	else
+	{
+		lr_save_string(breadcrum, "y_breadcrum_temp");
+		lr_save_string(lr_eval_string("{Breadcrum};{y_breadcrum_temp}"), "Breadcrum");
+	}
+}
+
+
+
+void y_breadcrum_reset()
+{
+	lr_save_string("", "Breadcrum");
+
+}
+
+
+
+
+// --------------------------------------------------------------------------------------------------
+// y_write_to_file()
+//       writes content (a string) to a file.
+// @author: Raymond de Jongh
+// Example:
+//      y_write_to_file("c:\\test.txt", "Write this to a file!");
+// --------------------------------------------------------------------------------------------------
+int y_write_to_file(char *filename, char *content)
+{
+   long file;
+   int result;
+
+   lr_message("LOGGING: %s", content);
+
+   if ((file = fopen(filename, "at")) == NULL)
+   { 
+       lr_error_message ("Cannot write to file >>%s<<", filename); 
+       return -1; 			// fail to open file...
+   } 
+   if (result = fprintf(file, "%s\n", content) <0)
+   {
+	   return result;		// fail to write to file...
+   }
+
+   if (result = fclose(file)!=0)
+   {
+	   return result;		// fail to close file...
+   }
+
+   return 0;                // everything worked great!
+}
+// --------------------------------------------------------------------------------------------------
+
+
+
+// --------------------------------------------------------------------------------------------------
+// y_write_to_log()
+//     writes "content" (a string) to a (log)file.
+//     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
+//        separated by commas. This function relies on y_write_to_file();
+// @author: Raymond de Jongh
+// Example:
+//     y_write_to_log("c:\\logfile.txt", "Everything went great");
+//     This will result that the file (c:\logfile.txt) has this content:
+//        20091126,215212,SomeGroup,3,4,Everything went great
+//     Ofcourse, the ID's and groupname will be different as this is just an example.
+// --------------------------------------------------------------------------------------------------
+int y_write_to_log(char *filename, char *content)
+{
+    int id, scid;
+	char *vuser_group;
+	int string_length=0;
+	char *log;
+	int len_vuser_group;
+	int len_scid;
+	int result;
+
+	lr_whoami(&id, &vuser_group, &scid);
+
+
+
+	string_length = strlen(content);
+	string_length +=strlen(vuser_group);
+	string_length +=15;		// y_datetime() is altijd 15 chars lang.
+	string_length +=6;		// 6 chars voor id (is dat genoeg?!?)
+	string_length +=6;		// 6 chars voor scid (is dat genoeg?!?)
+
+	log = y_mem_alloc(string_length);
+	y_datetime();
+	sprintf(log, "%s,%s,%6d,%6d,%s", lr_eval_string("{DATE_TIME_STRING}"), vuser_group, id, scid, content);
+
+	result = y_write_to_file(filename, log);
+
+	free(log);
+
+	return result;
+
+}
+// --------------------------------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------------------------------------
+//	y_datetime()
+//	  Simply returns the current date-time as a string, in this format:
+//	    YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
+// @author: Raymond de Jongh
+// --------------------------------------------------------------------------------------------------
+void y_datetime()
+{
+    char *tmp;
+	typedef long time_t; 
+	struct tm 
+	{ 
+		int tm_sec;   // seconds after the minute - [0,59] 
+		int tm_min;   // minutes after the hour - [0,59] 
+		int tm_hour;  // hours since midnight - [0,23] 
+		int tm_mday;  // day of the month - [1,31] 
+		int tm_mon;   // months since January - [0,11] 
+		int tm_year;  // years since 1900 
+		int tm_wday;  // days since Sunday - [0,6] 
+		int tm_yday;  // days since January 1 - [0,365] 
+		int tm_isdst; // daylight savings time flag 
+	}; 
+
+	time_t t; 
+    struct tm * now; 
+
+	_tzset(); // Sets variables used by localtime 
+	time(&t); 
+
+	tmp = (char *)y_mem_alloc(16);
+
+    // Convert to time structure
+	now = (struct tm *)localtime(&t); 
+	sprintf(tmp, "%04d%02d%02d,%02d%02d%02d", now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec); 
+	tmp[15] = '\0';
+
+	lr_save_string(tmp, "DATE_TIME_STRING");
+
+	free(tmp);
+}
+
+
+
+
+
+// --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
+
 
