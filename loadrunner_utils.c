@@ -178,10 +178,10 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
 //    example usage:     
 //        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
 //        web_url("www.google.nl", ............
-//        y_array_save("TAG", 2, "newvalue");                // save the sting "newvalue" into {TAG_2}
+//        y_array_save("newvalue", "TAG", 2);                // save the sting "newvalue" into {TAG_2}
 //        lr_message("Value: %s", y_array_get("TAG", 2));    // print the value of {TAG_2}. (will be "newvalue" in this example)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save( const char* pArray, const int pIndex, const char* value )
+y_array_save(const char* value, const char* pArray, const int pIndex)
 {
     int len = strlen(pArray) +3;
     char *result;
@@ -208,7 +208,7 @@ y_array_save( const char* pArray, const int pIndex, const char* value )
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //    example usage:   
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save_count( const char *pArray , const int count)
+y_array_save_count(const int count, const char *pArray)
 {
     const char *ctpf = "_count";
     int len = strlen(pArray) + strlen(ctpf) + 1;
@@ -239,8 +239,8 @@ y_array_add( const char* pArray, const char* value )
     // hmm - should we check if the array does not exist?
     // Maybe not - there are cases where we care, and there are cases where we don't.
     size++;
-    y_array_save(pArray, size, value);
-    y_array_save_count(pArray, size);
+    y_array_save(value, pArray, size);
+    y_array_save_count(size, pArray);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -384,10 +384,10 @@ y_array_dump( const char *pArrayName )
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //      lr_save_string("<option value=\"water\"><option value=\"fire\"><option value=\"burn\">", "SOURCE");
-//      y_array_save_param_list("SOURCE", "VALUES", "value=\"", "\">");
+//      y_array_save_param_list("SOURCE", "value=\"", "\">", "VALUES");
 //      y_array_dump("VALUES");    // {VALUES_1} contains "water" (no quotes)    {VALUES_2} contains "fire" (no quotes)    etc...
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save_param_list(const char *sourceParam, const char *destArrayParam, const char *LB, const char *RB)
+y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *destArrayParam)
 {
     int i = 0;
     char *source = y_get_parameter(sourceParam);
@@ -404,11 +404,11 @@ y_array_save_param_list(const char *sourceParam, const char *destArrayParam, con
         buffer[end - (int)buffer] = '\0';
 
         i++;
-        y_array_save(destArrayParam, i, next+strlen(LB));
+        y_array_save(next+strlen(LB), destArrayParam, i);
         next = (char *)(end + strlen(RB));
     }
     free(buffer);
-    y_array_save_count(destArrayParam, i);
+    y_array_save_count(i, destArrayParam);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -424,7 +424,7 @@ y_array_save_param_list(const char *sourceParam, const char *destArrayParam, con
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //         lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
-//        y_array_save_param_list("SOURCE", "VALUES", "<", ">");
+//        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
 //        y_array_grep("VALUES", "VALUES2", "r");        // get all elements containing "r" (crayon and drum)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -440,12 +440,12 @@ y_array_grep( const char *pArrayName, const char *resultArrayName, const char *s
         item = y_array_get_no_zeroes(pArrayName, i);
         if( strstr(item, search) )
         {
-            y_array_save(resultArrayName, j++, item);
+            y_array_save(item, resultArrayName, j++);
         }
         lr_eval_string_ext_free(&item);
     }
 
-    y_array_save_count(resultArrayName, j-1);
+    y_array_save_count(j-1, resultArrayName);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -461,7 +461,7 @@ y_array_grep( const char *pArrayName, const char *resultArrayName, const char *s
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //         lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
-//        y_array_save_param_list("SOURCE", "VALUES", "<", ">");
+//        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
 //        y_array_filter("VALUES", "VALUES2", "r");        // get all elements NOT containing "r" (apple, baloon)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -478,12 +478,12 @@ y_array_filter( const char *pArrayName, const char *resultArrayName, const char 
         item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain \x00 in the input. Ugh.
         if( strstr(item, search) == NULL )
         {
-            y_array_save(resultArrayName, j++, item);
+            y_array_save(item, resultArrayName, j++);
         }
         lr_eval_string_ext_free(&item);
     }
 
-    y_array_save_count(resultArrayName, j-1);
+    y_array_save_count(j-1, resultArrayName);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -506,9 +506,9 @@ y_array_filter( const char *pArrayName, const char *resultArrayName, const char 
 //     example usage:
 //         lr_save_string("<apple><baloon><crayon><drum>", "THING");
 //        lr_save_string("<fruit><toy><art><music>", "CAT");
-//        y_array_save_param_list("THING", "THING2", "<", ">");    //    {THING2} contains "baloon" (no quotes)
-//        y_array_save_param_list("CAT", "CAT2", "<", ">");        //    {CAT2} contains "toy"
-//        y_array_merge("THING2", "CAT2", "RESULT", "=>");        //    {RESULT_2} now contains baloon=>toy
+//        y_array_save_param_list("THING", "<", ">", "THING2");    //    {THING2} contains "baloon" (no quotes)
+//        y_array_save_param_list("CAT", "<", ">", "CAT2");        //    {CAT2} contains "toy"
+//        y_array_merge("THING2", "CAT2", "RESULT", "=>");         //    {RESULT_2} now contains baloon=>toy
 //        y_array_dump("RESULT");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, const char *resultArray, const char *separator)
@@ -536,7 +536,7 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
         sprintf(result, "%s%s%s", left, separator, right);
         lr_eval_string_ext_free(&left);
         lr_eval_string_ext_free(&right);
-        y_array_save(resultArray, i, result);
+        y_array_save(result, resultArray, i);
         free(result);
 
         //lr_save_string( left, "_left");
@@ -545,8 +545,7 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
     }
 
     //lr_save_int(i-1, lr_eval_string("{_resultArray}_count") );
-    y_array_save_count(resultArray, i-1);
-
+    y_array_save_count(i-1, resultArray);
     return 1;
 }
 // --------------------------------------------------------------------------------------------------
@@ -580,9 +579,9 @@ void array_split(const char *pInputArray, const char *separator, const char *pAr
         y_split_str(item, separator, left, right);
         lr_eval_string_ext_free(&item);
 
-        y_array_save(pArrayNameLeft, i, left);
+        y_array_save(left, pArrayNameLeft, i);
         free(left);
-        y_array_save(pArrayNameRight, i, right);
+        y_array_save(right, pArrayNameRight, i);
         free(right);
     }
 
@@ -657,12 +656,14 @@ void y_shuffle_parameter_array(char *source_param_array_name, char *dest_param_a
         // something like: 'dest_param_array'_name_i = 'source_param_array_name'_array[i];
         //y_array_save( const char* pArray, const int pIndex, const char* value )
         // char *y_array_get( const char *pArray, const int pIndex )
-        y_array_save(dest_param_array_name, i, y_array_get(source_param_array_name, shuffle[i]));
+        y_array_save(
+           y_array_get(source_param_array_name, shuffle[i]),
+           dest_param_array_name, i);
 
     }
 
     sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
-    lr_save_int(source_length, destination_length);                        
+    lr_save_int(source_length, destination_length);
     free (shuffle);
     free(destination_length);
 
