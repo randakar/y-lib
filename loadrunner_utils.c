@@ -537,24 +537,24 @@ y_array_filter( const char *pArrayName, const char *search, const char *resultAr
 // --------------------------------------------------------------------------------------------------
 // Merge two arrays into a single array. They have to be of the same length.
 //
-// The resulting items are each item from the right array appended to the item with
-// the same index in the left array, with an optional glue separator in the middle for
+// The resulting items are each item from the left array appended to the item with
+// the same index in the right array, with an optional glue separator in the middle for
 // convenient re-splitting later.
 //
 // This thing is mostly created to facilitate situations where you have a list of links
 // but the titles of those links are really hard to capture in the same parameter. With this
 // function you can just look for them separately, merge the results, then pick one link based on
-// the title or something and then y_split the resulting link back for further processing ..
+// the title or something and then y_split() the resulting link back for further processing ..
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
-//         lr_save_string("<apple><baloon><crayon><drum>", "THING");
+//        lr_save_string("<apple><baloon><crayon><drum>", "THING");
 //        lr_save_string("<fruit><toy><art><music>", "CAT");
 //        y_array_save_param_list("THING", "<", ">", "THING2");    //    {THING2} contains "baloon" (no quotes)
 //        y_array_save_param_list("CAT", "<", ">", "CAT2");        //    {CAT2} contains "toy"
-//        y_array_merge("THING2", "CAT2", "RESULT", "=>");         //    {RESULT_2} now contains baloon=>toy
+//        y_array_merge("THING2", "CAT2", "=>", "RESULT");         //    {RESULT_2} now contains baloon=>toy
 //        y_array_dump("RESULT");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, const char *resultArray, const char *separator)
+int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, const char *separator, const char *resultArray)
 {
     int i = 1;
     char *param;
