@@ -22,7 +22,6 @@
 #define _LOADRUNNER_UTILS_C
 
 #include "string.c"
-// #include "web_submit_data_buffer.h"
 
 
 //
@@ -93,25 +92,20 @@ char *y_array_get( const char *pArray, const int pIndex )
     //-- Loadrunner 9 and upwards
     // return lr_paramarr_idx(pArray, pIndex);
 
-    //-- Loadrunner 8 and below
+    //-- Loadrunner 8 and below, or when using performance center,
+    //   or when you want some sane boundary checks:
     int size = y_array_count( pArray );
     char *tmp;
     char *result;
     
-    //lr_log_message("y_array_get(%s,%d)", pArray, pIndex );
-    
-    tmp = y_mem_alloc( strlen(pArray) +10 +4 ); // 10 characters for the index, 4 characters added: { _ } \0
-    sprintf( tmp , "{%s_%d}" , pArray , pIndex );
-
-
-//    removed to mimic the behaviour of lr_paramarr_idx:
-/*    if ( (pIndex > size) || (pIndex < 1) )
+    //lr_log_message("y_array_get(%s,%d)", pArray, pIndex ); 
+    if ( (pIndex > size) || (pIndex < 1) )
     {
-        
         lr_error_message("Index out of bounds");
         lr_abort();
     }
-*/
+    tmp = y_mem_alloc( strlen(pArray) +10 +4 ); // 10 characters for the index, 4 characters added: { _ } \0
+    sprintf( tmp , "{%s_%d}" , pArray , pIndex );
 
     // This breaks if the index number is 10 billion or more  ;-)
     // I presume we have run out of memory by then ..
