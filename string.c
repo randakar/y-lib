@@ -1,6 +1,7 @@
 /*
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2009 Floris Kraak
+ * Copyright (C) 2009 Raymond de Jongh
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -195,7 +196,7 @@ void y_cleanse_parameter(const char* paramName)
 
 
 // used in function "y_uppercase_parameter()", below.
-extern char *strupr ( char *string );
+extern char *strupr( char *string );
 
 // --------------------------------------------------------------------------------------------------
 // Convert the content of a parameter to UPPERCASE. Does not affect non-alphabetic characters.

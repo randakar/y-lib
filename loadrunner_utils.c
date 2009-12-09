@@ -1,9 +1,7 @@
 /*
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2009 Floris Kraak
- *
- * Last modified     : 2009-12-08
- * Last modified by  : Raymond de Jongh
+ * Copyright (C) 2009 Raymond de Jongh
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
