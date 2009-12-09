@@ -197,7 +197,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
 {
     const int trans_nr_len = 2;    // eg. '01'
     int trans_name_size = strlen(action_prefix) +1 + trans_nr_len +1 + strlen(transaction_name) +1;
-    char *actual_trans_name = memAlloc( trans_name_size );
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
 
     sprintf(actual_trans_name, "%s_%02d %s", action_prefix, transaction_nr, transaction_name);
     y_set_current_transaction_name(actual_trans_name);
@@ -210,7 +210,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 {
     const int trans_nr_len = 2;    // eg. '01'
     int trans_name_size = strlen(action_prefix) +1 + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
-    char *actual_trans_name = memAlloc( trans_name_size );
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
 
     sprintf(actual_trans_name, "%s_%02d_%02d %s", action_prefix, transaction_nr, sub_transaction_nr, transaction_name);
     y_set_current_sub_transaction_name(actual_trans_name);
@@ -310,7 +310,7 @@ y_trans_web_link(char *transaction, char *linkname)
         return;
     }
     
-    tmp = memAlloc(strlen(link) + strlen("Text=") +1);
+    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);
     sprintf(tmp, "Text=%s", link);
     
     trans = lr_eval_string(transaction);
@@ -345,7 +345,7 @@ do {                                                                      \
         return;                                                           \
     }                                                                     \
                                                                           \
-    tmp = memAlloc(strlen(link) + strlen("Text=") +1);                    \
+    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);                    \
     sprintf(tmp, "Text=%s", link);                                        \
                                                                           \
     trans = lr_eval_string(TRANSACTION);                                  \
@@ -393,7 +393,7 @@ y_setup_step_waterfall()
 
     while ( step && (strcmp(step, "END") != 0) )
     {
-        tmp = memAlloc( strlen(head) + strlen(step) +1);
+        tmp = y_mem_alloc( strlen(head) + strlen(step) +1);
         // note: if the memory allocation fails we're in trouble!
 
         tmp[0] = '\0';       // This could be a sprintf() call instead
@@ -418,7 +418,7 @@ y_setup_step_waterfall()
 y_waterfall_random_weighted_continue(char * stepname)
 {
     char *head = "step_chance_";
-    char *paramname = memAlloc( strlen(head) + strlen(stepname) +3);
+    char *paramname = y_mem_alloc( strlen(head) + strlen(stepname) +3);
     char *chancestr;
     int chance = 100; // Default
     int rnum = (rand() % 100); // random number between 0 and 99
