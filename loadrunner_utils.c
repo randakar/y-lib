@@ -598,15 +598,20 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
 
 
 // --------------------------------------------------------------------------------------------------
+// Split an input array vertically into two new arrays, based on a search parameter.
+// This is the reverse of y_array_merge(). It will examine each parameter in turn and save
+// each value into two separate parameter lists.
+//
+// See also y_split(), as that is the single parameter version of this.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void array_split(const char *pInputArray, const char *separator, const char *pArrayNameLeft, const char *pArrayNameRight)
+void y_array_split(const char *pInputArray, const char *separator, const char *pArrayNameLeft, const char *pArrayNameRight)
 {
     int i = 1;
     int size = y_array_count(pInputArray);
 
-    //lr_log_message("y_array_count(%s, %s, %s)", pArrayName, search, resultArrayName);
+    //lr_log_message("y_array_split(%s, %s, %s, %s)", pInputArray, separator,pArrayNameLeft, pArrayNameRight);
 
     for( i=1; i <= size; i++)
     {
