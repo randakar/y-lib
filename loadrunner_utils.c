@@ -244,7 +244,50 @@ y_array_add( const char* pArray, const char* value )
 }
 // --------------------------------------------------------------------------------------------------
 
+// --------------------------------------------------------------------------------------------------
+// Concatenate two arrays together, saves the result into a third array.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//     example usage:
+//        web_reg_save_param("TAG1", "LB=<a h", "RB=>", "ORD=ALL", LAST);  
+//        web_reg_save_param("TAG2", "LB=<A id", "RB=>", "ORD=ALL", LAST);
+//        web_url("www.google.nl", ... );
+//        // Loadrunner saves parameters:
+//        // TAG1 - "TAG1_1" to "TAG1_12", "TAG1_count" = 12
+//        // TAG2 - "TAG2_1" to "TAG2_14", "TAG2_count" = 14
+//
+//        y_array_concat("TAG1", "TAG2", "TAG");   // saves "TAG_1" to "TAG_26", "TAG_count" = 26
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+y_array_concat(const char *pArrayFirst, const char *pArraySecond, const char *resultArray)
+{
+    int size_first = y_array_count(pArrayFirst);
+    int size_second = y_array_count(pArraySecond);
+    int size_total = size_first + size_second;
+    int i = 1;
+    int j = 1;
 
+    //lr_log_message("y_array_concat(%s, %s, %s)", pArrayFirst, pArraySecond, resultArray);
+    //lr_log_message("size_total = %d, i = %d", size_total, i);
+
+    for(i=1; i <= size_total; i++)
+    {
+        char *value;
+        //lr_log_message("Iteration %i, j=%d", i, j);
+
+        if( i <= size_first )
+        {
+            value = y_array_get_no_zeroes(pArrayFirst,i);
+        }
+        else
+        {
+            value = y_array_get_no_zeroes(pArraySecond,j);
+            j++;
+        }
+
+        y_array_save(value, resultArray, i);
+        lr_eval_string_ext_free(&value);
+    }
+    y_array_save_count(size_total, resultArray);
+}
 
 
 
