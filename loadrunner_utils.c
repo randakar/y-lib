@@ -318,18 +318,20 @@ char *y_array_get_random_no_zeroes( const char *pArray )
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_pick_random( const char *pArray )
+int y_array_pick_random( const char *pArray )
 {
     if(y_array_count(pArray))
     {
         char *result = y_array_get_random_no_zeroes(pArray);
         lr_save_string(result, pArray );
         lr_eval_string_ext_free(&result);
+        return 1;
     }
     else
     {
         lr_save_string("", pArray);
         //lr_output_message("y_array_pick_random(): Unknown parameter list");
+        return 0;
     }
 }
 // --------------------------------------------------------------------------------------------------
