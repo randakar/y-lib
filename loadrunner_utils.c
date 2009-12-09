@@ -804,44 +804,44 @@ y_save_attribute_to_parameter( char* attrib, char* param )
 
 
 // --------------------------------------------------------------------------------------------------
-// y_breadcrum();
-//         Adds a string to the parameter {Breadcrum}.
+// y_breadcrumb();
+//         Adds a string to the parameter {breadcrumb}.
 //      Use this to keep track of the steps taken by the script. Very useful is you have a script which
 //      does things in a random order and you want to know (in the end) which order it used.
 //      You can, ofcourse, write this to a (log)file.
-//      Don't forget to use y_breadcrum_reset() to clear the parameter at the start of the script.
+//      Don't forget to use y_breadcrumb_reset() to clear the parameter at the start of the script.
 // @author: Raymond de Jongh
 // Example:
-//        y_breadcrum_reset();    // clean the breadcrum-variable. (previous data in {Breadcrum} is deleted.
-//        y_breadcrum("start");
+//        y_breadcrumb_reset();    // clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.
+//        y_breadcrumb("start");
 //        .... some code....
-//        y_breadcrum("processing data")
+//        y_breadcrumb("processing data")
 //        ... some code ....
-//        y_breadcrum("finished")
-//      The result is that {Breadcrum} contains "start;processing data;finished"
+//        y_breadcrumb("finished")
+//      The result is that {breadcrumb} contains "start;processing data;finished"
 // --------------------------------------------------------------------------------------------------
-void y_breadcrum(char *breadcrum)
+void y_breadcrumb(char *breadcrumb)
 {
     lr_message("---------------------------------------------------------------------------------");
 
-    if ((strcmp(lr_eval_string("{Breadcrum}"), "{Breadcrum}") == 0) || ((strcmp(breadcrum, "") == 0)))
+    if ((strcmp(lr_eval_string("{breadcrumb}"), "{breadcrumb}") == 0) || ((strcmp(breadcrumb, "") == 0)))
     {
-        lr_save_string("", "Breadcrum");
-        lr_save_string(breadcrum, "y_breadcrum_temp");
-        lr_save_string(lr_eval_string("{y_breadcrum_temp}"), "Breadcrum");
+        lr_save_string("", "breadcrumb");
+        lr_save_string(breadcrumb, "y_breadcrumb_temp");
+        lr_save_string(lr_eval_string("{y_breadcrumb_temp}"), "breadcrumb");
     }
     else
     {
-        lr_save_string(breadcrum, "y_breadcrum_temp");
-        lr_save_string(lr_eval_string("{Breadcrum};{y_breadcrum_temp}"), "Breadcrum");
+        lr_save_string(breadcrumb, "y_breadcrumb_temp");
+        lr_save_string(lr_eval_string("{breadcrumb};{y_breadcrumb_temp}"), "breadcrumb");
     }
 }
 
 
 
-void y_breadcrum_reset()
+void y_breadcrumb_reset()
 {
-    lr_save_string("", "Breadcrum");
+    lr_save_string("", "breadcrumb");
 
 }
 
