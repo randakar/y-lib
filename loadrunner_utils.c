@@ -466,18 +466,18 @@ y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB,
 // Just call it 'grep' :P
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
-//         lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
+//        lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
 //        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
-//        y_array_grep("VALUES", "VALUES2", "r");        // get all elements containing "r" (crayon and drum)
+//        y_array_grep("VALUES", "r", "VALUES2");   // get all elements containing "r" (crayon and drum)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_grep( const char *pArrayName, const char *resultArrayName, const char *search)
+y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
     char *item;
     int size = y_array_count(pArrayName);
 
-    //lr_log_message("y_array_grep(%s, %s, %s)", pArrayName, resultArrayName, search);
+    //lr_log_message("y_array_grep(%s, %s, %s)", pArrayName, search, resultArrayName);
     for( i=1; i <= size; i++)
     {
         item = y_array_get_no_zeroes(pArrayName, i);
