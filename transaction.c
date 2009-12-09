@@ -95,7 +95,7 @@ void y_start_transaction(char *transaction_name)
     y_set_sub_transaction_nr(1);
 
     // For external analysis of the responsetimes.
-    log_to_report(lr_eval_string("TimerOn {current_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOn {current_transaction}"));
     lr_start_transaction(lr_eval_string("{current_transaction}"));
 }
 
@@ -115,7 +115,7 @@ void y_end_transaction(char *transaction_name, int status)
     y_set_sub_transaction_nr(0);
 
     // For external analysis of the response times.
-    log_to_report(lr_eval_string("TimerOff {current_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOff {current_transaction}"));
 
 }
 
@@ -150,7 +150,7 @@ void y_start_sub_transaction(char *transaction_name)
                                     y_get_and_increment_sub_transaction_nr());
 
     // For external analysis of the response times.
-    log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
     lr_start_sub_transaction(lr_eval_string("{current_sub_transaction}"), 
                              lr_eval_string("{current_transaction}"));
 }
@@ -167,7 +167,7 @@ void y_end_sub_transaction(char *transaction_name, int status)
     lr_end_sub_transaction(trans_name, status);
 
     // For external analysis of the response times.
-    log_to_report(lr_eval_string("TimerOff {current_sub_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOff {current_sub_transaction}"));
 
     // if we faked an outer transaction, fake closing it.
     //
