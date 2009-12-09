@@ -2,9 +2,6 @@
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2009 Floris Kraak
  *
- * Last modified     : 2009-11-09
- * Last modified by  : Raymond de Jongh
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -23,7 +20,6 @@
 #ifndef _STRING_C
 #define _STRING_C
 
-extern char *strupr ( char *string );         // used in function "y_uppercase_parameter()"
 // --------------------------------------------------------------------------------------------------
 
 
@@ -198,6 +194,8 @@ void y_cleanse_parameter(const char* paramName)
 // --------------------------------------------------------------------------------------------------
 
 
+// used in function "y_uppercase_parameter()", below.
+extern char *strupr ( char *string );
 
 // --------------------------------------------------------------------------------------------------
 // Convert the content of a parameter to UPPERCASE. Does not affect non-alphabetic characters.
@@ -212,8 +210,8 @@ void y_cleanse_parameter(const char* paramName)
 y_uppercase_parameter(const char* paramName)
 {
    char *result = y_get_parameter(paramName);
-   //strupper(result);
-   strupr(result);                // Note that in Vugen files, you need to explicitly declare C functions that do not return integers
+   // Note that in Vugen files, you need to explicitly declare C functions that do not return integers.
+   strupr(result);  
    lr_save_string(result, paramName);
 }
 // --------------------------------------------------------------------------------------------------
@@ -222,9 +220,8 @@ y_uppercase_parameter(const char* paramName)
 
 
 // --------------------------------------------------------------------------------------------------
-// Cut the end off a string based on a search string and store the resulting head in a parameter.
-// In other words: split the string into 2 parts, using the search string. Save the left part
-// into the resultParameter.
+// Split the string into 2 parts using the search string. Save the left part into the resultParameter.
+//
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:
@@ -264,9 +261,9 @@ y_left( const char *originalParameter, const char *search, const char *resultPar
 
 
 // --------------------------------------------------------------------------------------------------
-// Cut the y_head off a string based on a search string, leaving only the tail. Store the result in a parameter.
-// In other words: split the string into 2 parts, using the search string. Save the right part
-// into the resultParameter.
+// Split the string into 2 parts, using the search string. Save the right part into the 
+// resultParameter.
+//
 // @author Floris Kraak
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:
@@ -355,7 +352,7 @@ y_last_right( const char *originalParameter, const char *search, const char *res
 // y_split a string in two based on a search parameter.
 //
 // Note: Unlike the others this one does not use parameter, but raw char pointers instead.
-// This mostly to accomodate the primary user - Array_Split();
+// This mostly to accomodate the primary user - y_array_split();
 // Both output buffers need to be pre-allocated! 
 //
 // For the parameter version use y_split().
@@ -397,10 +394,10 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
 //        example usage:
 //            lr_save_string("WackoYackoDotWarner", "Test");
 //            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=WackoYackoDotWarner
-//            y_split("Test", "Yacko", "Left", "Right");            // Use "Yacko" as the separator
+//            y_split("Test", "Yacko", "Left", "Right");           // Use "Yacko" as the separator
 //            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDot
 //            lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
-//            lr_message(lr_eval_string("Right   : {Right}\n"));    // {Right}    = Warner
+//            lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = Warner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
 {
@@ -455,9 +452,9 @@ y_split( const char *originalParameter, const char *separator, const char *leftP
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:
 //            lr_save_string("  WackoYackoDot ", "Test");
-//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}="  WackoYackoDot "
+//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "  WackoYackoDot "
 //            y_chop("Test");
-//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}    = "WackoYackoDot"
+//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "WackoYackoDot"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_chop( const char* parameter )
 {
@@ -498,8 +495,8 @@ y_chop( const char* parameter )
 
 
 // --------------------------------------------------------------------------------------------------
-// Search and y_replace.
-// Find 'search' in 'parameter' and replace it with 'y_replace'.
+// Search and replace.
+// Find 'search' in 'parameter' and replace it with 'replace'.
 // Replaces the originally passed-in parameter with the new one.
 //
 // Note: This one has a built-in search/y_replace limit when
@@ -511,11 +508,11 @@ y_chop( const char* parameter )
 //             lr_save_string("test123", "par1");
 //          y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_replace( const char *parameter, const char *search, const char *y_replace)
+y_replace( const char *parameter, const char *search, const char *replace)
 {
-   int slen, rlen, plen;      // lengte van search, y_replace, en basis string
+   int slen, rlen, plen;      // lengte van search, replace, en basis string
    int i = 0;                 // aantal replacements
-   int limit = 1000;          // replacement limiet als y_replace > search
+   int limit = 1000;          // replacement limiet als replace > search
 
    char *c;                   // punt waar change moet beginnen
    char *cend;                // einde van de change = c+slen
@@ -523,18 +520,18 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
    char *buffer;              // buffer voor bewerkingen
    char *string;              // originele string waar we in zoeken
 
-   if ((search == NULL)     || (strlen(search) <1))     return;        // added by Ray
-                                                                // 
-   if (!search || !y_replace)      return;   // ongeldige search of y_replace
-   if (!strcmp(search, y_replace)) return;   // search == y_replace: geen wijziging
+   if ((search == NULL)     || (strlen(search) <1)) 
+       return;
+   if (!search || !replace)      return;   // ongeldige search of_replace
+   if (!strcmp(search, replace)) return;   // search == replace: geen wijziging
 
    slen = strlen (search);          // de lengte van search
-   rlen = strlen (y_replace);         // de lengte van y_replace
+   rlen = strlen (replace);         // de lengte van replace
 
-   string = y_get_parameter(parameter); // <-- memory allocated by loadrunner, too small if y_replace > search
+   string = y_get_parameter(parameter); // <-- memory allocated by loadrunner, too small if replace > search
    plen = strlen(string);
 
-   //lr_log_message("y_replace(%s, %s, %s) - slen %d, rlen %d, plen %d", parameter, search, y_replace, slen, rlen, plen);
+   //lr_log_message("y_replace(%s, %s, %s) - slen %d, rlen %d, plen %d", parameter, search, replace, slen, rlen, plen);
     
    if ( rlen > slen)
    {
@@ -556,7 +553,7 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
       //lr_output_message("c:%s", c);
  
       i++;
-      if (slen != rlen)                    // zijn search en y_replace van verschillende lengte?
+      if (slen != rlen)                    // zijn search en replace van verschillende lengte?
       {
          if( i >= limit )
          {
@@ -569,7 +566,7 @@ y_replace( const char *parameter, const char *search, const char *y_replace)
          //lr_output_message("memmove completed, result = %s", c);
          last = last - slen + rlen;            // en bereken het nieuwe eindpunt
       }
-      memcpy (c, y_replace, rlen);         // voeg y_replace toe over search heen
+      memcpy (c, replace, rlen);  // voeg replace toe over search heen
    }
    lr_save_string(buffer, parameter);
 
@@ -599,7 +596,8 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 
    lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
 
-   if ((removeMe == NULL) || (strlen(removeMe) <1))     return;        // added by Ray
+   if ((removeMe == NULL) || (strlen(removeMe) < 1))
+       return;
 
    // fetch the contents of the parameter to change
    parameter = y_get_parameter(paramName);
@@ -631,8 +629,8 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 // The "words" will be minimal 1 character long, and max. 8 characters.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:     
-//            y_random_string_buffer("par1", 10,10);    // creates a string of exactly 10 characters and save it into string {par1}
-//            y_random_string_buffer("par1", 5,10);    // creates a string of min 5 and max 10 char and save it into string {par1}    
+//            y_random_string_buffer("par1", 10,10);   // creates a string of exactly 10 characters and saves it into string {par1}
+//            y_random_string_buffer("par1", 5,10);    // creates a string of min 5 and max 10 char and saves it into string {par1}    
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
 {
@@ -640,17 +638,17 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
                      'a','b','c','d','e','f','g','h','i','j','k','l','m',
                      'n','o','p','q','r','s','t','u','v','w','x','y','z',
                      'A','B','C','D','E','F','G','H','I','J','K','L','M',
-                     'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-                     '1','2','3','4','5','6','7','8','9','0','?','!','-',
-                     ',','.',';' };
+                     'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
                      /*
+                     '1','2','3','4','5','6','7','8','9','0','?','!','-',
+                     ',','.',';',
                      '`','~','@','#','$','%','^','&','*','(',')',
                      '=','_','+','[',']','{','}','|',':','/',
                      '<','>',  };
                      */
 
    char *buffer;
-   int charSetSize = 52; // length of the above array (actually, that is longer, but we only want A..z
+   int charSetSize = 52; // length of the above array
    int length = 0;
    int max = 0;
 
@@ -671,9 +669,11 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
       lr_error_message( "minimumLength (%d) bigger than maximumLength (%d)", minimumLength, maximumLength );
    }
    else if(maximumLength > minimumLength) {
+      // Not an error
       max = (rand() % (maximumLength-minimumLength)) + minimumLength;
    }
    else if(maximumLength == minimumLength) {
+      // Not an error either
       max = maximumLength;
    }
    else {
@@ -690,24 +690,25 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
    
    // get memory for the buffer
    buffer = (char *)y_mem_alloc( max +1 );
-   if ( !buffer )
+   // note: it might be wise to move this check into y_mem_alloc() and just abort from there
+   if( !buffer )
    {
       lr_error_message("Failed to allocate buffer for random string!");
       lr_exit(LR_ABORT, LR_FAIL);
    }
-   
 
-   while ( length < max )
+
+   while( length < max )
    {
       lettersInWord = ((rand() % 8) + 2);
 
-      while ( lettersInWord-- && (length < (max)) )
+      while( lettersInWord-- && (length < (max)) )
       {
          randomNumber = (char) (rand() % charSetSize);
          buffer[length++] = characterSet[randomNumber];
       }
 
-      if (length!=max)
+      if(length!=max)
       {
           buffer[length++] = ' ';
       }
