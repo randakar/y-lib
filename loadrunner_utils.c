@@ -503,18 +503,18 @@ y_array_grep( const char *pArrayName, const char *resultArrayName, const char *s
 // Reverse grep, in other words.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
-//         lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
+//        lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
 //        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
-//        y_array_filter("VALUES", "VALUES2", "r");        // get all elements NOT containing "r" (apple, baloon)
+//        y_array_filter("VALUES", "r", "VALUES2");   // get all elements NOT containing "r" (apple, baloon)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_filter( const char *pArrayName, const char *resultArrayName, const char *search)
+y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
     char *item;
     int size = y_array_count(pArrayName);
 
-    //lr_log_message("y_array_filter(%s, %s, %s)", pArrayName, resultArrayName, search);
+    //lr_log_message("y_array_filter(%s, %s, %s)", pArrayName, search, resultArrayName);
 
     for( i=1; i <= size; i++)
     {
