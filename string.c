@@ -583,11 +583,11 @@ y_replace( const char *parameter, const char *search, const char *replace)
 // --------------------------------------------------------------------------------------------------
 // Lightweight alternative to the y_replace() function.
 // Remove all occorrances of 'removeMe' in the parameter named 'paramName'
-// stores the result in the original parameter
+// Stores the result in the original parameter.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:     
-//             lr_save_string("test123", "par1");
-//          y_remove_string_from_parameter("par1", "1");        // {par1} now has the value test23
+//          lr_save_string("test123", "par1");
+//          y_remove_string_from_parameter("par1", "1");   // {par1} now has the value test23
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 {
