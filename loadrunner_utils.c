@@ -21,7 +21,7 @@
 #ifndef _LOADRUNNER_UTILS_C
 #define _LOADRUNNER_UTILS_C
 
-#include "string_ray.c"
+#include "string.c"
 // #include "web_submit_data_buffer.h"
 
 
