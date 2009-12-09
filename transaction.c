@@ -46,11 +46,11 @@ int _fake_sub_trans = 0;
 // 
 
 
-void start_action_block(char *action_prefix)
+void y_start_action_block(char *action_prefix)
 {
     if(!strlen(y_get_action_prefix()))
     {
-        end_action_block();
+        y_end_action_block();
     }
 
     y_set_action_prefix(action_prefix);
@@ -62,7 +62,7 @@ void start_action_block(char *action_prefix)
     lr_start_transaction(_block_transaction);
 }
 
-void end_action_block()
+void y_end_action_block()
 {
     if(strlen(_block_transaction))
     {
@@ -73,7 +73,7 @@ void end_action_block()
 }
 
 //
-// start_transaction() / end_transaction()
+// y_start_transaction() / y_end_transaction()
 // These are drop-in replacements for the loadrunner functions 
 // lr_start_transaction() and lr_end_transaction(). 
 // 
@@ -82,7 +82,7 @@ void end_action_block()
 // as well as consistent numbering.
 // 
 
-void start_transaction(char *transaction_name)
+void y_start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'current_transaction' parameter.
     y_create_new_transaction_name(transaction_name, 
@@ -101,7 +101,7 @@ void start_transaction(char *transaction_name)
 
 // Note: This completely ignores the 'transaction_name' argument
 // to retain compatibility with lr_end_transaction().
-void end_transaction(char *transaction_name, int status)
+void y_end_transaction(char *transaction_name, int status)
 {
     char *trans_name = lr_eval_string("{current_transaction}");
 
@@ -121,8 +121,8 @@ void end_transaction(char *transaction_name, int status)
 
 
 //
-// start_sub_transaction() / end_sub_transactio()
-// Like start_transaction() / end_transaction().
+// y_start_sub_transaction() / y_end_sub_transaction()
+// Like y_start_transaction() / y_end_transaction().
 // 
 // Can be called outside of a running top level transaction, 
 // in which case it will create one as needed.
@@ -131,12 +131,12 @@ void end_transaction(char *transaction_name, int status)
 // but as a fallback for situations where the sub transactions can not neccesarily
 // be predicted. (Think 'sudden popups from GUI apps' and similar cases.)
 // 
-void start_sub_transaction(char *transaction_name)
+void y_start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
     if( y_get_sub_transaction_nr() == 0 )
     {
-        start_transaction(transaction_name);
+        y_start_transaction(transaction_name);
         _fake_sub_trans = 1;
 
         // This should not disrupt the numbering ..
@@ -155,7 +155,7 @@ void start_sub_transaction(char *transaction_name)
                              lr_eval_string("{current_transaction}"));
 }
 
-void end_sub_transaction(char *transaction_name, int status)
+void y_end_sub_transaction(char *transaction_name, int status)
 {
     char *trans_name; 
 
@@ -171,12 +171,12 @@ void end_sub_transaction(char *transaction_name, int status)
 
     // if we faked an outer transaction, fake closing it.
     //
-    // Note: It might be an idea to move this to start_(sub_)transaction() instead, for
+    // Note: It might be an idea to move this to y_start_(sub_)transaction() instead, for
     // better grouping. That may not be without it's problems though.
     if( _fake_sub_trans == 1 )
     {
         _fake_sub_trans = 0;
-        end_transaction(transaction_name, status);
+        y_end_transaction(transaction_name, status);
     }
 }
 
@@ -185,11 +185,11 @@ void end_sub_transaction(char *transaction_name, int status)
 // Generates the transaction name prefixed with a user defined action prefix and a transaction number.
 // The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
 //
-// To use this scripts need to call start_action_block() - once at the start of each action.
+// To use this scripts need to call y_start_action_block() - once at the start of each action.
 //
 // 
 // Dirty trick that no longer needs to be used:
-//#define lr_start_transaction(transaction_name) start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
+//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
 //                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
 //#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
 //
@@ -291,7 +291,8 @@ void y_set_sub_transaction_nr(int trans_nr)
 
 
 //
-// Shorthand for "start transaction(transaction); web_link(linkname); end_transaction(transaction)"
+// Shorthand for 
+// "y_start_transaction(transaction); web_link(linkname); y_end_transaction(transaction)"
 //
 // Note: In order for the logging to report correct line numbers it is advised to use the macro
 // version TRANS_WEB_LINK() found below.
@@ -314,9 +315,9 @@ y_trans_web_link(char *transaction, char *linkname)
     sprintf(tmp, "Text=%s", link);
     
     trans = lr_eval_string(transaction);
-    start_transaction(trans);
+    y_start_transaction(trans);
     web_link(link, tmp, LAST);
-    end_transaction(trans, LR_AUTO);
+    y_end_transaction(trans, LR_AUTO);
     
     free(tmp);
 }
@@ -324,7 +325,8 @@ y_trans_web_link(char *transaction, char *linkname)
 
 
 //
-// Shorthand for "start transaction(transaction); web_link(linkname); end_transaction(transaction)"
+// Shorthand for 
+// "y_start_transaction(transaction); web_link(linkname); y_end_transaction(transaction)"
 // Macro version. Use this to preserve line numbers in the virtual user log.
 // For the regular version see y_trans_web_link() above.
 // 
@@ -345,13 +347,13 @@ do {                                                                      \
         return;                                                           \
     }                                                                     \
                                                                           \
-    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);                    \
+    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);                 \
     sprintf(tmp, "Text=%s", link);                                        \
                                                                           \
     trans = lr_eval_string(TRANSACTION);                                  \
-    start_transaction(trans);                                             \
+    y_start_transaction(trans);                                           \
     web_link(link, tmp, LAST);                                            \
-    end_transaction(trans, LR_AUTO);                                      \
+    y_end_transaction(trans, LR_AUTO);                                    \
                                                                           \
     free(tmp);                                                            \
 } while(0)
