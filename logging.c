@@ -19,8 +19,7 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
-// #include "T:\\Projecten\\LR_Script_Includes\\VuserFunctions\\VuserGlobals.h"
-
+// FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C
 #ifndef VUSERFUNC
     #define VUSERFUNC    "vuserfunctions.dll"    // dynamic link library Vuser functions
 #endif
@@ -28,7 +27,7 @@
 // Global variables
 char* _injectorHost;         // injector name
 int _vUserID;                // virtual user id
-const int _extraLogging = 1; // on/off switch; 0 = off, 1 = on
+const int _extraLogging = 0; // Client specific logging code on/off switch; 0 = off, 1 = on
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
@@ -46,6 +45,8 @@ setup_logging()
 
     // Load general vuser functions
     // These 'general vuser functions' are only used for logging, though ;-)
+    // (not to mention specific to one client!)
+    // FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C.
     {
         int result;
         if( (result = lr_load_dll(VUSERFUNC)) != 0)
