@@ -48,13 +48,13 @@ int _fake_sub_trans = 0;
 
 void start_action_block(char *action_prefix)
 {
-    if(!strlen(get_action_prefix()))
+    if(!strlen(y_get_action_prefix()))
     {
         end_action_block();
     }
 
-    set_action_prefix(action_prefix);
-    set_transaction_nr(1);
+    y_set_action_prefix(action_prefix);
+    y_set_transaction_nr(1);
 
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
@@ -69,7 +69,7 @@ void end_action_block()
         lr_end_transaction(_block_transaction, LR_AUTO);
     }
     _block_transaction[0] = '\0';
-    set_action_prefix("");
+    y_set_action_prefix("");
 }
 
 //
@@ -86,13 +86,13 @@ void start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'current_transaction' parameter.
     create_new_transaction_name(transaction_name, 
-                                get_action_prefix(), 
-                                get_and_increment_transaction_nr());
+                                y_get_action_prefix(), 
+                                y_get_and_increment_transaction_nr());
 
     // Reset the sub transaction numbering.
     // This also stops sub transactions from automagically
     // creating outer transactions for themselves.
-    set_sub_transaction_nr(1);
+    y_set_sub_transaction_nr(1);
 
     // For external analysis of the responsetimes.
     log_to_report(lr_eval_string("TimerOn {current_transaction}"));
@@ -112,7 +112,7 @@ void end_transaction(char *transaction_name, int status)
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
-    set_sub_transaction_nr(0);
+    y_set_sub_transaction_nr(0);
 
     // For external analysis of the response times.
     log_to_report(lr_eval_string("TimerOff {current_transaction}"));
@@ -134,20 +134,20 @@ void end_transaction(char *transaction_name, int status)
 void start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
-    if( get_sub_transaction_nr() == 0 )
+    if( y_get_sub_transaction_nr() == 0 )
     {
         start_transaction(transaction_name);
         _fake_sub_trans = 1;
 
         // This should not disrupt the numbering ..
-        set_transaction_nr( get_transaction_nr() -1 );
+        y_set_transaction_nr( y_get_transaction_nr() -1 );
     }
 
 
     create_new_sub_transaction_name(transaction_name, 
-                                    get_action_prefix(),
-                                    get_transaction_nr(),
-                                    get_and_increment_sub_transaction_nr());
+                                    y_get_action_prefix(),
+                                    y_get_transaction_nr(),
+                                    y_get_and_increment_sub_transaction_nr());
 
     // For external analysis of the response times.
     log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
@@ -199,7 +199,7 @@ void create_new_transaction_name(const char *transaction_name, const char *actio
     char *actual_trans_name = memAlloc( trans_name_size );
 
     sprintf(actual_trans_name, "%s_%02d %s", action_prefix, transaction_nr, transaction_name);
-    set_current_transaction_name(actual_trans_name);
+    y_set_current_transaction_name(actual_trans_name);
 
     free(actual_trans_name);
 }
@@ -212,7 +212,7 @@ void create_new_sub_transaction_name(const char *transaction_name, const char *a
     char *actual_trans_name = memAlloc( trans_name_size );
 
     sprintf(actual_trans_name, "%s_%02d_%02d %s", action_prefix, transaction_nr, sub_transaction_nr, transaction_name);
-    set_current_sub_transaction_name(actual_trans_name);
+    y_set_current_sub_transaction_name(actual_trans_name);
 
     free(actual_trans_name);
 }
@@ -220,68 +220,68 @@ void create_new_sub_transaction_name(const char *transaction_name, const char *a
 
 // Getters / Setters //
 
-char *get_current_transaction_name()
+char *y_get_current_transaction_name()
 {
     return lr_eval_string("{current_transaction}");
 }
 
-void set_current_transaction_name(char *trans_name)
+void y_set_current_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "current_transaction");
 }
 
 
-char *get_current_sub_transaction_name()
+char *y_get_current_sub_transaction_name()
 {
     return lr_eval_string("{current_sub_transaction}");
 }
 
-void set_current_sub_transaction_name(char *trans_name)
+void y_set_current_sub_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "current_sub_transaction");
 }
 
 
-char *get_action_prefix()
+char *y_get_action_prefix()
 {
     return _action_prefix;
 }
 
-void set_action_prefix(char *action_prefix)
+void y_set_action_prefix(char *action_prefix)
 {
     _action_prefix = action_prefix;
 }
 
 
 
-int get_transaction_nr()
+int y_get_transaction_nr()
 {
     return _transaction_nr;
 
 }
 
-int get_and_increment_transaction_nr()
+int y_get_and_increment_transaction_nr()
 {
     return _transaction_nr++;
 }
 
-void set_transaction_nr(int trans_nr)
+void y_set_transaction_nr(int trans_nr)
 {
     _transaction_nr = trans_nr;
 }
 
 
-int get_sub_transaction_nr()
+int y_get_sub_transaction_nr()
 {
     return _sub_transaction_nr;
 }
 
-int get_and_increment_sub_transaction_nr()
+int y_get_and_increment_sub_transaction_nr()
 {
     return _sub_transaction_nr++;
 }
 
-void set_sub_transaction_nr(int trans_nr)
+void y_set_sub_transaction_nr(int trans_nr)
 {
     _sub_transaction_nr = trans_nr;
 }
