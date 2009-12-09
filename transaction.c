@@ -300,7 +300,7 @@ void set_sub_transaction_nr(int trans_nr)
 //
 // @author: Floris Kraak
 // 
-trans_web_link(char *transaction, char *linkname)
+y_trans_web_link(char *transaction, char *linkname)
 {
     char *link = lr_eval_string(linkname);
     char *tmp, *trans;
@@ -316,9 +316,9 @@ trans_web_link(char *transaction, char *linkname)
     sprintf(tmp, "Text=%s", link);
     
     trans = lr_eval_string(transaction);
-    start_transaction( trans );
-    web_link( link,    tmp, LAST);
-    end_transaction( trans, LR_AUTO);
+    start_transaction(trans);
+    web_link(link, tmp, LAST);
+    end_transaction(trans, LR_AUTO);
     
     free(tmp);
 }
@@ -328,14 +328,14 @@ trans_web_link(char *transaction, char *linkname)
 //
 // Shorthand for "start transaction(transaction); web_link(linkname); end_transaction(transaction)"
 // Macro version. Use this to preserve line numbers in the virtual user log.
-// For the regular version see trans_web_link() above.
+// For the regular version see y_trans_web_link() above.
 // 
 // Use as if calling a function named TRANS_WEB_LINK() with two arguments.
-// (Being able to just search/replace trans_web_link( with TRANS_WEB_LINK( in
+// (Being able to just search/replace y_trans_web_link( with Y_TRANS_WEB_LINK( in
 // a vUser script is a feature, so keep the interfaces and functionality identical
 // please.)
 // 
-#define TRANS_WEB_LINK( TRANSACTION, LINKNAME )                           \
+#define Y_TRANS_WEB_LINK( TRANSACTION, LINKNAME )                         \
 do {                                                                      \
   char *link = lr_eval_string(LINKNAME);                                  \
     char *tmp, *trans;                                                    \
@@ -351,9 +351,9 @@ do {                                                                      \
     sprintf(tmp, "Text=%s", link);                                        \
                                                                           \
     trans = lr_eval_string(TRANSACTION);                                  \
-    start_transaction( trans );                                           \
-    web_link( link,    tmp, LAST);                                        \
-    end_transaction( trans, LR_AUTO);                                     \
+    start_transaction(trans);                                             \
+    web_link(link, tmp, LAST);                                            \
+    end_transaction(trans, LR_AUTO);                                      \
                                                                           \
     free(tmp);                                                            \
 } while(0)
@@ -379,14 +379,14 @@ do {                                                                      \
 // and save each step chance to a seperate parameter with a name starting with
 // 'step_chance_'.
 //
-// Before each step is executed a call is made to waterfall_random_weighted_continue()
+// Before each step is executed a call is made to y_waterfall_random_weighted_continue()
 // with the name of the step added. If the corresponding parameter was set up the
 // value it contained is used as the weighted chance that the next part of the script
 // will be executed.
 //
 // @author: Floris Kraak
 //
-setup_step_waterfall()
+y_setup_step_waterfall()
 {
     char *step = lr_eval_string("{step}");
     char *stepchance = lr_eval_string("{stepchance}");
@@ -412,12 +412,12 @@ setup_step_waterfall()
 }
 
 //
-// for full documentation see setup_step_waterfall()
+// for full documentation see y_setup_step_waterfall()
 //
-// @see setup_step_waterfall 
+// @see y_setup_step_waterfall 
 // @author: Floris Kraak
 //
-waterfall_random_weighted_continue(char * stepname)
+y_waterfall_random_weighted_continue(char * stepname)
 {
     char *head = "step_chance_";
     char *paramname = memAlloc( strlen(head) + strlen(stepname) +3);
