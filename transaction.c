@@ -85,7 +85,7 @@ void end_action_block()
 void start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'current_transaction' parameter.
-    create_new_transaction_name(transaction_name, 
+    y_create_new_transaction_name(transaction_name, 
                                 y_get_action_prefix(), 
                                 y_get_and_increment_transaction_nr());
 
@@ -144,7 +144,7 @@ void start_sub_transaction(char *transaction_name)
     }
 
 
-    create_new_sub_transaction_name(transaction_name, 
+    y_create_new_sub_transaction_name(transaction_name, 
                                     y_get_action_prefix(),
                                     y_get_transaction_nr(),
                                     y_get_and_increment_sub_transaction_nr());
@@ -192,7 +192,7 @@ void end_sub_transaction(char *transaction_name, int status)
 //                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
 //#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
 //
-void create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
+void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
     int trans_name_size = strlen(action_prefix) +1 + trans_nr_len +1 + strlen(transaction_name) +1;
@@ -204,7 +204,7 @@ void create_new_transaction_name(const char *transaction_name, const char *actio
     free(actual_trans_name);
 }
 
-void create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
+void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
                                      const int transaction_nr, int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
