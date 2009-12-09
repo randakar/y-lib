@@ -31,7 +31,7 @@ const int _extraLogging = 0; // Client specific logging code on/off switch; 0 = 
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
-setup_logging()
+y_setup_logging()
 {
     // Only add extra logging if it has been turned on in globals.h
     if( !_extraLogging )
@@ -59,7 +59,7 @@ setup_logging()
 }
 
 
-log_to_report(char *message)
+y_log_to_report(char *message)
 {
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
 
@@ -70,7 +70,7 @@ log_to_report(char *message)
     }
 }
 
-log_error(char *message)
+y_log_error(char *message)
 {
     char *msg = lr_eval_string(message);
     log_to_report(msg);
@@ -78,7 +78,7 @@ log_error(char *message)
     lr_fail_trans_with_error(msg);
 }
 
-log_warning(char *message)
+y_log_warning(char *message)
 {
     char *msg;
     lr_save_string(lr_eval_string(message), "_log_msg");
@@ -88,7 +88,7 @@ log_warning(char *message)
 }
 
 // Save the current loglevel and turn off logging.
-log_turn_off()
+y_log_turn_off()
 {
     lr_log_message("Log level set to OFF.\n");
 
@@ -98,7 +98,7 @@ log_turn_off()
     lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
 }
 
-log_set_brief()
+y_log_set_brief()
 {
     lr_log_message("Log level set to BRIEF.\n");
 
@@ -109,7 +109,7 @@ log_set_brief()
     lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
 }
 
-log_set_extended()
+y_log_set_extended()
 {
     lr_log_message("Log level set to EXTENDED.\n");
 
@@ -123,7 +123,7 @@ log_set_extended()
 }
 
 // Restore the log level to the old state.
-log_restore()
+y_log_restore()
 {
     /*
     if(_logLevel == LR_MSG_CLASS_DISABLE_LOG)
@@ -138,7 +138,7 @@ log_restore()
 
 }
 
-log_turn_on()
+y_log_turn_on()
 {
     if(_logLevel == LR_MSG_CLASS_DISABLE_LOG)
     {
@@ -150,7 +150,6 @@ log_turn_on()
     }
 
 }
-
 
 
 #endif // _LOGGING_C
