@@ -132,7 +132,7 @@ void y_exec_profile(y_profile *chosenProfile)
         // The current transaction name is likely to get overwritten
         // as the profile starts running it's own set of transactions.
         // Save it here.
-        savedTransactionName = get_current_transaction_name();
+        savedTransactionName = y_get_current_transaction_name();
 
         // Run the profile.
         profile_function();
