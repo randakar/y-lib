@@ -59,7 +59,7 @@ int y_array_count( const char *pArrayName )
 
     // -- Loadrunner 8 and below
     int result;
-    char *tmp = y_mem_alloc( strlen(pArrayName) + strlen("_count") +4 );  // 4 characters added: { _ } \0
+    char *tmp = y_mem_alloc( strlen(pArrayName) +9 );  // 9 = strlen("{}_count") +1 -- the +1 is '\0'.
     
     sprintf(tmp , "{%s_count}" , pArrayName );
     result = atoi(lr_eval_string(tmp));
@@ -104,6 +104,7 @@ char *y_array_get( const char *pArray, const int pIndex )
         lr_error_message("Index out of bounds");
         lr_abort();
     }
+
     tmp = y_mem_alloc( strlen(pArray) +10 +4 ); // 10 characters for the index, 4 characters added: { _ } \0
     sprintf( tmp , "{%s_%d}" , pArray , pIndex );
 
