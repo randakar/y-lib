@@ -33,15 +33,15 @@ int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log 
 
 y_setup_logging()
 {
-	/*
+    /*
     // Only add extra logging if it has been turned on.
     if( !_extraLogging )
     {
         return;
     }
-	*/
-	// Turn extra logging on if setup_logging() gets called.
-	_extraLogging = 1;
+    */
+    // Turn extra logging on if setup_logging() gets called.
+    _extraLogging = 1;
 
     // Global variables, handle with care
     lr_whoami(&_vUserID, NULL, NULL);
