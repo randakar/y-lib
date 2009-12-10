@@ -211,10 +211,9 @@ y_array_save(const char* value, const char* pArray, const int pIndex)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_array_save_count(const int count, const char *pArray)
 {
-    const char *ctpf = "_count";
-    int len = strlen(pArray) + strlen(ctpf) + 1;
+    int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
     char *result = y_mem_alloc(len);
-    sprintf(result, "%s%s", pArray, ctpf);
+    sprintf(result, "%s_count", pArray);
     lr_save_int(count, result);
     free(result);
 }
