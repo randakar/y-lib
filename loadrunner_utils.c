@@ -727,7 +727,7 @@ void y_shuffle_parameter_array(char *source_param_array_name, char *dest_param_a
 
 typedef long time_t;
 
-time_t timestamp()
+time_t y_timestamp()
 {
     return time(NULL);
 }
