@@ -19,7 +19,7 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
-// FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C
+// FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C.
 #ifndef VUSERFUNC
     #define VUSERFUNC    "vuserfunctions.dll"    // dynamic link library Vuser functions
 #endif
@@ -33,11 +33,15 @@ int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log 
 
 y_setup_logging()
 {
-    // Only add extra logging if it has been turned on in globals.h
+	/*
+    // Only add extra logging if it has been turned on.
     if( !_extraLogging )
     {
         return;
     }
+	*/
+	// Turn extra logging on if setup_logging() gets called.
+	_extraLogging = 1;
 
     // Global variables, handle with care
     lr_whoami(&_vUserID, NULL, NULL);
