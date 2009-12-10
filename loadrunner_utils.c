@@ -633,8 +633,8 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
         free(right);
     }
 
-    y_array_save_count(pArrayNameLeft, i-1);
-    y_array_save_count(pArrayNameRight, i-1);
+    y_array_save_count(i-1,pArrayNameLeft);
+    y_array_save_count(i-1,pArrayNameRight);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -983,6 +983,9 @@ int y_write_to_log(char *filename, char *content)
 //      Simply returns the current date-time as a string, in this format:
 //        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
 // @author: Raymond de Jongh
+// 
+// Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
+//           -- Floris
 // --------------------------------------------------------------------------------------------------
 void y_datetime()
 {
