@@ -49,8 +49,9 @@ char *y_mem_alloc(int size)
     if ((buff = (char *)malloc(mem)) == NULL) 
     {
         // Fixme: implement some generic error handling facility to send this stuff to.
-        // Just for the record though: If this happens you're pretty much screwed anyway.
         lr_error_message("Insufficient memory available, requested %d", mem);
+        // If this happens you're pretty much screwed anyway.
+        lr_abort();
     }
     return buff;
 }
@@ -82,6 +83,8 @@ char *y_array_alloc(int length, int bytesPerChar)
     {
         // Fixme: implement some generic error handling facility to send this stuff to.
         lr_error_message("Insufficient memory available, requested %d", mem);
+        // If this happens you're pretty much screwed anyway.
+        lr_abort();
     }
     return buff;
 }
