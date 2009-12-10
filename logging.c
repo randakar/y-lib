@@ -25,9 +25,9 @@
 #endif
 
 // Global variables
-char* _injectorHost;         // injector name
-int _vUserID;                // virtual user id
-int _extraLogging = 0; // Client specific logging code on/off switch; 0 = off, 1 = on
+char* _injectorHost;                      // injector name
+int _vUserID;                             // virtual user id
+int _extraLogging = 0;                    // Client specific logging code on/off switch; 0 = off, 1 = on
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
