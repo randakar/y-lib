@@ -182,7 +182,7 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
 //        y_array_save("newvalue", "TAG", 2);                // save the sting "newvalue" into {TAG_2}
 //        lr_message("Value: %s", y_array_get("TAG", 2));    // print the value of {TAG_2}. (will be "newvalue" in this example)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save(const char* value, const char* pArray, const int pIndex)
+void y_array_save(const char* value, const char* pArray, const int pIndex)
 {
     int len = strlen(pArray) +3;
     char *result;
@@ -209,7 +209,7 @@ y_array_save(const char* value, const char* pArray, const int pIndex)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //    example usage:   
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save_count(const int count, const char *pArray)
+void y_array_save_count(const int count, const char *pArray)
 {
     int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
     char *result = y_mem_alloc(len);
@@ -233,7 +233,7 @@ y_array_save_count(const int count, const char *pArray)
 //        web_url("www.google.nl", 
 //         y_array_add("TAG", "newValue");        // the added value (=last one) in {TAG} is now "newValue".
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_add( const char* pArray, const char* value )
+void y_array_add( const char* pArray, const char* value )
 {
     int size = y_array_count(pArray);
     // hmm - should we check if the array does not exist?
@@ -257,7 +257,7 @@ y_array_add( const char* pArray, const char* value )
 //
 //        y_array_concat("TAG1", "TAG2", "TAG");   // saves "TAG_1" to "TAG_26", "TAG_count" = 26
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_concat(const char *pArrayFirst, const char *pArraySecond, const char *resultArray)
+void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const char *resultArray)
 {
     int size_first = y_array_count(pArrayFirst);
     int size_second = y_array_count(pArraySecond);
@@ -393,7 +393,7 @@ int y_array_pick_random( const char *pArray )
 //        web_url("www.google.nl", 
 //         y_array_dump("TAG");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_dump( const char *pArrayName )
+void y_array_dump( const char *pArrayName )
 {
     int i;
     int count;
@@ -430,7 +430,7 @@ y_array_dump( const char *pArrayName )
 //      y_array_save_param_list("SOURCE", "value=\"", "\">", "VALUES");
 //      y_array_dump("VALUES");    // {VALUES_1} contains "water" (no quotes)    {VALUES_2} contains "fire" (no quotes)    etc...
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *destArrayParam)
+void y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *destArrayParam)
 {
     int i = 0;
     char *source = y_get_parameter(sourceParam);
@@ -471,7 +471,7 @@ y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB,
 //        y_array_grep("VALUES", "r", "VALUES2");   // get all elements containing "r" (crayon and drum)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
+void y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
     char *item;
@@ -508,7 +508,7 @@ y_array_grep( const char *pArrayName, const char *search, const char *resultArra
 //        y_array_filter("VALUES", "r", "VALUES2");   // get all elements NOT containing "r" (apple, baloon)
 //        y_array_dump("VALUES2");
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
+void y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
     char *item;
@@ -663,7 +663,7 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
 //         {SHUFFLE_TAG_1} = "chicken", {SHUFFLE_TAG_2}="redguy", {SHUFFLE_TAG_3} = "cow", {SHUFFLE_TAG_4}="boneless".
 //     to do: remove Dunglish.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void y_shuffle_parameter_array(char *source_param_array_name, char *dest_param_array_name)
+void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 {
     int source_length;
     int dest_length;
