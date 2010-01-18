@@ -22,7 +22,7 @@
 // Needed to compile this - the definition of LAST is missing if it's not included
 #include "web_api.h"
 
-// Other LoadLib functions
+// Other Ylib functions
 #include "logging.c"
 #include "string.c"
 
@@ -35,10 +35,16 @@
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
 char *_action_prefix = "";
-char _block_transaction[100] = "";
+
+    // We could allocate _block_transaction with malloc
+    // but freeing that gets complicated quickly. Too quickly.
+//char _block_transaction[100] = "";
 int _transaction_nr = 0;
 int _sub_transaction_nr = 0;
 int _fake_sub_trans = 0;
+
+// make sure this thing contains a valid string to prevent y_end_action_block using random memory
+//_block_transaction[0] = '\0';
 
 //
 // Action blocks. Name all transactions within an action block with a common prefix.
@@ -56,19 +62,19 @@ void y_start_action_block(char *action_prefix)
     y_set_action_prefix(action_prefix);
     y_set_transaction_nr(1);
 
-    // We could allocate _block_transaction with malloc
-    // but freeing that gets complicated quickly. Too quickly.
-    sprintf(_block_transaction, "%s_TOTAL", action_prefix);
-    lr_start_transaction(_block_transaction);
+	// Start a transaction to measure total time spend in this block
+	// 
+    //sprintf(_block_transaction, "%s_TOTAL", action_prefix);
+    //lr_start_transaction(_block_transaction);
 }
 
 void y_end_action_block()
 {
-    if(strlen(_block_transaction))
-    {
-        lr_end_transaction(_block_transaction, LR_AUTO);
-    }
-    _block_transaction[0] = '\0';
+    //if(strlen(_block_transaction))
+    //{
+    //    lr_end_transaction(_block_transaction, LR_AUTO);
+    //}
+    //_block_transaction[0] = '\0';
     y_set_action_prefix("");
 }
 
