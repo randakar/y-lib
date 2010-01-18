@@ -43,6 +43,73 @@ int _transaction_nr = 0;
 int _sub_transaction_nr = 0;
 int _fake_sub_trans = 0;
 
+
+// Getters / Setters //
+
+char *y_get_current_transaction_name()
+{
+    return lr_eval_string("{current_transaction}");
+}
+
+void y_set_current_transaction_name(char *trans_name)
+{
+    lr_save_string(lr_eval_string(trans_name), "current_transaction");
+}
+
+
+char *y_get_current_sub_transaction_name()
+{
+    return lr_eval_string("{current_sub_transaction}");
+}
+
+void y_set_current_sub_transaction_name(char *trans_name)
+{
+    lr_save_string(lr_eval_string(trans_name), "current_sub_transaction");
+}
+
+
+char *y_get_action_prefix()
+{
+    return _action_prefix;
+}
+
+void y_set_action_prefix(char *action_prefix)
+{
+    _action_prefix = action_prefix;
+}
+
+int y_get_transaction_nr()
+{
+    return _transaction_nr;
+
+}
+
+int y_get_and_increment_transaction_nr()
+{
+    return _transaction_nr++;
+}
+
+void y_set_transaction_nr(int trans_nr)
+{
+    _transaction_nr = trans_nr;
+}
+
+int y_get_sub_transaction_nr()
+{
+    return _sub_transaction_nr;
+}
+
+int y_get_and_increment_sub_transaction_nr()
+{
+    return _sub_transaction_nr++;
+}
+
+void y_set_sub_transaction_nr(int trans_nr)
+{
+    _sub_transaction_nr = trans_nr;
+}
+
+
 // make sure this thing contains a valid string to prevent y_end_action_block using random memory
 //_block_transaction[0] = '\0';
 
@@ -51,6 +118,15 @@ int _fake_sub_trans = 0;
 // Ajust to taste.
 // 
 
+void y_end_action_block()
+{
+    //if(strlen(_block_transaction))
+    //{
+    //    lr_end_transaction(_block_transaction, LR_AUTO);
+    //}
+    //_block_transaction[0] = '\0';
+    y_set_action_prefix("");
+}
 
 void y_start_action_block(char *action_prefix)
 {
@@ -68,14 +144,42 @@ void y_start_action_block(char *action_prefix)
     //lr_start_transaction(_block_transaction);
 }
 
-void y_end_action_block()
+
+//
+// Generates the transaction name prefixed with a user defined action prefix and a transaction number.
+// The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
+//
+// To use this scripts need to call y_start_action_block() - once at the start of each action.
+//
+// 
+// Dirty trick that no longer needs to be used:
+//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
+//                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
+//#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
+//
+void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
 {
-    //if(strlen(_block_transaction))
-    //{
-    //    lr_end_transaction(_block_transaction, LR_AUTO);
-    //}
-    //_block_transaction[0] = '\0';
-    y_set_action_prefix("");
+    const int trans_nr_len = 2;    // eg. '01'
+    int trans_name_size = strlen(action_prefix) +1 + trans_nr_len +1 + strlen(transaction_name) +1;
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
+
+    sprintf(actual_trans_name, "%s_%02d %s", action_prefix, transaction_nr, transaction_name);
+    y_set_current_transaction_name(actual_trans_name);
+
+    free(actual_trans_name);
+}
+
+void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
+                                     const int transaction_nr, int sub_transaction_nr)
+{
+    const int trans_nr_len = 2;    // eg. '01'
+    int trans_name_size = strlen(action_prefix) +1 + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
+
+    sprintf(actual_trans_name, "%s_%02d_%02d %s", action_prefix, transaction_nr, sub_transaction_nr, transaction_name);
+    y_set_current_sub_transaction_name(actual_trans_name);
+
+    free(actual_trans_name);
 }
 
 //
@@ -186,109 +290,6 @@ void y_end_sub_transaction(char *transaction_name, int status)
     }
 }
 
-
-//
-// Generates the transaction name prefixed with a user defined action prefix and a transaction number.
-// The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
-//
-// To use this scripts need to call y_start_action_block() - once at the start of each action.
-//
-// 
-// Dirty trick that no longer needs to be used:
-//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
-//                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
-//#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
-//
-void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
-{
-    const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size = strlen(action_prefix) +1 + trans_nr_len +1 + strlen(transaction_name) +1;
-    char *actual_trans_name = y_mem_alloc( trans_name_size );
-
-    sprintf(actual_trans_name, "%s_%02d %s", action_prefix, transaction_nr, transaction_name);
-    y_set_current_transaction_name(actual_trans_name);
-
-    free(actual_trans_name);
-}
-
-void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
-                                     const int transaction_nr, int sub_transaction_nr)
-{
-    const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size = strlen(action_prefix) +1 + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
-    char *actual_trans_name = y_mem_alloc( trans_name_size );
-
-    sprintf(actual_trans_name, "%s_%02d_%02d %s", action_prefix, transaction_nr, sub_transaction_nr, transaction_name);
-    y_set_current_sub_transaction_name(actual_trans_name);
-
-    free(actual_trans_name);
-}
-
-
-// Getters / Setters //
-
-char *y_get_current_transaction_name()
-{
-    return lr_eval_string("{current_transaction}");
-}
-
-void y_set_current_transaction_name(char *trans_name)
-{
-    lr_save_string(lr_eval_string(trans_name), "current_transaction");
-}
-
-
-char *y_get_current_sub_transaction_name()
-{
-    return lr_eval_string("{current_sub_transaction}");
-}
-
-void y_set_current_sub_transaction_name(char *trans_name)
-{
-    lr_save_string(lr_eval_string(trans_name), "current_sub_transaction");
-}
-
-
-char *y_get_action_prefix()
-{
-    return _action_prefix;
-}
-
-void y_set_action_prefix(char *action_prefix)
-{
-    _action_prefix = action_prefix;
-}
-
-int y_get_transaction_nr()
-{
-    return _transaction_nr;
-
-}
-
-int y_get_and_increment_transaction_nr()
-{
-    return _transaction_nr++;
-}
-
-void y_set_transaction_nr(int trans_nr)
-{
-    _transaction_nr = trans_nr;
-}
-
-int y_get_sub_transaction_nr()
-{
-    return _sub_transaction_nr;
-}
-
-int y_get_and_increment_sub_transaction_nr()
-{
-    return _sub_transaction_nr++;
-}
-
-void y_set_sub_transaction_nr(int trans_nr)
-{
-    _sub_transaction_nr = trans_nr;
-}
 
 
 

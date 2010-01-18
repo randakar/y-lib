@@ -933,6 +933,51 @@ int y_write_to_file(char *filename, char *content)
 
 
 // --------------------------------------------------------------------------------------------------
+//    y_datetime()
+//      Simply returns the current date-time as a string, in this format:
+//        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
+// @author: Raymond de Jongh
+// 
+// Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
+//           -- Floris
+// --------------------------------------------------------------------------------------------------
+void y_datetime()
+{
+    char *tmp;
+    typedef long time_t; 
+    struct tm 
+    { 
+        int tm_sec;   // seconds after the minute - [0,59] 
+        int tm_min;   // minutes after the hour - [0,59] 
+        int tm_hour;  // hours since midnight - [0,23] 
+        int tm_mday;  // day of the month - [1,31] 
+        int tm_mon;   // months since January - [0,11] 
+        int tm_year;  // years since 1900 
+        int tm_wday;  // days since Sunday - [0,6] 
+        int tm_yday;  // days since January 1 - [0,365] 
+        int tm_isdst; // daylight savings time flag 
+    }; 
+
+    time_t t; 
+    struct tm * now; 
+
+    _tzset(); // Sets variables used by localtime 
+    time(&t); 
+
+    tmp = (char *)y_mem_alloc(16);
+
+    // Convert to time structure
+    now = (struct tm *)localtime(&t); 
+    sprintf(tmp, "%04d%02d%02d,%02d%02d%02d", now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec); 
+    tmp[15] = '\0';
+
+    lr_save_string(tmp, "DATE_TIME_STRING");
+
+    free(tmp);
+}
+
+
+// --------------------------------------------------------------------------------------------------
 // y_write_to_log()
 //     writes "content" (a string) to a (log)file.
 //     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
@@ -978,49 +1023,6 @@ int y_write_to_log(char *filename, char *content)
 // --------------------------------------------------------------------------------------------------
 
 
-// --------------------------------------------------------------------------------------------------
-//    y_datetime()
-//      Simply returns the current date-time as a string, in this format:
-//        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
-// @author: Raymond de Jongh
-// 
-// Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
-//           -- Floris
-// --------------------------------------------------------------------------------------------------
-void y_datetime()
-{
-    char *tmp;
-    typedef long time_t; 
-    struct tm 
-    { 
-        int tm_sec;   // seconds after the minute - [0,59] 
-        int tm_min;   // minutes after the hour - [0,59] 
-        int tm_hour;  // hours since midnight - [0,23] 
-        int tm_mday;  // day of the month - [1,31] 
-        int tm_mon;   // months since January - [0,11] 
-        int tm_year;  // years since 1900 
-        int tm_wday;  // days since Sunday - [0,6] 
-        int tm_yday;  // days since January 1 - [0,365] 
-        int tm_isdst; // daylight savings time flag 
-    }; 
-
-    time_t t; 
-    struct tm * now; 
-
-    _tzset(); // Sets variables used by localtime 
-    time(&t); 
-
-    tmp = (char *)y_mem_alloc(16);
-
-    // Convert to time structure
-    now = (struct tm *)localtime(&t); 
-    sprintf(tmp, "%04d%02d%02d,%02d%02d%02d", now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec); 
-    tmp[15] = '\0';
-
-    lr_save_string(tmp, "DATE_TIME_STRING");
-
-    free(tmp);
-}
 
 
 
