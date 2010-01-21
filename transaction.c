@@ -170,7 +170,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
 }
 
 void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
-                                     const int transaction_nr, int sub_transaction_nr)
+                                     const int transaction_nr, const int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
     int trans_name_size = strlen(action_prefix) +1 + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
