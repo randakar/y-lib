@@ -49,10 +49,6 @@ int _sub_transaction_nr = 0;
 int _trans_status = Y_TRANS_STATUS_NONE;
 
 
-
-// 0 == no transaction started, 1 == transaction started, 2 == automatically created transaction started
-
-
 // Getters / Setters //
 
 char *y_get_current_transaction_name()
@@ -255,7 +251,7 @@ void y_end_transaction(char *transaction_name, int status)
 void y_start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
-    if( y_get_sub_transaction_nr() == 0 )
+    if( _trans_status == Y_TRANS_STATUS_NONE )
     {
         y_start_transaction(transaction_name);
         _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
