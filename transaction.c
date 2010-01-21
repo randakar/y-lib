@@ -16,8 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+
 #ifndef _TRANSACTION_C
 #define _TRANSACTION_C
+
+//
+// Transaction names take the form: '{action_prefix}_{transaction_nr}_{step_name}'
+// This file helps do that automatically.
+//
+
 
 // Needed to compile this - the definition of LAST is missing if it's not included
 #include "web_api.h"
@@ -27,9 +35,7 @@
 #include "string.c"
 
 
-// Transaction names take the form: '{action_prefix}_{transaction_nr}_{step_name}'
-// This file helps do that automatically.
-
+// Variables //
 
 
 // Never access these variables directly - names may change. 
