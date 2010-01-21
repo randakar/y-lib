@@ -41,7 +41,16 @@ char *_action_prefix = "";
 //char _block_transaction[100] = "";
 int _transaction_nr = 0;
 int _sub_transaction_nr = 0;
-int _fake_sub_trans = 0;
+
+// Transaction status tracking
+#define Y_TRANS_STATUS_NONE         0
+#define Y_TRANS_STATUS_STARTED      1
+#define Y_TRANS_STATUS_AUTO_STARTED 2
+int _trans_status = Y_TRANS_STATUS_NONE;
+
+
+
+// 0 == no transaction started, 1 == transaction started, 2 == automatically created transaction started
 
 
 // Getters / Setters //
@@ -86,7 +95,7 @@ int y_get_transaction_nr()
 
 int y_get_and_increment_transaction_nr()
 {
-    return _transaction_nr++;
+    return ++_transaction_nr;
 }
 
 void y_set_transaction_nr(int trans_nr)
@@ -101,7 +110,7 @@ int y_get_sub_transaction_nr()
 
 int y_get_and_increment_sub_transaction_nr()
 {
-    return _sub_transaction_nr++;
+    return ++_sub_transaction_nr;
 }
 
 void y_set_sub_transaction_nr(int trans_nr)
@@ -136,7 +145,7 @@ void y_start_action_block(char *action_prefix)
     }
 
     y_set_action_prefix(action_prefix);
-    y_set_transaction_nr(1);
+    y_set_transaction_nr(0);
 
 	// Start a transaction to measure total time spend in this block
 	// 
@@ -200,9 +209,11 @@ void y_start_transaction(char *transaction_name)
                                 y_get_and_increment_transaction_nr());
 
     // Reset the sub transaction numbering.
-    // This also stops sub transactions from automagically
-    // creating outer transactions for themselves.
-    y_set_sub_transaction_nr(1);
+    y_set_sub_transaction_nr(0);
+
+	// Stops sub transactions from automagically
+	// creating outer transactions for themselves.
+	_trans_status = Y_TRANS_STATUS_STARTED;
 
     // For external analysis of the responsetimes.
     y_log_to_report(lr_eval_string("TimerOn {current_transaction}"));
@@ -220,9 +231,9 @@ void y_end_transaction(char *transaction_name, int status)
 
     lr_end_transaction(trans_name, status);
 
-    // Tell our subtransaction support that there is no outer transaction
-    // so if a sub-transaction is created it may have to fake this.
-    y_set_sub_transaction_nr(0);
+	// Tell our subtransaction support that there is no outer transaction
+	// so if a sub-transaction is created it may have to fake this.
+	_trans_status = Y_TRANS_STATUS_NONE;
 
     // For external analysis of the response times.
     y_log_to_report(lr_eval_string("TimerOff {current_transaction}"));
@@ -247,12 +258,12 @@ void y_start_sub_transaction(char *transaction_name)
     if( y_get_sub_transaction_nr() == 0 )
     {
         y_start_transaction(transaction_name);
-        _fake_sub_trans = 1;
-
-        // This should not disrupt the numbering ..
-        y_set_transaction_nr( y_get_transaction_nr() -1 );
+        _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
     }
 
+	// This should not disrupt the numbering ..
+	// .. but why is it needed??
+	//y_set_transaction_nr( y_get_transaction_nr() -1 );
 
     y_create_new_sub_transaction_name(transaction_name, 
                                     y_get_action_prefix(),
@@ -283,9 +294,8 @@ void y_end_sub_transaction(char *transaction_name, int status)
     //
     // Note: It might be an idea to move this to y_start_(sub_)transaction() instead, for
     // better grouping. That may not be without it's problems though.
-    if( _fake_sub_trans == 1 )
+    if( _trans_status == Y_TRANS_STATUS_AUTO_STARTED)
     {
-        _fake_sub_trans = 0;
         y_end_transaction(transaction_name, status);
     }
 }
