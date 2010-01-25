@@ -19,49 +19,87 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
-// FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C.
-#ifndef VUSERFUNC
-    #define VUSERFUNC    "vuserfunctions.dll"    // dynamic link library Vuser functions
-#endif
 
 // Global variables
-char* _injectorHost;                      // injector name
+char *_injectorHost;                      // injector name
 int _vUserID;                             // virtual user id
 int _extraLogging = 0;                    // Client specific logging code on/off switch; 0 = off, 1 = on
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
+// --------------------------------------------------------------------------------------------------
+//// Time/date/stamp functions
+
+typedef long time_t;
+
+struct tm { 
+    int tm_sec;   // seconds after the minute - [0,59] 
+    int tm_min;   // minutes after the hour - [0,59] 
+    int tm_hour;  // hours since midnight - [0,23] 
+    int tm_mday;  // day of the month - [1,31] 
+    int tm_mon;   // months since January - [0,11] 
+    int tm_year;  // years since 1900 
+    int tm_wday;  // days since Sunday - [0,6] 
+    int tm_yday;  // days since January 1 - [0,365] 
+    int tm_isdst; // daylight savings time flag 
+#ifdef LINUX 
+    int tm_gmtoff; 
+    const char * tm_zone; 
+#endif 
+};
+
+struct timeb {
+    time_t time;
+    unsigned short millitm;
+    short timezone;
+    short dstflag;
+};
+
+
+/*
+ * getDateTimeStamp
+ * Returns the current date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+ */
+char *y_get_datetimestamp()
+{
+	struct timeb timebuffer;
+	struct tm *nu;
+	static char YMDHMSm[24]; // moet static char zijn om te gebruiken als returnwaarde
+
+	_tzset();
+	ftime( &timebuffer );
+	nu = (struct tm *)localtime( & (timebuffer.time) );
+	
+	sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
+       nu->tm_year + 1900,
+			nu->tm_mon + 1,
+			nu->tm_mday,
+			nu->tm_hour,
+			nu->tm_min,
+			nu->tm_sec,
+			timebuffer.millitm);
+	return YMDHMSm;
+}
+
+//
+// Hmn, do we even still need this?
+// 
+time_t y_timestamp()
+{
+    return time(NULL);
+}
+// --------------------------------------------------------------------------------------------------
+
+
 y_setup_logging()
 {
-    /*
-    // Only add extra logging if it has been turned on.
-    if( !_extraLogging )
-    {
-        return;
-    }
-    */
-    // Turn extra logging on if setup_logging() gets called.
-    _extraLogging = 1;
-
     // Global variables, handle with care
     lr_whoami(&_vUserID, NULL, NULL);
     _injectorHost = lr_get_host_name(); 
 
-    // Load general vuser functions
-    // These 'general vuser functions' are only used for logging, though ;-)
-    // (not to mention specific to one client!)
-    // FIXME: Make this particular dll unneccesary by reimplementing getDateTimeStamp() in C.
-    {
-        int result;
-        if( (result = lr_load_dll(VUSERFUNC)) != 0)
-        {
-            char *logLine = "%s: VUserId: %d, host: %s, rc: %d, %s";
-            lr_log_message(logLine, "N/A", _vUserID, _injectorHost, result, "could not load vuser functions");
-            lr_exit(LR_EXIT_VUSER, LR_FAIL);
-        }
-    }
+    // Make the extra logging facility available to the user.
+    _extraLogging = 1;
 }
-
 
 y_log_to_report(char *message)
 {
@@ -70,7 +108,7 @@ y_log_to_report(char *message)
     // Only add extra logging if it has been turned on.
     if( _extraLogging ) 
     {
-        lr_log_message(logLine, getDateTimeStamp(), _vUserID, _injectorHost, lr_eval_string(message));
+        lr_log_message(logLine, y_get_datetimestamp(), _vUserID, _injectorHost, lr_eval_string(message));
     }
 }
 

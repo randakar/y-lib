@@ -722,16 +722,6 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 
 
 
-// --------------------------------------------------------------------------------------------------
-//// Time/date/stamp functions
-
-typedef long time_t;
-
-time_t y_timestamp()
-{
-    return time(NULL);
-}
-// --------------------------------------------------------------------------------------------------
 
 
 
