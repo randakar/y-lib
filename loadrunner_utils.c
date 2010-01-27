@@ -656,7 +656,7 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
 //        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
 //        web_url("www.google.nl", 
 //         ...
-//        y_shuffle_parameter_array("TAG", "SHUFFLE_TAG");
+//        y_array_shuffle("TAG", "SHUFFLE_TAG");
 //         
 //    now, suppose {TAG_1}="cow", {TAG_2}="chicken", {TAG_3}="boneless", {TAG_4}="redguy"
 //  then this could be the result: 
@@ -679,8 +679,10 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     }
 
     source_length=lr_paramarr_len(source_param_array_name);
-    shuffle=(int *)calloc(source_length+1, sizeof(int));
-    destination_length=(char *)calloc(strlen(dest_param_array_name)+9); 
+
+	
+    shuffle=(int *)y_array_alloc(source_length+1, sizeof(int));
+    destination_length=(char *)y_array_alloc(strlen(dest_param_array_name)+9, sizeof(char)); 
 
     lr_message("source_length: %d", source_length);
     for (i=1; i<=source_length; i++)
@@ -710,18 +712,20 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 
     }
 
-    sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
-    lr_save_int(source_length, destination_length);
+/*    sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
+
+	lr_message("dest_param_array_name: %s", dest_param_array_name);
+	lr_message("destination_length: %s", 	destination_length);
+	lr_message("source_length: %i", source_length);
+	lr_save_int(source_length, destination_length);
+*/
+	y_array_save_count(--i, dest_param_array_name);
+
     free (shuffle);
     free(destination_length);
 
 }
 // --------------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 
@@ -946,6 +950,7 @@ void y_datetime()
         int tm_wday;  // days since Sunday - [0,6] 
         int tm_yday;  // days since January 1 - [0,365] 
         int tm_isdst; // daylight savings time flag 
+					  // 
     }; 
 
     time_t t; 
