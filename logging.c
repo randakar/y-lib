@@ -21,9 +21,10 @@
 
 
 // Global variables
-char *_injectorHost;                      // injector name
+// FIXME: y_ ify these ..
 int _vUserID;                             // virtual user id
-int _extraLogging = 0;                    // Client specific logging code on/off switch; 0 = off, 1 = on
+int _extraLogging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
+char *_vUserGroup = NULL;                 // virtual user group
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
@@ -94,8 +95,7 @@ time_t y_timestamp()
 y_setup_logging()
 {
     // Global variables, handle with care
-    lr_whoami(&_vUserID, NULL, NULL);
-    _injectorHost = lr_get_host_name(); 
+    lr_whoami(&_vUserID, &_vUserGroup, NULL);
 
     // Make the extra logging facility available to the user.
     _extraLogging = 1;
@@ -108,7 +108,7 @@ y_log_to_report(char *message)
     // Only add extra logging if it has been turned on.
     if( _extraLogging ) 
     {
-        lr_log_message(logLine, y_get_datetimestamp(), _vUserID, _injectorHost, lr_eval_string(message));
+        lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
     }
 }
 
