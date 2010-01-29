@@ -115,8 +115,8 @@ y_log_to_report(char *message)
 y_log_error(char *message)
 {
     char *msg = lr_eval_string(message);
-    log_to_report(msg);
-    lr_error_message(msg);
+    y_log_to_report(msg);
+    //lr_error_message(msg); 
     lr_fail_trans_with_error(msg);
 }
 
@@ -126,7 +126,7 @@ y_log_warning(char *message)
     lr_save_string(lr_eval_string(message), "_log_msg");
     msg = lr_eval_string("Warning: {_log_msg}");
 
-    log_to_report(msg);
+    y_log_to_report(msg);
 }
 
 // Save the current loglevel and turn off logging.
