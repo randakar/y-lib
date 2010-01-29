@@ -19,6 +19,12 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
+/*
+Todo: 
+- split the extralogging bits from the setup stuff
+- Seed the random number generator using _vuserId and _vUserGroup
+- y_ify these variables (below)
+*/
 
 // Global variables
 // FIXME: y_ ify these ..
