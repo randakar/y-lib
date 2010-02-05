@@ -160,8 +160,8 @@ void y_start_action_block(char *action_prefix)
     y_set_action_prefix(action_prefix);
     y_set_transaction_nr(0);
 
-	// Start a transaction to measure total time spend in this block
-	// 
+    // Start a transaction to measure total time spend in this block
+    // 
     //sprintf(_block_transaction, "%s_TOTAL", action_prefix);
     //lr_start_transaction(_block_transaction);
 }
@@ -182,27 +182,55 @@ void y_start_action_block(char *action_prefix)
 void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size = strlen(action_prefix) +1 + trans_nr_len +1 + strlen(transaction_name) +1;
-    char *actual_trans_name = y_mem_alloc( trans_name_size );
+    int trans_name_size;
+    int prefix_len = strlen(action_prefix);
+    char *actual_trans_name;
+    char *first_seperator = "_";
 
-    sprintf(actual_trans_name, "%s_%02d %s", action_prefix, transaction_nr, transaction_name);
+    if( prefix_len == 0 )
+    {
+        first_seperator = "";
+    }
+
+    trans_name_size = prefix_len + strlen(first_seperator) + 
+                      trans_nr_len +1 + 
+                      strlen(transaction_name) +1;
+    actual_trans_name = y_mem_alloc( trans_name_size );
+
+    sprintf(actual_trans_name, "%s%s%02d %s", action_prefix, first_seperator, transaction_nr, transaction_name);
     y_set_current_transaction_name(actual_trans_name);
 
     free(actual_trans_name);
 }
 
+
+// 
+// Todo: Find a way to make this share more code with y_create_new_transaction_name()
+//
 void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
                                      const int transaction_nr, const int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size = strlen(action_prefix) +1 + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
-    char *actual_trans_name = y_mem_alloc( trans_name_size );
+    int trans_name_size;
+    int prefix_len = strlen(action_prefix);
+    char *actual_trans_name;
+    char *first_seperator = "_";
 
-    sprintf(actual_trans_name, "%s_%02d_%02d %s", action_prefix, transaction_nr, sub_transaction_nr, transaction_name);
+    if( prefix_len == 0 )
+    {
+        first_seperator = "";
+    }
+
+    trans_name_size = strlen(action_prefix) + strlen(first_seperator) + 
+                      (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
+    actual_trans_name = y_mem_alloc( trans_name_size );
+
+    sprintf(actual_trans_name, "%s%s%02d_%02d %s", action_prefix, first_seperator, transaction_nr, sub_transaction_nr, transaction_name);
     y_set_current_sub_transaction_name(actual_trans_name);
 
     free(actual_trans_name);
 }
+
 
 //
 // y_start_transaction() / y_end_transaction()
@@ -224,9 +252,9 @@ void y_start_transaction(char *transaction_name)
     // Reset the sub transaction numbering.
     y_set_sub_transaction_nr(0);
 
-	// Stops sub transactions from automagically
-	// creating outer transactions for themselves.
-	_trans_status = Y_TRANS_STATUS_STARTED;
+    // Stops sub transactions from automagically
+    // creating outer transactions for themselves.
+    _trans_status = Y_TRANS_STATUS_STARTED;
 
     // For external analysis of the responsetimes.
     y_log_to_report(lr_eval_string("TimerOn {current_transaction}"));
@@ -244,9 +272,9 @@ void y_end_transaction(char *transaction_name, int status)
 
     lr_end_transaction(trans_name, status);
 
-	// Tell our subtransaction support that there is no outer transaction
-	// so if a sub-transaction is created it may have to fake this.
-	_trans_status = Y_TRANS_STATUS_NONE;
+    // Tell our subtransaction support that there is no outer transaction
+    // so if a sub-transaction is created it may have to fake this.
+    _trans_status = Y_TRANS_STATUS_NONE;
 
     // For external analysis of the response times.
     y_log_to_report(lr_eval_string("TimerOff {current_transaction}"));
@@ -274,9 +302,9 @@ void y_start_sub_transaction(char *transaction_name)
         _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
     }
 
-	// This should not disrupt the numbering ..
-	// .. but why is it needed??
-	//y_set_transaction_nr( y_get_transaction_nr() -1 );
+    // This should not disrupt the numbering ..
+    // .. but why is it needed??
+    //y_set_transaction_nr( y_get_transaction_nr() -1 );
 
     y_create_new_sub_transaction_name(transaction_name, 
                                     y_get_action_prefix(),
