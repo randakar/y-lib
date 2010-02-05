@@ -40,6 +40,8 @@
 
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
+
+//
 char *_action_prefix = "";
 
     // We could allocate _block_transaction with malloc
@@ -62,6 +64,7 @@ char *y_get_current_transaction_name()
     return lr_eval_string("{current_transaction}");
 }
 
+
 void y_set_current_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "current_transaction");
@@ -72,6 +75,7 @@ char *y_get_current_sub_transaction_name()
 {
     return lr_eval_string("{current_sub_transaction}");
 }
+
 
 void y_set_current_sub_transaction_name(char *trans_name)
 {
@@ -84,10 +88,12 @@ char *y_get_action_prefix()
     return _action_prefix;
 }
 
+
 void y_set_action_prefix(char *action_prefix)
 {
     _action_prefix = action_prefix;
 }
+
 
 int y_get_transaction_nr()
 {
@@ -95,25 +101,30 @@ int y_get_transaction_nr()
 
 }
 
+
 int y_get_and_increment_transaction_nr()
 {
     return ++_transaction_nr;
 }
+
 
 void y_set_transaction_nr(int trans_nr)
 {
     _transaction_nr = trans_nr;
 }
 
+
 int y_get_sub_transaction_nr()
 {
     return _sub_transaction_nr;
 }
 
+
 int y_get_and_increment_sub_transaction_nr()
 {
     return ++_sub_transaction_nr;
 }
+
 
 void y_set_sub_transaction_nr(int trans_nr)
 {
