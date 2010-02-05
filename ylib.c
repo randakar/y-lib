@@ -23,6 +23,7 @@
 #include "logging.c"
 #include "transaction.c"
 #include "loadrunner_utils.c"
+#include "param_array.c"
 #include "profile.c"
 
 #endif // _YLIB_C
