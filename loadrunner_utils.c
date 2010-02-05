@@ -35,6 +35,114 @@
 // --------------------------------------------------------------------------------------------------
 //// Random number generator control ////
 
+
+
+// --------------------------------------------------------------------------------------------------
+// Usage: y_random_string_buffer("parameterNameWhichGetsTheRandomValue", minimumlength, maximumlength);
+//
+// ex. randomString("randomFeedback", 100, 200); will fill a parameter with between 100 and 200 characters.
+// to use the random value, use the parameter name provided.
+// To make it look like real sentences, this function inserts spaces at random.
+// The "words" will be minimal 1 character long, and max. 8 characters.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:     
+//            y_random_string_buffer("par1", 10,10);   // creates a string of exactly 10 characters and saves it into string {par1}
+//            y_random_string_buffer("par1", 5,10);    // creates a string of min 5 and max 10 char and saves it into string {par1}    
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
+{
+   const char characterSet[] = { 
+                     'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                     'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                     'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                     'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+                     /*
+                     '1','2','3','4','5','6','7','8','9','0','?','!','-',
+                     ',','.',';',
+                     '`','~','@','#','$','%','^','&','*','(',')',
+                     '=','_','+','[',']','{','}','|',':','/',
+                     '<','>',  };
+                     */
+
+   char *buffer;
+   int charSetSize = 52; // length of the above array
+   int length = 0;
+   int max = 0;
+
+   char randomNumber;
+   int lettersInWord;
+
+   // error checks - lots of code that saves us headaches later
+   if( minimumLength < 1 ) {
+      lr_error_message( "minimumLength smaller than 0 (%d)", minimumLength );
+   }
+   else if( maximumLength < 1 ) {
+      lr_error_message( "maximumLength smaller than 0 (%d)", maximumLength );
+   }
+   else if( maximumLength > (1024 * 1024) ) {
+      lr_error_message( "maximumLength too big (%d)", maximumLength );
+   }
+   else if( maximumLength < minimumLength ) {
+      lr_error_message( "minimumLength (%d) bigger than maximumLength (%d)", minimumLength, maximumLength );
+   }
+   else if(maximumLength > minimumLength) {
+      // Not an error
+      max = (rand() % (maximumLength-minimumLength)) + minimumLength;
+   }
+   else if(maximumLength == minimumLength) {
+      // Not an error either
+      max = maximumLength;
+   }
+   else {
+      lr_error_message("This can never happen. If we reach this point it's a bug.");
+   }
+
+   // if we got an error
+   if( max == 0 )
+   {
+      lr_set_transaction_status(LR_FAIL);
+      // Not sure this is the right exit code that we want to use here, but ok.
+      lr_exit(LR_EXIT_ITERATION_AND_CONTINUE, LR_FAIL);
+   }
+   
+   // get memory for the buffer
+   buffer = (char *)y_mem_alloc( max +1 );
+   // note: it might be wise to move this check into y_mem_alloc() and just abort from there
+   if( !buffer )
+   {
+      lr_error_message("Failed to allocate buffer for random string!");
+      lr_exit(LR_ABORT, LR_FAIL);
+   }
+
+
+   while( length < max )
+   {
+      lettersInWord = ((rand() % 8) + 2);
+
+      while( lettersInWord-- && (length < (max)) )
+      {
+         randomNumber = (char) (rand() % charSetSize);
+         buffer[length++] = characterSet[randomNumber];
+      }
+
+      if(length!=max)
+      {
+          buffer[length++] = ' ';
+      }
+   }
+
+   buffer[length++] = '\0';
+
+   lr_save_string(buffer, parameter);
+   free(buffer);
+
+   return 0;
+}
+// --------------------------------------------------------------------------------------------------
+
+
+
+
 //
 // Roll a random number between (and including) 0 and randMax, and tell us if that number falls 
 // between the lower and upper bounds or not. (attention: boundaries are included!)
