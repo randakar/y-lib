@@ -23,6 +23,9 @@
 
 #include "string.c"
 
+int _vUserID = 0;                         // virtual user id
+char *_vUserGroup = NULL;                 // virtual user group
+int _y_random_seed_initialized = 0;
 
 //
 // This file contains loadrunner specific helper funtions.
@@ -36,6 +39,29 @@
 //// Random number generator control ////
 
 
+void y_setup()
+{
+	// Global variables, handle with care
+	lr_whoami(&_vUserID, &_vUserGroup, NULL);
+}
+
+int y_rand()
+{
+	if(!_y_random_seed_initialized)
+	{
+		if( _vUserID == NULL )
+		{
+			y_setup();
+		}
+		// Seed the random number generator for later use.
+		// To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
+		// In case the script itself already initialized the random number generator, use a random number from 
+		// there as well.
+		srand( time() + atoi(_vUserID) + ((int)(_vUserGroup)) + rand() );
+		_y_random_seed_initialized = 1;
+	}
+	return rand();
+}
 
 // --------------------------------------------------------------------------------------------------
 // Usage: y_random_string_buffer("parameterNameWhichGetsTheRandomValue", minimumlength, maximumlength);
@@ -87,7 +113,7 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
    }
    else if(maximumLength > minimumLength) {
       // Not an error
-      max = (rand() % (maximumLength-minimumLength)) + minimumLength;
+      max = (y_rand() % (maximumLength-minimumLength)) + minimumLength;
    }
    else if(maximumLength == minimumLength) {
       // Not an error either
@@ -117,11 +143,11 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
 
    while( length < max )
    {
-      lettersInWord = ((rand() % 8) + 2);
+      lettersInWord = ((y_rand() % 8) + 2);
 
       while( lettersInWord-- && (length < (max)) )
       {
-         randomNumber = (char) (rand() % charSetSize);
+         randomNumber = (char) (y_rand() % charSetSize);
          buffer[length++] = characterSet[randomNumber];
       }
 
@@ -151,25 +177,22 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
 // One = Yes.
 // Negative return values are errors and generally mean that arguments make no sense
 //
-// Fixme: Think up a way to automatically initialize the random number generator instead
-// of just relying on the user to put it in vuser_init().
-// (Hint to the user: Please call srand() with something sufficiently random in vuser_init().)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
-//         y_rand_between(1, 10, 20);
+//         y_rand_in_sliding_window(1, 10, 20);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int y_rand_between(int lowerbound, int upperbound, int randMax)
+int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 {
     int roll;
 
     if( (0>lowerbound) || (lowerbound>upperbound) || (upperbound > randMax) || (randMax <= 0))
     {
-        lr_error_message("y_rand_between called with nonsensical arguments: ( 0 <= %d < %d <= %d ) == FALSE",
+        lr_error_message("y_rand_in_sliding_window called with nonsensical arguments: ( 0 <= %d < %d <= %d ) == FALSE",
                         lowerbound, upperbound, randMax);
         return -1;
     }
 
-    roll = y_rand(0, randMax);
+    roll = y_rand_between(0, randMax);
     if( (roll >= lowerbound) && (roll <= upperbound) )
     {
         return 1;
@@ -183,13 +206,13 @@ int y_rand_between(int lowerbound, int upperbound, int randMax)
 
 // --------------------------------------------------------------------------------------------------
 // create a random number (integer), between two values, including the boundaries(!)
-// So, y_rand(0,4) can result in these values: 0,1,2,3,4
+// So, y_rand_between(0,4) can result in these values: 0,1,2,3,4
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //         int random;        
-//         random = y_rand(0, 10);        // generate a random number between 0 and 10.
+//         random = y_rand_between(0, 10);        // generate a random number between 0 and 10.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int y_rand(int lowerbound, int upperbound)
+int y_rand_between(int lowerbound, int upperbound)
 {
     int roll;
 
@@ -198,10 +221,9 @@ int y_rand(int lowerbound, int upperbound)
         lr_error_message("y_rand called with nonsensical arguments. (lowerbound should be less than upperbound)");
         return -1;    //    hmmm. is this correct?
     }
-    roll = rand() % ((upperbound + 1 - lowerbound)) + lowerbound;
+    roll = y_rand() % ((upperbound + 1 - lowerbound)) + lowerbound;
     return roll;
 }
-
 
 
 

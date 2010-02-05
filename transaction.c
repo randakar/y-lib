@@ -59,6 +59,7 @@
 // Other Ylib functions
 #include "logging.c"
 #include "string.c"
+#include "loadrunner_utils.c"
 
 
 // Variables //
@@ -541,7 +542,7 @@ y_waterfall_random_weighted_continue(char * stepname)
     char *paramname = y_mem_alloc( strlen(head) + strlen(stepname) +3);
     char *chancestr;
     int chance = 100; // Default
-    int rnum = (rand() % 100); // random number between 0 and 99
+    int rnum = (y_rand() % 100); // random number between 0 and 99
 
     lr_log_message("Weighted stop chance evaluation for %s", stepname);
 

@@ -19,18 +19,16 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
+#include "loadrunner_utils.c"
 /*
 Todo: 
 - split the extralogging bits from the setup stuff
-- Seed the random number generator using _vuserId and _vUserGroup
 - y_ify these variables (below)
 */
 
 // Global variables
 // FIXME: y_ ify these ..
-int _vUserID;                             // virtual user id
 int _extraLogging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
-char *_vUserGroup = NULL;                 // virtual user group
 int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
@@ -100,8 +98,10 @@ time_t y_timestamp()
 
 y_setup_logging()
 {
-    // Global variables, handle with care
-    lr_whoami(&_vUserID, &_vUserGroup, NULL);
+	if( _vUserID == NULL ) 
+	{
+		y_setup();
+	}
 
     // Make the extra logging facility available to the user.
     _extraLogging = 1;

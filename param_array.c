@@ -22,6 +22,7 @@
 #define _PARAM_ARRAY_C
 
 #include "string.c"
+#include "loadrunner_utils.c"
 
 //
 // This file contains loadrunner param array helper functions.
@@ -313,7 +314,7 @@ char *y_array_get_random( const char *pArray )
         return NULL;
     }
     
-    index = (rand() % count) +1;
+    index = (y_rand() % count) +1;
     return y_array_get(pArray, index);
 }
 // --------------------------------------------------------------------------------------------------
@@ -343,7 +344,7 @@ char *y_array_get_random_no_zeroes( const char *pArray )
         return NULL;
     }
     
-    index = (rand() % count) +1;
+    index = (y_rand() % count) +1;
     return y_array_get_no_zeroes(pArray, index);
 }
 // --------------------------------------------------------------------------------------------------
@@ -690,7 +691,7 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 
     for(i=1; i<=source_length; i++)
     {
-        r=y_rand(1,source_length);
+        r=y_rand_between(1,source_length);
         temp = shuffle[i];
         shuffle[i] = shuffle[r];
         shuffle[r] = temp;
