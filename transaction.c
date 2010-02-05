@@ -25,6 +25,32 @@
 // Transaction names take the form: '{action_prefix}_{transaction_nr}_{step_name}'
 // This file helps do that automatically.
 //
+// 
+/* 
+    // Testcase:
+    y_setup_logging();                   // Initialisation. May be omitted. (testcase?)
+
+    y_start_sub_transaction("alpha");    // starts trans '01 alpha' and subtrans '01_01 alpha'.
+    y_end_sub_transaction("", LR_AUTO);  // ends both.
+
+    y_start_action_block("one");         // starts action block "one".
+    y_start_sub_transaction("beta");     // starts trans 'one_01 beta' and subtrans 'one_01_01 beta'.
+    y_end_sub_transaction("", LR_AUTO);  // ends both.
+    y_end_action_block();                // ends action block "one".
+
+    y_set_add_group_to_transaction(1);   // start adding the groupname - 'None', when running inside vugen.
+
+    y_start_sub_transaction("gamma");    // starts trans 'None_02 gamma' and subtrans 'None_02_01 gamma'.
+    y_end_sub_transaction("", LR_AUTO);  // ends both.
+
+    y_start_action_block("two");         // starts action block "two".
+    y_start_sub_transaction("delta");    // starts trans 'None_two_01 delta' and subtrans 'None_two_01_01 delta'.
+    y_end_sub_transaction("", LR_AUTO);  // ends both.
+    y_end_action_block();                // ends action block "two".
+    lr_abort();                          // end testcase ;-)
+    return;
+*/
+
 
 
 // Needed to compile this - the definition of LAST is missing if it's not included
@@ -43,6 +69,7 @@
 
 //
 char *_action_prefix = "";
+int _add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
 
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
@@ -88,11 +115,18 @@ char *y_get_action_prefix()
     return _action_prefix;
 }
 
+void y_set_add_group_to_transaction(int add_group_to_trans)
+{
+    _add_group_to_trans = add_group_to_trans;
+}
+
 
 void y_set_action_prefix(char *action_prefix)
 {
+    lr_save_string(action_prefix, "y_action_prefix");
     _action_prefix = action_prefix;
 }
+
 
 
 int y_get_transaction_nr()
@@ -167,6 +201,51 @@ void y_start_action_block(char *action_prefix)
 }
 
 
+char *y_calculate_actual_action_prefix(const char *action_prefix)
+{
+    const char *seperator = "_";
+    int group_len = 0;
+    int prefix_len = strlen(action_prefix);
+    char *buffer;
+
+
+    // _vUserGroup is set only when _extraLogging is set.
+    // See logging.c -> y_setup_logging().
+    if( _add_group_to_trans && (_vUserGroup != NULL))
+    {
+        group_len = strlen(_vUserGroup);
+    }
+
+    // add room for the seperators
+    if(prefix_len > 0)
+    {
+        prefix_len++;
+    }
+    if(group_len > 0)
+    {
+        group_len++;
+    }
+
+    // allocate memory -- note this needs to be free()'ed afterwards!
+    buffer = y_mem_alloc(group_len + prefix_len+1);
+    buffer[0] = '\0';
+
+    // start concatenating things together
+    if(group_len > 0)
+    {
+        strcat(buffer, _vUserGroup);
+        strcat(buffer, seperator);
+    }
+    if(prefix_len > 0)
+    {
+        strcat(buffer, action_prefix);
+        strcat(buffer,seperator);
+    }
+
+    return buffer;
+}
+
+
 //
 // Generates the transaction name prefixed with a user defined action prefix and a transaction number.
 // The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
@@ -182,24 +261,14 @@ void y_start_action_block(char *action_prefix)
 void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size;
-    int prefix_len = strlen(action_prefix);
-    char *actual_trans_name;
-    char *first_seperator = "_";
+    char *actual_prefix = y_calculate_actual_action_prefix(action_prefix);
+    int prefix_len = strlen(actual_prefix);
+    int trans_name_size = prefix_len + trans_nr_len +1 + strlen(transaction_name) +1;
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
 
-    if( prefix_len == 0 )
-    {
-        first_seperator = "";
-    }
-
-    trans_name_size = prefix_len + strlen(first_seperator) + 
-                      trans_nr_len +1 + 
-                      strlen(transaction_name) +1;
-    actual_trans_name = y_mem_alloc( trans_name_size );
-
-    sprintf(actual_trans_name, "%s%s%02d %s", action_prefix, first_seperator, transaction_nr, transaction_name);
+    sprintf(actual_trans_name, "%s%02d %s", actual_prefix, transaction_nr, transaction_name);
+    free(actual_prefix);
     y_set_current_transaction_name(actual_trans_name);
-
     free(actual_trans_name);
 }
 
@@ -211,23 +280,14 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
                                      const int transaction_nr, const int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    int trans_name_size;
-    int prefix_len = strlen(action_prefix);
-    char *actual_trans_name;
-    char *first_seperator = "_";
+    char *actual_prefix = y_calculate_actual_action_prefix(action_prefix);
+    int prefix_len = strlen(actual_prefix);
+    int trans_name_size = prefix_len + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
+    char *actual_trans_name = y_mem_alloc( trans_name_size );
 
-    if( prefix_len == 0 )
-    {
-        first_seperator = "";
-    }
-
-    trans_name_size = strlen(action_prefix) + strlen(first_seperator) + 
-                      (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
-    actual_trans_name = y_mem_alloc( trans_name_size );
-
-    sprintf(actual_trans_name, "%s%s%02d_%02d %s", action_prefix, first_seperator, transaction_nr, sub_transaction_nr, transaction_name);
+    sprintf(actual_trans_name, "%s%02d_%02d %s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
+    free(actual_prefix);
     y_set_current_sub_transaction_name(actual_trans_name);
-
     free(actual_trans_name);
 }
 
