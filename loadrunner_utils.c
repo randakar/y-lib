@@ -380,6 +380,9 @@ void y_datetime()
 //     writes "content" (a string) to a (log)file.
 //     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
 //        separated by commas. This function relies on y_write_to_file();
+//
+// Todo: move this to logging.c
+//
 // @author: Raymond de Jongh
 // Example:
 //     y_write_to_log("c:\\logfile.txt", "Everything went great");
@@ -397,6 +400,7 @@ int y_write_to_log(char *filename, char *content)
     int len_scid;
     int result;
 
+    // todo: make this call y_setup().
     lr_whoami(&id, &vuser_group, &scid);
 
 
