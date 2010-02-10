@@ -68,9 +68,8 @@
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
 
-//
-char *_action_prefix = "";
-int _add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
+char *_y_action_prefix = "";
+int _y_add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
 
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
@@ -113,19 +112,19 @@ void y_set_current_sub_transaction_name(char *trans_name)
 
 char *y_get_action_prefix()
 {
-    return _action_prefix;
+    return _y_action_prefix;
 }
 
 void y_set_add_group_to_transaction(int add_group_to_trans)
 {
-    _add_group_to_trans = add_group_to_trans;
+    _y_add_group_to_trans = add_group_to_trans;
 }
 
 
 void y_set_action_prefix(char *action_prefix)
 {
     lr_save_string(action_prefix, "y_action_prefix");
-    _action_prefix = action_prefix;
+    _y_action_prefix = action_prefix;
 }
 
 
@@ -212,7 +211,7 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
 
     // _vUserGroup is set only when _y_extra_logging is set.
     // See logging.c -> y_setup_logging().
-    if( _add_group_to_trans && (_vUserGroup != NULL))
+    if( _y_add_group_to_trans && (_vUserGroup != NULL))
     {
         group_len = strlen(_vUserGroup);
     }
@@ -255,7 +254,7 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
 //
 // 
 // Dirty trick that no longer needs to be used:
-//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _action_prefix, _trans_nr++); \
+//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _y_action_prefix, _trans_nr++); \
 //                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
 //#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
 //
