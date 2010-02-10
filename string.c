@@ -188,11 +188,7 @@ void y_cleanse_parameter(const char* paramName)
 
    // Put the result back into the original parameter.
    lr_save_string(result, paramName);
-
    lr_eval_string_ext_free(&result);
-
-
-   return;
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -294,7 +290,6 @@ y_right( const char *originalParameter, const char *search, const char *resultPa
     }
 
     //lr_log_message("pos = %d", pos);
-
     posPtr = posPtr + strlen(search);
     lr_save_string(posPtr, resultParameter);
 }
