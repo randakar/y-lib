@@ -133,13 +133,7 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
    
    // get memory for the buffer
    buffer = (char *)y_mem_alloc( max +1 );
-   // note: it might be wise to move this check into y_mem_alloc() and just abort from there
-   if( !buffer )
-   {
-      lr_error_message("Failed to allocate buffer for random string!");
-      lr_exit(LR_ABORT, LR_FAIL);
-   }
-
+   // note: if this fails y_mem_alloc() aborts the script, so no error handling needed.
 
    while( length < max )
    {
