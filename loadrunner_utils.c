@@ -365,7 +365,9 @@ int y_write_to_file(char *filename, char *content)
 //        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
 // @author: Raymond de Jongh
 // @author: Floris Kraak
-// 
+//
+// This mostly exists to facilitate y_write_to_log(), in logging.c 
+//
 // Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
 //           -- Floris
 // --------------------------------------------------------------------------------------------------
@@ -373,61 +375,6 @@ void y_datetime()
 {
     lr_save_datetime("%Y%m%d,%H%M%S", DATE_NOW, "DATE_TIME_STRING");
 }
-
-
-// --------------------------------------------------------------------------------------------------
-// y_write_to_log()
-//     writes "content" (a string) to a (log)file.
-//     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
-//        separated by commas. This function relies on y_write_to_file();
-//
-// Todo: move this to logging.c
-//
-// @author: Raymond de Jongh
-// Example:
-//     y_write_to_log("c:\\logfile.txt", "Everything went great");
-//     This will result that the file (c:\logfile.txt) has this content:
-//        20091126,215212,SomeGroup,3,4,Everything went great
-//     Ofcourse, the ID's and groupname will be different as this is just an example.
-// --------------------------------------------------------------------------------------------------
-int y_write_to_log(char *filename, char *content)
-{
-    int id, scid;
-    char *vuser_group;
-    int string_length=0;
-    char *log;
-    int len_vuser_group;
-    int len_scid;
-    int result;
-
-    // todo: make this call y_setup().
-    lr_whoami(&id, &vuser_group, &scid);
-
-
-
-    string_length = strlen(content);
-    string_length +=strlen(vuser_group);
-    string_length +=15;        // y_datetime() is altijd 15 chars lang.
-    string_length +=6;        // 6 chars voor id (is dat genoeg?!?)
-    string_length +=6;        // 6 chars voor scid (is dat genoeg?!?)
-
-    log = y_mem_alloc(string_length);
-    y_datetime();
-    sprintf(log, "%s,%s,%6d,%6d,%s", lr_eval_string("{DATE_TIME_STRING}"), vuser_group, id, scid, content);
-
-    result = y_write_to_file(filename, log);
-
-    free(log);
-
-    return result;
-
-}
-// --------------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
