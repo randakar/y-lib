@@ -422,6 +422,9 @@ void y_array_dump( const char *pArrayName )
 // Note     : This does not understand the entire web_reg_save_param() syntax,
 //            notably left/right boundaries are simple strings rather than strings-with-text-flags.
 // Note2    : Existing values in the destination parameter (pArrayname) will be destroyed.
+// Todo     : Find out how to make this fast enough to deal with extremely large amounts of 'hits'.
+// Todo2    : Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML
+//            dropdown boxes.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //      lr_save_string("<option value=\"water\"><option value=\"fire\"><option value=\"burn\">", "SOURCE");
@@ -513,7 +516,6 @@ void y_array_filter( const char *pArrayName, const char *search, const char *res
     int size = y_array_count(pArrayName);
 
     //lr_log_message("y_array_filter(%s, %s, %s)", pArrayName, search, resultArrayName);
-
     for( i=1; i <= size; i++)
     {
         item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain \x00 in the input. Ugh.
@@ -563,6 +565,7 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
         // If the sizes aren't the same there's a good chance numbers won't line up on both sides.
         // We definitely don't want to end up with records merged that don't actually correspond to each other!
         lr_error_message("Unable to merge arrays %s and %s - sizes unequal!", pArrayNameLeft, pArrayNameRight);
+        lr_abort();
         return 0;
     }
 
@@ -674,11 +677,12 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     if (strcmp(source_param_array_name, dest_param_array_name) == 0)
     {
         lr_error_message("Source and Destination parameter name can not be equal!");
+        lr_abort();
     }
 
     source_length=lr_paramarr_len(source_param_array_name);
 
-	
+
     shuffle=(int *)y_array_alloc(source_length+1, sizeof(int));
     destination_length=(char *)y_array_alloc(strlen(dest_param_array_name)+9, sizeof(char)); 
 
@@ -696,7 +700,7 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
         shuffle[i] = shuffle[r];
         shuffle[r] = temp;
     }
-    
+
 //    random_array_start_at_1(array, source_length);
 
     for(i=1; i<=source_length; i++)
@@ -707,21 +711,19 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
         y_array_save(
            y_array_get(source_param_array_name, shuffle[i]),
            dest_param_array_name, i);
-
     }
 
-/*    sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
-
-	lr_message("dest_param_array_name: %s", dest_param_array_name);
-	lr_message("destination_length: %s", 	destination_length);
-	lr_message("source_length: %i", source_length);
-	lr_save_int(source_length, destination_length);
+/*    
+    sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
+    lr_message("dest_param_array_name: %s", dest_param_array_name);
+    lr_message("destination_length: %s", 	destination_length);
+    lr_message("source_length: %i", source_length);
+    lr_save_int(source_length, destination_length);
 */
-	y_array_save_count(--i, dest_param_array_name);
+    y_array_save_count(--i, dest_param_array_name);
 
     free (shuffle);
     free(destination_length);
-
 }
 
 // --------------------------------------------------------------------------------------------------
