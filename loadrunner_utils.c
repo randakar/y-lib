@@ -319,7 +319,6 @@ void y_breadcrumb(char *breadcrumb)
 void y_breadcrumb_reset()
 {
     lr_save_string("", "breadcrumb");
-
 }
 
 
@@ -342,16 +341,16 @@ int y_write_to_file(char *filename, char *content)
    if ((file = fopen(filename, "at")) == NULL)
    { 
        lr_error_message ("Cannot write to file >>%s<<", filename); 
-       return -1;             // fail to open file...
+       return -1;             // failed to open file...
    } 
    if (result = fprintf(file, "%s\n", content) <0)
    {
-       return result;        // fail to write to file...
+       return result;        // failed to write to file...
    }
 
    if (result = fclose(file)!=0)
    {
-       return result;        // fail to close file...
+       return result;        // failed to close file...
    }
 
    return 0;                // everything worked great!
@@ -365,44 +364,14 @@ int y_write_to_file(char *filename, char *content)
 //      Simply returns the current date-time as a string, in this format:
 //        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
 // @author: Raymond de Jongh
+// @author: Floris Kraak
 // 
 // Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
 //           -- Floris
 // --------------------------------------------------------------------------------------------------
 void y_datetime()
 {
-    char *tmp;
-    typedef long time_t; 
-    struct tm 
-    { 
-        int tm_sec;   // seconds after the minute - [0,59] 
-        int tm_min;   // minutes after the hour - [0,59] 
-        int tm_hour;  // hours since midnight - [0,23] 
-        int tm_mday;  // day of the month - [1,31] 
-        int tm_mon;   // months since January - [0,11] 
-        int tm_year;  // years since 1900 
-        int tm_wday;  // days since Sunday - [0,6] 
-        int tm_yday;  // days since January 1 - [0,365] 
-        int tm_isdst; // daylight savings time flag 
-					  // 
-    }; 
-
-    time_t t; 
-    struct tm * now; 
-
-    _tzset(); // Sets variables used by localtime 
-    time(&t); 
-
-    tmp = (char *)y_mem_alloc(16);
-
-    // Convert to time structure
-    now = (struct tm *)localtime(&t); 
-    sprintf(tmp, "%04d%02d%02d,%02d%02d%02d", now->tm_year+1900, now->tm_mon+1, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec); 
-    tmp[15] = '\0';
-
-    lr_save_string(tmp, "DATE_TIME_STRING");
-
-    free(tmp);
+    lr_save_datetime("%Y%m%d,%H%M%S", DATE_NOW, "DATE_TIME_STRING");
 }
 
 
