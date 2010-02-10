@@ -57,7 +57,7 @@ int y_rand()
 		// To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
 		// In case the script itself already initialized the random number generator, use a random number from 
 		// there as well.
-		srand( time() + atoi(_vUserID) + ((int)(_vUserGroup)) + rand() );
+		srand( time() + _vUserID + ((int)(_vUserGroup)) + rand() );
 		_y_random_seed_initialized = 1;
 	}
 	return rand();
