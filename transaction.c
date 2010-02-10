@@ -210,7 +210,7 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     char *buffer;
 
 
-    // _vUserGroup is set only when _extraLogging is set.
+    // _vUserGroup is set only when _y_extra_logging is set.
     // See logging.c -> y_setup_logging().
     if( _add_group_to_trans && (_vUserGroup != NULL))
     {

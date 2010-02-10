@@ -23,13 +23,11 @@
 /*
 Todo: 
 - split the extralogging bits from the setup stuff
-- y_ify these variables (below)
 */
 
 // Global variables
-// FIXME: y_ ify these ..
-int _extraLogging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
-int _logLevel = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
+int _y_extra_logging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
+int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
 // --------------------------------------------------------------------------------------------------
@@ -104,7 +102,7 @@ y_setup_logging()
 	}
 
     // Make the extra logging facility available to the user.
-    _extraLogging = 1;
+    _y_extra_logging = 1;
 }
 
 y_log_to_report(char *message)
@@ -112,7 +110,7 @@ y_log_to_report(char *message)
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
 
     // Only add extra logging if it has been turned on.
-    if( _extraLogging ) 
+    if( _y_extra_logging ) 
     {
         lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
     }
@@ -141,7 +139,7 @@ y_log_turn_off()
     lr_log_message("Log level set to OFF.\n");
 
     // Save the previous loglevel.
-    _logLevel = lr_get_debug_message();
+    _y_log_level = lr_get_debug_message();
 
     lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
 }
@@ -151,7 +149,7 @@ y_log_set_brief()
     lr_log_message("Log level set to BRIEF.\n");
 
     // Save the previous loglevel.
-    _logLevel = lr_get_debug_message();
+    _y_log_level = lr_get_debug_message();
 
     lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
     lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
@@ -162,7 +160,7 @@ y_log_set_extended()
     lr_log_message("Log level set to EXTENDED.\n");
 
     // Save the previous loglevel.
-    _logLevel = lr_get_debug_message();
+    _y_log_level = lr_get_debug_message();
 
     lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
     lr_set_debug_message(
@@ -174,13 +172,13 @@ y_log_set_extended()
 y_log_restore()
 {
     /*
-    if(_logLevel == LR_MSG_CLASS_DISABLE_LOG)
+    if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
     {
         lr_log_message("Warning: Restoring the previous loglevel will turn logging OFF.\n");
         // If the current loglevel is off as well nobody can hear this scream ..
     }
     */
-    lr_set_debug_message(_logLevel, LR_SWITCH_ON);
+    lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
     lr_log_message("Log level restored to the previous state.\n");
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 
@@ -188,7 +186,7 @@ y_log_restore()
 
 y_log_turn_on()
 {
-    if(_logLevel == LR_MSG_CLASS_DISABLE_LOG)
+    if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
     {
         log_set_extended();
     }
