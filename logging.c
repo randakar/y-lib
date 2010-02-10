@@ -74,7 +74,7 @@ char *y_get_datetimestamp()
 	nu = (struct tm *)localtime( & (timebuffer.time) );
 	
 	sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
-       nu->tm_year + 1900,
+      nu->tm_year + 1900,
 			nu->tm_mon + 1,
 			nu->tm_mday,
 			nu->tm_hour,
@@ -181,7 +181,6 @@ y_log_restore()
     lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
     lr_log_message("Log level restored to the previous state.\n");
     // Of course if the previous state was "OFF" the user will never see this either ;-)
-
 }
 
 y_log_turn_on()
@@ -194,7 +193,6 @@ y_log_turn_on()
     {
         log_restore();
     }
-
 }
 
 
