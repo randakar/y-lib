@@ -74,8 +74,8 @@ int _y_add_group_to_trans = 0;      // whether to add the name of the vuser grou
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
 //char _block_transaction[100] = "";
-int _transaction_nr = 0;
-int _sub_transaction_nr = 0;
+int _y_transaction_nr = 0;
+int _y_sub_transaction_nr = 0;
 
 // Transaction status tracking
 #define Y_TRANS_STATUS_NONE         0
@@ -131,32 +131,32 @@ void y_set_action_prefix(char *action_prefix)
 
 int y_get_transaction_nr()
 {
-    return _transaction_nr;
+    return _y_transaction_nr;
 
 }
 
 
 int y_get_and_increment_transaction_nr()
 {
-    return ++_transaction_nr;
+    return ++_y_transaction_nr;
 }
 
 
 void y_set_transaction_nr(int trans_nr)
 {
-    _transaction_nr = trans_nr;
+    _y_transaction_nr = trans_nr;
 }
 
 
 int y_get_sub_transaction_nr()
 {
-    return _sub_transaction_nr;
+    return _y_sub_transaction_nr;
 }
 
 
 int y_get_and_increment_sub_transaction_nr()
 {
-    return ++_sub_transaction_nr;
+    return ++_y_sub_transaction_nr;
 }
 
 
