@@ -162,7 +162,7 @@ int y_get_and_increment_sub_transaction_nr()
 
 void y_set_sub_transaction_nr(int trans_nr)
 {
-    _sub_transaction_nr = trans_nr;
+    _y_sub_transaction_nr = trans_nr;
 }
 
 
@@ -277,7 +277,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
 // Todo: Find a way to make this share more code with y_create_new_transaction_name()
 //
 void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
-                                     const int transaction_nr, const int sub_transaction_nr)
+                                       const int transaction_nr, const int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
     char *actual_prefix = y_calculate_actual_action_prefix(action_prefix);
