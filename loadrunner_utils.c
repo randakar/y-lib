@@ -171,9 +171,18 @@ y_random_string_buffer(const char *parameter, int minimumLength, int maximumLeng
 // One = Yes.
 // Negative return values are errors and generally mean that arguments make no sense
 //
+// This is useful for pathing decisions: Say that at point P in a script a choice has to be made
+// between continuing with actions A, B, and C. The decision is made based on a percentage:
+// A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code
+// that would make this decision.
+//
+// Note: Mathematically speaking this approach has flaws.  A better method would roll the number
+// just once, and then apply the boundary constraints to it repeatedly to make the decision.
+// This needs further work (tm).
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //     example usage:
 //         y_rand_in_sliding_window(1, 10, 20);
+//         // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 {
