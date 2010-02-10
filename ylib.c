@@ -20,9 +20,9 @@
 #define _YLIB_C
 
 #include "string.c"
+#include "loadrunner_utils.c"
 #include "logging.c"
 #include "transaction.c"
-#include "loadrunner_utils.c"
 #include "param_array.c"
 #include "profile.c"
 
