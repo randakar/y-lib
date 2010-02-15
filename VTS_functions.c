@@ -164,7 +164,6 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
     {
         if (status == 0)
         {
-            // write failed, most likely because the value already exists in VTS
             errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
             errorcode = -3;
         }
@@ -216,7 +215,6 @@ int VTS_pushlast(char* columnname, char* value)
 // maak de hele kolom (met name "columnname") leeg
 int VTS_clearColumn(char * columnname)
 {
-    // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
@@ -250,7 +248,6 @@ int VTS_clearColumn(char * columnname)
 // lees een willekeurige cel uit de tabel columnname
 int VTS_readRandom(char* columnname, char* ParameterName)
 {
-    // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
@@ -298,7 +295,6 @@ int VTS_readRandom(char* columnname, char* ParameterName)
 // De naam van de colums wordt in parameter {databasevelden} bepaald.
 int VTS_readRandomMultipleColumns(char* columnname)
 {
-    // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
@@ -356,7 +352,6 @@ int VTS_readRandomMultipleColumns(char* columnname)
 //             uit de database verwijderd. Zodoende kan een deze waarde nooit 2x gebruikt worden.
 int VTS_popfirst(char *columnname)
 {
-    //    Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     int            size;
@@ -392,7 +387,6 @@ int VTS_popfirst(char *columnname)
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns_unique(char *columnnames, char *data)
 {
-    //    Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
@@ -432,7 +426,6 @@ int VTS_push_multiple_columns_unique(char *columnnames, char *data)
 //     dan duurt dat ca. 12,5 sec. Dat is gemiddeld dus per push en pop: 12,5 msec. 
 int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 {
-    // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
@@ -469,7 +462,6 @@ int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns(char* columnnames, char* data)
 {
-    //    Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
     unsigned short status;
