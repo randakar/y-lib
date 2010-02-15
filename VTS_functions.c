@@ -127,49 +127,49 @@ int VTS_disconnect(int ppp)
 // ***************************************************************************************************
 
 // Voeg een waarde toe aan de onderkant van de tabel, onder voorwaarde dat deze waarde niet al bestaat!
-int VTS_pushlast_unique(char * columnname, char * value)
+int VTS_pushlast_unique(char* columnname, char* value)
 {
-    // Standard variable declarations
-    PVCI           ppp;
-    int            rc = 0;
-    int            size;
+    int rc = 0;
+    int errorcode = 0;
+    char* errortxt = "Write to VTS: OK.";
     unsigned short status;
-    int            errorcode = 0;
+    PVCI ppp = VTS_connect();
 
-    ppp = VTS_connect();
-
-    //ppp = atoi(lr_eval_string("{VTS_ppp}"));
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set it's own error message.
+        return -1;
+    }
 
     rc = vtc_send_if_unique(ppp, columnname, value, &status);
     //lr_log_message("result: %d .... send message status: %d", rc, status);
-    if (rc != 0)
+    if( rc != 0 )
     {
-        // kan niet schrijven...
-        lr_save_string("Can not connect to VTS: server unreachable.","VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-        errorcode = -1;
+        errortxt = "Cannot write to VTS.";
+        errorcode = -2;
     }
     else
     {
         if (status == 0)
         {
             // write failed, most likely because the value already exists in VTS
-            lr_save_string("Can not write to VTS: value (most likely) already exists in VTS.","VTS_ERROR_MESSAGE");
-            lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-            errorcode = -2;
+            errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
+            errorcode = -3;
         }
         else
         {   // write ok
-            lr_save_string("Write to VTS: OK.","VTS_ERROR_MESSAGE");
             errorcode = 0;
         }
     }
     
+    lr_save_string(errortext,"VTS_ERROR_MESSAGE");
+    if(errorcode != 0 )
+    {
+        lr_error_message(errortext);
+    }
+
     vtc_free(value);
-
-    // Disconnect from Virtual Table Server
-    VTS_disconnect(ppp);;
-
+    VTS_disconnect(ppp);
     return errorcode;
 }
 
