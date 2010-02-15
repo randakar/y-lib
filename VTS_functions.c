@@ -97,9 +97,9 @@ int VTS_connect()
     
     if(rc != 0)
     {
-        const char errortxt = "Can not connect to VTS: server unreachable.";
-        lr_save_string(errortxt, "VTS_ERROR_MESSAGE");
-        lr_error_message(errortxt);
+        const char errortext = "Can not connect to VTS: server unreachable.";
+        lr_save_string(errortext, "VTS_ERROR_MESSAGE");
+        lr_error_message(errortext);
         ppp = -1;
     }
 
@@ -135,7 +135,7 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
 {
     int rc = 0;
     int errorcode = 0;
-    char* errortxt = "Write to VTS: OK.";
+    char* errortext = "Write to VTS: OK.";
     unsigned short status;
     PVCI ppp = VTS_connect();
 
@@ -157,7 +157,7 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
     //lr_log_message("result: %d .... send message status: %d", rc, status);
     if( rc != 0 )
     {
-        errortxt = "Cannot write to VTS.";
+        errortext = "Cannot write to VTS.";
         errorcode = -2;
     }
     else
