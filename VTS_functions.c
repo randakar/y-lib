@@ -126,8 +126,12 @@ int VTS_disconnect(int ppp)
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
 
-// Voeg een waarde toe aan de onderkant van de tabel, onder voorwaarde dat deze waarde niet al bestaat!
-int VTS_pushlast_unique(char* columnname, char* value)
+// Voeg een waarde toe aan de onderkant van de tabel. 
+// Als de unique vlag groter dan 0 is gebeurt dat alleen onder voorwaarde dat de waarde niet al 
+// bestaat in de tabel.
+//
+// @author Floris Kraak
+int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
 {
     int rc = 0;
     int errorcode = 0;
@@ -137,11 +141,19 @@ int VTS_pushlast_unique(char* columnname, char* value)
 
     if( ppp == -1 )
     {
-        // VTS_connect() should have set it's own error message.
+        // VTS_connect() should have set the error message already.
         return -1;
     }
 
-    rc = vtc_send_if_unique(ppp, columnname, value, &status);
+    if( unique > 0)
+    {
+        rc = vtc_send_if_unique(ppp, columnname, value, &status);
+    }
+    else
+    {
+        rc = vtc_send_message(ppp, columnname, value, &status);
+    }
+
     //lr_log_message("result: %d .... send message status: %d", rc, status);
     if( rc != 0 )
     {
@@ -174,62 +186,25 @@ int VTS_pushlast_unique(char* columnname, char* value)
 }
 
 
+// ***************************************************************************************************
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+// ***************************************************************************************************
 
-
+// Voeg een waarde toe aan de onderkant van de tabel, onder voorwaarde dat deze waarde niet al bestaat!
+int VTS_pushlast_unique(char* columnname, char* value)
+{
+    return VTS_pushlast_with_flag(columnname, value, 1);
+}
 
 // ***************************************************************************************************
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
 
 // Voeg een waarde toe aan de onderkant van de tabel.
-// klopt, het verschil tussen VTS_pushlast en VTP_pushlast_unique is 1 regeltje.
-// OOIT, ik beloof het, zal ik het netter maken! Misschien...
-int VTS_pushlast(char * columnname, char * value)
+int VTS_pushlast(char* columnname, char* value)
 {
-    // Standard variable declarations
-    PVCI           ppp;
-    int            rc = 0;
-    int            size;
-    unsigned short status;
-    int            errorcode = 0;
-
-    ppp = VTS_connect();
-
-    //ppp = atoi(lr_eval_string("{VTS_ppp}"));
-
-    rc = vtc_send_message(ppp, columnname, value, &status);
-    //lr_log_message("result: %d .... send message status: %d", rc, status);
-    if (rc != 0)
-    {
-        // kan niet schrijven...
-        lr_save_string("Can not connect to VTS: server unreachable.","VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-        errorcode = -1;
-    }
-    else
-    {
-        if (status == 0) 
-        {
-            // write failed, most likely because the value already exists in VTS
-            lr_save_string("Can not write to VTS: value (most likely) already exists in VTS.","VTS_ERROR_MESSAGE");
-            lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-            errorcode = -2;
-        }
-        else
-        {   // write ok
-            lr_save_string("Write to VTS: OK.","VTS_ERROR_MESSAGE");
-            errorcode = 0;
-        }
-    }
-    
-    vtc_free(value);
-
-    // Disconnect from Virtual Table Server
-    VTS_disconnect(ppp);;
-
-    return errorcode;
+    return VTS_pushlast_with_flag(columnname, value, 0);
 }
-
 
 
 
