@@ -133,7 +133,7 @@ int VTS_pushlast_unique(char * columnname, char * value)
     // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
-    int            size,rand_row;
+    int            size;
     unsigned short status;
     int            errorcode = 0;
 
@@ -190,7 +190,7 @@ int VTS_pushlast(char * columnname, char * value)
     // Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
-    int            size,rand_row;
+    int            size;
     unsigned short status;
     int            errorcode = 0;
 
@@ -385,7 +385,7 @@ int VTS_popfirst(char *columnname)
     //    Standard variable declarations
     PVCI           ppp;
     int            rc = 0;
-    int            size,rand_row;
+    int            size;
     unsigned short status;
     int            errorcode = 0;
     
