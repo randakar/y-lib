@@ -1,3 +1,26 @@
+/*
+ * Ylib Loadrunner function library.
+ * Copyright (C) 2009-2010 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
+ * Copyright (C) 2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+#ifndef _VTS_FUNC_C
+#define _VTS_FUNC_C
+
 /*****************************************************************************************************
   - VTS functies -
     versie  :   0.2
@@ -526,3 +549,6 @@ int VTS_push_multiple_columns(char *columnnames, char *data)
 	return errorcode;
 
 }
+
+// --------------------------------------------------------------------------------------------------
+#endif // _STRING_C
