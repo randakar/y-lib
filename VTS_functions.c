@@ -91,22 +91,21 @@ VTS_functions()
 //        parameter VTSPort, bevat de Poortnummer van de VTS-server
 int VTS_connect()
 {
-    // Standard variable declarations
-    PVCI ppp;
-    int rc;
-
     // Connect to the Virtual Table Server and grab the Handle, and print it.
-    ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
+    PVCI ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
+    int rc = vtc_get_last_error(ppp);
+    
+    if(rc != 0)
+    {
+        const char errortxt = "Can not connect to VTS: server unreachable.";
+        lr_save_string(errortxt, "VTS_ERROR_MESSAGE");
+        lr_error_message(errortxt);
+        ppp = -1;
+    }
+
     // lr_output_message(">> The VTS Handle is : %d", ppp);
     lr_save_int(ppp, "VTS_ppp");
 
-    if ((rc = vtc_get_last_error(ppp)) != 0)
-    {
-        lr_save_string("Can not connect to VTS: server unreachable.","VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-        ppp = -1;
-    }
-    
     return ppp;
 }
 
