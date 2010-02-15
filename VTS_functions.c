@@ -213,28 +213,35 @@ int VTS_pushlast(char* columnname, char* value)
 
 
 // maak de hele kolom (met name "columnname") leeg
-int VTS_clearColumn(char * columnname)
+int VTS_clearColumn(char* columnname)
 {
-    PVCI           ppp;
-    int            rc = 0;
+    PVCI ppp = VTS_connect();
+    int rc = 0;
+    int errorcode = 0;
+    char* errortext;
     unsigned short status;
-    int            errorcode = 0;
 
-    ppp = VTS_connect();
-
-    if ((rc = vtc_clear_column(ppp, columnname, &status)) != 0)
+    if( ppp == -1 )
     {
-        lr_save_string("Can not delete column", "VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
+
+    if((rc = vtc_clear_column(ppp, columnname, &status)) != 0)
+    {
         errorcode = -1;
+        errortext = "Can not delete column";
+        lr_error_message(errortext);       
     }
     else
     {
-        lr_save_string("INFO: Content of the column is deleted", "VTS_ERROR_MESSAGE");
-        lr_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
+        // Success!
         errorcode = 0;
+        errortext = "INFO: Content of the column is deleted.";
+        lr_message(errortext);
     }
 
+    lr_save_string(errortext,"VTS_ERROR_MESSAGE");
     VTS_disconnect(ppp);
 
     return errorcode;
