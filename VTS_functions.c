@@ -22,6 +22,7 @@
 #define _VTS_FUNC_C
 
 #include "string.c"
+#include "loadrunner_utils.c"
 
 /*****************************************************************************************************
   - VTS functies -
@@ -153,6 +154,8 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
     {
         rc = vtc_send_message(ppp, columnname, value, &status);
     }
+    vtc_free(value);
+    VTS_disconnect(ppp);
 
     //lr_log_message("result: %d .... send message status: %d", rc, status);
     if( rc != 0 )
@@ -179,8 +182,6 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
         lr_error_message(errortext);
     }
 
-    vtc_free(value);
-    VTS_disconnect(ppp);
     return errorcode;
 }
 
@@ -243,7 +244,6 @@ int VTS_clearColumn(char* columnname)
 
     lr_save_string(errortext,"VTS_ERROR_MESSAGE");
     VTS_disconnect(ppp);
-
     return errorcode;
 }
 
@@ -255,48 +255,49 @@ int VTS_clearColumn(char* columnname)
 // lees een willekeurige cel uit de tabel columnname
 int VTS_readRandom(char* columnname, char* ParameterName)
 {
-    PVCI           ppp;
-    int            rc = 0;
+    PVCI ppp = VTS_connect();
+    int rc = 0;
     unsigned short status;
-    int            errorcode = 0;
-    int            tablesize;
-    int            rand_row;
-    char           *value = NULL;
+    int errorcode = 0;
+    char* errortext;
+    int tablesize;
+    int rand_row;
+    char* value = NULL;
 
-    ppp = VTS_connect();
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
         return -1;
-    }   		
-    
-    if ((rc = vtc_column_size(ppp, columnname, &tablesize)) != 0)
+    }
+
+    if((rc = vtc_column_size(ppp, columnname, &tablesize)) != 0)
     {
-        lr_save_string("Can not determine column size", "VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-        errorcode = -1;
+        errorcode = rc;
+    		errortext = "Can not determine column size. Error code %d.";
     }
 
     //lr_log_message("tablesize: %d\n", tablesize);
-    
-    rand_row = rand() % tablesize + 1;
-
-    if ((rc = vtc_query_column(ppp, columnname, rand_row, &value)) != 0)
+    rand_row = y_rand() % tablesize + 1;
+    if((rc = vtc_query_column(ppp, columnname, rand_row, &value)) != 0)
     {
-        lr_error_message("******************** VTS Error - Query Return Code = %d", rc);
+        errortext = "******************** VTS Error - Query Return Code = %d";
+        errorcode = rc;
     }
     else
     {
-        //lr_output_message("******************** Query Column 1 Result = %s", value);
-        lr_save_string(value,ParameterName);
+        errortext = "INFO: VTS random read succeeded.";
+        lr_save_string(value,ParameterName);        
     }
+    vtc_free(value);    
+    VTS_disconnect(ppp);   
 
-    
-    // Maak het geheugen weer vrij
-    vtc_free(value);
-    
-    //    Disconnect from Virtual Table Server
-    VTS_disconnect(ppp);
+    if(errorcode != 0)
+    {
+        lr_error_message(errortext, errorcode);
+    }
+    lr_param_sprintf("VTS_ERROR_MESSAGE", errortext, errorcode);
+
+    return errorcode;
 }
 
 
