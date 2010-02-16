@@ -264,6 +264,11 @@ int VTS_readRandom(char* columnname, char* ParameterName)
     char           *value = NULL;
 
     ppp = VTS_connect();
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }   		
     
     if ((rc = vtc_column_size(ppp, columnname, &tablesize)) != 0)
     {
@@ -311,6 +316,11 @@ int VTS_readRandomMultipleColumns(char* columnname)
     char           *value = NULL;
 
     ppp = VTS_connect();
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
 
     tablesize=0;
     lr_save_string(lr_eval_string("{databasevelden}"), "databaseveld");
@@ -366,6 +376,12 @@ int VTS_popfirst(char *columnname)
     int            errorcode = 0;
     
     ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
+    
     if( (rc = lrvtc_retrieve_message(columnname)) != 0)
     {
         lr_error_message("******************** VTS Error - Query Return Code = %d", rc);
@@ -400,6 +416,11 @@ int VTS_push_multiple_columns_unique(char *columnnames, char *data)
     int            errorcode = 0;
 
     ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
 
     rc=lrvtc_send_row1(columnnames, data, ";", VTSEND_STACKED_UNIQUE);
     if(rc != 0)
@@ -439,6 +460,11 @@ int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
     int            errorcode = 0;
 
     ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
 
     if( (rc = lrvtc_retrieve_messages1(gewenste_databasevelden, ";")) != 0)
     {
@@ -475,6 +501,11 @@ int VTS_push_multiple_columns(char* columnnames, char* data)
     int            errorcode = 0;
 
     ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
+    if( ppp == -1 )
+    {
+        // VTS_connect() should have set the error message already.
+        return -1;
+    }
 
     rc=lrvtc_send_row1(columnnames, data, ";", VTSEND_SAME_ROW);
     if (rc != 0)
