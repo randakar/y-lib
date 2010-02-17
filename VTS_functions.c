@@ -28,31 +28,6 @@ benodigd:   VTS-server. Deze is normaal gesproken te vinden op een pc met loadru
             Het ip-adres en poortnummer kan je instellen via de parameters VTSServer en VTSPort
             Deze instellingen moeten overeenkomen met die van de VTSServer.
 
-
-De volgende regels moeten in vuser_init() geplaatst worden:
-===============================================================
-//***************************
-//* Load the client VTS DLL *
-//***************************
-
-lr_load_dll("vtclient.dll");
-===============================================================
-
-Deze moet geincluded worden: #include "vts2.h"
-Dit kan BOVEN de vuser_init().
-Dus bijvoorbeeld:
-===============================================================
-#include "as_web.h"
-#include "vts2.h"
-vuser_init()
-{
-    //***************************
-    //* Load the client VTS DLL *
-    //***************************
-    lr_load_dll("vtclient.dll");
-}
-=============================================================== 
-
 VTS installeren:
 1) Obtain VTS2 from Mercury Support Representatives. (Downloadable Binaries)
    (je kan deze gewoon in de T:\Tools\ directory vinden. Is net handiger, toch?)
@@ -69,13 +44,22 @@ VTS starten:
 #ifndef _VTS_FUNC_C
 #define _VTS_FUNC_C
 
+#include "vts2.h"
 #include "string.c"
 #include "loadrunner_utils.c"
+
+// Global variables
+int _vts_setup_completed = 0;
 
 
 void VTS_setup()
 {
     int result;
+    if( _vts_setup_completed )
+    {
+        return;
+    }
+    
     //***************************
     //* Load the client VTS DLL *
     //***************************
@@ -84,6 +68,8 @@ void VTS_setup()
         lr_error_message("Unable to load Virtual Table Server client dll. Please check your VTS installation.");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
+
+    _vts_setup_completed = 1;
 }
 
 // ***************************************************************************************************
@@ -95,6 +81,8 @@ void VTS_setup()
 //        parameter VTSPort, bevat de Poortnummer van de VTS-server
 int VTS_connect()
 {
+    VTS_setup();
+
     // Connect to the Virtual Table Server and grab the Handle, and print it.
     PVCI ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
     int rc = vtc_get_last_error(ppp);
@@ -276,7 +264,7 @@ int VTS_readRandom(char* columnname, char* ParameterName)
     if((rc = vtc_column_size(ppp, columnname, &tablesize)) != 0)
     {
         errorcode = rc;
-    		errortext = "Can not determine column size. Error code %d.";
+        errortext = "Can not determine column size. Error code %d.";
     }
 
     //lr_log_message("tablesize: %d\n", tablesize);
