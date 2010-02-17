@@ -308,7 +308,7 @@ int VTS_readRandom(char* columnname, char* ParameterName)
 // De naam van de colums wordt in parameter {databasevelden} bepaald.
 int VTS_readRandomMultipleColumns(char* columnname)
 {
-    PVCI           ppp;
+    PVCI ppp = VTS_connect();
     int            rc = 0;
     unsigned short status;
     int            errorcode = 0;
@@ -316,7 +316,6 @@ int VTS_readRandomMultipleColumns(char* columnname)
     int            rand_row;
     char           *value = NULL;
 
-    ppp = VTS_connect();
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
@@ -353,11 +352,9 @@ int VTS_readRandomMultipleColumns(char* columnname)
     }
     while (strcmp(lr_eval_string("{databaseveld}"), "einde") != 0);
     
-    // Maak het geheugen weer vrij
     vtc_free(value);
-    
-    //    Disconnect from Virtual Table Server
     VTS_disconnect(ppp);
+    return errorcode;
 }
 
 
