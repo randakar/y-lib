@@ -229,7 +229,6 @@ int VTS_disconnect(int ppp)
 // @author Floris Kraak
 int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
 {
-    int rc = 0;
     int errorcode = 0;
     char* errortext = "Write to VTS: OK.";
     unsigned short status;
@@ -243,29 +242,31 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
 
     if( unique > 0 )
     {
-        rc = vtc_send_if_unique(ppp, columnname, value, &status);
+        errorcode = vtc_send_if_unique(ppp, columnname, value, &status);
     }
     else
     {
-        rc = vtc_send_message(ppp, columnname, value, &status);
+        errorcode = vtc_send_message(ppp, columnname, value, &status);
     }
     vtc_free(value);
     VTS_disconnect(ppp);
 
-    //lr_log_message("result: %d .... send message status: %d", rc, status);
-    if( VTS_process_returncode(rc) != VTCERR_OK )
+    //lr_log_message("result: %d .... send message status: %d", errorcode, status);
+    if(VTS_process_returncode(errorcode) == VTCERR_OK)
     {
-        // VTS_process_returncode() handled the error for us.
-        return rc;
-    }
+        if(status == 1)
+        {
+            // Success!
+            lr_message("INFO: Value pushed onto column successfully.");
+        }
+        else
+        {
+            errorcode = -2;
+            errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
+            VTS_report_error(errortext);
+        }
+    }   
     
-    if(status == 0)
-    {
-        errorcode = -2;
-        errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
-        VTS_report_error(errortext);
-    }
-
     return errorcode;
 }
 
@@ -301,9 +302,7 @@ int VTS_pushlast(char* columnname, char* value)
 int VTS_clearColumn(char* columnname)
 {
     PVCI ppp = VTS_connect();
-    int rc = 0;
     int errorcode = 0;
-    char* errortext;
     unsigned short status;
 
     if( ppp == -1 )
@@ -312,22 +311,24 @@ int VTS_clearColumn(char* columnname)
         return -1;
     }
 
-    if((rc = vtc_clear_column(ppp, columnname, &status)) != 0)
+    errorcode = vtc_clear_column(ppp, columnname, &status);
+    VTS_disconnect(ppp);
+
+    if(VTS_process_returncode(errorcode) == VTCERR_OK)
     {
-        errorcode = -1;
-        errortext = "Can not delete column";
-        lr_error_message(errortext);       
-    }
-    else
-    {
-        // Success!
-        errorcode = 0;
-        errortext = "INFO: Content of the column is deleted.";
-        lr_message(errortext);
+        if(status == 1)
+        {
+            // Success!
+            lr_message("INFO: Content of the column is deleted.");
+        }
+        else
+        {
+            errorcode = -2;
+            errortext = "Failed to clear column.";
+            VTS_report_error(errortext);
+        }
     }
 
-    lr_save_string(errortext,"VTS_ERROR_MESSAGE");
-    VTS_disconnect(ppp);
     return errorcode;
 }
 
