@@ -16,19 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
-
-#ifndef _VTS_FUNC_C
-#define _VTS_FUNC_C
-
-#include "string.c"
-#include "loadrunner_utils.c"
+ */ 
 
 /*****************************************************************************************************
   - VTS functies -
-
-versie  :   0.2
-auteur  :   Raymond de Jongh
 datum   :   2008-11-13
             2009-09-03
 
@@ -75,13 +66,12 @@ VTS starten:
     C:\Program Files\HP\LoadRunner\bin\vtconsole.exe
 *****************************************************************************************************/
 
+#ifndef _VTS_FUNC_C
+#define _VTS_FUNC_C
 
-// beeeeautiful VTS functions ;-) 
-VTS_functions()
-{
-    lr_error_message("This function should not be called directly...\n");
-    return -1;
-}
+#include "string.c"
+#include "loadrunner_utils.c"
+
 
 void VTS_setup()
 {
@@ -91,11 +81,10 @@ void VTS_setup()
     //***************************
     if( (result = lr_load_dll("vtclient.dll")) != 0 )
     {
-        lr_error_message("Unable to load Virtual Table Server client dll");
+        lr_error_message("Unable to load Virtual Table Server client dll. Please check your VTS installation.");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 }
-
 
 // ***************************************************************************************************
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
