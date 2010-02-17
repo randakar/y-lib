@@ -30,7 +30,6 @@ benodigd:   VTS-server. Deze is normaal gesproken te vinden op een pc met loadru
 
 VTS installeren:
 1) Obtain VTS2 from Mercury Support Representatives. (Downloadable Binaries)
-   (je kan deze gewoon in de T:\Tools\ directory vinden. Is net handiger, toch?)
 2) Unzip the file into the main LoadRunner directory (using the directory structure provided).
    (eg. "..\Mercury Interactive\LoadRunner")
    
