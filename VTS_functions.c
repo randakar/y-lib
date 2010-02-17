@@ -103,59 +103,59 @@ int VTS_process_returncode(int returncode)
     // Encode the above information in a simple lookup table.
     switch(returncode)
     {
-        VTCERR_OK:
+        case VTCERR_OK:
             errortext = "INFO: VTS command succeeded.";
             lr_message(errortext);
             return returncode;
             break; // <-- never reached, but kept for readability.
 
-        VTCERR_INVALID_CONNECTION_INFO:
+        case VTCERR_INVALID_CONNECTION_INFO:
             errortext = "Invalid connection info.";
             break;
 
-        VTCERR_FAILED_TO_RESOLVE_ADDR:
+        case VTCERR_FAILED_TO_RESOLVE_ADDR:
             errortext = "Failed to resolve address.";
             break;
 
-        VTCERR_FAILED_TO_CREATE_SOCKET:
+        case VTCERR_FAILED_TO_CREATE_SOCKET:
             errortext = "Failed to create socket.";
             break;
 
-        VTCERR_FAILED_TO_CONNECT:
+        case VTCERR_FAILED_TO_CONNECT:
             errortext = "Failed to connect.";
             break;
 
-        VTCERR_INCOMPLETE_REQUEST:
+        case VTCERR_INCOMPLETE_REQUEST:
             errortext = "Incomplete request.";
             break;
 
-        VTCERR_FAILED_TO_RECV_RESPONSE:
+        case VTCERR_FAILED_TO_RECV_RESPONSE:
             errortext = "Failed to receive response.";
             break;
 
-        VTCERR_INCOMPLETE_RESPONSE:
+        case VTCERR_INCOMPLETE_RESPONSE:
             errortext = "Incomplete response.";
             break;
 
-        VTCERR_RESPONSE_ARGS_UNMATCH:
+        case VTCERR_RESPONSE_ARGS_UNMATCH:
             errortext = "Received error code VTCERR_RESPONSE_ARGS_UNMATCH.";
             break;
 
-        VTCERR_OPERATION_ERROR_BASE:
+        case VTCERR_OPERATION_ERROR_BASE:
             errortext = "Received error code VTCERR_OPERATION_ERROR_BASE.";
             break;
 
-        VTCERR_SERVER_IS_BUSY:
+        case VTCERR_SERVER_IS_BUSY:
             errortext = "Server is busy. Go away.";
             break;
 
-        VTCERR_CLIENT_REQUEST_ERROR:
+        case VTCERR_CLIENT_REQUEST_ERROR:
             errortext = "Client request error.";
             break;
 
         default:
-        	  errortext = "Unknown VTC error code.";
-        	  break;
+            errortext = "Unknown VTC error code.";
+            break;
     }
 
     // Report the error to the user. (The "All OK" case jumped out of this function earlier ..)
