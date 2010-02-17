@@ -81,11 +81,14 @@ void VTS_setup()
 //        parameter VTSPort, bevat de Poortnummer van de VTS-server
 int VTS_connect()
 {
+	PVCI ppp;
+	int rc;
+
     VTS_setup();
 
     // Connect to the Virtual Table Server and grab the Handle, and print it.
-    PVCI ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
-    int rc = vtc_get_last_error(ppp);
+    ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
+    rc = vtc_get_last_error(ppp);
     
     if(rc != 0)
     {
