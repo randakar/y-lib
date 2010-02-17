@@ -72,6 +72,102 @@ void VTS_setup()
     _vts_setup_completed = 1;
 }
 
+
+int VTS_process_returncode(int returncode)
+{
+    const char* errorheader = "****** VTS ERROR: ";
+    char* errortext;
+    char* buffer;
+    
+    /** 
+     * This is what the header file vts2.h tells us about error codes:
+     *
+     * //VTS Error Codes
+     * #define  VTCERR_OK                            0
+     * #define  VTCERR_INVALID_CONNECTION_INFO  -10000
+     * #define  VTCERR_FAILED_TO_RESOLVE_ADDR   -10001
+     * #define  VTCERR_FAILED_TO_CREATE_SOCKET  -10002
+     * #define  VTCERR_FAILED_TO_CONNECT        -10003
+     *
+     * #define  VTCERR_INCOMPLETE_REQUEST       -10100
+     * #define  VTCERR_FAILED_TO_RECV_RESPONSE  -10101
+     * #define  VTCERR_INCOMPLETE_RESPONSE      -10102
+     * #define  VTCERR_RESPONSE_ARGS_UNMATCH    -10103
+     *
+     * // --- Operation Error Base
+     * #define  VTCERR_OPERATION_ERROR_BASE     -11000
+     * #define  VTCERR_SERVER_IS_BUSY           (VTCERR_OPERATION_ERROR_BASE - 0xFF)
+     * #define  VTCERR_CLIENT_REQUEST_ERROR     (VTCERR_OPERATION_ERROR_BASE - 0xFE)
+     **/
+
+    // Encode the above information in a simple lookup table.
+    switch(returncode)
+    {
+        VTCERR_OK:
+            errortext = "INFO: VTS command succeeded.";
+            lr_message(errortext);
+            return returncode;
+            break; // <-- never reached, but kept for readability.
+
+        VTCERR_INVALID_CONNECTION_INFO:
+            errortext = "Invalid connection info.";
+            break;
+
+        VTCERR_FAILED_TO_RESOLVE_ADDR:
+            errortext = "Failed to resolve address.";
+            break;
+
+        VTCERR_FAILED_TO_CREATE_SOCKET:
+            errortext = "Failed to create socket.";
+            break;
+
+        VTCERR_FAILED_TO_CONNECT:
+            errortext = "Failed to connect.";
+            break;
+
+        VTCERR_INCOMPLETE_REQUEST:
+            errortext = "Incomplete request.";
+            break;
+
+        VTCERR_FAILED_TO_RECV_RESPONSE:
+            errortext = "Failed to receive response.";
+            break;
+
+        VTCERR_INCOMPLETE_RESPONSE:
+            errortext = "Incomplete response.";
+            break;
+
+        VTCERR_RESPONSE_ARGS_UNMATCH:
+            errortext = "Received error code VTCERR_RESPONSE_ARGS_UNMATCH.";
+            break;
+
+        VTCERR_OPERATION_ERROR_BASE:
+            errortext = "Received error code VTCERR_OPERATION_ERROR_BASE.";
+            break;
+
+        VTCERR_SERVER_IS_BUSY:
+            errortext = "Server is busy. Go away.";
+            break;
+
+        VTCERR_CLIENT_REQUEST_ERROR:
+            errortext = "Client request error.";
+            break;
+
+        default:
+        	  errortext = "Unknown VTC error code.";
+        	  break;
+    }
+
+    // Report the error to the user. (The "All OK" case jumped out of this function earlier ..)
+    buffer = y_mem_alloc( strlen(errorheader) + strlen(errortext) +1 );
+    lr_param_sprintf("VTS_ERROR_MESSAGE", "%s%s", errorheader, errortext);
+    lr_error_message(errortext);
+    // At this point it might be an idea to call lr_abort() or lr_exit(LR_EXIT_VUSER, LR_FAIL)
+    
+    return returncode;
+}
+
+
 // ***************************************************************************************************
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
@@ -81,20 +177,16 @@ void VTS_setup()
 //        parameter VTSPort, bevat de Poortnummer van de VTS-server
 int VTS_connect()
 {
-	PVCI ppp;
-	int rc;
+    PVCI ppp;
+    int rc;
 
     VTS_setup();
 
     // Connect to the Virtual Table Server and grab the Handle, and print it.
     ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
-    rc = vtc_get_last_error(ppp);
     
-    if(rc != 0)
+    if( VTS_process_returncode(vtc_get_last_error(ppp)) != 0 )
     {
-        char* errortext = "Can not connect to VTS: server unreachable.";
-        lr_save_string(errortext, "VTS_ERROR_MESSAGE");
-        lr_error_message(errortext);
         ppp = -1;
     }
 
