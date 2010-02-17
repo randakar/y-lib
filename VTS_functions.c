@@ -51,6 +51,20 @@ VTS starten:
 int _vts_setup_completed = 0;
 
 
+// Standardised error reporting for all VTS functions.
+// @author Floris Kraak
+void VTS_report_error(char* errortext)
+{
+    const char* errorheader = "****** VTS ERROR: ";
+    char *buffer = y_mem_alloc( strlen(errorheader) + strlen(errortext) +1 );
+    sprintf(buffer, "%s%s", errorheader, errortext);
+    lr_error_message(buffer);
+    lr_save_string(buffer, "VTS_ERROR_MESSAGE");
+    free(buffer);
+}
+
+// Initialisation of the VTS client library etc.
+// @author Floris Kraak
 void VTS_setup()
 {
     int result;
@@ -64,19 +78,20 @@ void VTS_setup()
     //***************************
     if( (result = lr_load_dll("vtclient.dll")) != 0 )
     {
-        lr_error_message("Unable to load Virtual Table Server client dll. Please check your VTS installation.");
+        VTS_report_error("Unable to load Virtual Table Server client dll. Please check your VTS installation.");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
     _vts_setup_completed = 1;
 }
 
-
+//
+// Translation facility for VTS return codes. Also reports any errors.
+// 
+// @author Floris Kraak
 int VTS_process_returncode(int returncode)
 {
-    const char* errorheader = "****** VTS ERROR: ";
     char* errortext;
-    char* buffer;
     
     /** 
      * This is what the header file vts2.h tells us about error codes:
@@ -158,9 +173,7 @@ int VTS_process_returncode(int returncode)
     }
 
     // Report the error to the user. (The "All OK" case jumped out of this function earlier ..)
-    buffer = y_mem_alloc( strlen(errorheader) + strlen(errortext) +1 );
-    lr_param_sprintf("VTS_ERROR_MESSAGE", "%s%s", errorheader, errortext);
-    lr_error_message(errortext);
+    VTS_report_error(errortext);
     // At this point it might be an idea to call lr_abort() or lr_exit(LR_EXIT_VUSER, LR_FAIL)
     
     return returncode;
@@ -228,7 +241,7 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
         return -1;
     }
 
-    if( unique > 0)
+    if( unique > 0 )
     {
         rc = vtc_send_if_unique(ppp, columnname, value, &status);
     }
@@ -240,28 +253,17 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
     VTS_disconnect(ppp);
 
     //lr_log_message("result: %d .... send message status: %d", rc, status);
-    if( rc != 0 )
+    if( VTS_process_returncode(rc) != VTCERR_OK )
     {
-        errortext = "Cannot write to VTS.";
-        errorcode = -2;
-    }
-    else
-    {
-        if (status == 0)
-        {
-            errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
-            errorcode = -3;
-        }
-        else
-        {   // write ok
-            errorcode = 0;
-        }
+        // VTS_process_returncode() handled the error for us.
+        return rc;
     }
     
-    lr_save_string(errortext,"VTS_ERROR_MESSAGE");
-    if(errorcode != 0 )
+    if(status == 0)
     {
-        lr_error_message(errortext);
+        errorcode = -2;
+        errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
+        VTS_report_error(errortext);
     }
 
     return errorcode;
