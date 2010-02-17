@@ -177,21 +177,18 @@ int VTS_process_returncode(int returncode)
 int VTS_connect()
 {
     PVCI ppp;
-    int rc;
-
     VTS_setup();
 
     // Connect to the Virtual Table Server and grab the Handle, and print it.
     ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
     
-    if( VTS_process_returncode(vtc_get_last_error(ppp)) != 0 )
+    if( VTS_process_returncode(vtc_get_last_error(ppp)) != VTCERR_OK )
     {
         ppp = -1;
     }
 
     // lr_output_message(">> The VTS Handle is : %d", ppp);
     lr_save_int(ppp, "VTS_ppp");
-
     return ppp;
 }
 
