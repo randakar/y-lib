@@ -98,7 +98,7 @@ int VTS_connect()
     
     if(rc != 0)
     {
-        const char errortext = "Can not connect to VTS: server unreachable.";
+        char* errortext = "Can not connect to VTS: server unreachable.";
         lr_save_string(errortext, "VTS_ERROR_MESSAGE");
         lr_error_message(errortext);
         ppp = -1;
