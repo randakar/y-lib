@@ -302,62 +302,6 @@ int VTS_readRandom(char* columnname, char* ParameterName)
 
 
 
-
-
-// lees een willekeurige kolom uit de VTS-database.
-// De naam van de colums wordt in parameter {databasevelden} bepaald.
-int VTS_readRandomMultipleColumns(char* columnname)
-{
-    PVCI ppp = VTS_connect();
-    int            rc = 0;
-    unsigned short status;
-    int            errorcode = 0;
-    int            tablesize;
-    int            rand_row;
-    char           *value = NULL;
-
-    if( ppp == -1 )
-    {
-        // VTS_connect() should have set the error message already.
-        return -1;
-    }
-
-    tablesize=0;
-    lr_save_string(lr_eval_string("{databasevelden}"), "databaseveld");
-    do
-    {
-        if (tablesize==0)
-        {
-            if ((rc = vtc_column_size(ppp, lr_eval_string("{databaseveld}"), &tablesize)) != 0)
-            {
-                lr_save_string("Can not determine column size", "VTS_ERROR_MESSAGE");
-                lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-                errorcode = -1;
-            }
-            rand_row = rand() % tablesize + 1;
-        }
-        lr_message("Tablesize: %d", tablesize);
-        lr_message("rand_row: %d", rand_row);
-
-        if ((rc = vtc_query_column(ppp, lr_eval_string("{databaseveld}"), rand_row, &value)) != 0)
-        {
-            lr_error_message("******************** VTS Error - Query Return Code = %d", rc);
-        }
-        else
-        {
-            // lr_output_message("******************** Query Column 1 Result = %s", value);
-            lr_save_string(value,lr_eval_string("{databaseveld}"));
-        }
-        lr_save_string(lr_eval_string("{databasevelden}"), "databaseveld");
-    }
-    while (strcmp(lr_eval_string("{databaseveld}"), "einde") != 0);
-    
-    vtc_free(value);
-    VTS_disconnect(ppp);
-    return errorcode;
-}
-
-
 // ***************************************************************************************************
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
