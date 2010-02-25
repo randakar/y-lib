@@ -226,6 +226,8 @@ int VTS_disconnect(int ppp)
 // Als de unique vlag groter dan 0 is gebeurt dat alleen onder voorwaarde dat de waarde niet al 
 // bestaat in de tabel.
 //
+// Todo: convert these functions to return a VTCERR rather than a simple int.
+//
 // @author Floris Kraak
 int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
 {
@@ -265,8 +267,8 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
             errortext = "Can not write to VTS: value (most likely) already exists in VTS.";
             VTS_report_error(errortext);
         }
-    }   
-    
+    }
+
     return errorcode;
 }
 
@@ -324,8 +326,7 @@ int VTS_clearColumn(char* columnname)
         else
         {
             errorcode = -2;
-            errortext = "Failed to clear column.";
-            VTS_report_error(errortext);
+            VTS_report_error("Failed to clear column.");
         }
     }
 
