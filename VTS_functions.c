@@ -523,27 +523,37 @@ int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns(char* columnnames, char* data)
 {
-    PVCI           ppp;
     int            rc = 0;
     unsigned short status;
     int            errorcode = 0;
 
-    ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
+    PVCI ppp = VTS_connect();
+
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
         return -1;
     }
 
-    rc=lrvtc_send_row1(columnnames, data, ";", VTSEND_SAME_ROW);
-    if (rc != 0)
+    errorcode=vtc_send_row1(ppp, columnnames, data, ";", VTSEND_SAME_ROW, &status);
+    //lr_message("status: %d", status);
+
+    VTS_disconnect(ppp);
+
+    if(VTS_process_returncode(errorcode) == VTCERR_OK)
     {
-        lr_save_string("Can not write to columns: ", "VTS_ERROR_MESSAGE");
-        lr_error_message(lr_eval_string("{VTS_ERROR_MESSAGE}"));
-        errorcode = -1;
+        if(status > 0)
+        {
+            // Success!
+            lr_message("INFO: Data written to multiple columns.");
+        }
+        else
+        {
+            errorcode = -2;
+            VTS_report_error("Failed to write to multiple columns.");
+        }
     }
 
-    lrvtc_disconnect();
     return errorcode;
 }
 
