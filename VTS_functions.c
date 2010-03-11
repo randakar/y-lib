@@ -193,7 +193,8 @@ int VTS_connect()
     VTS_setup();
 
     // Connect to the Virtual Table Server and grab the Handle, and print it.
-    ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
+    //ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
+    ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
     
     if( VTS_process_returncode(vtc_get_last_error(ppp)) != VTCERR_OK )
     {
@@ -210,9 +211,9 @@ int VTS_connect()
 // ***************************************************************************************************
 
 // verbinding met VTS verbreken
-int VTS_disconnect(int ppp)
+int VTS_disconnect()
 {
-    vtc_disconnect(ppp);
+    lrvtc_disconnect();
     return 0;
 }
 
@@ -251,7 +252,7 @@ int VTS_pushlast_with_flag(char* columnname, char* value, int unique)
         errorcode = vtc_send_message(ppp, columnname, value, &status);
     }
     vtc_free(value);
-    VTS_disconnect(ppp);
+    VTS_disconnect();
 
     //lr_log_message("result: %d .... send message status: %d", errorcode, status);
     if(VTS_process_returncode(errorcode) == VTCERR_OK)
@@ -314,7 +315,7 @@ int VTS_clearColumn(char* columnname)
     }
 
     errorcode = vtc_clear_column(ppp, columnname, &status);
-    VTS_disconnect(ppp);
+    VTS_disconnect();
 
     if(VTS_process_returncode(errorcode) == VTCERR_OK)
     {
@@ -375,7 +376,7 @@ int VTS_readRandom(char* columnname, char* ParameterName)
         lr_save_string(value,ParameterName);        
     }
     vtc_free(value);    
-    VTS_disconnect(ppp);   
+    VTS_disconnect();   
 
     if(errorcode != 0)
     {
@@ -397,13 +398,12 @@ int VTS_readRandom(char* columnname, char* ParameterName)
 //             uit de database verwijderd. Zodoende kan een deze waarde nooit 2x gebruikt worden.
 int VTS_popfirst(char *columnname)
 {
-    PVCI           ppp;
+    PVCI           ppp = VTS_connect();
     int            rc = 0;
     int            size;
     unsigned short status;
     int            errorcode = 0;
     
-    ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
@@ -419,7 +419,7 @@ int VTS_popfirst(char *columnname)
         // dit werkt niet helemaal goed. Dit geeft de tekst "columname" terug, ipv de inhoud van {columnname}
         lr_output_message ("Retrieved value is : %s", y_get_parameter(columnname));
     }
-    lrvtc_disconnect();
+    VTS_disconnect();
 
     return errorcode;
 }
@@ -438,12 +438,11 @@ int VTS_popfirst(char *columnname)
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns_unique(char *columnnames, char *data)
 {
-    PVCI           ppp;
+    PVCI           ppp = VTS_connect();
     int            rc = 0;
     unsigned short status;
     int            errorcode = 0;
 
-    ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
@@ -458,7 +457,7 @@ int VTS_push_multiple_columns_unique(char *columnnames, char *data)
         errorcode = -1;
     }
 
-    lrvtc_disconnect();
+    VTS_disconnect();
     return errorcode;
 }
 
@@ -482,12 +481,11 @@ int VTS_push_multiple_columns_unique(char *columnnames, char *data)
 //     dan duurt dat ca. 12,5 sec. Dat is gemiddeld dus per push en pop: 12,5 msec. 
 int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 {
-    PVCI           ppp;
+    PVCI           ppp = VTS_connect();
     int            rc = 0;
     unsigned short status;
     int            errorcode = 0;
 
-    ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), 0);
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
@@ -503,7 +501,7 @@ int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
         // lr_output_message("******************** Query Column 1 Result = %s", value);
         // lr_save_string(value,lr_eval_string("{databaseveld}"));
     }
-    lrvtc_disconnect();
+    VTS_disconnect();
 
     return errorcode;
 }
@@ -526,7 +524,6 @@ int VTS_push_multiple_columns(char* columnnames, char* data)
     int            rc = 0;
     unsigned short status;
     int            errorcode = 0;
-
     PVCI ppp = VTS_connect();
 
     if( ppp == -1 )
@@ -538,7 +535,7 @@ int VTS_push_multiple_columns(char* columnnames, char* data)
     errorcode=vtc_send_row1(ppp, columnnames, data, ";", VTSEND_SAME_ROW, &status);
     //lr_message("status: %d", status);
 
-    VTS_disconnect(ppp);
+    VTS_disconnect();
 
     if(VTS_process_returncode(errorcode) == VTCERR_OK)
     {
