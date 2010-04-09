@@ -21,8 +21,8 @@
 #ifndef _PARAM_ARRAY_C
 #define _PARAM_ARRAY_C
 
-#include "string.c"
-#include "loadrunner_utils.c"
+#include "y_string.c"
+#include "y_loadrunner_utils.c"
 
 //
 // This file contains loadrunner param array helper functions.

@@ -57,9 +57,9 @@
 #include "web_api.h"
 
 // Other Ylib functions
-#include "logging.c"
-#include "string.c"
-#include "loadrunner_utils.c"
+#include "y_logging.c"
+#include "y_string.c"
+#include "y_loadrunner_utils.c"
 
 
 // Variables //

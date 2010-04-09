@@ -19,7 +19,7 @@
 #ifndef _PROFILE_C
 #define _PROFILE_C
 
-#include "transaction.c"
+#include "y_transaction.c"
 
 //
 // Todo: Write documentation

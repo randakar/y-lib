@@ -21,7 +21,7 @@
 #ifndef _LOADRUNNER_UTILS_C
 #define _LOADRUNNER_UTILS_C
 
-#include "string.c"
+#include "y_string.c"
 
 int _vUserID = 0;                         // virtual user id
 char *_vUserGroup = NULL;                 // virtual user group

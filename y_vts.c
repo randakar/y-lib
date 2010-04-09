@@ -44,8 +44,8 @@ VTS starten:
 #define _VTS_FUNC_C
 
 #include "vts2.h"
-#include "string.c"
-#include "loadrunner_utils.c"
+#include "y_string.c"
+#include "y_loadrunner_utils.c"
 
 // Global variables
 int _vts_setup_completed = 0;

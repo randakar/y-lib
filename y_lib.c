@@ -19,11 +19,11 @@
 #ifndef _YLIB_C
 #define _YLIB_C
 
-#include "string.c"
-#include "loadrunner_utils.c"
-#include "logging.c"
-#include "transaction.c"
-#include "param_array.c"
-#include "profile.c"
+#include "y_string.c"
+#include "y_loadrunner_utils.c"
+#include "y_logging.c"
+#include "y_transaction.c"
+#include "y_param_array.c"
+#include "y_profile.c"
 
 #endif // _YLIB_C

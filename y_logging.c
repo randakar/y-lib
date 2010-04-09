@@ -20,7 +20,7 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
-#include "loadrunner_utils.c"
+#include "y_loadrunner_utils.c"
 /*
 Todo: 
 - split the extralogging bits from the setup stuff
