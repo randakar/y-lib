@@ -266,6 +266,12 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
     int trans_name_size = prefix_len + trans_nr_len +1 + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
 
+	if( transaction_nr >= 100 )
+	{
+		y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+		lr_exit(LR_EXIT_VUSER, LR_FAIL);
+	}
+
     sprintf(actual_trans_name, "%s%02d %s", actual_prefix, transaction_nr, transaction_name);
     free(actual_prefix);
     y_set_current_transaction_name(actual_trans_name);
@@ -284,6 +290,12 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
     int prefix_len = strlen(actual_prefix);
     int trans_name_size = prefix_len + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
+
+	if( transaction_nr >= 100 )
+	{
+		y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+		lr_exit(LR_EXIT_VUSER, LR_FAIL);
+	}
 
     sprintf(actual_trans_name, "%s%02d_%02d %s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
     free(actual_prefix);
