@@ -467,7 +467,7 @@ y_trans_web_link(char *transaction, char *linkname)
 // 
 #define Y_TRANS_WEB_LINK( TRANSACTION, LINKNAME )                         \
 do {                                                                      \
-  char *link = lr_eval_string(LINKNAME);                                  \
+    char *link = lr_eval_string(LINKNAME);                                \
     char *tmp, *trans;                                                    \
                                                                           \
     if( !(strlen(link) > 0) )                                             \
