@@ -30,6 +30,16 @@
 // "ord=all" argument. 
 //
 
+//
+// Some historical functions now have loadrunner equivalents, starting with LoadRunner version 9. 
+// Those functions have been replaced with macros that will call the correct LR 9 equivalent 
+// instead. If Y_COMPAT_LR_8 is enabled the old behaviour is restored.
+//
+// If you still use loadrunner versions earlier than 9 or are using Performance Center (version?)
+// you may need to uncomment the line below.
+//
+// #define Y_COMPAT_LR_8
+
 
 //////////////////////////// Param array functions. ////////////////////////////
 // --------------------------------------------------------------------------------------------------
@@ -39,7 +49,9 @@
 // --------------------------------------------------------------------------------------------------
 // Retrieve the number of saved elements for the parameter defined in *pArrayName
 // 
-// Superseded by the LR 9 function lr_paramarr_len() but kept for compatibility reasons.
+// Superseded by the LR 9 function lr_paramarr_len(), if Y_COMPAT_LR_8 is turned off this function 
+// is replaced with a simple macro calling the loadrunner equivalent.
+// Note: Performance Center may need Y_COMPAT_LR_8
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //    example usage:     
 //        int result;
@@ -50,6 +62,7 @@
 //        result = y_array_count("TAG");
 //        lr_message("RESULT: %d", result);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#ifdef Y_COMPAT_LR_8
 int y_array_count( const char *pArrayName )
 {
     // -- Loadrunner 9 and upwards
@@ -64,6 +77,11 @@ int y_array_count( const char *pArrayName )
     free(tmp);
     return result;
 }
+#else
+#define y_array_count( pArrayName ) lr_paramarr_len(pArrayName) 
+#endif // Y_COMPAT_LR_8
+
+
 // --------------------------------------------------------------------------------------------------
 
 
@@ -73,10 +91,12 @@ int y_array_count( const char *pArrayName )
 // --------------------------------------------------------------------------------------------------
 // Get a specific element from a parameter list.
 //
-// Note: If the data inside the parameter contains embedded null (\x00) characters you may have an issue
-// processing the return value. See also y_array_get_no_zeroes().
+// Note: If the data inside the parameter contains embedded null (\x00) characters you may have an 
+// issue processing the return value. See also y_array_get_no_zeroes().
 //
-// Superseded by the LR 9 function lr_paramarr_idx() but kept for compatibility reasons.
+// Superseded by the LR 9 function lr_paramarr_idx(), if Y_COMPAT_LR_8 is turned off this function
+// is replaced with a simple macro calling the loadrunner equivalent.
+// Note: Performance Center may need Y_COMPAT_LR_8
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //    example usage:     
 //        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
@@ -85,6 +105,7 @@ int y_array_count( const char *pArrayName )
 //        lr_message("LR9x: 4e in de array: %s", lr_paramarr_idx("TAG", 4));    // LR9 variant
 //        lr_message("LRxx: 4e in de array: %s", y_array_get("TAG", 4));        // y_array_get variant.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#ifdef Y_COMPAT_LR_8
 char *y_array_get( const char *pArray, const int pIndex )
 {
     //-- Loadrunner 9 and upwards
@@ -112,6 +133,10 @@ char *y_array_get( const char *pArray, const int pIndex )
     free (tmp);    
     return result;
 }
+#else
+#define y_array_get( pArray, pIndex ) lr_paramarr_idx(pArray, pIndex)
+#endif // Y_COMPAT_LR_8
+
 // --------------------------------------------------------------------------------------------------
 
 
