@@ -39,12 +39,33 @@ int _y_random_seed_initialized = 0;
 //// Random number generator control ////
 
 
+
+//!   y_setup()
+/*!   Used by y_rand(), and (possibly) others.
+Runs lr_whoami and sets vUserId and vUserGroup as global(!) variables.
+\return void
+\author Floris Kraak
+\warning uses 2 global variables: _vUserID and _vUserGroup. Use with care!
+*/
 void y_setup()
 {
    // Global variables, handle with care
    lr_whoami(&_vUserID, &_vUserGroup, NULL);
 }
 
+
+// --------------------------------------------------------------------------------------------------
+
+
+//!   Generate a random (integer) number between 0 and MAX_RAND.
+/*!   Seeds the random number generator only the first time this function is called.
+\return random number (integer)
+\author Floris Kraak
+\start_example
+int random_number;
+random_number=y_rand();
+\end_example
+*/
 int y_rand()
 {
    if(!_y_random_seed_initialized)
@@ -62,6 +83,7 @@ int y_rand()
    }
    return rand();
 }
+
 
 // --------------------------------------------------------------------------------------------------
 
@@ -276,33 +298,29 @@ y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximum
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
 }
 
-
 // --------------------------------------------------------------------------------------------------
 
 
+//! Check whether or not a random number lies between 2 given boundaries
+/*!
+Generate a random number between (and including) 0 and randMax, and tell us if that number lies 
+between the lower and upper bounds or not. (attention: boundaries are included!)
 
-
-//
-// Roll a random number between (and including) 0 and randMax, and tell us if that number falls 
-// between the lower and upper bounds or not. (attention: boundaries are included!)
-//
-// Zero = No.
-// One = Yes.
-// Negative return values are errors and generally mean that arguments make no sense
-//
-// This is useful for pathing decisions: Say that at point P in a script a choice has to be made
-// between continuing with actions A, B, and C. The decision is made based on a percentage:
-// A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code
-// that would make this decision.
-//
-// Note: Mathematically speaking this approach has flaws.  A better method would roll the number
-// just once, and then apply the boundary constraints to it repeatedly to make the decision.
-// This needs further work (tm).
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//         y_rand_in_sliding_window(1, 10, 20);
-//         // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This is useful for pathing decisions: Say that at point P in a script a choice has to be made
+between continuing with actions A, B, and C. The decision is made based on a percentage:
+A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code
+that would make this decision.
+@param[in] lowerbound Minumum value
+@param[in] upperbound Maximum value
+@param[in] randMax Upper boundary of the random number
+\author Floris Kraak
+\return 0: no, random number lies outside the boundaries\n
+      1: yes, random number lies inside the boundaries\n
+      <0: input made no sense.
+\start_example
+y_rand_in_sliding_window(1, 10, 20); // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
+\end_example
+*/
 int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 {
     int roll;
@@ -322,8 +340,9 @@ int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 
     return 0;
 }
-// --------------------------------------------------------------------------------------------------
 
+
+// --------------------------------------------------------------------------------------------------
 
 
 //! Create a random number (integer), between two boundaries. (the boundaries are included!)
@@ -351,44 +370,48 @@ int y_rand_between(int lowerbound, int upperbound)
 }
 
 
-
 // --------------------------------------------------------------------------------------------------
-////// Controller / Scenario related //////
 
 
-// This will fetch attributes from the vUser's command line (as set in the scenario!)
-// and store them in a parameter of the same name.
-// See also y_save_attribute_to_parameter()
-//
-// Arguments:
-//   - param: the name of the attribute to get AND
-//            the name of the parameter to store the retrieved value in.
-//
-// @author: Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//! Fetch attribute from vUser's command line.
+/*!
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
+and stores it in a parameter of the same name.
+This function is a short cut of y_save_attribute_to_parameter()
+
+@param[in] param Argument Name of the attribute.
+\return A LR parameter with the same name as the Argument Name.
+\author Floris Kraak
+\start_example
+y_save_attribute("server");
+web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
+\end_example
+\sa y_save_attribute_to_parameter()
+*/
 y_save_attribute( char* param )
 {
    y_save_attribute_to_parameter( param, param );
 }
 
 
-// This will fetch attributes from the vUser's command line (as set in the scenario!)
-// and store them in a parameter.
-// See also y_save_attribute()
-//
-// These attributes are defined in the details of the vUser group
-// They take the form "-attributename value"
-//
-// Arguments:
-//   - attrib: The name of the attribute to fetch
-//   - param : The name of the parameter to store the attribute in.
-//
-// @author: Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// --------------------------------------------------------------------------------------------------
+
+
+//! Fetch attribute from vUser's command line.
+/*!
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
+and stores it in a parameter of the same name.
+
+@param[in] attrib Argument Name of the attribute.
+@param[out] param LR-parameter name in which the Argument Value is stored.
+\return A LR parameter with the same name as the Argument Name.
+\author Floris Kraak
+\start_example
+y_save_attribute_to_parameter("server", "nice_server");
+web_add_auto_filter("Action=Include", "HostSuffix={nice_server}", LAST );
+\end_example
+\sa y_save_attribute()
+*/
 y_save_attribute_to_parameter( char* attrib, char* param )
 {
    char *tmp;
@@ -398,27 +421,34 @@ y_save_attribute_to_parameter( char* attrib, char* param )
       lr_save_string(tmp, param);
    }
 }
+
+
 // --------------------------------------------------------------------------------------------------
 
 
+//! Keep track of the steps in the script
+/*!
+Adds (another) string (read: step) to the LR-parameter {breadcrumb}
+Use this to keep track of the steps taken by the script. Very useful if you have a script which
+does things in a random order and you want to know (in the end) which order it used.
+You can, ofcourse, write this to a (log)file.
+Don't forget to use y_breadcrumb_reset() to clear the parameter at the start of the script.
+(else you end up with a very long breadcrumb (breadstick?).)
 
-// --------------------------------------------------------------------------------------------------
-// y_breadcrumb();
-//         Adds a string to the parameter {breadcrumb}.
-//      Use this to keep track of the steps taken by the script. Very useful is you have a script which
-//      does things in a random order and you want to know (in the end) which order it used.
-//      You can, ofcourse, write this to a (log)file.
-//      Don't forget to use y_breadcrumb_reset() to clear the parameter at the start of the script.
-// @author: Raymond de Jongh
-// Example:
-//        y_breadcrumb_reset();    // clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.
-//        y_breadcrumb("start");
-//        .... some code....
-//        y_breadcrumb("processing data")
-//        ... some code ....
-//        y_breadcrumb("finished")
-//      The result is that {breadcrumb} contains "start;processing data;finished"
-// --------------------------------------------------------------------------------------------------
+@param[in] breadcrumb
+\return LR parameter {breadcrumb}
+\author Raymond de Jongh
+\start_example
+y_breadcrumb_reset();    // clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.
+y_breadcrumb("start");
+// .... some code....
+y_breadcrumb("processing data")
+//... some code ....
+y_breadcrumb("finished")
+The result is that {breadcrumb} contains "start;processing data;finished"   
+\end_example
+\sa y_breadcrumb_reset()
+*/
 void y_breadcrumb(char *breadcrumb)
 {
     lr_message("---------------------------------------------------------------------------------");
@@ -436,23 +466,40 @@ void y_breadcrumb(char *breadcrumb)
     }
 }
 
+// --------------------------------------------------------------------------------------------------
 
 
+//! Resets the breadcrumb 
+/*! Use this function to start a new breadcrumb or to reset an existing one.
+\author Raymond de Jongh
+\sa y_breadcrumb()
+*/
 void y_breadcrumb_reset()
 {
     lr_save_string("", "breadcrumb");
 }
 
 
+// --------------------------------------------------------------------------------------------------
 
 
-// --------------------------------------------------------------------------------------------------
-// y_write_to_file()
-//       writes content (a string) to a file.
-// @author: Raymond de Jongh
-// Example:
-//      y_write_to_file("c:\\test.txt", "Write this to a file!");
-// --------------------------------------------------------------------------------------------------
+//! Write a string to a file.
+/*! Write a string to a file. Creates the file if it doesn't exist. Appends to an existing file.
+
+@param[in] filename Name of the file in which the content is saved.
+@param[in] content String which is saved into the file
+\return 0: everthing went fine\n
+<0: failed
+\author Raymond de Jongh
+\start_example
+int result;
+result=y_write_to_file("c:\\temp.txt", "This is a test");
+if (result != 0)
+{   // o dear, something went wrong!
+}
+\end_example
+\sa y_breadcrumb_reset()
+*/
 int y_write_to_file(char *filename, char *content)
 {
    long file;
@@ -477,22 +524,23 @@ int y_write_to_file(char *filename, char *content)
 
    return 0;                // everything worked great!
 }
+
+
 // --------------------------------------------------------------------------------------------------
 
 
+//! Saves the current date/time into a LR-parameter
+/*!
+Stores the current date/time into LR-parameter {DATE_TIME_STRING} in this format:\n
+YYYYMMDD,HHMMSS (yes, separated by a comma.)
 
-// --------------------------------------------------------------------------------------------------
-//    y_datetime()
-//      Simply returns the current date-time as a string, in this format:
-//        YYYYMMDD,HHMMSS (yesss, separated by a comma. That is most suitable for this moment.
-// @author: Raymond de Jongh
-// @author: Floris Kraak
-//
-// This mostly exists to facilitate y_write_to_log(), in logging.c 
-//
-// Comment: Ray, please have a look at lr_save_datetime() for me will you? Thanks ;-)
-//           -- Floris
-// --------------------------------------------------------------------------------------------------
+\return current date/time into LR-parameter {DATE_TIME_STRING}.
+\author Floris Kraak
+\start_example
+y_datetime();
+lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
+\end_example
+*/
 void y_datetime()
 {
     lr_save_datetime("%Y%m%d,%H%M%S", DATE_NOW, "DATE_TIME_STRING");
