@@ -207,22 +207,25 @@ int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 
 
 
-// --------------------------------------------------------------------------------------------------
-// create a random number (integer), between two values, including the boundaries(!)
-// So, y_rand_between(0,4) can result in these values: 0,1,2,3,4
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//         int random;        
-//         random = y_rand_between(0, 10);        // generate a random number between 0 and 10.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//! Create a random number (integer), between two boundaries. (the boundaries are included!)
+/*! When the lower boundary equals the upper boundary, y_rand_between() simply returns the lower boundary.
+@param[in] lowerbound Lower boundary of the generated number
+@param[in] upperbound Upper boundary of the generated number
+\return random number
+\author Floris Kraak
+\start_example
+int random;        
+random = y_rand_between(0, 10);        // generate a random number between 0 and 10 (including 0 and 10!)
+\end_example
+*/
 int y_rand_between(int lowerbound, int upperbound)
 {
     int roll;
 
-    if ((lowerbound>upperbound) || ((upperbound - lowerbound) == 0))
+    if( (lowerbound < 0) || (lowerbound>upperbound) || ((upperbound - lowerbound) == 0) )
     {
-        lr_error_message("y_rand called with nonsensical arguments. (lowerbound should be less than upperbound)");
-        return -1;    //    hmmm. is this correct?
+        lr_error_message("y_rand() called with negative or nonsensical arguments. Lowerbound should be less than upperbound!");
+        return -1;    // Note to self: This is a classic case for standard error codes.
     }
     roll = y_rand() % ((upperbound + 1 - lowerbound)) + lowerbound;
     return roll;
