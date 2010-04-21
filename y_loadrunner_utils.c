@@ -206,12 +206,74 @@ The total length of the line is minimal \e minimumLength and maimum \e maximumLe
 @param[in] maximumLength Maximum length of the string
 \return void
 \author Raymond de Jongh
-\sa y_random_number_buffer_core
+\sa y_random_string_buffer_core
 */
 y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 3, 8, 
    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Returns a random string of numbers with a given minimum and maximum length.
+/*!
+This function generates a string of numbers with a given minimum and maximum length.
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+y_random_number_buffer(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Returns a string containing only the "shift-1...shift 9 characters (on a US-keyboard).
+/*!
+This function generates a string of non-alfa-characters with a given minimum and maximum length.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+y_random_string_buffer_curses(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "!@#$%^&*()");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Generates a random string with a hexadecimal number, of a given minimum and maximum length
+/*!
+This function generates a string with a hexadecimal number.
+
+Should you need other word lenghts, use y_random_number_buffer_core().
+The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
 }
 
 
