@@ -41,26 +41,26 @@ int _y_random_seed_initialized = 0;
 
 void y_setup()
 {
-	// Global variables, handle with care
-	lr_whoami(&_vUserID, &_vUserGroup, NULL);
+   // Global variables, handle with care
+   lr_whoami(&_vUserID, &_vUserGroup, NULL);
 }
 
 int y_rand()
 {
-	if(!_y_random_seed_initialized)
-	{
-		if( _vUserID == NULL )
-		{
-			y_setup();
-		}
-		// Seed the random number generator for later use.
-		// To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
-		// In case the script itself already initialized the random number generator, use a random number from 
-		// there as well.
-		srand( time() + _vUserID + ((int)(_vUserGroup)) + rand() );
-		_y_random_seed_initialized = 1;
-	}
-	return rand();
+   if(!_y_random_seed_initialized)
+   {
+      if( _vUserID == NULL )
+      {
+         y_setup();
+      }
+      // Seed the random number generator for later use.
+      // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
+      // In case the script itself already initialized the random number generator, use a random number from 
+      // there as well.
+      srand( time() + _vUserID + ((int)(_vUserGroup)) + rand() );
+      _y_random_seed_initialized = 1;
+   }
+   return rand();
 }
 
 // --------------------------------------------------------------------------------------------------
