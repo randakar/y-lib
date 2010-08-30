@@ -206,30 +206,30 @@ void y_set_sub_transaction_nr(int trans_nr)
 
 void y_set_transaction_start_trigger( y_trigger_func *trigger_function )
 {
-	_y_trigger_start_trans = trigger_function;
+    _y_trigger_start_trans = trigger_function;
 }
 
 void y_set_transaction_end_trigger( y_trigger_func *trigger_function )
 {
-	_y_trigger_end_trans = trigger_function;
+    _y_trigger_end_trans = trigger_function;
 }
 
 int y_run_transaction_start_trigger()
 {
-	if( _y_trigger_start_trans == NULL )
-	{
-		return 0;
-	}
-	else return _y_trigger_start_trans();
+    if( _y_trigger_start_trans == NULL )
+    {
+        return 0;
+    }
+    else return _y_trigger_start_trans();
 }
 
 int y_run_transaction_end_trigger()
 {
-	if( _y_trigger_end_trans == NULL )
-	{
-		return 0;
-	}
-	else return _y_trigger_end_trans();
+    if( _y_trigger_end_trans == NULL )
+    {
+        return 0;
+    }
+    else return _y_trigger_end_trans();
 }
 
 //
@@ -237,25 +237,25 @@ int y_run_transaction_end_trigger()
 // 
 y_save_transaction_end_status(char* transaction_name, const char* saveparam, int status)
 {
-	int actual_status = lr_get_transaction_status(transaction_name);
+    int actual_status = lr_get_transaction_status(transaction_name);
 
-	if( actual_status == LR_PASS )
-	{
-		// LR thinks everything is fine. If our code doesn't that becomes the new end status.
-		lr_set_transaction_status(status);
-	}
-	else // in case of a LR reported fail status of some kind.
-	{
-		// The loadrunner reported status takes precendence as those errors are usually quite fundamental.
-		status = actual_status;
-	}
+    if( actual_status == LR_PASS )
+    {
+        // LR thinks everything is fine. If our code doesn't that becomes the new end status.
+        lr_set_transaction_status(status);
+    }
+    else // in case of a LR reported fail status of some kind.
+    {
+        // The loadrunner reported status takes precendence as those errors are usually quite fundamental.
+        status = actual_status;
+    }
 
-	if( actual_status == -16863 ) 
-	{
-		// Fix me: Lookup the corresponding LR constant.
-		lr_log_message("Warning: Possible attempt to close a transaction that has not been opened!");
-	}
-	lr_save_int(status, saveparam);
+    if( actual_status == -16863 ) 
+    {
+        // Fix me: Lookup the corresponding LR constant.
+        lr_log_message("Warning: Possible attempt to close a transaction that has not been opened!");
+    }
+    lr_save_int(status, saveparam);
 }
 
 
@@ -362,11 +362,11 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
     int trans_name_size = prefix_len + trans_nr_len +1 + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
 
-	if( transaction_nr >= 100 )
-	{
-		y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
-		lr_exit(LR_EXIT_VUSER, LR_FAIL);
-	}
+    if( transaction_nr >= 100 )
+    {
+        y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+        lr_exit(LR_EXIT_VUSER, LR_FAIL);
+    }
 
     sprintf(actual_trans_name, "%s%02d %s", actual_prefix, transaction_nr, transaction_name);
     free(actual_prefix);
@@ -387,11 +387,11 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
     int trans_name_size = prefix_len + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
 
-	if( transaction_nr >= 100 )
-	{
-		y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
-		lr_exit(LR_EXIT_VUSER, LR_FAIL);
-	}
+    if( transaction_nr >= 100 )
+    {
+        y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+        lr_exit(LR_EXIT_VUSER, LR_FAIL);
+    }
 
     sprintf(actual_trans_name, "%s%02d_%02d %s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
     free(actual_prefix);
@@ -420,12 +420,12 @@ void y_start_transaction(char *transaction_name)
     // Reset the sub transaction numbering.
     y_set_sub_transaction_nr(0);
 
-	// Fire the start trigger. For complicated web_reg_find() / web_reg_save_param() 
-	// statement collections that we want run right before starting every
-	// transaction in a group of transactions.
-	// Placed after the generation of the transaction name since that might be 
-	// a nice thing to have available.for trigger authors.
-	y_run_transaction_start_trigger();
+    // Fire the start trigger. For complicated web_reg_find() / web_reg_save_param() 
+    // statement collections that we want run right before starting every
+    // transaction in a group of transactions.
+    // Placed after the generation of the transaction name since that might be 
+    // a nice thing to have available.for trigger authors.
+    y_run_transaction_start_trigger();
 
     // Stops sub transactions from automagically
     // creating outer transactions for themselves.
@@ -442,20 +442,20 @@ void y_end_transaction(char *transaction_name, int status)
 {
     char *trans_name = lr_eval_string("{current_transaction}");
 
-	// Fire the transaction end trigger. For processing the results of 
-	// complicated web_reg_find() / web_reg_save_param() statement 
-	// collections that repeat for a group of transactions.
-	// This fires before the actual end of the transaction so that it can 
-	// still influence the transaction end status.
-	int trigger_result = y_run_transaction_end_trigger();
-	if( status == LR_PASS && trigger_result != LR_PASS )
-	{
-		lr_error_message("Transaction end trigger did not return LR_PASS");
-		status = trigger_result;
-	}
+    // Fire the transaction end trigger. For processing the results of 
+    // complicated web_reg_find() / web_reg_save_param() statement 
+    // collections that repeat for a group of transactions.
+    // This fires before the actual end of the transaction so that it can 
+    // still influence the transaction end status.
+    int trigger_result = y_run_transaction_end_trigger();
+    if( status == LR_PASS && trigger_result != LR_PASS )
+    {
+        lr_error_message("Transaction end trigger did not return LR_PASS");
+        status = trigger_result;
+    }
 
-	// Save the end status of this transaction. It won't be available after ending it.
-	y_save_transaction_end_status(trans_name, "current_transaction", status);
+    // Save the end status of this transaction. It won't be available after ending it.
+    y_save_transaction_end_status(trans_name, "current_transaction", status);
     lr_end_transaction(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
@@ -497,8 +497,8 @@ void y_start_sub_transaction(char *transaction_name)
                                     y_get_transaction_nr(),
                                     y_get_and_increment_sub_transaction_nr());
 
-	// Fire the transaction start trigger.
-	y_run_transaction_start_trigger();
+    // Fire the transaction start trigger.
+    y_run_transaction_start_trigger();
 
     // For external analysis of the response times.
     y_log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
@@ -510,15 +510,15 @@ void y_end_sub_transaction(char *transaction_name, int status)
 {
     char *trans_name = lr_eval_string("{current_sub_transaction}");
 
-	// Fire the transaction end trigger.
-	int trigger_result = y_run_transaction_end_trigger();
-	if( status == LR_PASS && trigger_result != LR_PASS )
-	{
-		status = trigger_result;
-	}
+    // Fire the transaction end trigger.
+    int trigger_result = y_run_transaction_end_trigger();
+    if( status == LR_PASS && trigger_result != LR_PASS )
+    {
+        status = trigger_result;
+    }
 
-	// Save the end status of this transaction. It won't be available after ending it.
-	y_save_transaction_end_status(trans_name, "last_sub_transaction_status", status);
+    // Save the end status of this transaction. It won't be available after ending it.
+    y_save_transaction_end_status(trans_name, "last_sub_transaction_status", status);
     lr_end_sub_transaction(trans_name, status);
 
     // For external analysis of the response times.
