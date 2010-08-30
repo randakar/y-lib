@@ -170,7 +170,8 @@ void y_set_sub_transaction_nr(int trans_nr)
 }
 
 
-/////******
+
+/******
 //
 //Users can now set trigger functions for the start and end of y_ transactions. 
 //These triggers will run just before the transaction measurements start, and 
@@ -201,7 +202,7 @@ void y_set_sub_transaction_nr(int trans_nr)
 //with the notable exception that the return //value is not ignored, but 
 //used to set the end status of the transaction before it ends.
 //
-*****//
+*****/
 
 void y_set_transaction_start_trigger( y_trigger_func *trigger_function )
 {
