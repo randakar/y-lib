@@ -83,6 +83,10 @@ int _y_sub_transaction_nr = 0;
 #define Y_TRANS_STATUS_AUTO_STARTED 2
 int _trans_status = Y_TRANS_STATUS_NONE;
 
+// Transaction trigger support
+typedef int (y_trigger_func)();
+y_trigger_func *_y_trigger_start_trans = NULL;
+y_trigger_func *_y_trigger_end_trans = NULL;
 
 // Getters / Setters //
 
@@ -166,8 +170,99 @@ void y_set_sub_transaction_nr(int trans_nr)
 }
 
 
-// make sure this thing contains a valid string to prevent y_end_action_block using random memory
-//_block_transaction[0] = '\0';
+/////******
+//
+//Users can now set trigger functions for the start and end of y_ transactions. 
+//These triggers will run just before the transaction measurements start, and 
+//just before the transaction measurements end.
+//
+//Usage:
+//Define a new function, as follows:
+//
+//int register_save_params_trigger()
+//{
+//   web_reg_save_param("something", ...);
+//   web_reg_save_param("same thing in a slightly different layout", ...);
+//
+//   return LR_PASS; // this is ignored for transaction start triggers
+//}
+//
+//Then, at the point where this trigger should start firing call:
+//
+//y_set_transaction_start_trigger( &register_save_params_trigger );
+//
+//From then on out every call to y_start_transaction() and 
+//y_start_sub_transaction() will fire the trigger. 
+//A call to //y_run_transaction_start_trigger() will fire the trigger too.
+//
+//To stop the trigger from firing call 'y_set_transaction_start_trigger(NULL);'
+//
+//Transaction end triggers are mirror images of transaction end triggers, 
+//with the notable exception that the return //value is not ignored, but 
+//used to set the end status of the transaction before it ends.
+//
+*****//
+
+void y_set_transaction_start_trigger( y_trigger_func *trigger_function )
+{
+	_y_trigger_start_trans = trigger_function;
+}
+
+void y_set_transaction_end_trigger( y_trigger_func *trigger_function )
+{
+	_y_trigger_end_trans = trigger_function;
+}
+
+int y_run_transaction_start_trigger()
+{
+	if( _y_trigger_start_trans == NULL )
+	{
+		return 0;
+	}
+	else return _y_trigger_start_trans();
+}
+
+int y_run_transaction_end_trigger()
+{
+	if( _y_trigger_end_trans == NULL )
+	{
+		return 0;
+	}
+	else return _y_trigger_end_trans();
+}
+
+//
+// Helper function to save the transaction end status before y_end_(sub_)transaction() closes them.
+// 
+y_save_transaction_end_status(char* transaction_name, const char* saveparam, int status)
+{
+	int actual_status = lr_get_transaction_status(transaction_name);
+
+	if( actual_status == LR_PASS )
+	{
+		// LR thinks everything is fine. If our code doesn't that becomes the new end status.
+		lr_set_transaction_status(status);
+	}
+	else // in case of a LR reported fail status of some kind.
+	{
+		// The loadrunner reported status takes precendence as those errors are usually quite fundamental.
+		status = actual_status;
+	}
+
+	if( actual_status == -16863 ) 
+	{
+		// Fix me: Lookup the corresponding LR constant.
+		lr_log_message("Warning: Possible attempt to close a transaction that has not been opened!");
+	}
+	lr_save_int(status, saveparam);
+}
+
+
+
+
+/////////// END HELPERS //////////
+
+
 
 //
 // Action blocks. Name all transactions within an action block with a common prefix.
@@ -324,6 +419,13 @@ void y_start_transaction(char *transaction_name)
     // Reset the sub transaction numbering.
     y_set_sub_transaction_nr(0);
 
+	// Fire the start trigger. For complicated web_reg_find() / web_reg_save_param() 
+	// statement collections that we want run right before starting every
+	// transaction in a group of transactions.
+	// Placed after the generation of the transaction name since that might be 
+	// a nice thing to have available.for trigger authors.
+	y_run_transaction_start_trigger();
+
     // Stops sub transactions from automagically
     // creating outer transactions for themselves.
     _trans_status = Y_TRANS_STATUS_STARTED;
@@ -339,9 +441,20 @@ void y_end_transaction(char *transaction_name, int status)
 {
     char *trans_name = lr_eval_string("{current_transaction}");
 
-    // Save the end status of this transaction. It won't be available after ending it.
-    lr_save_int(lr_get_transaction_status(trans_name), "last_transaction_status");
+	// Fire the transaction end trigger. For processing the results of 
+	// complicated web_reg_find() / web_reg_save_param() statement 
+	// collections that repeat for a group of transactions.
+	// This fires before the actual end of the transaction so that it can 
+	// still influence the transaction end status.
+	int trigger_result = y_run_transaction_end_trigger();
+	if( status == LR_PASS && trigger_result != LR_PASS )
+	{
+		lr_error_message("Transaction end trigger did not return LR_PASS");
+		status = trigger_result;
+	}
 
+	// Save the end status of this transaction. It won't be available after ending it.
+	y_save_transaction_end_status(trans_name, "current_transaction", status);
     lr_end_transaction(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
@@ -383,6 +496,9 @@ void y_start_sub_transaction(char *transaction_name)
                                     y_get_transaction_nr(),
                                     y_get_and_increment_sub_transaction_nr());
 
+	// Fire the transaction start trigger.
+	y_run_transaction_start_trigger();
+
     // For external analysis of the response times.
     y_log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
     lr_start_sub_transaction(lr_eval_string("{current_sub_transaction}"), 
@@ -391,13 +507,17 @@ void y_start_sub_transaction(char *transaction_name)
 
 void y_end_sub_transaction(char *transaction_name, int status)
 {
-    char *trans_name; 
+    char *trans_name = lr_eval_string("{current_sub_transaction}");
 
-    trans_name = lr_eval_string("{current_sub_transaction}");
+	// Fire the transaction end trigger.
+	int trigger_result = y_run_transaction_end_trigger();
+	if( status == LR_PASS && trigger_result != LR_PASS )
+	{
+		status = trigger_result;
+	}
 
-    // Save the end status of this transaction. It won't be available after ending it.
-    lr_save_int(lr_get_transaction_status(trans_name), "last_sub_transaction_status");
-
+	// Save the end status of this transaction. It won't be available after ending it.
+	y_save_transaction_end_status(trans_name, "last_sub_transaction_status", status);
     lr_end_sub_transaction(trans_name, status);
 
     // For external analysis of the response times.
