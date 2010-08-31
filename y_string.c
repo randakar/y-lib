@@ -391,11 +391,11 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //        example usage:
 //            lr_save_string("WackoYackoDotWarner", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=WackoYackoDotWarner
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
 //            y_split("Test", "Yacko", "Left", "Right");           // Use "Yacko" as the separator
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDot
+//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
 //            lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
-//            lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = Warner
+//            lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = DotWarnerWarner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
 {
