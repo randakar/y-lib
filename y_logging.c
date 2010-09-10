@@ -137,7 +137,7 @@ y_log_warning(char *message)
 // Save the current loglevel and turn off logging.
 y_log_turn_off()
 {
-    lr_log_message("Log level set to OFF.\n");
+    //lr_log_message("Log level set to OFF.\n");
 
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
@@ -147,7 +147,7 @@ y_log_turn_off()
 
 y_log_set_brief()
 {
-    lr_log_message("Log level set to BRIEF.\n");
+    //lr_log_message("Log level set to BRIEF.\n");
 
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
@@ -158,7 +158,7 @@ y_log_set_brief()
 
 y_log_set_extended()
 {
-    lr_log_message("Log level set to EXTENDED.\n");
+    //lr_log_message("Log level set to EXTENDED.\n");
 
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
@@ -180,7 +180,7 @@ y_log_restore()
     }
     */
     lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
-    lr_log_message("Log level restored to the previous state.\n");
+    //lr_log_message("Log level restored to the previous state.\n");
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
 
@@ -228,7 +228,7 @@ int y_write_to_log(char *filename, char *content)
 
     string_length = strlen(content);
     string_length +=strlen(vuser_group);
-    string_length +=15;        // y_datetime() is altijd 15 chars lang.
+    string_length +=15;       // y_datetime() is altijd 15 chars lang.
     string_length +=6;        // 6 chars voor id (is dat genoeg?!?)
     string_length +=6;        // 6 chars voor scid (is dat genoeg?!?)
 
