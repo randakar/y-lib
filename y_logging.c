@@ -21,10 +21,7 @@
 #define _LOGGING_C
 
 #include "y_loadrunner_utils.c"
-/*
-Todo: 
-- split the extralogging bits from the setup stuff
-*/
+
 
 // Global variables
 int _y_extra_logging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
@@ -66,23 +63,23 @@ struct timeb {
  */
 char *y_get_datetimestamp()
 {
-	struct timeb timebuffer;
-	struct tm *nu;
-	static char YMDHMSm[24]; // moet static char zijn om te gebruiken als returnwaarde
+    struct timeb timebuffer;
+    struct tm *nu;
+    static char YMDHMSm[24]; // moet static char zijn om te gebruiken als returnwaarde
 
-	_tzset();
-	ftime( &timebuffer );
-	nu = (struct tm *)localtime( & (timebuffer.time) );
-	
-	sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
-      nu->tm_year + 1900,
-			nu->tm_mon + 1,
-			nu->tm_mday,
-			nu->tm_hour,
-			nu->tm_min,
-			nu->tm_sec,
-			timebuffer.millitm);
-	return YMDHMSm;
+    _tzset();
+    ftime( &timebuffer );
+    nu = (struct tm *)localtime( & (timebuffer.time) );
+
+    sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
+        nu->tm_year + 1900,
+        nu->tm_mon + 1,
+        nu->tm_mday,
+        nu->tm_hour,
+        nu->tm_min,
+        nu->tm_sec,
+        timebuffer.millitm);
+    return YMDHMSm;
 }
 
 //
@@ -97,10 +94,10 @@ time_t y_timestamp()
 
 y_setup_logging()
 {
-	if( _vUserID == NULL ) 
-	{
-		y_setup();
-	}
+    if( _vUserID == NULL ) 
+    {
+        y_setup();
+    }
 
     // Make the extra logging facility available to the user.
     _y_extra_logging = 1;
@@ -188,11 +185,11 @@ y_log_turn_on()
 {
     if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
     {
-        log_set_extended();
+        y_log_set_extended();
     }
     else
     {
-        log_restore();
+        y_log_restore();
     }
 }
 
@@ -224,8 +221,6 @@ int y_write_to_log(char *filename, char *content)
     // todo: make this call y_setup().
     lr_whoami(&id, &vuser_group, &scid);
 
-
-
     string_length = strlen(content);
     string_length +=strlen(vuser_group);
     string_length +=15;       // y_datetime() is altijd 15 chars lang.
@@ -241,7 +236,6 @@ int y_write_to_log(char *filename, char *content)
     free(log);
 
     return result;
-
 }
 // --------------------------------------------------------------------------------------------------
 
