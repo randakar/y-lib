@@ -535,7 +535,7 @@ Stores the current date/time into LR-parameter {DATE_TIME_STRING} in this format
 YYYYMMDD,HHMMSS (yes, separated by a comma.)
 
 \return current date/time into LR-parameter {DATE_TIME_STRING}.
-\author Floris Kraak
+\author Raymond de Jongh
 \start_example
 y_datetime();
 lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
@@ -544,6 +544,82 @@ lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
 void y_datetime()
 {
     lr_save_datetime("%Y%m%d,%H%M%S", DATE_NOW, "DATE_TIME_STRING");
+}
+
+
+//! Calculate the difference in days between today and X workdays into the future.
+/*!
+Calculate the difference in days between today and a date X workdays into the future.
+
+\return How many days into the future X workdays will be.
+\author Floris Kraak
+\start_example
+// Reserve a meeting room in 'reservationOffset' days.
+int daysOffSet = y_workdays_from_today( atoi(lr_eval_string("{reservationOffset}")) );
+lr_save_datetime("%d-%m-%Y", DATE_NOW + (daysOffSet*ONE_DAY), "ReservationDate");
+
+lr_vuser_status_message( 
+    lr_eval_string("Running with offset {reservationOffset} at day offset %d"), 
+    daysOffSet);    
+\end_example
+*/
+int y_workdays_from_today(int workdays)
+{
+    int weekday, weeksOffset, weekstart;
+    int i = 0;
+    int result = workdays;
+    //int debugOffset = 0;
+
+    // debugging loop
+    //for(debugOffset = 0; debugOffset < 13; debugOffset++) {
+    //    result = debugOffset;
+
+    //lr_log_message("--- result start %d ---", result);
+
+    // Determine what day of the week today falls into.
+    lr_save_datetime("%w", DATE_NOW, "weekdayToday");
+    weekstart = atoi(lr_eval_string("{weekdayToday}"));
+    //lr_log_message("--- weekstart = %d ---", weekstart);
+
+    weeksOffset = result / 5;
+    //lr_log_message("weeksOffset %d", weeksOffset);
+    result += (2 * weeksOffset);
+    //lr_log_message("Adding extra weeks weekends adds up to %d", result);
+
+    // Determine what day of the week our target day falls into.
+    lr_save_datetime("%w", DATE_NOW + result*(ONE_DAY), "weekdayFuture");
+    weekday = atoi(lr_eval_string("{weekdayFuture}"));
+    //lr_log_message("--- weekday = %d ---", weekday);
+
+    // Look at each day between the day of the week that our count started on,
+    // and the day of our target date. Shift the target date backwards if we find
+    // a weekend.
+    i = weekstart;
+    do {
+        // Weekend rollover
+        if( i > 6) {
+            i = 0;
+        }
+        // Weekend day found
+        if( i == 0 || i == 6 ) {
+            //lr_log_message("i = %d, adding 1 day", i);
+            result++;
+        }
+        i++;
+    } while( i != (weekday+1) );
+
+    // Add another day if our target day falls on a saturday.
+    // The search loop accounted for the saturday itself, but saturdays tend to be
+    // followed by sundays ..
+    if ( weekday == 6 ) {
+        //lr_log_message("weekday = %d, adding 1 day", weekday);
+        result++;
+    }
+
+    //lr_log_message( "############ Final day offset = %d ############", result);
+    
+    //} // end debugging loop
+    return result;
 }
 
 
