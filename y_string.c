@@ -592,7 +592,7 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    char* tmp;
    int removePtr;
 
-   lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
+   //lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
 
    if(!removeMe || !*removeMe)
       return;
