@@ -592,10 +592,10 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    char* tmp;
    int removePtr;
 
-   lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
+   //lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
 
-   if ((removeMe == NULL) || (strlen(removeMe) < 1))
-       return;
+   if(!removeMe || !*removeMe)
+	   return;
 
    // fetch the contents of the parameter to change
    parameter = y_get_parameter(paramName);
