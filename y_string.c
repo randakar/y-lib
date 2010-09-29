@@ -588,10 +588,10 @@ y_replace( const char *parameter, const char *search, const char *replace)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 {
-   char* parameter;
-   char* tmp;
-   int removePtr;
-
+   char *parameter;
+   char *removePtr;
+   int remlen;
+ 
    //lr_log_message("y_remove_string_from_parameter( remove:%s, parameter:%s )", removeMe, paramName);
 
    if(!removeMe || !*removeMe)
@@ -600,17 +600,15 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    // fetch the contents of the parameter to change
    parameter = y_get_parameter(paramName);
    // removePtr is used to track our progress through this string
-   removePtr = (int)parameter;
+   removePtr = parameter;
+   remlen = strlen(removeMe);
 
    // while we find occurrances of the string we're looking for
-   while ( removePtr = strstr( removePtr, removeMe ) )
+   while ( removePtr = (char *)strstr( removePtr, removeMe ) )
    {
-      // calculate where data ends that we want to remove
-      tmp = (char *)removePtr + strlen(removeMe);
-
-      // copy the characters between aforementioned point and end-of-string to the place
-      // where we found our offending content.
-      strcpy( removePtr, tmp);
+      // copy the characters between the end of the data we wish to remove and end-of-string 
+      // to the place where we found our offending content.
+      strcpy( removePtr, removePtr + remlen);
    }
 
    // store it in the original parameter
