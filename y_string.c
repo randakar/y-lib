@@ -368,7 +368,7 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
     if( posPtr == NULL )
     {
         // Copy the original to the left hand output buffer.
-        strcpy(left, original);
+		strncpy(left, original, strlen(original));
         return;
     }
     //lr_log_message("pos = %d", pos);
@@ -379,7 +379,10 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
 
     // Copy the right hand side starting from the position 
     // just after the found string.
-    strcpy(right, posPtr+strlen(separator));
+	{
+		char *start = posPtr + strlen(separator);
+        strncpy(right, start, strlen(original) - start);
+	}
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -564,7 +567,7 @@ y_replace( const char *parameter, const char *search, const char *replace)
          //lr_output_message("memmove completed, result = %s", c);
          last = last - slen + rlen;            // en bereken het nieuwe eindpunt
       }
-      memmove (c, replace, rlen);  // voeg replace toe over search heen
+      memmove(c, replace, rlen);  // execute the replacement
    }
    lr_save_string(buffer, parameter);
 
@@ -608,7 +611,7 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    {
       // copy the characters between the end of the data we wish to remove and end-of-string 
       // to the place where we found our offending content.
-      strcpy( removePtr, removePtr + remlen);
+      strncpy( removePtr, removePtr + remlen, strlen(removePtr) - remlen);
    }
 
    // store it in the original parameter
