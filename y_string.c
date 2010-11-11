@@ -611,7 +611,7 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    {
       // copy the characters between the end of the data we wish to remove and end-of-string 
       // to the place where we found our offending content.
-	  char* origin = removePtr + remlen;
+      char* origin = removePtr + remlen;
       strncpy(removePtr, origin, strlen(origin));
    }
 
