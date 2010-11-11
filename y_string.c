@@ -564,7 +564,7 @@ y_replace( const char *parameter, const char *search, const char *replace)
          //lr_output_message("memmove completed, result = %s", c);
          last = last - slen + rlen;            // en bereken het nieuwe eindpunt
       }
-      memcpy (c, replace, rlen);  // voeg replace toe over search heen
+      memmove (c, replace, rlen);  // voeg replace toe over search heen
    }
    lr_save_string(buffer, parameter);
 
