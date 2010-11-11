@@ -381,7 +381,7 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
     // just after the found string.
     {
         char *start = posPtr + strlen(separator);
-        strncpy(right, start, strlen(original) - start);
+        strncpy(right, start, strlen(start));
     }
 }
 // --------------------------------------------------------------------------------------------------
