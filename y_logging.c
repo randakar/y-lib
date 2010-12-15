@@ -103,6 +103,9 @@ y_setup_logging()
     _y_extra_logging = 1;
 }
 
+// Force a line to be logged to the logfile even if logging is off.
+// Only done if extra logging was enabled through a call to y_setup_logging();
+// 
 y_log_to_report(char *message)
 {
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
@@ -110,7 +113,16 @@ y_log_to_report(char *message)
     // Only add extra logging if it has been turned on.
     if( _y_extra_logging ) 
     {
+        int log_level = lr_get_debug_message();
+
+        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
+        lr_set_debug_message(
+            LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
+            LR_SWITCH_ON);
+
         lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
+
+        lr_set_debug_message(log_level, LR_SWITCH_ON);
     }
 }
 
@@ -241,3 +253,4 @@ int y_write_to_log(char *filename, char *content)
 
 
 #endif // _LOGGING_C
+
