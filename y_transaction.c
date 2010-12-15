@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-
 #ifndef _TRANSACTION_C
 #define _TRANSACTION_C
 
@@ -87,6 +86,11 @@ int _trans_status = Y_TRANS_STATUS_NONE;
 typedef int (y_trigger_func)();
 y_trigger_func *_y_trigger_start_trans = NULL;
 y_trigger_func *_y_trigger_end_trans = NULL;
+
+// Transaction time measurements
+merc_timer_handle_t y_trans_timer = "";
+merc_timer_handle_t y_sub_trans_timer = "";
+
 
 // Getters / Setters //
 
@@ -431,6 +435,7 @@ void y_start_transaction(char *transaction_name)
     _trans_status = Y_TRANS_STATUS_STARTED;
 
     // For external analysis of the responsetimes.
+    y_trans_timer = lr_start_timer();
     y_log_to_report(lr_eval_string("TimerOn {y_current_transaction}"));
     lr_start_transaction(lr_eval_string("{y_current_transaction}"));
 }
@@ -439,6 +444,7 @@ void y_start_transaction(char *transaction_name)
 // to retain compatibility with lr_end_transaction().
 void y_end_transaction(char *transaction_name, int status)
 {
+    double duration = lr_end_timer(y_trans_timer);
     char *trans_name = lr_eval_string("{y_current_transaction}");
 
     // Fire the transaction end trigger. For processing the results of 
@@ -462,8 +468,11 @@ void y_end_transaction(char *transaction_name, int status)
     _trans_status = Y_TRANS_STATUS_NONE;
 
     // For external analysis of the response times.
-    y_log_to_report(lr_eval_string("TimerOff {y_current_transaction}"));
-
+    {
+        char logline[200];
+        sprintf(logline, "TimerOff {y_current_transaction}, duration: %f seconds.", duration);
+        y_log_to_report(lr_eval_string(logline));
+    }
 }
 
 
@@ -500,6 +509,7 @@ void y_start_sub_transaction(char *transaction_name)
     y_run_transaction_start_trigger();
 
     // For external analysis of the response times.
+    y_sub_trans_timer = lr_start_timer();
     y_log_to_report(lr_eval_string("TimerOn {y_current_sub_transaction}"));
     lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
                              lr_eval_string("{y_current_transaction}"));
@@ -507,6 +517,7 @@ void y_start_sub_transaction(char *transaction_name)
 
 void y_end_sub_transaction(char *transaction_name, int status)
 {
+    double duration = lr_end_timer(y_sub_trans_timer);
     char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
@@ -521,7 +532,11 @@ void y_end_sub_transaction(char *transaction_name, int status)
     lr_end_sub_transaction(trans_name, status);
 
     // For external analysis of the response times.
-    y_log_to_report(lr_eval_string("TimerOff {y_current_sub_transaction}"));
+    {
+        char logline[200];
+        sprintf(logline, "TimerOff {y_current_sub_transaction}, duration: %f seconds.", duration);
+        y_log_to_report(lr_eval_string(logline));
+    }
 
     // if we faked an outer transaction, fake closing it.
     //
