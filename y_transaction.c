@@ -92,25 +92,25 @@ y_trigger_func *_y_trigger_end_trans = NULL;
 
 char *y_get_current_transaction_name()
 {
-    return lr_eval_string("{current_transaction}");
+    return lr_eval_string("{y_current_transaction}");
 }
 
 
 void y_set_current_transaction_name(char *trans_name)
 {
-    lr_save_string(lr_eval_string(trans_name), "current_transaction");
+    lr_save_string(lr_eval_string(trans_name), "y_current_transaction");
 }
 
 
 char *y_get_current_sub_transaction_name()
 {
-    return lr_eval_string("{current_sub_transaction}");
+    return lr_eval_string("{y_current_sub_transaction}");
 }
 
 
 void y_set_current_sub_transaction_name(char *trans_name)
 {
-    lr_save_string(lr_eval_string(trans_name), "current_sub_transaction");
+    lr_save_string(lr_eval_string(trans_name), "y_current_sub_transaction");
 }
 
 
@@ -296,7 +296,6 @@ void y_start_action_block(char *action_prefix)
     //lr_start_transaction(_block_transaction);
 }
 
-
 char *y_calculate_actual_action_prefix(const char *action_prefix)
 {
     const char *seperator = "_";
@@ -344,15 +343,15 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
 
 //
 // Generates the transaction name prefixed with a user defined action prefix and a transaction number.
-// The result is saved in the "current_transaction" loadrunner parameter for use by some macro's.
+// The result is saved in the "y_current_transaction" loadrunner parameter for use by some macro's.
 //
 // To use this scripts need to call y_start_action_block() - once at the start of each action.
 //
 // 
 // Dirty trick that no longer needs to be used:
 //#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _y_action_prefix, _trans_nr++); \
-//                                               lr_start_transaction(lr_eval_string("{current_transaction}"))
-//#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{current_transaction}"), status)
+//                                               lr_start_transaction(lr_eval_string("{y_current_transaction}"))
+//#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{y_current_transaction}"), status)
 //
 void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
 {
@@ -412,7 +411,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 
 void y_start_transaction(char *transaction_name)
 {
-    // This saves it's result in the 'current_transaction' parameter.
+    // This saves it's result in the 'y_current_transaction' parameter.
     y_create_new_transaction_name(transaction_name, 
                                 y_get_action_prefix(), 
                                 y_get_and_increment_transaction_nr());
@@ -432,15 +431,15 @@ void y_start_transaction(char *transaction_name)
     _trans_status = Y_TRANS_STATUS_STARTED;
 
     // For external analysis of the responsetimes.
-    y_log_to_report(lr_eval_string("TimerOn {current_transaction}"));
-    lr_start_transaction(lr_eval_string("{current_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOn {y_current_transaction}"));
+    lr_start_transaction(lr_eval_string("{y_current_transaction}"));
 }
 
 // Note: This completely ignores the 'transaction_name' argument
 // to retain compatibility with lr_end_transaction().
 void y_end_transaction(char *transaction_name, int status)
 {
-    char *trans_name = lr_eval_string("{current_transaction}");
+    char *trans_name = lr_eval_string("{y_current_transaction}");
 
     // Fire the transaction end trigger. For processing the results of 
     // complicated web_reg_find() / web_reg_save_param() statement 
@@ -455,7 +454,7 @@ void y_end_transaction(char *transaction_name, int status)
     }
 
     // Save the end status of this transaction. It won't be available after ending it.
-    y_save_transaction_end_status(trans_name, "current_transaction", status);
+    y_save_transaction_end_status(trans_name, "y_current_transaction_status", status);
     lr_end_transaction(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
@@ -463,7 +462,7 @@ void y_end_transaction(char *transaction_name, int status)
     _trans_status = Y_TRANS_STATUS_NONE;
 
     // For external analysis of the response times.
-    y_log_to_report(lr_eval_string("TimerOff {current_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOff {y_current_transaction}"));
 
 }
 
@@ -501,14 +500,14 @@ void y_start_sub_transaction(char *transaction_name)
     y_run_transaction_start_trigger();
 
     // For external analysis of the response times.
-    y_log_to_report(lr_eval_string("TimerOn {current_sub_transaction}"));
-    lr_start_sub_transaction(lr_eval_string("{current_sub_transaction}"), 
-                             lr_eval_string("{current_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOn {y_current_sub_transaction}"));
+    lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
+                             lr_eval_string("{y_current_transaction}"));
 }
 
 void y_end_sub_transaction(char *transaction_name, int status)
 {
-    char *trans_name = lr_eval_string("{current_sub_transaction}");
+    char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
     int trigger_result = y_run_transaction_end_trigger();
@@ -518,11 +517,11 @@ void y_end_sub_transaction(char *transaction_name, int status)
     }
 
     // Save the end status of this transaction. It won't be available after ending it.
-    y_save_transaction_end_status(trans_name, "last_sub_transaction_status", status);
+    y_save_transaction_end_status(trans_name, "y_last_sub_transaction_status", status);
     lr_end_sub_transaction(trans_name, status);
 
     // For external analysis of the response times.
-    y_log_to_report(lr_eval_string("TimerOff {current_sub_transaction}"));
+    y_log_to_report(lr_eval_string("TimerOff {y_current_sub_transaction}"));
 
     // if we faked an outer transaction, fake closing it.
     //
