@@ -454,7 +454,7 @@ void y_end_transaction(char *transaction_name, int status)
     }
 
     // Save the end status of this transaction. It won't be available after ending it.
-    y_save_transaction_end_status(trans_name, "y_current_transaction_status", status);
+    y_save_transaction_end_status(trans_name, "y_last_transaction_status", status);
     lr_end_transaction(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
