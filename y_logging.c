@@ -115,14 +115,16 @@ y_log_to_report(char *message)
     {
         int log_level = lr_get_debug_message();
 
-        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
+        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
         lr_set_debug_message(
             LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
             LR_SWITCH_ON);
+	
 
         lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
 
         lr_set_debug_message(log_level, LR_SWITCH_ON);
+		//lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
     }
 }
 
@@ -161,7 +163,7 @@ y_log_set_brief()
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
 
-    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
+    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
     lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
 }
 
@@ -172,7 +174,7 @@ y_log_set_extended()
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
 
-    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_OFF);
+    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
     lr_set_debug_message(
         LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
         LR_SWITCH_ON);
