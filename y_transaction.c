@@ -132,7 +132,11 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 void y_set_action_prefix(char *action_prefix)
 {
     lr_save_string(action_prefix, "y_action_prefix");
-    _y_action_prefix = action_prefix;
+
+	// Using lr_eval_string() to move memory management into LR itself here ..
+	// We may want to free() this pointer somehow first. TODO.
+    _y_action_prefix = lr_eval_string("{y_action_prefix}");
+
 }
 
 
