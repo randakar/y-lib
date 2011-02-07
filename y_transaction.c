@@ -66,8 +66,7 @@
 
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
-
-char *_y_action_prefix = "";
+char _y_action_prefix[100] = {'\0'}; // static allocation
 int _y_add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
 
     // We could allocate _block_transaction with malloc
@@ -84,8 +83,8 @@ int _trans_status = Y_TRANS_STATUS_NONE;
 
 // Transaction trigger support
 typedef int (y_trigger_func)();
-y_trigger_func *_y_trigger_start_trans = NULL;
-y_trigger_func *_y_trigger_end_trans = NULL;
+y_trigger_func* _y_trigger_start_trans = NULL;
+y_trigger_func* _y_trigger_end_trans = NULL;
 
 // Transaction time measurements
 merc_timer_handle_t y_trans_timer = "";
@@ -131,12 +130,14 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 
 void y_set_action_prefix(char *action_prefix)
 {
-    lr_save_string(action_prefix, "y_action_prefix");
+    // lr_save_string(action_prefix, "y_action_prefix");
 
-	// Using lr_eval_string() to move memory management into LR itself here ..
-	// We may want to free() this pointer somehow first. TODO.
-    _y_action_prefix = lr_eval_string("{y_action_prefix}");
+    // Using lr_eval_string() to move memory management into LR itself here ..
+    // We may want to free() this pointer somehow first. 
+    // --- THIS IS TOO UNRELIABLE ---
+    // _y_action_prefix = lr_eval_string("{y_action_prefix}");
 
+    memmove(_y_action_prefix, action_prefix, strlen(action_prefix) );
 }
 
 
