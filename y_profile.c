@@ -19,12 +19,13 @@
 #ifndef _PROFILE_C
 #define _PROFILE_C
 
-#include "y_transaction.c"
+// #include "y_transaction.c"
 
 //
 // Todo: Write documentation
 // For example usage, see the bottom of this file.
 //
+
 
 // This is a function pointer to the profile to execute.
 // Or at least, the type definition of such.
@@ -49,15 +50,33 @@ typedef int (y_profile_func)();
 // (Note to self: Implement time accounting)
 struct y_struct_profile
 {
-    int number; // position in the profile list, if applicable.
+    int number; // Used for assigning transaction numbers to the execute profile.
     char *name;
     y_profile_func *profileFunc;
     int chance;
 };
 
+
 // For clarity purposes we hide the exact type of a profile with 
 // a typedef
 typedef struct y_struct_profile y_profile;
+
+
+// Given a profile list of a specified length, calculate what number all profile
+// chances added together add up to.
+// Do not call directly unless you have checked the profile list for sanity beforehand.
+int y_calculate_max_chance(y_profile *profile_list[], int profile_count)
+{
+    int i, total = 0;
+    for(i=0; i < profile_count; i++)
+    {
+        y_profile* prof = profile_list[i];
+        total += prof->chance;
+    }
+    lr_log_message("y_profile: Combined total of chances is: %d", total);
+    return total;
+}
+
 
 //
 // Choose a profile from a list of profiles. 
@@ -67,12 +86,13 @@ typedef struct y_struct_profile y_profile;
 // The profile_count argument should exactly match the number of profiles
 // in the array or the script might blow up with MEMORY_ACCESS_VIOLATION errors.
 //
-y_profile *y_choose_profile(y_profile *profile_list[], int profile_count)
+// Do not call directly unless you have checked the profile list for sanity beforehand.
+y_profile* y_choose_profile(y_profile *profile_list[], int profile_count)
 {
     //y_profile **profile_list = profile_list_ptr;
     int i, lowerbound = 0;
     int cursor = 0;
-    int roll = rand() % 100;
+    int roll = rand() % y_calculate_max_chance(profile_list, profile_count);
 
     lr_log_message("Roll: %d", roll);
 
@@ -111,38 +131,15 @@ void y_exec_profile(y_profile *chosenProfile)
     {
         lr_log_message("Warning: Cannot execute NULL profile function for profile %s", 
             chosenProfile->name);
-    	return;
+        return;
     }
     else
-    {   	
+    {       
         y_profile_func *profile_function = chosenProfile->profileFunc;
-        char *savedTransactionName;
-
-        // Start a "profile" transaction to enable measuring how long
-        // a profile needs to execute fully.
-        //
-        // Profile transaction names need a bit of magic as they are 
-        // not quite like regular transactions. We use the profile number
-        // instead of the transaction number - profile transactions are 
-        // singular anyway.
-        y_start_action_block("__Profiel_");
-        y_set_transaction_nr(chosenProfile->number);
-        y_start_transaction(chosenProfile->name);
-
-        // The current transaction name is likely to get overwritten
-        // as the profile starts running it's own set of transactions.
-        // Save it here.
-        savedTransactionName = y_get_current_transaction_name();
 
         // Run the profile.
         profile_function();
 
-        // Restore the saved transaction name.
-        y_set_current_transaction_name(savedTransactionName);
-
-        // End the transaction
-        y_end_transaction(chosenProfile->name, LR_AUTO);
-        y_end_action_block();
     }
 }
 
@@ -158,11 +155,11 @@ Profiel()
     #define PROFILE_COUNT 5
     
     // Define the weights
-    static y_profile fo_pwm  = { "FO_PWM",  Profiel_FO_PWM,  37 };
-    static y_profile fo_pam  = { "FO_PAM",  Profiel_FO_PAM,  21 };
-    static y_profile fo_sead = { "FO_SEAD", Profiel_FO_SEAD,  2 };
-    static y_profile mo      = { "MO",      Profiel_MO,      25 };
-    static y_profile staff   = { "STAFF",   Profiel_Staff,   15 };
+    static y_profile fo_pwm  = { 0, "FO_PWM",  Profiel_FO_PWM,  37 };
+    static y_profile fo_pam  = { 1, "FO_PAM",  Profiel_FO_PAM,  21 };
+    static y_profile fo_sead = { 2, "FO_SEAD", Profiel_FO_SEAD,  2 };
+    static y_profile mo      = { 3, "MO",      Profiel_MO,      25 };
+    static y_profile staff   = { 4, "STAFF",   Profiel_Staff,   15 };
     static y_profile* profile_list[PROFILE_COUNT];
 
     profile_list[0] = &fo_pwm;
