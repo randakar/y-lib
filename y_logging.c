@@ -58,28 +58,38 @@ struct timeb {
 
 
 /*
- * getDateTimeStamp
- * Returns the current date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+ * Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+ * @param time - the unix time stamp
+ * @param millitm - the milliseconds belonging to the time stamp
  */
-char *y_get_datetimestamp()
+char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
-    struct timeb timebuffer;
-    struct tm *nu;
-    static char YMDHMSm[24]; // moet static char zijn om te gebruiken als returnwaarde
+    struct tm *resulttime;
+    static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
 
     _tzset();
-    ftime( &timebuffer );
-    nu = (struct tm *)localtime( & (timebuffer.time) );
+    resulttime = (struct tm *)localtime(&time);
 
     sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
-        nu->tm_year + 1900,
-        nu->tm_mon + 1,
-        nu->tm_mday,
-        nu->tm_hour,
-        nu->tm_min,
-        nu->tm_sec,
-        timebuffer.millitm);
+        resulttime->tm_year + 1900,
+        resulttime->tm_mon + 1,
+        resulttime->tm_mday,
+        resulttime->tm_hour,
+        resulttime->tm_min,
+        resulttime->tm_sec,
+        millitm);
     return YMDHMSm;
+}
+
+/*
+ * Returns the current date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+ */
+char* y_get_datetimestamp()
+{
+    struct timeb timebuffer;
+    _tzset();
+    ftime( &timebuffer );
+    return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
 }
 
 //
@@ -119,12 +129,12 @@ y_log_to_report(char *message)
         lr_set_debug_message(
             LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
             LR_SWITCH_ON);
-	
+    
 
         lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
 
         lr_set_debug_message(log_level, LR_SWITCH_ON);
-		//lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
+        //lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
     }
 }
 
@@ -255,4 +265,3 @@ int y_write_to_log(char *filename, char *content)
 
 
 #endif // _LOGGING_C
-
