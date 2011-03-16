@@ -137,7 +137,7 @@ void y_set_action_prefix(char *action_prefix)
     // --- THIS IS TOO UNRELIABLE ---
     // _y_action_prefix = lr_eval_string("{y_action_prefix}");
 
-    memmove(_y_action_prefix, action_prefix, strlen(action_prefix) );
+    memmove(_y_action_prefix, action_prefix, strlen(action_prefix)+1 );
 }
 
 
