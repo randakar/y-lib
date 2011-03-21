@@ -281,21 +281,13 @@ y_save_transaction_end_status(char* transaction_name, const char* saveparam, int
 
 void y_end_action_block()
 {
-    //if(strlen(_block_transaction))
-    //{
-    //    lr_end_transaction(_block_transaction, LR_AUTO);
-    //}
+    //lr_end_transaction(_block_transaction, LR_AUTO);
     //_block_transaction[0] = '\0';
     y_set_action_prefix("");
 }
 
 void y_start_action_block(char *action_prefix)
 {
-    if(strlen(y_get_action_prefix()))
-    {
-        y_end_action_block();
-    }
-
     y_set_action_prefix(action_prefix);
     y_set_transaction_nr(0);
 
