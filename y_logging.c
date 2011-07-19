@@ -1,8 +1,7 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2011 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
- * Copyright (C) 2011 André Luyer
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,7 +49,7 @@ struct tm {
 #endif 
 };
 
-struct _timeb {
+struct timeb {
     time_t time;
     unsigned short millitm;
     short timezone;
@@ -87,50 +86,10 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
  */
 char* y_get_datetimestamp()
 {
-    struct _timeb timebuffer;
+    struct timeb timebuffer;
     _tzset();
-    ftime(&timebuffer);
+    ftime( &timebuffer );
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
-}
-
-// leest datum en tijd, in UTC
-// IN: ctime formaat, bijvoorbeeld: "Tue Nov 17 08:32:01 2009"
-// UIT: tijd sinds epoch
-// @author: André Luyer
-//
-time_t y_convert_datetime_utc(const char *str)
-{
-	struct _timeb tijdb;
-
-	int u, m, s, j, mm, d; char maand[4];
-	const char maanden[][4] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-	struct tm utc; 
-
-	if (sscanf(str, "%*s %3s %2d %2d:%2d:%2d %4d", maand, &d, &u, &m, &s, &j) != 6) {
-		lr_error_message("Inlezen string \"%s\" mislukt", str);
-		return -1;
-	}
-
-	for (mm = 0; mm < 12; mm++) if (strcmp(maand, maanden[mm]) == 0) break;
-	if (mm == 12) {
-		lr_error_message("Onbekende maand \"%s\" ", maand);
-		return -1;
-	}
-	//lr_message("Debug: %d-%d-%d %2d:%02d:%02d", j, mm + 1, d, u, m, s);
-
-	// en nu omrekenen...
-	utc.tm_sec  = s;
-	utc.tm_min  = m;
-	utc.tm_hour = u;
-	utc.tm_mday = d;
-	utc.tm_mon  = mm;
-	utc.tm_year = j - 1900;
-	utc.tm_isdst = 0;// 0==geen daylight savings time actief (altijd waar voor UTC)
-
-	tzset(); // Zet eenmalig de variabelen die ftime gebruikt
-	ftime(&tijdb); // bepaal tijdzone offset
-
-	return mktime(&utc) - tijdb.timezone * 60; // +timezone omdat mktime in localtime werkt...
 }
 
 //
@@ -258,6 +217,15 @@ y_log_turn_on()
     }
 }
 
+// Log a message forcefully, bypassing all log settings.
+// Typically used for generating datafiles within scripts with the loglevel set to OFF.
+y_log_force_message(char *message)
+{
+	y_log_set_extended();
+	lr_log_message( message );
+	y_log_restore();
+}
+
 // --------------------------------------------------------------------------------------------------
 // y_write_to_log()
 //     writes "content" (a string) to a (log)file.
@@ -306,5 +274,4 @@ int y_write_to_log(char *filename, char *content)
 
 
 #endif // _LOGGING_C
-
 
