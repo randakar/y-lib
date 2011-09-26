@@ -209,19 +209,28 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_array_save(const char* value, const char* pArray, const int pIndex)
 {
-    int len = strlen(pArray) +3;
-    char *result;
-    int power = pIndex;
-
-    while(power = (power / 10))
+    if(pArray == NULL)
     {
-        len++;
+        // In some cases calling this without a parameter name is entirely valid.
+        // eg. y_split() on an array where you only need one half of the results.
+        return;
     }
+    else
+    {
+        int len = strlen(pArray) +3;
+        int power = pIndex;
+        char *result;
 
-    result = y_mem_alloc(len);
-    sprintf(result, "%s_%d", pArray, pIndex);
-    lr_save_string(value, result);
-    free(result);
+        while(power = (power / 10))
+        {
+            len++;
+        }
+
+        result = y_mem_alloc(len);
+        sprintf(result, "%s_%d", pArray, pIndex);
+        lr_save_string(value, result);
+        free(result);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -236,11 +245,21 @@ void y_array_save(const char* value, const char* pArray, const int pIndex)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_array_save_count(const int count, const char *pArray)
 {
-    int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
-    char *result = y_mem_alloc(len);
-    sprintf(result, "%s_count", pArray);
-    lr_save_int(count, result);
-    free(result);
+    if( pArray == NULL )
+    {
+        // In some cases calling this without a parameter name is entirely valid.
+        // eg. y_split() on an array where you only need one half of the results.
+        return;
+    }
+    else 
+    {
+        int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
+        char* result = y_mem_alloc(len);
+
+        sprintf(result, "%s_count", pArray);
+        lr_save_int(count, result);
+        free(result);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
