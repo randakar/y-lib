@@ -70,19 +70,31 @@ int y_rand()
 {
    if(!_y_random_seed_initialized)
    {
+      int seed, tm, rnd;
       if( _vUserID == NULL )
       {
          y_setup();
       }
-      // Seed the random number generator for later use.
-      // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
-      // In case the script itself already initialized the random number generator, use a random number from 
-      // there as well.
-      srand( time() + _vUserID + ((int)(_vUserGroup)) + rand() );
+
+	  // Seed the random number generator for later use.
+	  // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
+	  // In case the script itself already initialized the random number generator, use a random number from 
+	  // there as well.
+
+	  tm = (int)time();
+	  rnd = rand();
+
+	  lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
+      seed = tm%10000 + _vUserID + ((int)_vUserGroup)%1000 + rnd%1000;
+	  lr_log_message("Initialising random seed: %d", seed);
+      srand( seed );
       _y_random_seed_initialized = 1;
    }
+
    return rand();
 }
+
+
 
 
 // --------------------------------------------------------------------------------------------------
@@ -449,35 +461,35 @@ This function will translate the codes into human readable errors which are then
 */
 void y_log_rendezvous_result(int result)
 {
-	char *message;
-	switch( result ) {
-		case LR_REND_ALL_ARRIVED:
-			message = "LR_REND_ALL_ARRIVED - Vuser was released after all the designated Vusers arrived.";
-			break;
-		case LR_REND_TIMEOUT:
-			message = "LR_REND_TIMEOUT - Vuser was released after the timeout value was reached.";
-			break;
-		case LR_REND_DISABLED:
-			message = "LR_REND_DISABLED - The rendezvous was disabled from the Controller.";
-			break;
-		case LR_REND_NOT_FOUND:
-			message = "LR_REND_NOT_FOUND - The rendezvous was not found.";
-			break;
-		case LR_REND_VUSER_NOT_MEMBER:
-			message = "LR_REND_VUSER_NOT_MEMBER - Vuser was not defined in the rendezvous.";
-			break;
-		case LR_REND_VUSER_DISABLED:
-			message = "LR_REND_VUSER_DISABLED - Vuser was disabled for the rendezvous.";
-			break;
-		case LR_REND_BY_USER:
-			message = "LR_REND_BY_USER - The rendezvous was released by the user.";
-			break;
-		default:
-			message = "Unknown rendezvous result code.";
-	}
+    char *message;
+    switch( result ) {
+        case LR_REND_ALL_ARRIVED:
+            message = "LR_REND_ALL_ARRIVED - Vuser was released after all the designated Vusers arrived.";
+            break;
+        case LR_REND_TIMEOUT:
+            message = "LR_REND_TIMEOUT - Vuser was released after the timeout value was reached.";
+            break;
+        case LR_REND_DISABLED:
+            message = "LR_REND_DISABLED - The rendezvous was disabled from the Controller.";
+            break;
+        case LR_REND_NOT_FOUND:
+            message = "LR_REND_NOT_FOUND - The rendezvous was not found.";
+            break;
+        case LR_REND_VUSER_NOT_MEMBER:
+            message = "LR_REND_VUSER_NOT_MEMBER - Vuser was not defined in the rendezvous.";
+            break;
+        case LR_REND_VUSER_DISABLED:
+            message = "LR_REND_VUSER_DISABLED - Vuser was disabled for the rendezvous.";
+            break;
+        case LR_REND_BY_USER:
+            message = "LR_REND_BY_USER - The rendezvous was released by the user.";
+            break;
+        default:
+            message = "Unknown rendezvous result code.";
+    }
 
-	//lr_vuser_status_message("Rendezvous returned: %s", message);
-	lr_log_message("Rendezvous returned: %s", message);
+    //lr_vuser_status_message("Rendezvous returned: %s", message);
+    lr_log_message("Rendezvous returned: %s", message);
 }
 
 
