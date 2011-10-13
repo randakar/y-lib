@@ -76,17 +76,17 @@ int y_rand()
          y_setup();
       }
 
-	  // Seed the random number generator for later use.
-	  // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
-	  // In case the script itself already initialized the random number generator, use a random number from 
-	  // there as well.
+      // Seed the random number generator for later use.
+      // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
+      // In case the script itself already initialized the random number generator, use a random number from 
+      // there as well.
 
-	  tm = (int)time();
-	  rnd = rand();
+      tm = (int)time();
+      rnd = rand();
 
-	  lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
+      lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
       seed = tm%10000 + _vUserID + ((int)_vUserGroup)%1000 + rnd%1000;
-	  lr_log_message("Initialising random seed: %d", seed);
+      lr_log_message("Initialising random seed: %d", seed);
       srand( seed );
       _y_random_seed_initialized = 1;
    }
