@@ -116,11 +116,23 @@ void y_set_current_sub_transaction_name(char *trans_name)
     lr_save_string(lr_eval_string(trans_name), "y_current_sub_transaction");
 }
 
-
 char *y_get_action_prefix()
 {
-    return _y_action_prefix;
+    //return _y_action_prefix;
+    const char* tmpname = "__y_temp_action_prefix";
+
+    // Trick loadrunner into giving us memory, managed by loadrunner.
+    // The disadvantage: Loadrunner might free it on us at the end of the iteration. 
+    // Which is not ideal, but also not very likely to happen. 
+    // 
+    // A proper fix would mean changing the calling interface a bit to let 
+    // the user pass in memory under control of the user.
+    // Or maybe allocating some memory on the fly and telling the user in BIG SCARY LETTERS that they need to free it.
+    // Which they'll probably promptly forget ..
+    lr_save_string(_y_action_prefix, tmpname);
+    return y_get_parameter(tmpname);
 }
+
 
 void y_set_add_group_to_transaction(int add_group_to_trans)
 {
