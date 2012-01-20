@@ -66,7 +66,6 @@
 
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
-char _y_action_prefix[100] = {'\0'}; // static allocation
 int _y_add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
 
     // We could allocate _block_transaction with malloc
@@ -118,20 +117,6 @@ void y_set_current_sub_transaction_name(char *trans_name)
 
 char *y_get_action_prefix()
 {
-    //return _y_action_prefix;
-    //const char* tmpname = "__y_temp_action_prefix";
-
-    // Trick loadrunner into giving us memory, managed by loadrunner.
-    // The disadvantage: Loadrunner might free it on us at the end of the iteration. 
-    // Which is not ideal, but also not very likely to happen. 
-    // 
-    // A proper fix would mean changing the calling interface a bit to let 
-    // the user pass in memory under control of the user.
-    // Or maybe allocating some memory on the fly and telling the user in BIG SCARY LETTERS that they need to free it.
-    // Which they'll probably promptly forget ..
-    //lr_save_string(_y_action_prefix, tmpname);
-    //return y_get_parameter(tmpname);
-
     // Bother. Let's do this the eminently simple and predictable way, then:
     return lr_eval_string("{y_action_prefix}");
 }
@@ -145,13 +130,6 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 
 void y_set_action_prefix(char *action_prefix)
 {
-    // Using lr_eval_string() to move memory management into LR itself here ..
-    // We may want to free() this pointer somehow first. 
-    // --- THIS IS TOO UNRELIABLE ---
-    // _y_action_prefix = lr_eval_string("{y_action_prefix}");
-
-    //memmove(_y_action_prefix, action_prefix, strlen(action_prefix)+1 );
-
     // Bother. Let's do this the eminently simple and predictable way, then:
     lr_save_string(action_prefix, "y_action_prefix");
 }
