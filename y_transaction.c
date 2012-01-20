@@ -119,7 +119,7 @@ void y_set_current_sub_transaction_name(char *trans_name)
 char *y_get_action_prefix()
 {
     //return _y_action_prefix;
-    const char* tmpname = "__y_temp_action_prefix";
+    //const char* tmpname = "__y_temp_action_prefix";
 
     // Trick loadrunner into giving us memory, managed by loadrunner.
     // The disadvantage: Loadrunner might free it on us at the end of the iteration. 
@@ -129,8 +129,11 @@ char *y_get_action_prefix()
     // the user pass in memory under control of the user.
     // Or maybe allocating some memory on the fly and telling the user in BIG SCARY LETTERS that they need to free it.
     // Which they'll probably promptly forget ..
-    lr_save_string(_y_action_prefix, tmpname);
-    return y_get_parameter(tmpname);
+    //lr_save_string(_y_action_prefix, tmpname);
+    //return y_get_parameter(tmpname);
+
+    // Bother. Let's do this the eminently simple and predictable way, then:
+    return lr_eval_string("{y_action_prefix}");
 }
 
 
@@ -142,14 +145,15 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 
 void y_set_action_prefix(char *action_prefix)
 {
-    // lr_save_string(action_prefix, "y_action_prefix");
-
     // Using lr_eval_string() to move memory management into LR itself here ..
     // We may want to free() this pointer somehow first. 
     // --- THIS IS TOO UNRELIABLE ---
     // _y_action_prefix = lr_eval_string("{y_action_prefix}");
 
-    memmove(_y_action_prefix, action_prefix, strlen(action_prefix)+1 );
+    //memmove(_y_action_prefix, action_prefix, strlen(action_prefix)+1 );
+
+    // Bother. Let's do this the eminently simple and predictable way, then:
+    lr_save_string(action_prefix, "y_action_prefix");
 }
 
 
