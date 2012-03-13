@@ -41,8 +41,10 @@ that said browser is seen in production.
 Usage:
 
 1) Set up the appropriate parameters
-2) Add this file to your script, plus any supporting files.
-3) Call y_setup_browser_emulation in vuser_init()
+2) Add this file to your script, plus any supporting ylib files.
+3) Add an include statement: '#include "y_browseremulation.c' to the top of vuser_init()
+
+4) Call y_setup_browser_emulation in vuser_init()
 
     Example:
 
@@ -78,7 +80,9 @@ Usage:
 struct y_struct_browser
 {
     char* name;
-    int chance;
+    int chance; // Maybe better to call this "weight", as this really isn't a percentage.
+    void* next; // Pointer to the next element in a single-linked list of browsers
+
     int max_connections_per_host;
     int max_connections;
     char* user_agent_string;
@@ -89,10 +93,8 @@ typedef struct y_struct_browser y_browser;
 
 
 // Set up a list of these things.
-#define MAX_BROWSER_LIST_LENGTH 200 // To prevent loops caused by faulty data files or parameter settings ..
-int browser_list_length = 0;
-y_browser* browser_list[MAX_BROWSER_LIST_LENGTH];
-
+#define MAX_BROWSER_LIST_LENGTH 1000 // To prevent loops caused by faulty data files or parameter settings ..
+y_browser* y_browser_list_head = NULL;
 
 
 
@@ -121,6 +123,8 @@ void y_save_browser_to_parameters(const y_browser* browser)
 void y_setup_browser_emulation()
 {
     int i;
+    y_browser* previous_browser = NULL;
+
 
     for(i=0; i < MAX_BROWSER_LIST_LENGTH; i++ )
     {
@@ -134,16 +138,28 @@ void y_setup_browser_emulation()
             break;
         }
 
-        browser->user_agent_string = y_get_parameter_in_malloc_string("browser_user_agent_string");
-
         browser->chance                   = atoi(y_get_parameter("browser_chance"));
         browser->max_connections_per_host = atoi(y_get_parameter("browser_max_connections_per_host"));
         browser->max_connections          = atoi(y_get_parameter("browser_max_connections"));
+        browser->user_agent_string = y_get_parameter_in_malloc_string("browser_user_agent_string");
 
         lr_log_message("y_browseremulation.c: Adding browser");
         y_log_browser(browser);
 
-        browser_list[i] = browser;
+        // Add it to the list.
+        if( y_browser_list_head == NULL )
+        {
+            y_browser_list_head = browser;
+        }
+        else
+        {
+            previous_browser->next = browser;
+        }
+
+        // This element is now the new end of the list.
+        browser->next = NULL;
+        previous_browser = browser;
+
 
         // This parameter should be set to "update each iteration", or this code will play havoc with it ..
         lr_advance_param("browser_name");
@@ -154,27 +170,19 @@ void y_setup_browser_emulation()
         lr_log_message("Too many browsers to fit in browser list struct, max list size = %d", MAX_BROWSER_LIST_LENGTH);
         lr_abort();
     }
-
-
-    browser_list[i+1] = NULL;
 }
 
 
 
 // Given a list of a specified length, calculate what number all weights added together add up to.
 // Do not call directly unless you have checked the list for sanity beforehand.
-int y_calculate_total_browser_chances(y_browser* browser_list[], int count)
+int y_calculate_total_browser_chances(y_browser* browser_list_head)
 {
-    int i, total = 0;
-    for(i=0; i < count; i++)
-    {
-        const y_browser* browser = browser_list[i];
+    int total = 0;
+    y_browser* browser; 
 
-        // This list is NULL terminated. Or at least, it should be ..
-        if( browser == NULL )
-        {
-            break;
-        }
+    for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
+    {
         //y_log_browser(browser);
 
         total += browser->chance;
@@ -188,24 +196,21 @@ int y_calculate_total_browser_chances(y_browser* browser_list[], int count)
 // Choose a browser profile from the browser list
 // Returns a pointer to a randomly chosen struct browser or NULL in case of errors.
 //
-// The count argument should exactly match the number of items
-// in the array or the script might blow up with MEMORY_ACCESS_VIOLATION errors.
-//
 // Do not call directly unless you have checked the list for sanity beforehand.
-y_browser* y_choose_browser_from_list(y_browser* browser_list[], const int count)
+y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
 {
     //y_browser **browser_list = browser_list_ptr;
     int i, lowerbound = 0;
     int cursor = 0;
-    int roll = y_rand() % y_calculate_total_browser_chances(browser_list, count);
+    int roll = y_rand() % y_calculate_total_browser_chances(browser_list_head);
+    y_browser* browser;
 
     lr_log_message("Roll: %d", roll);
 
-    for(i=0; i < count; i++)
+    for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
     {
-        y_browser *browser = browser_list[i];
-        int chance = browser->chance;
-        cursor += chance;
+        //y_log_browser(browser);
+        cursor += browser->chance;
 
         //lr_log_message("Chance cursor: %d", cursor);
         if(roll < cursor)
@@ -219,9 +224,8 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list[], const int count
 
 y_browser* y_choose_browser()
 {
-    return y_choose_browser_from_list(browser_list, (sizeof browser_list / sizeof browser_list[0]) );
+    return y_choose_browser_from_list(y_browser_list_head);
 }
-
 
 
 void y_emulate_browser(y_browser* browser)
@@ -263,5 +267,4 @@ void y_emulate_browser(y_browser* browser)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _Y_BROWSER_EMULATION_C
-
 
