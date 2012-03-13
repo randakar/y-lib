@@ -131,20 +131,21 @@ void y_setup_browser_emulation()
         y_browser* browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
 
         browser->name = y_get_parameter_in_malloc_string("browser_name");
-
         if(strcmp(browser->name, "END") == 0)
         {
-            lr_log_message("y_browseremulation.c: End of browser list initialisation");
+            //lr_log_message("y_browseremulation.c: End of browser list initialisation");
             break;
         }
 
+    	// Fill out all remaining fields
+		browser->next = NULL;
         browser->chance                   = atoi(y_get_parameter("browser_chance"));
         browser->max_connections_per_host = atoi(y_get_parameter("browser_max_connections_per_host"));
         browser->max_connections          = atoi(y_get_parameter("browser_max_connections"));
         browser->user_agent_string = y_get_parameter_in_malloc_string("browser_user_agent_string");
 
-        lr_log_message("y_browseremulation.c: Adding browser");
-        y_log_browser(browser);
+        //lr_log_message("y_browseremulation.c: Adding browser");
+        //y_log_browser(browser);
 
         // Add it to the list.
         if( y_browser_list_head == NULL )
@@ -155,12 +156,9 @@ void y_setup_browser_emulation()
         {
             previous_browser->next = browser;
         }
+        previous_browser = browser; // Replaces the previous tail element with the new one.
 
-        // This element is now the new end of the list.
-        browser->next = NULL;
-        previous_browser = browser;
-
-
+		// Get the next value for the new iteration.
         // This parameter should be set to "update each iteration", or this code will play havoc with it ..
         lr_advance_param("browser_name");
     };
@@ -184,7 +182,6 @@ int y_calculate_total_browser_chances(y_browser* browser_list_head)
     for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
     {
         //y_log_browser(browser);
-
         total += browser->chance;
     }
     lr_log_message("y_browser_emulation: Combined total of chances is: %d", total);
@@ -228,25 +225,23 @@ y_browser* y_choose_browser()
 }
 
 
-void y_emulate_browser(y_browser* browser)
+void y_emulate_browser(const y_browser* browser)
 {
     char str_max_connections[10];
     char str_max_connections_per_host[10];
     int max_connections;
 
-    y_log_browser(browser);
-
-    // This actually behaves pretty funky..
-    //y_save_browser_to_parameters(browser);
-
 
     // Debugging purposes ..
+	//y_log_browser(browser);
     //browser->max_connections = 20000;
     //browser->max_connections_per_host = 20000;
 
+	// This actually behaves pretty funky.. so let's not do this.
+	//y_save_browser_to_parameters(browser);
 
-    // Loadrunner doesn't accept values higher than 50 for this sockets option,
-    // so we'll just log it and set it to 50.
+
+    // Loadrunner doesn't accept values higher than 50 for this sockets option, so we'll just log it and set it to 50.
     max_connections = browser->max_connections;
     if( max_connections > 50 )
     {
@@ -257,14 +252,12 @@ void y_emulate_browser(y_browser* browser)
     sprintf(str_max_connections_per_host, "%d", browser->max_connections_per_host);
     sprintf(str_max_connections,          "%d", max_connections);
 
-    // Now finally set up the correct numbers for the chosen browser:
+    // Now finally setthe correct settings for the chosen browser:
     web_set_sockets_option("MAX_CONNECTIONS_PER_HOST", str_max_connections_per_host);
     web_set_sockets_option("MAX_TOTAL_CONNECTIONS",    str_max_connections);
     web_add_auto_header("User-Agent", browser->user_agent_string);
-
 }
 
 
 // --------------------------------------------------------------------------------------------------
 #endif // _Y_BROWSER_EMULATION_C
-
