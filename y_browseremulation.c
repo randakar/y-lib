@@ -137,8 +137,8 @@ void y_setup_browser_emulation()
             break;
         }
 
-    	// Fill out all remaining fields
-		browser->next = NULL;
+        // Fill out all remaining fields
+        browser->next = NULL;
         browser->chance                   = atoi(y_get_parameter("browser_chance"));
         browser->max_connections_per_host = atoi(y_get_parameter("browser_max_connections_per_host"));
         browser->max_connections          = atoi(y_get_parameter("browser_max_connections"));
@@ -158,7 +158,7 @@ void y_setup_browser_emulation()
         }
         previous_browser = browser; // Replaces the previous tail element with the new one.
 
-		// Get the next value for the new iteration.
+        // Get the next value for the new iteration.
         // This parameter should be set to "update each iteration", or this code will play havoc with it ..
         lr_advance_param("browser_name");
     };
@@ -233,12 +233,12 @@ void y_emulate_browser(const y_browser* browser)
 
 
     // Debugging purposes ..
-	//y_log_browser(browser);
+    //y_log_browser(browser);
     //browser->max_connections = 20000;
     //browser->max_connections_per_host = 20000;
 
-	// This actually behaves pretty funky.. so let's not do this.
-	//y_save_browser_to_parameters(browser);
+    // This actually behaves pretty funky.. so let's not do this.
+    //y_save_browser_to_parameters(browser);
 
 
     // Loadrunner doesn't accept values higher than 50 for this sockets option, so we'll just log it and set it to 50.
@@ -249,10 +249,10 @@ void y_emulate_browser(const y_browser* browser)
         max_connections = 50;
     }
 
-    sprintf(str_max_connections_per_host, "%d", browser->max_connections_per_host);
     sprintf(str_max_connections,          "%d", max_connections);
+    sprintf(str_max_connections_per_host, "%d", browser->max_connections_per_host);
 
-    // Now finally setthe correct settings for the chosen browser:
+    // Now finally set the correct settings for the chosen browser:
     web_set_sockets_option("MAX_CONNECTIONS_PER_HOST", str_max_connections_per_host);
     web_set_sockets_option("MAX_TOTAL_CONNECTIONS",    str_max_connections);
     web_add_auto_header("User-Agent", browser->user_agent_string);
