@@ -33,7 +33,7 @@
 //            ..
 //            free(test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-char *y_mem_alloc(int size)
+char *y_mem_alloc(const int size)
 {
     char *buff;
     int mem = size * sizeof(char);
@@ -100,7 +100,7 @@ char *y_array_alloc(int length, int bytesPerChar)
 //            i=y_get_int_from_char('9');
 //                lr_message("i = %d", i + 1);        // result is "i = 10"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int y_get_int_from_char(char character)
+int y_get_int_from_char(const char character)
 {
     char tmp[2];
     tmp[0] = character;
