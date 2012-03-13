@@ -144,6 +144,38 @@ char* y_get_parameter(const char* paramName)
 // --------------------------------------------------------------------------------------------------
 
 
+// --------------------------------------------------------------------------------------------------
+// Get the content of the parameter named "src_param" and return it as a char *
+//
+// Like y_get_parameter, but the result will use memory allocated with malloc(), rather than gotten
+// from loadrunner memory by calling lr_eval_string() on a parameter name.
+// 
+// WARNING: Memory allocated in this manner MUST be freed using "free()" if called more than once per
+// loadtest, or you will run the virtual user out of memory.
+//
+// @author Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+//                char *test;
+//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+//                test=y_get_parameter("TestParam");
+//                lr_message("Test: %s", test);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+char* y_get_parameter_in_malloc_string(const char *src_param)
+{
+    char *result;
+    char *src = y_get_parameter(src_param);
+    //lr_log_message("Copying source data: %s", src);
+
+    result = y_mem_alloc( strlen(src) +1);
+    strcpy(result, src);
+
+    return result;
+    //lr_log_message("Copied result: %s", result);
+}
+
+
 
 // --------------------------------------------------------------------------------------------------
 // Clean a parameter by removing any embedded \x00 (null) characters from it.
