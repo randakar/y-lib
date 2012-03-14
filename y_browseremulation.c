@@ -35,6 +35,8 @@ Basic concept: The tester defines a list of browsers inside a parameter file, th
 4) max connections per host - Same as above, but this setting limits the number of connections to a single hostname.
 5) User agent string - A user agent string used by said browser.
 
+The last entry of this list of parameters needs to use "END" as the browser name.
+
 This list is then read in using lr_advance_param() during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose browsers to emulate based on their likelyhood
 that said browser is seen in production.
 
@@ -261,3 +263,5 @@ void y_emulate_browser(const y_browser* browser)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _Y_BROWSER_EMULATION_C
+
+
