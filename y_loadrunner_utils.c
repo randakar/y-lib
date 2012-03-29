@@ -27,6 +27,12 @@ int _vUserID = 0;                         // virtual user id
 char *_vUserGroup = NULL;                 // virtual user group
 int _y_random_seed_initialized = 0;
 
+
+// Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h>
+// is missing. We define it here mostly for documentation, as we do not have access
+// to the header files themselves and therefore cannot change this. 
+#define RAND_MAX 32767
+
 //
 // This file contains loadrunner specific helper funtions.
 //
@@ -84,14 +90,18 @@ int y_rand()
       tm = (int)time();
       rnd = rand();
 
-      lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
+      //lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
       seed = tm%10000 + _vUserID + ((int)_vUserGroup)%1000 + rnd%1000;
-      lr_log_message("Initialising random seed: %d", seed);
+      //lr_log_message("Initialising random seed: %d", seed);
       srand( seed );
       _y_random_seed_initialized = 1;
    }
 
-   return rand();
+   {
+       int result = rand();
+       lr_log_message("y_rand: random roll = %d, RAND_MAX = %d", result, RAND_MAX);
+       return result;
+   }
 }
 
 
@@ -699,3 +709,4 @@ int y_workdays_from_today(int workdays)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
+
