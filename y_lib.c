@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,5 +25,6 @@
 #include "y_transaction.c"
 #include "y_param_array.c"
 #include "y_profile.c"
+#include "y_browseremulation.c"
 
 #endif // _YLIB_C
