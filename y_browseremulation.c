@@ -206,12 +206,10 @@ int y_calculate_total_browser_chances(y_browser* browser_list_head)
 // Do not call directly unless you have checked the list for sanity beforehand.
 y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
 {
-    //y_browser **browser_list = browser_list_ptr;
-    int i, lowerbound = 0;
-    int cursor = 0;
-    y_browser* browser;
-    int max = y_browser_list_chance_total; //y_calculate_total_browser_chances(browser_list_head);
-    long roll = y_rand()%max;
+    int i, lowerbound, cursor = 0;
+    int max = y_browser_list_chance_total;
+    long roll = y_rand() % max;
+    y_browser* browser = NULL;
 
     // The upper bound of the rand() function is determined by the RAND_MAX constant.
     // RAND_MAX is hardcoded in loadrunner to a value of exactly 32767.
@@ -238,19 +236,21 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     }
     lr_log_message("Roll: %d", roll);
 
-    for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
+    for( browser = browser_list_head; browser != NULL; browser = browser->next)
     {
         cursor += browser->chance;
+        // lr_log_message("Chance cursor: %d for browser: %s", cursor, browser->name);
 
-        lr_log_message("Chance cursor: %d", cursor);
-        if(roll < cursor)
+        if(roll <= cursor)
         {
-            lr_log_message("Chosen browser:");
-            y_log_browser(browser);
+            //lr_log_message("Chosen browser:");
+            //y_log_browser(browser);
             return browser;
         }
     }
-    return NULL;
+    // This code should be unreachable.
+    lr_error_message("y_browseremulation.c: Roll result out of bounds: roll: %d, cursor: %d, max %d", roll, cursor, max);
+    return browser;
 }
 
 
