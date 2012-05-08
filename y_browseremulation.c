@@ -97,6 +97,8 @@ typedef struct y_struct_browser y_browser;
 // Set up a list of these things.
 #define MAX_BROWSER_LIST_LENGTH 1000 // To prevent loops caused by faulty data files or parameter settings ..
 y_browser* y_browser_list_head = NULL;
+int y_browser_list_chance_total = 0; // Cache rather than calculate on the fly.. 
+                                     // Theoretically this should be per-list, however, rather than global.
 
 
 
@@ -135,7 +137,7 @@ void y_setup_browser_emulation()
         browser->name = y_get_parameter_in_malloc_string("browser_name");
         if(strcmp(browser->name, "END") == 0)
         {
-            //lr_log_message("y_browseremulation.c: End of browser list initialisation");
+            lr_log_message("y_browseremulation.c: End of browser list initialisation");
             break;
         }
 
@@ -148,6 +150,10 @@ void y_setup_browser_emulation()
 
         //lr_log_message("y_browseremulation.c: Adding browser");
         //y_log_browser(browser);
+
+        // Increment the global count of weights.
+        y_browser_list_chance_total += browser->chance;
+        lr_log_message("y_browseremulation.c: Adding weight: %d", y_browser_list_chance_total);
 
         // Add it to the list.
         if( y_browser_list_head == NULL )
@@ -176,6 +182,7 @@ void y_setup_browser_emulation()
 
 // Given a list of a specified length, calculate what number all weights added together add up to.
 // Do not call directly unless you have checked the list for sanity beforehand.
+/*
 int y_calculate_total_browser_chances(y_browser* browser_list_head)
 {
     int total = 0;
@@ -189,6 +196,7 @@ int y_calculate_total_browser_chances(y_browser* browser_list_head)
     lr_log_message("y_browser_emulation: Combined total of chances is: %d", total);
     return total;
 }
+*/
 
 
 //
@@ -202,8 +210,8 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     int i, lowerbound = 0;
     int cursor = 0;
     y_browser* browser;
-    int roll = y_rand();
-    int max = y_calculate_total_browser_chances(browser_list_head);
+    int max = y_browser_list_chance_total; //y_calculate_total_browser_chances(browser_list_head);
+    long roll = y_rand()%max;
 
     // The upper bound of the rand() function is determined by the RAND_MAX constant.
     // RAND_MAX is hardcoded in loadrunner to a value of exactly 32767.
@@ -218,6 +226,9 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     // 
     // Ugly? Yes. Necessary? Very ..
     // 
+    // Update: y_rand() now returns a 31 bit number, giving it an upper bound of 2147483647.
+    // That should reduce the need for this code by a bit ..
+    // 
     // TODO: Fix y_profile.c as well, as it almost assuredly suffers from the same issue.
 
     //lr_log_message("max = %d, RAND_MAX = %d, roll %d", max, RAND_MAX, roll);
@@ -225,16 +236,17 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     {
         roll = roll * ((max / RAND_MAX));
     }
-    //lr_log_message("Roll: %d", roll);
+    lr_log_message("Roll: %d", roll);
 
     for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
     {
-        //y_log_browser(browser);
         cursor += browser->chance;
 
-        //lr_log_message("Chance cursor: %d", cursor);
+        lr_log_message("Chance cursor: %d", cursor);
         if(roll < cursor)
         {
+            lr_log_message("Chosen browser:");
+            y_log_browser(browser);
             return browser;
         }
     }
@@ -256,7 +268,7 @@ void y_emulate_browser(const y_browser* browser)
 
 
     // Debugging purposes .
-    lr_log_message("Chosen browser:");
+    lr_log_message("Emulating browser:");
     y_log_browser(browser);
     //browser->max_connections = 20000;
     //browser->max_connections_per_host = 20000;
