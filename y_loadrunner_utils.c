@@ -31,7 +31,11 @@ int _y_random_seed_initialized = 0;
 // Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h>
 // is missing. We define it here mostly for documentation, as we do not have access
 // to the header files themselves and therefore cannot change this. 
-#define RAND_MAX 32767
+// #define RAND_MAX 32767
+//
+// With some slight changes to y_rand() this constant can be increased by quite a bit ..
+// 
+#define RAND_MAX 2147483647
 
 //
 // This file contains loadrunner specific helper funtions.
@@ -63,7 +67,7 @@ void y_setup()
 // --------------------------------------------------------------------------------------------------
 
 
-//!   Generate a random (integer) number between 0 and MAX_RAND.
+//!   Generate a random (integer) number between 0 and RAND_MAX (2147483648)
 /*!   Seeds the random number generator only the first time this function is called.
 \return random number (integer)
 \author Floris Kraak
@@ -72,7 +76,7 @@ int random_number;
 random_number=y_rand();
 \end_example
 */
-int y_rand()
+long y_rand()
 {
    if(!_y_random_seed_initialized)
    {
@@ -98,8 +102,25 @@ int y_rand()
    }
 
    {
-       int result = rand();
-       lr_log_message("y_rand: random roll = %d, RAND_MAX = %d", result, RAND_MAX);
+       // Because rand() does not return numbers above 32767 and we want to get the full 31 bits
+       // of randomness that a long affords us we are going to do roll multiple numbers and
+       // basically concatenate them together using bit shifts.
+       // 
+       // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
+       // because it will break people's expectations of what rand() does. )
+
+       // This gets us 15 bits of randomness
+       long result = rand() & 0x000000000000FFFF; 
+       //lr_log_message("y_rand: first 15 random bits: = %d, RAND_MAX = %d", result, RAND_MAX);
+
+       // left shift those 15 bits and add another 15 bits
+       result = (result << 15) | (rand() & 0x000000000000FFFF); 
+       //lr_log_message("y_rand: added second 15 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
+
+       result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
+       lr_log_message("y_rand: final random roll = %d, RAND_MAX = %d", result, RAND_MAX);
+
+       //lr_abort();
        return result;
    }
 }
@@ -709,4 +730,3 @@ int y_workdays_from_today(int workdays)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
-
