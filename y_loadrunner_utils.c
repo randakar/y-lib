@@ -21,6 +21,7 @@
 #ifndef _LOADRUNNER_UTILS_C
 #define _LOADRUNNER_UTILS_C
 
+#include "vugen.h"
 #include "y_string.c"
 
 int _vUserID = 0;                         // virtual user id
@@ -95,7 +96,7 @@ long y_rand()
       // In case the script itself already initialized the random number generator, use a random number from 
       // there as well.
 
-      tm = (int)time();
+      tm = (int)time(NULL);
       rnd = rand();
 
       //lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
