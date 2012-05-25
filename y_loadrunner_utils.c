@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -59,6 +59,10 @@ Runs lr_whoami and sets vUserId and vUserGroup as global(!) variables.
 */
 void y_setup()
 {
+   // Loadrunner sets the locale to "", causing scripts written in locales other than en_US to misbehave.
+   // Let's set it to something sensible, that actually works for people who don't want to mess with this stuff.
+   setlocale(LC_ALL, "C");
+
    // Global variables, handle with care
    lr_whoami(&_vUserID, &_vUserGroup, NULL);
 }
