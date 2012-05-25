@@ -19,6 +19,7 @@
 #ifndef _YLIB_C
 #define _YLIB_C
 
+#include "vugen.h"
 #include "y_string.c"
 #include "y_loadrunner_utils.c"
 #include "y_logging.c"
