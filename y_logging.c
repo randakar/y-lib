@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -20,6 +20,7 @@
 #ifndef _LOGGING_C
 #define _LOGGING_C
 
+#include "vugen.h"
 #include "y_loadrunner_utils.c"
 
 
@@ -30,6 +31,9 @@ int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with l
 
 // --------------------------------------------------------------------------------------------------
 //// Time/date/stamp functions
+
+/*
+// vugen.h does this now.
 
 typedef long time_t;
 
@@ -49,12 +53,23 @@ struct tm {
 #endif 
 };
 
-struct timeb {
+struct _timeb {
     time_t time;
     unsigned short millitm;
     short timezone;
     short dstflag;
 };
+
+time_t time(time_t *timeptr);
+char *ctime(const time_t *calTime);
+void ftime(struct _timeb *time1);
+struct tm *gmtime(const time_t *calTime);
+char *asctime(const struct tm *tmTime);
+size_t *strftime(char *string, size_t maxlen, const char *format, const struct tm *timestruct);
+time_t mktime(struct tm * timeptr);
+struct tm *localtime(const time_t * timer);
+void tzset(void);
+*/
 
 
 /*
@@ -86,7 +101,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
  */
 char* y_get_datetimestamp()
 {
-    struct timeb timebuffer;
+    struct _timeb timebuffer;
     _tzset();
     ftime( &timebuffer );
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
@@ -221,9 +236,9 @@ y_log_turn_on()
 // Typically used for generating datafiles within scripts with the loglevel set to OFF.
 y_log_force_message(char *message)
 {
-	y_log_set_extended();
-	lr_log_message( message );
-	y_log_restore();
+    y_log_set_extended();
+    lr_log_message( message );
+    y_log_restore();
 }
 
 // --------------------------------------------------------------------------------------------------
@@ -274,4 +289,3 @@ int y_write_to_log(char *filename, char *content)
 
 
 #endif // _LOGGING_C
-
