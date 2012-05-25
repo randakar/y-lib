@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,6 +54,9 @@
 
 // Needed to compile this - the definition of LAST is missing if it's not included
 #include "web_api.h"
+
+// More C definitions
+#include "vugen.h"
 
 // Other Ylib functions
 #include "y_logging.c"
@@ -294,6 +297,7 @@ void y_start_action_block(char *action_prefix)
 char *y_calculate_actual_action_prefix(const char *action_prefix)
 {
     const char *seperator = "_";
+    int seperator_len = strlen(seperator);
     int group_len = 0;
     int prefix_len = strlen(action_prefix);
     char *buffer;
@@ -309,17 +313,18 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     // add room for the seperators
     if(prefix_len > 0)
     {
-        prefix_len++;
+        prefix_len += seperator_len;
     }
     if(group_len > 0)
     {
-        group_len++;
+        group_len += seperator_len;
     }
 
     // allocate memory -- note this needs to be free()'ed afterwards!
-    buffer = y_mem_alloc(group_len + prefix_len+1);
+    buffer = y_mem_alloc(group_len + prefix_len + 1);
     buffer[0] = '\0';
 
+    /*
     // start concatenating things together
     if(group_len > 0)
     {
@@ -329,7 +334,26 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     if(prefix_len > 0)
     {
         strcat(buffer, action_prefix);
-        strcat(buffer,seperator);
+        strcat(buffer, seperator);
+    }*/
+
+    if(group_len > 0)
+    {
+        if(prefix_len > 0)
+        {
+            sprintf(buffer, "%s%s%s%s", _vUserGroup, seperator, action_prefix, seperator);
+        }
+        else
+        {
+            sprintf(buffer, "%s%s", _vUserGroup, seperator);
+        }
+    }
+    else
+    {
+        if(prefix_len > 0)
+        {
+            sprintf(buffer, "%s%s", action_prefix, seperator);
+        }
     }
 
     return buffer;
@@ -654,10 +678,8 @@ y_setup_step_waterfall()
         tmp = y_mem_alloc( strlen(head) + strlen(step) +1);
         // note: if the memory allocation fails we're in trouble!
 
-        tmp[0] = '\0';       // This could be a sprintf() call instead
-        strcat(tmp, head);
-        strcat(tmp, step);
-               
+        sprintf(tmp, "%s%s", head, step);
+
         lr_save_string(stepchance, tmp);
         free(tmp);
 
@@ -683,12 +705,7 @@ y_waterfall_random_weighted_continue(char * stepname)
 
     lr_log_message("Weighted stop chance evaluation for %s", stepname);
 
-    paramname[0] = '\0';
-    strcat( paramname, "{");
-    strcat( paramname, head);
-    strcat( paramname, stepname);
-    strcat( paramname, "}");
-
+    sprintf( paramname, "%s%s%s%s", "{", head, stepname, "}" );
     chancestr = lr_eval_string(paramname);
 
     if( (strlen(chancestr) > 0) && (strcmp(chancestr, paramname) != 0) )
