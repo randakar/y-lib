@@ -100,13 +100,15 @@ char *y_array_alloc(int length, int bytesPerChar)
 //            i=y_get_int_from_char('9');
 //                lr_message("i = %d", i + 1);        // result is "i = 10"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-int y_get_int_from_char(const char character)
+/* int y_get_int_from_char(const char character)
 {
     char tmp[2];
     tmp[0] = character;
     tmp[1] = '\0';
-    return atoi(tmp);    
-}
+    return atoi(tmp);  
+}*/
+#define y_get_int_from_char(c) (isdigit(c) ? c - ‘0’: 0)
+
 // --------------------------------------------------------------------------------------------------
 
 
