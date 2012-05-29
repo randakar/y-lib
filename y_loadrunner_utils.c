@@ -559,15 +559,13 @@ void y_breadcrumb(char *breadcrumb)
 {
     lr_message("---------------------------------------------------------------------------------");
 
-    if ((strcmp(lr_eval_string("{y_breadcrumb}"), "{y_breadcrumb}") == 0) || ((strcmp(breadcrumb, "") == 0)))
+    if( y_is_empty_parameter("breadcrumb") || ((strlen(breadcrumb) == 0)) )
     {
-        lr_save_string(breadcrumb, "y_breadcrumb");
+        lr_save_string(breadcrumb, "breadcrumb");
     }
     else
     {
-        // Note: We can probably get rid of y_breadcrumb_temp entirely by using lr_param_sprintf()..
-        lr_save_string(breadcrumb, "y_breadcrumb_temp");
-        lr_save_string(lr_eval_string("{y_breadcrumb};{y_breadcrumb_temp}"), "y_breadcrumb");
+        lr_param_sprintf("breadcrumb", lr_eval_string("{breadcrumb};%s"), breadcrumb);
     }
 }
 
@@ -581,7 +579,7 @@ void y_breadcrumb(char *breadcrumb)
 */
 /*void y_breadcrumb_reset()
 {
-    lr_save_string("", "breadcrumb");
+    lr_save_string("", "y_breadcrumb");
 }*/
 #define y_breadcrumb_reset() lr_save_string("", "breadcrumb")
 
