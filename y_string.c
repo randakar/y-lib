@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -22,6 +22,7 @@
 #define _STRING_C
 // --------------------------------------------------------------------------------------------------
 
+#include "vugen.h"
 
 
 // --------------------------------------------------------------------------------------------------
@@ -114,6 +115,45 @@ char *y_array_alloc(int length, int bytesPerChar)
 
 
 // --------------------------------------------------------------------------------------------------
+// Given a parameter name, obtain the string required to fetch the contents of that parameter through
+// lr_eval_string().
+// 
+// Note: the return argument will need to be freed.
+// 
+// @author Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+// 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+char* y_get_parameter_eval_string(const char *param_name)
+{
+    char *result = y_mem_alloc( strlen(param_name) +3 ); 
+                          // parameter name + "{}" + '\0' (end of string)
+    sprintf(result, "{%s}", param_name );
+    return result;
+}
+
+// --------------------------------------------------------------------------------------------------
+// Test if the given parameter is empty or not yet set (these are two different things..)
+// 
+// @author Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+// 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+int y_is_empty_parameter(const char *param_name)
+{
+    char *param_eval_string = y_get_parameter_eval_string(param_name);
+    char *param = lr_eval_string(param_eval_string);
+    
+    int result = strlen(param) == 0 || strcmp(param, param_eval_string) == 0;
+    free(param_eval_string);
+
+    return result;
+}
+
+
+// --------------------------------------------------------------------------------------------------
 // Get the content of the parameter named "paramName" and return it as a char *
 //
 // Todo: Make a derivative function getParameterNoZeroes() which uses lr_eval_string_ext()
@@ -134,17 +174,13 @@ char *y_array_alloc(int length, int bytesPerChar)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char* y_get_parameter(const char* paramName)
 {
-   char *parameter;
-   char *tmp = y_mem_alloc( strlen(paramName) +3 ); 
-                         // parameter name + "{}" + '\0' (end of string)
-   sprintf( tmp, "{%s}", paramName );   
-   parameter = lr_eval_string(tmp);
+   char *tmp = y_get_parameter_eval_string(paramName);
+   char *parameter = lr_eval_string(tmp);
    free(tmp);
    
    return parameter;
 }
 // --------------------------------------------------------------------------------------------------
-
 
 // --------------------------------------------------------------------------------------------------
 // Get the content of the parameter named "src_param" and return it as a char *
@@ -227,9 +263,6 @@ void y_cleanse_parameter(const char* paramName)
 // --------------------------------------------------------------------------------------------------
 
 
-// used in function "y_uppercase_parameter()", below.
-extern char *strupr( char *string );
-
 // --------------------------------------------------------------------------------------------------
 // Convert the content of a parameter to UPPERCASE. Does not affect non-alphabetic characters.
 // @author Floris Kraak
@@ -244,7 +277,7 @@ y_uppercase_parameter(const char* paramName)
 {
    char *result = y_get_parameter(paramName);
    // Note that in Vugen files, you need to explicitly declare C functions that do not return integers.
-   strupr(result);  
+   strupr(result);
    lr_save_string(result, paramName);
 }
 // --------------------------------------------------------------------------------------------------
