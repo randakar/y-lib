@@ -559,16 +559,15 @@ void y_breadcrumb(char *breadcrumb)
 {
     lr_message("---------------------------------------------------------------------------------");
 
-    if ((strcmp(lr_eval_string("{breadcrumb}"), "{breadcrumb}") == 0) || ((strcmp(breadcrumb, "") == 0)))
+    if ((strcmp(lr_eval_string("{y_breadcrumb}"), "{y_breadcrumb}") == 0) || ((strcmp(breadcrumb, "") == 0)))
     {
-        lr_save_string("", "breadcrumb");
-        lr_save_string(breadcrumb, "y_breadcrumb_temp");
-        lr_save_string(lr_eval_string("{y_breadcrumb_temp}"), "breadcrumb");
+        lr_save_string(breadcrumb, "y_breadcrumb");
     }
     else
     {
+        // Note: We can probably get rid of y_breadcrumb_temp entirely by using lr_param_sprintf()..
         lr_save_string(breadcrumb, "y_breadcrumb_temp");
-        lr_save_string(lr_eval_string("{breadcrumb};{y_breadcrumb_temp}"), "breadcrumb");
+        lr_save_string(lr_eval_string("{y_breadcrumb};{y_breadcrumb_temp}"), "y_breadcrumb");
     }
 }
 
@@ -580,10 +579,11 @@ void y_breadcrumb(char *breadcrumb)
 \author Raymond de Jongh
 \sa y_breadcrumb()
 */
-void y_breadcrumb_reset()
+/*void y_breadcrumb_reset()
 {
     lr_save_string("", "breadcrumb");
-}
+}*/
+#define y_breadcrumb_reset() lr_save_string("", "breadcrumb")
 
 
 // --------------------------------------------------------------------------------------------------
