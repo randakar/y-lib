@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2010 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,6 +21,7 @@
 #ifndef _PARAM_ARRAY_C
 #define _PARAM_ARRAY_C
 
+#include "vugen.h"
 #include "y_string.c"
 #include "y_loadrunner_utils.c"
 
@@ -389,7 +390,7 @@ char *y_array_get_random_no_zeroes( const char *pArray )
         return NULL;
     }
     
-	_y_random_array_index = (y_rand() % count) +1;
+    _y_random_array_index = (y_rand() % count) +1;
     return y_array_get_no_zeroes(pArray, _y_random_array_index);
 }
 // --------------------------------------------------------------------------------------------------
@@ -487,14 +488,14 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
 
     while( next = (char *)strstr(next, LB) )
     {
-        int end = strstr(next, RB);
+        char* end = strstr(next, RB);
         if(!end) 
             break;
-        buffer[end - (int)buffer] = '\0';
+        buffer[end - buffer] = '\0';
 
         i++;
         y_array_save(next+strlen(LB), destArrayParam, i);
-        next = (char *)(end + strlen(RB));
+        next = end + strlen(RB);
     }
     free(buffer);
     y_array_save_count(i, destArrayParam);
@@ -524,7 +525,7 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
     int size = y_array_count(pArrayName);
 
     //lr_log_message("y_array_grep(%s, %s, %s)", pArrayName, search, resultArrayName);
-	//y_log_turn_off();
+    //y_log_turn_off();
     for( i=1; i <= size; i++)
     {
         item = y_array_get_no_zeroes(pArrayName, i);
@@ -534,7 +535,7 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
         }
         lr_eval_string_ext_free(&item);
     }
-	//y_log_restore();
+    //y_log_restore();
 
     y_array_save_count(j-1, resultArrayName);
 }
@@ -763,7 +764,7 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 /*    
     sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
     lr_message("dest_param_array_name: %s", dest_param_array_name);
-    lr_message("destination_length: %s", 	destination_length);
+    lr_message("destination_length: %s",    destination_length);
     lr_message("source_length: %i", source_length);
     lr_save_int(source_length, destination_length);
 */
