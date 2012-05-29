@@ -296,8 +296,8 @@ void y_start_action_block(char *action_prefix)
 
 char *y_calculate_actual_action_prefix(const char *action_prefix)
 {
-    const char *seperator = "_";
-    int seperator_len = strlen(seperator);
+    const char seperator[] = "_";
+    const int seperator_len = sizeof seperator - 1; // strlen(seperator);
     int group_len = 0;
     int prefix_len = strlen(action_prefix);
     char *buffer;
@@ -324,38 +324,18 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     buffer = y_mem_alloc(group_len + prefix_len + 1);
     buffer[0] = '\0';
 
-    /*
     // start concatenating things together
-    if(group_len > 0)
     {
-        strcat(buffer, _vUserGroup);
-        strcat(buffer, seperator);
-    }
-    if(prefix_len > 0)
-    {
-        strcat(buffer, action_prefix);
-        strcat(buffer, seperator);
-    }*/
-
-    if(group_len > 0)
-    {
-        if(prefix_len > 0)
+        int len = 0;
+        if(group_len > 0)
         {
-            sprintf(buffer, "%s%s%s%s", _vUserGroup, seperator, action_prefix, seperator);
+            len = sprintf(buffer, "%s%s", _vUserGroup, seperator);
         }
-        else
+        if(prefix_len > 0) 
         {
-            sprintf(buffer, "%s%s", _vUserGroup, seperator);
+            sprintf(buffer + len, "%s%s", action_prefix, seperator);
         }
     }
-    else
-    {
-        if(prefix_len > 0)
-        {
-            sprintf(buffer, "%s%s", action_prefix, seperator);
-        }
-    }
-
     return buffer;
 }
 
