@@ -714,36 +714,52 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 {
-    int source_length;
-    int dest_length;
     int i;
-    int r;
     int *shuffle;
-    int temp;
-    char *destination_length;
+    int source_length;
 
     if (strcmp(source_param_array_name, dest_param_array_name) == 0)
     {
         lr_error_message("Source and Destination parameter name can not be equal!");
         lr_abort();
+        return;
     }
 
-    source_length=lr_paramarr_len(source_param_array_name);
+    source_length = y_array_count(source_param_array_name);
 
+    //lr_message("source_length: %d", source_length);
+    if(source_length < 1)
+    {
+        lr_error_message("Cannot shuffle empty parameter arrays!");
+        lr_abort();
+        return;
+    }
+
+    if(source_length == 1)
+    {
+        lr_log_message("Cannot shuffle a list with just 1 entry.");
+        y_array_save( y_array_get(source_param_array_name, 1), dest_param_array_name, 1);
+        y_array_save_count(1, dest_param_array_name);
+        return;
+    }
+
+    // Now the cases where we can actually shuffle something:
 
     shuffle=(int *)y_array_alloc(source_length+1, sizeof(int));
-    destination_length=(char *)y_array_alloc(strlen(dest_param_array_name)+9, sizeof(char)); 
 
-    lr_message("source_length: %d", source_length);
     for (i=1; i<=source_length; i++)
     {
-        lr_message("i: %d", i);    
+        //lr_message("i: %d", i);    
         shuffle[i]=i;
     }
 
+
     for(i=1; i<=source_length; i++)
     {
-        r=y_rand_between(1,source_length);
+        int temp, r;
+        r=(y_rand() % (source_length))+1;
+        lr_log_message("shuffle r %d into i %d", r, i);
+        lr_log_message("swapping %d with %d", shuffle[i], shuffle[r]);
         temp = shuffle[i];
         shuffle[i] = shuffle[r];
         shuffle[r] = temp;
@@ -753,25 +769,14 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 
     for(i=1; i<=source_length; i++)
     {
-        // something like: 'dest_param_array'_name_i = 'source_param_array_name'_array[i];
-        //y_array_save( const char* pArray, const int pIndex, const char* value )
-        // char *y_array_get( const char *pArray, const int pIndex )
         y_array_save(
            y_array_get(source_param_array_name, shuffle[i]),
            dest_param_array_name, i);
     }
 
-/*    
-    sprintf(destination_length, "%s_count", dest_param_array_name);        // moet nog iets maken wat lijkt op "{DEST_count}"
-    lr_message("dest_param_array_name: %s", dest_param_array_name);
-    lr_message("destination_length: %s",    destination_length);
-    lr_message("source_length: %i", source_length);
-    lr_save_int(source_length, destination_length);
-*/
     y_array_save_count(--i, dest_param_array_name);
 
     free (shuffle);
-    free(destination_length);
 }
 
 // --------------------------------------------------------------------------------------------------
