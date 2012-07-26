@@ -89,8 +89,14 @@ y_trigger_func* _y_trigger_start_trans = NULL;
 y_trigger_func* _y_trigger_end_trans = NULL;
 
 // Transaction time measurements
-merc_timer_handle_t y_trans_timer = "";
-merc_timer_handle_t y_sub_trans_timer = "";
+merc_timer_handle_t _y_trans_timer = "";
+merc_timer_handle_t _y_sub_trans_timer = "";
+
+// Transaction implementation pointers
+typedef int (y_trans_start_impl_func)(char* trans_name);
+typedef int (y_trans_end_impl_func)(char* trans_name, int status);
+y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
+y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
 
 
 // Getters / Setters //
@@ -142,7 +148,6 @@ void y_set_action_prefix(char *action_prefix)
 int y_get_transaction_nr()
 {
     return _y_transaction_nr;
-
 }
 
 
@@ -220,6 +225,50 @@ void y_set_transaction_end_trigger( y_trigger_func *trigger_function )
     _y_trigger_end_trans = trigger_function;
 }
 
+y_trigger_func* y_get_transaction_start_trigger()
+{
+    return _y_trigger_start_trans;
+}
+
+y_trigger_func* y_get_transaction_end_trigger()
+{
+    return _y_trigger_start_trans;
+}
+
+
+
+// Transaction implementation change support
+// For those people who for some reason feel compelled to implement lr_start_transaction() and lr_end_transaction themselves :p
+
+// Definitions can be found further up. For reference:
+// y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
+// y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
+// 
+void y_set_transaction_start_implementation( y_trans_start_impl_func* trans_start_func )
+{
+   _y_trans_start_impl = trans_start_func;
+}
+
+void y_set_transaction_end_implementation( y_trans_end_impl_func* trans_end_func )
+{
+   _y_trans_end_impl = trans_end_func;
+}
+
+y_trans_start_impl_func* y_get_transaction_start_implementation()
+{
+   return _y_trans_start_impl;
+}
+
+y_trans_end_impl_func* y_get_transaction_end_implementation()
+{
+   return _y_trans_end_impl;
+}
+
+
+// End getters/setters
+
+
+
 int y_run_transaction_start_trigger()
 {
     if( _y_trigger_start_trans == NULL )
@@ -237,6 +286,8 @@ int y_run_transaction_end_trigger()
     }
     else return _y_trigger_end_trans();
 }
+
+
 
 //
 // Helper function to save the transaction end status before y_end_(sub_)transaction() closes them.
@@ -408,7 +459,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 // as well as consistent numbering.
 // 
 
-void y_start_transaction(char *transaction_name)
+int y_start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'y_current_transaction' parameter.
     y_create_new_transaction_name(transaction_name, 
@@ -430,16 +481,18 @@ void y_start_transaction(char *transaction_name)
     _trans_status = Y_TRANS_STATUS_STARTED;
 
     // For external analysis of the responsetimes.
-    y_trans_timer = lr_start_timer();
+    _y_trans_timer = lr_start_timer();
     y_log_to_report(lr_eval_string("TimerOn {y_current_transaction}"));
-    lr_start_transaction(lr_eval_string("{y_current_transaction}"));
+
+    //return lr_start_transaction(lr_eval_string("{y_current_transaction}"));
+    return _y_trans_start_impl(lr_eval_string("{y_current_transaction}"));
 }
 
 // Note: This completely ignores the 'transaction_name' argument
 // to retain compatibility with lr_end_transaction().
-void y_end_transaction(char *transaction_name, int status)
+int y_end_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(y_trans_timer);
+    double duration = lr_end_timer(_y_trans_timer);
     char *trans_name = lr_eval_string("{y_current_transaction}");
 
     // Fire the transaction end trigger. For processing the results of 
@@ -456,7 +509,8 @@ void y_end_transaction(char *transaction_name, int status)
 
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_transaction_status", status);
-    lr_end_transaction(trans_name, status);
+    //status = lr_end_transaction(trans_name, status);
+    status = _y_trans_end_impl(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
@@ -468,6 +522,7 @@ void y_end_transaction(char *transaction_name, int status)
         sprintf(logline, "TimerOff {y_current_transaction}, duration: %f seconds.", duration);
         y_log_to_report(lr_eval_string(logline));
     }
+    return status;
 }
 
 
@@ -504,7 +559,7 @@ void y_start_sub_transaction(char *transaction_name)
     y_run_transaction_start_trigger();
 
     // For external analysis of the response times.
-    y_sub_trans_timer = lr_start_timer();
+    _y_sub_trans_timer = lr_start_timer();
     y_log_to_report(lr_eval_string("TimerOn {y_current_sub_transaction}"));
     lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
                              lr_eval_string("{y_current_transaction}"));
@@ -512,7 +567,7 @@ void y_start_sub_transaction(char *transaction_name)
 
 void y_end_sub_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(y_sub_trans_timer);
+    double duration = lr_end_timer(_y_sub_trans_timer);
     char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
