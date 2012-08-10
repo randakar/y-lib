@@ -131,6 +131,29 @@ long y_rand()
 }
 
 
+// A unique parameter that is more predictable in length than the LR counterpart: Exactly 20 characters.
+// The user group name can get really really long..
+// 
+// The guarantees on this thing depend on the way LR lays out it's memory - specifically, where it puts the
+// vuser group name. Not sure that that can be helped. But collisions should be terribly unlikely, anyway.
+void y_param_unique(char *param)
+{
+    time_t tm = time(NULL);
+    int uid;
+    if( _vUserID == NULL )
+    {
+        y_setup();
+    }
+    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d", param, _vUserID, _vUserGroup, (int)tm);
+
+    uid=abs(_vUserID);
+
+    //lr_param_unique(param);
+
+    // Exactly 20 characters. No more, no less. Close enough for our purposes, I reckon.
+    lr_param_sprintf(param, "%05d%05d%05d%05d", ((int)_vUserGroup)%100000, uid%100000, tm%100000, y_rand()%100000);
+}
+
 
 
 // --------------------------------------------------------------------------------------------------
@@ -579,7 +602,7 @@ void y_breadcrumb(char *breadcrumb)
 */
 /*void y_breadcrumb_reset()
 {
-    lr_save_string("", "y_breadcrumb");
+    lr_save_string("", "breadcrumb");
 }*/
 #define y_breadcrumb_reset() lr_save_string("", "breadcrumb")
 
