@@ -313,18 +313,23 @@ y_save_transaction_end_status(char* transaction_name, const char* saveparam, int
 
 
 //
-// Action blocks. Name all transactions within an action block with a common prefix.
-// Ajust to taste.
+// Transaction blocks. Prefix all transactions in a series with the same text.
 // 
 
-void y_end_action_block()
+void y_end_transaction_block()
 {
     //lr_end_transaction(_block_transaction, LR_AUTO);
     //_block_transaction[0] = '\0';
     y_set_action_prefix("");
 }
 
-void y_start_action_block(char *action_prefix)
+// DEPRECATED
+void y_end_action_block()
+{
+    y_end_transaction_block();
+}
+
+void y_start_transaction_block(char *action_prefix)
 {
     y_set_action_prefix(action_prefix);
     y_set_transaction_nr(0);
@@ -334,6 +339,14 @@ void y_start_action_block(char *action_prefix)
     //sprintf(_block_transaction, "%s_TOTAL", action_prefix);
     //lr_start_transaction(_block_transaction);
 }
+
+
+// DEPRECATED
+void y_start_action_block(char *action_prefix)
+{
+    y_start_transaction_block(action_prefix);
+}
+
 
 char *y_calculate_actual_action_prefix(const char *action_prefix)
 {
@@ -482,7 +495,7 @@ int y_start_transaction(char *transaction_name)
 // to retain compatibility with lr_end_transaction().
 int y_end_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(_y_trans_timer);
+    double duration = lr_end_timer(_y_trans_timer); // <-- DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     char *trans_name = lr_eval_string("{y_current_transaction}");
 
     // Fire the transaction end trigger. For processing the results of 
@@ -506,6 +519,7 @@ int y_end_transaction(char *transaction_name, int status)
     // so if a sub-transaction is created it may have to fake this.
     _trans_status = Y_TRANS_STATUS_NONE;
 
+    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     // For external analysis of the response times.
     {
         char logline[200];
@@ -548,6 +562,7 @@ void y_start_sub_transaction(char *transaction_name)
     // Fire the transaction start trigger.
     y_run_transaction_start_trigger();
 
+    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     // For external analysis of the response times.
     _y_sub_trans_timer = lr_start_timer();
     y_log_to_report(lr_eval_string("TimerOn {y_current_sub_transaction}"));
@@ -555,9 +570,10 @@ void y_start_sub_transaction(char *transaction_name)
                              lr_eval_string("{y_current_transaction}"));
 }
 
-void y_end_sub_transaction(char *transaction_name, int status)
+int y_end_sub_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(_y_sub_trans_timer);
+    double duration = lr_end_timer(_y_sub_trans_timer); // <-- DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
+
     char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
@@ -571,6 +587,7 @@ void y_end_sub_transaction(char *transaction_name, int status)
     y_save_transaction_end_status(trans_name, "y_last_sub_transaction_status", status);
     lr_end_sub_transaction(trans_name, status);
 
+    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     // For external analysis of the response times.
     {
         char logline[200];
@@ -586,6 +603,7 @@ void y_end_sub_transaction(char *transaction_name, int status)
     {
         y_end_transaction(transaction_name, status);
     }
+    return status;
 }
 
 
