@@ -225,16 +225,6 @@ void y_set_transaction_end_trigger( y_trigger_func *trigger_function )
     _y_trigger_end_trans = trigger_function;
 }
 
-y_trigger_func* y_get_transaction_start_trigger()
-{
-    return _y_trigger_start_trans;
-}
-
-y_trigger_func* y_get_transaction_end_trigger()
-{
-    return _y_trigger_start_trans;
-}
-
 
 
 // Transaction implementation change support
@@ -417,7 +407,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
-    sprintf(actual_trans_name, "%s%02d %s", actual_prefix, transaction_nr, transaction_name);
+    sprintf(actual_trans_name, "%s%02d_%s", actual_prefix, transaction_nr, transaction_name);
     free(actual_prefix);
     y_set_current_transaction_name(actual_trans_name);
     free(actual_trans_name);
@@ -510,7 +500,7 @@ int y_end_transaction(char *transaction_name, int status)
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_transaction_status", status);
     //status = lr_end_transaction(trans_name, status);
-    status = _y_trans_end_impl(trans_name, status);
+	status = _y_trans_end_impl(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
@@ -522,7 +512,7 @@ int y_end_transaction(char *transaction_name, int status)
         sprintf(logline, "TimerOff {y_current_transaction}, duration: %f seconds.", duration);
         y_log_to_report(lr_eval_string(logline));
     }
-    return status;
+	return status;
 }
 
 
