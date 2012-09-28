@@ -445,7 +445,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
-    sprintf(actual_trans_name, "%s%02d_%02d %s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
+    sprintf(actual_trans_name, "%s%02d_%02d_%s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
     free(actual_prefix);
     y_set_current_sub_transaction_name(actual_trans_name);
     free(actual_trans_name);
