@@ -500,7 +500,7 @@ int y_end_transaction(char *transaction_name, int status)
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_transaction_status", status);
     //status = lr_end_transaction(trans_name, status);
-	status = _y_trans_end_impl(trans_name, status);
+    status = _y_trans_end_impl(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
@@ -512,7 +512,7 @@ int y_end_transaction(char *transaction_name, int status)
         sprintf(logline, "TimerOff {y_current_transaction}, duration: %f seconds.", duration);
         y_log_to_report(lr_eval_string(logline));
     }
-	return status;
+    return status;
 }
 
 
