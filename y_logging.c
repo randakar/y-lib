@@ -208,6 +208,8 @@ y_log_set_extended()
 // Restore the log level to the old state.
 y_log_restore()
 {
+    const int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR;
+    
     /*
     if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
     {
@@ -216,7 +218,7 @@ y_log_restore()
     }
     */
     lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
-    lr_set_debug_message(~_y_log_level & 0x21F, LR_SWITCH_OFF);
+    lr_set_debug_message(~_y_log_level & Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);
     //lr_log_message("Log level restored to the previous state.\n");
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
