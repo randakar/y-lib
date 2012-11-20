@@ -144,7 +144,6 @@ void y_set_action_prefix(char *action_prefix)
 }
 
 
-
 int y_get_transaction_nr()
 {
     return _y_transaction_nr;
@@ -180,6 +179,11 @@ void y_set_sub_transaction_nr(int trans_nr)
     _y_sub_transaction_nr = trans_nr;
 }
 
+
+int y_get_transaction_running()
+{
+    return _trans_status;
+}
 
 
 /******
