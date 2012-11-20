@@ -82,7 +82,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
     struct tm *resulttime;
     static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
 
-    _tzset();
+    // _tzset();  // “The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. “
     resulttime = (struct tm *)localtime(&time);
 
     sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
@@ -102,7 +102,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
 char* y_get_datetimestamp()
 {
     struct _timeb timebuffer;
-    _tzset();
+    // _tzset();  // “The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. “
     ftime( &timebuffer );
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
 }
@@ -216,6 +216,7 @@ y_log_restore()
     }
     */
     lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
+    lr_set_debug_message(~_y_log_level & 0x21F, LR_SWITCH_OFF);
     //lr_log_message("Log level restored to the previous state.\n");
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
