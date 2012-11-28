@@ -35,45 +35,6 @@ unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for u
 // --------------------------------------------------------------------------------------------------
 //// Time/date/stamp functions
 
-/*
-// vugen.h does this now.
-
-typedef long time_t;
-
-struct tm { 
-    int tm_sec;   // seconds after the minute - [0,59] 
-    int tm_min;   // minutes after the hour - [0,59] 
-    int tm_hour;  // hours since midnight - [0,23] 
-    int tm_mday;  // day of the month - [1,31] 
-    int tm_mon;   // months since January - [0,11] 
-    int tm_year;  // years since 1900 
-    int tm_wday;  // days since Sunday - [0,6] 
-    int tm_yday;  // days since January 1 - [0,365] 
-    int tm_isdst; // daylight savings time flag 
-#ifdef LINUX 
-    int tm_gmtoff; 
-    const char * tm_zone; 
-#endif 
-};
-
-struct _timeb {
-    time_t time;
-    unsigned short millitm;
-    short timezone;
-    short dstflag;
-};
-
-time_t time(time_t *timeptr);
-char *ctime(const time_t *calTime);
-void ftime(struct _timeb *time1);
-struct tm *gmtime(const time_t *calTime);
-char *asctime(const struct tm *tmTime);
-size_t *strftime(char *string, size_t maxlen, const char *format, const struct tm *timestruct);
-time_t mktime(struct tm * timeptr);
-struct tm *localtime(const time_t * timer);
-void tzset(void);
-*/
-
 
 /*
  * Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
@@ -296,8 +257,6 @@ y_log_force_message(char *message)
 //     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
 //        separated by commas. This function relies on y_write_to_file();
 //
-// Todo: move this to logging.c
-//
 // @author: Raymond de Jongh
 // Example:
 //     y_write_to_log("c:\\logfile.txt", "Everything went great");
@@ -309,14 +268,12 @@ int y_write_to_log(char *filename, char *content)
 {
     int string_length=0;
     char *log;
-    int len_vuser_group;
-    int len_scid;
     int result;
 
     y_setup();
 
-    string_length = strlen(content);
-    string_length +=strlen(y_virtual_user_group);
+    string_length =  strlen(content);
+    string_length += strlen(y_virtual_user_group);
     string_length +=15;       // y_datetime() is altijd 15 chars lang.
     string_length +=6;        // 6 chars voor id (is dat genoeg?!?)
     string_length +=6;        // 6 chars voor scid (is dat genoeg?!?)
