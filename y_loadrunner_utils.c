@@ -24,8 +24,17 @@
 #include "vugen.h"
 #include "y_string.c"
 
-int _vUserID = 0;                         // virtual user id
-char *_vUserGroup = NULL;                 // virtual user group
+// Reserved space to hold lr_whoami() output.
+int y_virtual_user_id = 0;                         // virtual user id
+char* y_virtual_user_group = NULL;                 // virtual user group
+int y_scid;                                        // pointer to scenario or session step identifier. See "lr_whoami()";
+
+// Complain loudly with a compiler error if people still use the old variants of the above.
+#define _vUserID 0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run
+#define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
+
+
+// Have we initialized the random seed yet?
 int _y_random_seed_initialized = 0;
 
 
@@ -56,16 +65,29 @@ int _y_random_seed_initialized = 0;
 Runs lr_whoami and sets vUserId and vUserGroup as global(!) variables.
 \return void
 \author Floris Kraak
-\warning uses 2 global variables: _vUserID and _vUserGroup. Use with care!
+\warning uses 2 global variables: y_virtual_user_id and y_virtual_user_group. Use with care!
 */
 void y_setup()
 {
-   // Loadrunner sets the locale to "", causing scripts written in locales other than en_US to misbehave.
-   // Let's set it to something sensible, that actually works for people who don't want to mess with this stuff.
-   setlocale(LC_ALL, "C");
+    // if this is filled y_setup() has already been called.
+    if( y_virtual_user_group != NULL )
+    {
+        return;
+    }
 
-   // Global variables, handle with care
-   lr_whoami(&_vUserID, &_vUserGroup, NULL);
+    // Loadrunner sets the locale to "", causing scripts written in locales other than en_US to misbehave.
+    // Let's set it to something sensible, that actually works for people who don't want to mess with this stuff.
+    setlocale(LC_ALL, "C");
+
+    // Global variables, handle with care
+    lr_whoami(&y_virtual_user_id, &y_virtual_user_group, &y_scid);
+}
+
+
+int y_is_vugen_run()
+{
+    y_setup();
+    return (y_virtual_user_id == -1);
 }
 
 
@@ -86,10 +108,7 @@ long y_rand()
    if(!_y_random_seed_initialized)
    {
       int seed, tm, rnd;
-      if( _vUserID == NULL )
-      {
-         y_setup();
-      }
+      y_setup();
 
       // Seed the random number generator for later use.
       // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
@@ -99,8 +118,8 @@ long y_rand()
       tm = (int)time(NULL);
       rnd = rand();
 
-      //lr_log_message("Seed values - time: %d, _vUserId: %d, _vUserGroup: %d, rand: %d", tm, _vUserID, (int)_vUserGroup, rnd);
-      seed = tm%10000 + _vUserID + ((int)_vUserGroup)%1000 + rnd%1000;
+      //lr_log_message("Seed values - time: %d, y_virtual_user_id: %d, y_virtual_user_group: %d, rand: %d", tm, y_virtual_user_id, (int)y_virtual_user_group, rnd);
+      seed = tm%10000 + y_virtual_user_id + ((int)y_virtual_user_group)%1000 + rnd%1000;
       //lr_log_message("Initialising random seed: %d", seed);
       srand( seed );
       _y_random_seed_initialized = 1;
@@ -140,18 +159,15 @@ void y_param_unique(char *param)
 {
     time_t tm = time(NULL);
     int uid;
-    if( _vUserID == NULL )
-    {
-        y_setup();
-    }
-    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d", param, _vUserID, _vUserGroup, (int)tm);
+    y_setup();
+    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d", param, y_virtual_user_id, y_virtual_user_group, (int)tm);
 
-    uid=abs(_vUserID);
+    uid=abs(y_virtual_user_id);
 
     //lr_param_unique(param);
 
     // Exactly 20 characters. No more, no less. Close enough for our purposes, I reckon.
-    lr_param_sprintf(param, "%05d%05d%05d%05d", ((int)_vUserGroup)%100000, uid%100000, tm%100000, y_rand()%100000);
+    lr_param_sprintf(param, "%05d%05d%05d%05d", ((int)y_virtual_user_group)%100000, uid%100000, tm%100000, y_rand()%100000);
 }
 
 
