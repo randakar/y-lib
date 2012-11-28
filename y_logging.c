@@ -23,10 +23,13 @@
 #include "vugen.h"
 #include "y_loadrunner_utils.c"
 
+// Constants
+// const unsigned int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR | LR_MSG_CLASS_AUTO_LOG;
+
 
 // Global variables
-int _y_extra_logging = 0;                    // client specific logging code on/off switch; 0 = off, 1 = on
-int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
+int _y_extra_logging = 0;                             // client specific logging code on/off switch; 0 = off, 1 = on
+unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
 
 
 // --------------------------------------------------------------------------------------------------
@@ -82,7 +85,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
     struct tm *resulttime;
     static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
 
-    // _tzset();  // “The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. “
+    // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
     resulttime = (struct tm *)localtime(&time);
 
     sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
@@ -102,7 +105,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
 char* y_get_datetimestamp()
 {
     struct _timeb timebuffer;
-    // _tzset();  // “The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. “
+    // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
     ftime( &timebuffer );
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
 }
@@ -119,10 +122,7 @@ time_t y_timestamp()
 
 y_setup_logging()
 {
-    if( _vUserID == NULL ) 
-    {
-        y_setup();
-    }
+    y_setup();
 
     // Make the extra logging facility available to the user.
     _y_extra_logging = 1;
@@ -144,9 +144,9 @@ y_log_to_report(char *message)
         lr_set_debug_message(
             LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
             LR_SWITCH_ON);
-    
 
-        lr_log_message(logLine, y_get_datetimestamp(), _vUserID, lr_get_host_name(), lr_eval_string(message));
+
+        lr_log_message(logLine, y_get_datetimestamp(), y_virtual_user_id, lr_get_host_name(), lr_eval_string(message));
 
         lr_set_debug_message(log_level, LR_SWITCH_ON);
         //lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
@@ -170,56 +170,94 @@ y_log_warning(char *message)
     y_log_to_report(msg);
 }
 
+y_log_save()
+{
+    // Save the previous loglevel.
+    _y_log_level = lr_get_debug_message();
+    //lr_error_message("Saved loglevel %d", _y_log_level);
+}
+
+y_log_turn_off_without_saving()
+{
+    // Lots of debug code here. Good grief, this debug message interface is terrible.
+
+    //unsigned int a, b, c, d, e;
+
+    //lr_log_message("Auto log has value %d", LR_MSG_CLASS_AUTO_LOG);
+
+    // First disable the 'extended' log types.
+    //lr_set_debug_message(LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE, LR_SWITCH_OFF);
+    //a = lr_get_debug_message();
+
+    // Set it to 'brief' so we cannot be in extended logging anymore.
+    //lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
+    //b = lr_get_debug_message();
+
+    // Disable the auto logging
+    //lr_set_debug_message(LR_MSG_CLASS_JIT_LOG_ON_ERROR, LR_SWITCH_OFF);
+    //a = lr_get_debug_message();
+
+    // None of the above seems necessary, after extensive testing in LR 11.
+    // No guarantees for earlier loadrunner versions though ..
+
+    // Turn all logging off. Which has the really weird side effect of turning auto logging on again.
+    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
+    //a = lr_get_debug_message();
+
+    // Disable the auto logging again, but using a different bit flag.
+    lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
+    //b = lr_get_debug_message();
+
+    //lr_error_message("Log stages: a=%d, b=%d", a, b);
+
+    //lr_error_message("All logging turned off, log level now %d", lr_get_debug_message() );
+}
+
+
 // Save the current loglevel and turn off logging.
 y_log_turn_off()
 {
-    //lr_log_message("Log level set to OFF.\n");
-
-    // Save the previous loglevel.
-    _y_log_level = lr_get_debug_message();
-
-    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
+    y_log_save();
+    y_log_turn_off_without_saving();
 }
 
 y_log_set_brief()
 {
     //lr_log_message("Log level set to BRIEF.\n");
 
-    // Save the previous loglevel.
-    _y_log_level = lr_get_debug_message();
-
-    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
+    y_log_turn_off();
     lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
+
+    //lr_log_message("Log level set to brief, from %d to %d", _y_log_level, lr_get_debug_message() );
 }
 
 y_log_set_extended()
 {
     //lr_log_message("Log level set to EXTENDED.\n");
 
-    // Save the previous loglevel.
-    _y_log_level = lr_get_debug_message();
-
-    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
+    y_log_turn_off();
     lr_set_debug_message(
         LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
         LR_SWITCH_ON);
+
+    //lr_log_message("Log level extended from %d to %d", _y_log_level, lr_get_debug_message() );
 }
 
 // Restore the log level to the old state.
 y_log_restore()
 {
-    const int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR;
-    
-    /*
-    if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
-    {
-        lr_log_message("Warning: Restoring the previous loglevel will turn logging OFF.\n");
-        // If the current loglevel is off as well nobody can hear this scream ..
-    }
-    */
+    //lr_log_message("Restoring log level to %d, current level %d.", _y_log_level, lr_get_debug_message());
+
+    y_log_turn_off_without_saving();
+
     lr_set_debug_message(_y_log_level, LR_SWITCH_ON);
-    lr_set_debug_message(~_y_log_level & Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);
-    //lr_log_message("Log level restored to the previous state.\n");
+
+    // None of this debug code does what we want. Only y_log_turn_off_without_saving() (above) seems to work ..
+    //lr_set_debug_message(~Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);
+    //lr_set_debug_message(~_y_log_level, LR_SWITCH_OFF); 
+    //lr_set_debug_message(~_y_log_level & Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);
+
+    //lr_error_message("Attempted to restore loglevel to %d, now it is %d", _y_log_level, lr_get_debug_message());
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
 
@@ -237,11 +275,19 @@ y_log_turn_on()
 
 // Log a message forcefully, bypassing all log settings.
 // Typically used for generating datafiles within scripts with the loglevel set to OFF.
+// 
+// Testcase:
+//  lr_log_message("Before");
+//  y_log_force_message("Forced message");
+//  lr_log_message("After");
+// 
 y_log_force_message(char *message)
 {
     y_log_set_extended();
     lr_log_message( message );
     y_log_restore();
+
+    //lr_error_message("Forced message done");
 }
 
 // --------------------------------------------------------------------------------------------------
@@ -261,26 +307,23 @@ y_log_force_message(char *message)
 // --------------------------------------------------------------------------------------------------
 int y_write_to_log(char *filename, char *content)
 {
-    int id, scid;
-    char *vuser_group;
     int string_length=0;
     char *log;
     int len_vuser_group;
     int len_scid;
     int result;
 
-    // todo: make this call y_setup().
-    lr_whoami(&id, &vuser_group, &scid);
+    y_setup();
 
     string_length = strlen(content);
-    string_length +=strlen(vuser_group);
+    string_length +=strlen(y_virtual_user_group);
     string_length +=15;       // y_datetime() is altijd 15 chars lang.
     string_length +=6;        // 6 chars voor id (is dat genoeg?!?)
     string_length +=6;        // 6 chars voor scid (is dat genoeg?!?)
 
     log = y_mem_alloc(string_length);
     y_datetime();
-    sprintf(log, "%s,%s,%6d,%6d,%s", lr_eval_string("{DATE_TIME_STRING}"), vuser_group, id, scid, content);
+    sprintf(log, "%s,%s,%6d,%6d,%s", lr_eval_string("{DATE_TIME_STRING}"), y_virtual_user_group, y_virtual_user_id, y_scid, content);
 
     result = y_write_to_file(filename, log);
 
