@@ -361,11 +361,11 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     char *buffer;
 
 
-    // _vUserGroup is set only when _y_extra_logging is set.
+    // y_virtual_user_group is set only when _y_extra_logging is set.
     // See logging.c -> y_setup_logging().
-    if( _y_add_group_to_trans && (_vUserGroup != NULL))
+    if( _y_add_group_to_trans && (y_virtual_user_group != NULL))
     {
-        group_len = strlen(_vUserGroup);
+        group_len = strlen(y_virtual_user_group);
     }
 
     // add room for the seperators
@@ -387,7 +387,7 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
         int len = 0;
         if(group_len > 0)
         {
-            len = sprintf(buffer, "%s%s", _vUserGroup, seperator);
+            len = sprintf(buffer, "%s%s", y_virtual_user_group, seperator);
         }
         if(prefix_len > 0) 
         {
