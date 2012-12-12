@@ -74,8 +74,8 @@ int _y_add_group_to_trans = 0;      // whether to add the name of the vuser grou
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
 //char _block_transaction[100] = "";
-int _y_transaction_nr = 0;
-int _y_sub_transaction_nr = 0;
+int _y_transaction_nr = 1;
+int _y_sub_transaction_nr = 1;
 
 // Transaction status tracking
 #define Y_TRANS_STATUS_NONE         0
@@ -144,40 +144,50 @@ void y_set_action_prefix(char *action_prefix)
 }
 
 
-int y_get_transaction_nr()
+int y_get_next_transaction_nr()
 {
     return _y_transaction_nr;
 }
 
 
-int y_get_and_increment_transaction_nr()
+int y_post_increment_transaction_nr()
 {
-    return ++_y_transaction_nr;
+    return _y_transaction_nr++;
 }
 
 
-void y_set_transaction_nr(int trans_nr)
+void y_set_next_transaction_nr(int trans_nr)
 {
     _y_transaction_nr = trans_nr;
 }
 
 
-int y_get_sub_transaction_nr()
+int y_get_next_sub_transaction_nr()
 {
     return _y_sub_transaction_nr;
 }
 
 
-int y_get_and_increment_sub_transaction_nr()
+int y_post_increment_sub_transaction_nr()
 {
-    return ++_y_sub_transaction_nr;
+    return _y_sub_transaction_nr++;
 }
 
 
-void y_set_sub_transaction_nr(int trans_nr)
+void y_set_next_sub_transaction_nr(int trans_nr)
 {
     _y_sub_transaction_nr = trans_nr;
 }
+
+// Complain loudly with a compiler error if people still use the old variants of the above.
+// We renamed these on purpose, the semantics of these functions are subtly different from the old ones so existing scripts need to change.
+// The most important change is that the internal transaction number now represents the *next* transaction number, not the previous one.
+#define y_set_transaction_nr 0y_set_transaction_nr_no_longer_exists_please_use_y_set_next_transaction_nr
+#define y_get_transaction_nr 0y_get_transaction_nr_no_longer_exists_please_use_y_get_next_transaction_nr
+#define y_get_and_increment_transaction_nr 0y_get_and_increment_transaction_nr_no_longer_exists_please_use_y_post_increment_transaction_nr
+#define y_get_sub_transaction_nr 0y_get_sub_transaction_nr_no_longer_exists_please_use_y_get_next_sub_transaction_nr
+#define y_get_and_increment_sub_transaction_nr 0y_get_and_increment_sub_transaction_nr_no_longer_exists_please_use_y_post_increment_sub_transaction_nr
+#define y_set_sub_transaction_nr 0y_set_sub_transaction_nr_no_longer_exists_please_use_y_set_next_sub_transaction_nr
 
 
 int y_get_transaction_running()
@@ -336,7 +346,7 @@ void y_end_action_block()
 void y_start_transaction_block(char *action_prefix)
 {
     y_set_action_prefix(action_prefix);
-    y_set_transaction_nr(0);
+    y_set_next_transaction_nr(1);
 
     // Start a transaction to measure total time spend in this block
     // 
@@ -455,7 +465,6 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
     free(actual_trans_name);
 }
 
-
 //
 // y_start_transaction() / y_end_transaction()
 // These are drop-in replacements for the loadrunner functions 
@@ -465,16 +474,13 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 // with external tools, and add a common prefix based on the action block (see above)
 // as well as consistent numbering.
 // 
-
 int y_start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'y_current_transaction' parameter.
-    y_create_new_transaction_name(transaction_name, 
-                                y_get_action_prefix(), 
-                                y_get_and_increment_transaction_nr());
+    y_create_new_transaction_name(transaction_name, y_get_action_prefix(), y_post_increment_transaction_nr());
 
     // Reset the sub transaction numbering.
-    y_set_sub_transaction_nr(0);
+    y_set_next_sub_transaction_nr(1);
 
     // Fire the start trigger. For complicated web_reg_find() / web_reg_save_param() 
     // statement collections that we want run right before starting every
@@ -494,6 +500,15 @@ int y_start_transaction(char *transaction_name)
     //return lr_start_transaction(lr_eval_string("{y_current_transaction}"));
     return _y_trans_start_impl(lr_eval_string("{y_current_transaction}"));
 }
+
+
+int y_start_transaction_with_number(char *transaction_name, int transaction_number)
+{
+    y_set_next_transaction_nr(transaction_number);
+    return y_start_transaction(transaction_name);
+}
+
+
 
 // Note: This completely ignores the 'transaction_name' argument
 // to retain compatibility with lr_end_transaction().
@@ -533,7 +548,6 @@ int y_end_transaction(char *transaction_name, int status)
     return status;
 }
 
-
 //
 // y_start_sub_transaction() / y_end_sub_transaction()
 // Like y_start_transaction() / y_end_transaction().
@@ -554,14 +568,11 @@ void y_start_sub_transaction(char *transaction_name)
         _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
     }
 
-    // This should not disrupt the numbering ..
-    // .. but why is it needed??
-    //y_set_transaction_nr( y_get_transaction_nr() -1 );
 
-    y_create_new_sub_transaction_name(transaction_name, 
+    y_create_new_sub_transaction_name(transaction_name,
                                     y_get_action_prefix(),
-                                    y_get_transaction_nr(),
-                                    y_get_and_increment_sub_transaction_nr());
+                                    y_get_next_transaction_nr()-1,
+                                    y_post_increment_sub_transaction_nr());
 
     // Fire the transaction start trigger.
     y_run_transaction_start_trigger();
@@ -573,6 +584,14 @@ void y_start_sub_transaction(char *transaction_name)
     lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
                              lr_eval_string("{y_current_transaction}"));
 }
+
+void y_start_sub_transaction_with_number(char *transaction_name, int transaction_number)
+{
+    y_set_next_sub_transaction_nr(transaction_number);
+    y_start_sub_transaction(transaction_name);
+}
+
+
 
 int y_end_sub_transaction(char *transaction_name, int status)
 {
