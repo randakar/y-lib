@@ -1,21 +1,23 @@
 /*
- * vugen.h - A.U. Luyer - 27 maart 2012
- * Deze header file bevat de veel voorkomende 'standaard C functies' in vugen scripts
- * Door deze functies netjes te declareren kan de comnpiler checks uitvoeren of deze
- * functies correct worden aangeroepen.
- * Deze header file 'ont-stript' de compiler in Vugen.
- * Het bevat in ieder geval de functies die genoemd worden in de HP LoadRunner Online Function Reference.
+ * vugen.h - A.U. Luyer - 2012-03-27
+ * This header file contains the most used 'standard C functions' in vugen scripts
+ * By declaring these functions properly the compiler can check if these functions 
+ * are used correctly and apply implicit conversions when necessary.
+ * This header file 'de-strips' the compiler in Vugen.
+ * It contains all the functions mentioned in the HP LoadRunner Online Function Reference.
+ * NOTE: Sites like http://www.cplusplus.com/reference/clibrary/ explain the standard C functions
+ * better than the HP LoadRunner Online Function Reference.
+ *
+ * Usage: add vugen.h to the script and add #include "vugen.h" to globals.h.
+ * Or: add to include directory and add the include to lhrun.h on all Vugen machines en load generators.
  */
 
 #ifndef _VUGEN_H_
 #define _VUGEN_H_
 
-// test test 
+/* Note: typedef unsigned long size_t; already in lrun.h */
 
-/***** 'extra' variabele types *****/
-//typedef unsigned long size_t; // ook al in lrun.h
-
-/***** String functies *****/
+/***** String functions *****/
 
 int sprintf(char *buffer, const char *format_string, ...);
 int sscanf(const char *buffer, const char *format_string, ...);
@@ -36,12 +38,12 @@ char *strstr(const char *string1, const char *string2);
 char *strtok(char *string, const char *delimiters);
 char *strupr(char *string);
 
-/* Forceer een compiler fout als strcat() gebruikt wordt, omdat het gebruik van strcat() vrijwel
- * altijd een indicatie is van slecht programeerwerk -- er is altijd een betere oplossing!
- * Hier #error gebruiken kan niet...
- * officieel: char *strcat(char *to, const char *from);
+/* Force a compile time error when strcat() is used. Because the use of strcat() is a very
+ * strong indicator for poorly written code being compiled -- there is always a better solution!
+ * Unfortunally the use of #error is not possible here.
+ * Original declaration: char *strcat(char *to, const char *from);
  */
-#define strcat(to, from) 0_strcat_NIET_GEBRUIKEN_ER_IS_ALTIJD_EEN_BETERE_OPLOSSING
+#define strcat(to, from) 0_DO_NOT_USE_strcat_THERE_IS_ALWAYS_A_BETTER_SOLUTION
 
 double atof(const char *string);
 int atoi(const char *string);
@@ -51,19 +53,29 @@ long strtol(const char *string, char **endptr, int radix);
 unsigned long int strtoul(const char *str, char **endptr, int base);
 double strtod(const char *str, char **endptr);
 
-int tolower(int c);
-int toupper(int c);
-int isdigit(int c);
-int isalpha(int c);
+/* ctype.h -- http://www.acm.uiuc.edu/webmonkeys/book/c_guide/ */
+int tolower(int character);
+int toupper(int character);
+int isalnum(int character);
+int isalpha(int character);
+int iscntrl(int character);
+int isdigit(int character);
+int isgraph(int character);
+int islower(int character);
+int isprint(int character);
+int ispunct(int character);
+int isspace(int character);
+int isupper(int character);
+int isxdigit(int character);
 
 void *memchr(const void *s, int c, size_t n);
 int memcmp(const void *s1, const void *s2, size_t n);
-/* verkies memmove boven memcpy! werking memcpy niet gegarandeerd bij overlap src - dst */
+/* prefer memmove over memcpy! The operation of memcpy is not garanteed on overlap */
 void *memcpy(void *dest, const void *src, size_t n);
 void *memmove(void *dest, const void *src, size_t n);
 void *memset(void *buffer, int c, size_t n);
 
-/***** Tijd structures en functies *****/
+/***** Time structures and functions *****/
 
 typedef long time_t;
 struct tm {
@@ -96,16 +108,15 @@ struct tm *gmtime(const time_t *calTime);
 char *asctime(const struct tm *tmTime);
 size_t *strftime(char *string, size_t maxlen, const char *format, const struct tm *timestruct);
 time_t mktime(struct tm * timeptr);
-struct tm *localtime(const time_t * timer);
+struct tm *localtime(const time_t *timer);
 void tzset(void);
 
-/***** File functies *****/
-/* LET OP: f-functies gebruiken in werkelijkijkheid (FILE *) type maar omdat in de
- * Vugen help deze gedefineerd worden als (long) hier ook maar zo...
- * Dus long file_pointer ipv FILE *file_pointer
- * Dat gaat 'toevallig' goed omdat geldt: sizeof(void *) == sizeof(long)
+/***** File functions *****/
+/* NOTE: the file functions use (FILE *), but because they are declared as (long)
+ * in the on-line help we use it here also...
+ * So 'long file_pointer' instead of 'FILE *file_pointer'.
+ * This 'happens' to be ok because sizeof(void *) == sizeof(long)
  */
- 
 int fclose(long file_pointer);
 int feof(long file_pointer);
 int ferror(long file_pointer);
@@ -114,14 +125,19 @@ char *fgets(char *string, int maxchar, long file_pointer);
 int fputs(const char *str, long file_pointer);
 long fopen(const char *filename, const char *access_mode);
 int fprintf(long file_pointer, const char *format_string, ...);
-int fputc(int c,long file_pointer);
+int fputc(int c, long file_pointer);
 size_t fread(void *buffer, size_t size, size_t count, long file_pointer);
 int fscanf(long file_pointer, const char *format_string, ...);
 int fseek(long file_pointer, long offset, int origin);
 long ftell(long file_pointer);
 size_t fwrite(const void *buffer, size_t size, size_t count, long file_pointer);
 void rewind(long file_pointer);
+long tmpfile(void);
+char *tmpnam(char *str);
 int setvbuf(long file_pointer, char * buffer, int mode, size_t size);
+
+#define	FILENAME_MAX	1024
+#define	L_tmpnam	FILENAME_MAX
 
 #ifndef SEEK_SET
 #define	SEEK_SET	0	/* set file offset to offset */
@@ -138,6 +154,16 @@ int setvbuf(long file_pointer, char * buffer, int mode, size_t size);
 
 #define	EOF	(-1)
 
+/*
+ * Routines in POSIX 1003.1:2001.
+ */
+int	getw(long file_pointer);
+int	pclose(long file_pointer);
+long popen(const char *command, const char *access_mode);
+int	putw(int word, long file_pointer);
+
+/***** File system functions *****/
+
 int chdir(const char *path);
 int chdrive(int drive);
 char *getcwd(char *path, int numchars);
@@ -146,18 +172,13 @@ int remove(const char *path);
 int rename(const char *oldname, const char *newname);
 int rmdir(const char *path);
 
-/*
- * Routines in POSIX 1003.1:2001.
- */
-int	getw(long file_pointer);
-int	pclose(long file_pointer);
-long popen(const char *command, const char *access_mode);
-int	putw(int, long file_pointer);
-
-/***** locale.h functies *****/
-/* LET OP: Vugen voert voor de start setlocale(LC_ALL, "") uit -- dus de system's default locale
- * In plaats van setlocale(LC_ALL, "C") -- the minimal locale en de default voor alle C compilers...
- * waardoor bv sscanf(buf , "%f", &double_var) niet goed werkt op Nederlandse Windows locale
+/***** locale.h functions *****/
+/* BEWARE: Vugen executes a setlocale(LC_ALL, "") before the start -- so the system's default locale
+ * is active instead of setlocale(LC_ALL, "C") -- the minimale locale and the default for all C compilers...
+ * This may cause functions like sscanf to behave unexpectically, for instance when the decimal point
+ * is a comma (as in many European languages) sscanf(buf , "%lf", &double_var) will not yield the correct
+ * number.
+ * To print the default locale: lr_log_message("%s", setlocale(LC_ALL, NULL));
  */
 #define LC_ALL	    0
 #define LC_COLLATE  1
@@ -189,7 +210,7 @@ double fabs(double x);
 double ceil(double x);
 double floor(double x);
 double fmod(double numerator, double denominator);
-double modf(double x, double * intpart);
+double modf(double x, double *intpart);
 double exp(double x);
 double sqrt(double x);
 double pow(double base, double exponent);
@@ -200,5 +221,9 @@ double cos(double x);
 
 int rand(void);
 int srand(unsigned int seed);
+
+/***** Windows API Functions *****/
+
+void sleep(DWORD dwMilliseconds); /* you should use lr_force_think_time() instead */
 
 #endif /* _VUGEN_H_ */
