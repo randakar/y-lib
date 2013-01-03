@@ -769,6 +769,35 @@ int y_workdays_from_today(int workdays)
 }
 
 
+//
+// In order to prevent our logs from filling up disks beyond capacity we need to know how much free space the log file system has.
+// 
+// Note: This is not capable of handling disk sizes > 16 TB.
+// The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
+// Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
+double y_get_free_disk_space_percentage(char* folder_name)
+{
+    size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
+    int load_dll_result;
+    size_t free_bytes;
+    double free_space_percentage;
+
+    if( (load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
+    {
+        lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report free disk space.", load_dll_result);
+        lr_abort();
+    }
+
+    GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
+
+    free_space_percentage = 100. * NumberOfFreeClusters / TotalNumberOfClusters;
+    free_bytes = SectorsPerCluster * BytesPerSector * NumberOfFreeClusters;
+    //lr_log_message("Free disk space for folder %s: %.2lf%% (%.lf bytes)", folder_name, free_space_percentage, free_bytes);
+    lr_log_message("Free disk space for folder %s: %.2lf%% (%.lu bytes)", folder_name, free_space_percentage, free_bytes);
+
+    return free_space_percentage;
+}
+
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
