@@ -87,6 +87,8 @@ int _trans_status = Y_TRANS_STATUS_NONE;
 typedef int (y_trigger_func)();
 y_trigger_func* _y_trigger_start_trans = NULL;
 y_trigger_func* _y_trigger_end_trans = NULL;
+y_trigger_func* _y_trigger_start_sub_trans = NULL;
+y_trigger_func* _y_trigger_end_sub_trans = NULL;
 
 // Transaction time measurements
 merc_timer_handle_t _y_trans_timer = "";
@@ -239,6 +241,16 @@ void y_set_transaction_end_trigger( y_trigger_func *trigger_function )
     _y_trigger_end_trans = trigger_function;
 }
 
+void y_set_sub_transaction_start_trigger( y_trigger_func *trigger_function )
+{
+    _y_trigger_start_sub_trans = trigger_function;
+}
+
+void y_set_sub_transaction_end_trigger( y_trigger_func *trigger_function )
+{
+    _y_trigger_end_sub_trans = trigger_function;
+}
+
 
 
 // Transaction implementation change support
@@ -291,6 +303,23 @@ int y_run_transaction_end_trigger()
     else return _y_trigger_end_trans();
 }
 
+int y_run_sub_transaction_start_trigger()
+{
+    if( _y_trigger_start_sub_trans == NULL )
+    {
+        return 0;
+    }
+    else return _y_trigger_start_sub_trans();
+}
+
+int y_run_sub_transaction_end_trigger()
+{
+    if( _y_trigger_end_sub_trans == NULL )
+    {
+        return 0;
+    }
+    else return _y_trigger_end_sub_trans();
+}
 
 
 //
@@ -575,7 +604,7 @@ void y_start_sub_transaction(char *transaction_name)
                                     y_post_increment_sub_transaction_nr());
 
     // Fire the transaction start trigger.
-    y_run_transaction_start_trigger();
+    y_run_sub_transaction_start_trigger();
 
     // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     // For external analysis of the response times.
@@ -600,7 +629,7 @@ int y_end_sub_transaction(char *transaction_name, int status)
     char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
-    int trigger_result = y_run_transaction_end_trigger();
+    int trigger_result = y_run_sub_transaction_end_trigger();
     if( status == LR_PASS && trigger_result != LR_PASS )
     {
         status = trigger_result;
