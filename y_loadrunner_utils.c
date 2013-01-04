@@ -799,5 +799,33 @@ double y_get_free_disk_space_percentage(char* folder_name)
 }
 
 
+
+y_read_file_into_parameter(char* filename, char* param)
+{
+    long pos;
+    char *bytes;
+    long f = fopen(filename, "rb");
+
+    if( f == NULL )
+    {
+        lr_error_message("Unable to open file %s", filename);
+        lr_abort();
+        return;
+    }
+
+    fseek(f, 0, SEEK_END);
+    pos = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    bytes = y_mem_alloc(pos);
+    fread(bytes, pos, 1, f);
+    fclose(f);
+
+    // hexdump(bytes); // do some stuff with it
+
+    lr_save_var(bytes, pos, 0, param);
+    free(bytes); // free allocated memory
+}
+
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
