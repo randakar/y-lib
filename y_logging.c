@@ -292,7 +292,7 @@ int y_write_to_log(char *filename, char *content)
 //
 // Detects low disk space situations and turns all logging off if not enough space is left.
 // 
-void y_disk_space_guard(int max_free_percentage)
+void y_disk_space_guard(double max_free_percentage)
 {
     char* log_folder = lr_get_attrib_string("out");
     double free_space_percentage = y_get_free_disk_space_percentage(log_folder);
