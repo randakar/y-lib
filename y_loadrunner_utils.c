@@ -779,20 +779,24 @@ double y_get_free_disk_space_percentage(char* folder_name)
 {
     size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
     int load_dll_result;
+    static int kernel_dll_loaded = 0;
     size_t free_bytes;
     double free_space_percentage;
 
-    if( (load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
+    if( kernel_dll_loaded == 0 && (load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
     {
         lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report free disk space.", load_dll_result);
         lr_abort();
+    }
+    else
+    {
+        kernel_dll_loaded = 1;
     }
 
     GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
 
     free_space_percentage = 100. * NumberOfFreeClusters / TotalNumberOfClusters;
     free_bytes = SectorsPerCluster * BytesPerSector * NumberOfFreeClusters;
-    //lr_log_message("Free disk space for folder %s: %.2lf%% (%.lf bytes)", folder_name, free_space_percentage, free_bytes);
     lr_log_message("Free disk space for folder %s: %.2lf%% (%.lu bytes)", folder_name, free_space_percentage, free_bytes);
 
     return free_space_percentage;
@@ -829,3 +833,4 @@ y_read_file_into_parameter(char* filename, char* param)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
+
