@@ -288,7 +288,27 @@ int y_write_to_log(char *filename, char *content)
 
     return result;
 }
-// --------------------------------------------------------------------------------------------------
 
+//
+// Detects low disk space situations and turns all logging off if not enough space is left.
+// 
+void y_disk_space_guard(int max_free_percentage)
+{
+    char* log_folder = lr_get_attrib_string("out");
+    double free_space_percentage = y_get_free_disk_space_percentage(log_folder);
+
+    if( free_space_percentage < max_free_percentage )
+    {
+        y_setup();
+        lr_set_transaction(lr_eval_string("---DISK SPACE LOW IN LOG FOLDER---"), 0, LR_FAIL);
+        lr_error_message("Disk space low in folder %s. %.2lf%% remaining. Logging turned off for user id %d for the remainder of the test!", log_folder, free_space_percentage, y_virtual_user_id);
+
+        y_log_turn_off_without_saving();
+        y_log_save(); // make sure it is never accidentally enabled again through y_log_restore() ..
+    }
+}
+
+
+// --------------------------------------------------------------------------------------------------
 
 #endif // _LOGGING_C
