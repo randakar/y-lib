@@ -45,7 +45,7 @@ int _y_random_seed_initialized = 0;
 //
 // With some slight changes to y_rand() this constant can be increased by quite a bit ..
 // 
-#define RAND_MAX 2147483647
+#define RAND_MAX 1073741823
 
 //
 // This file contains loadrunner specific helper funtions.
@@ -134,15 +134,15 @@ long y_rand()
        // because it will break people's expectations of what rand() does. )
 
        // This gets us 15 bits of randomness
-       long result = rand() & 0x000000000000FFFF; 
+       long result;// = rand() & 0x000000000000FFFF; 
        //lr_log_message("y_rand: first 15 random bits: = %d, RAND_MAX = %d", result, RAND_MAX);
 
        // left shift those 15 bits and add another 15 bits
-       result = (result << 15) | (rand() & 0x000000000000FFFF); 
+       result = rand() << 15 | rand(); 
        //lr_log_message("y_rand: added second 15 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
 
-       result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
-       lr_log_message("y_rand: final random roll = %d, RAND_MAX = %d", result, RAND_MAX);
+       //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
+       lr_log_message("y_rand: final random roll = %x, RAND_MAX = %d", result, RAND_MAX);
 
        //lr_abort();
        return result;
@@ -157,17 +157,11 @@ long y_rand()
 // vuser group name. Not sure that that can be helped. But collisions should be terribly unlikely, anyway.
 void y_param_unique(char *param)
 {
-    time_t tm = time(NULL);
-    int uid;
-    y_setup();
-    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d", param, y_virtual_user_id, y_virtual_user_group, (int)tm);
-
-    uid=abs(y_virtual_user_id);
-
-    //lr_param_unique(param);
-
+    struct _timeb ms;
+    ftime(&ms);
+    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d.%03d", param, y_virtual_user_id, y_virtual_user_group, ms.time, ms.millitm);
     // Exactly 20 characters. No more, no less. Close enough for our purposes, I reckon.
-    lr_param_sprintf(param, "%05d%05d%05d%05d", ((int)y_virtual_user_group)%100000, uid%100000, tm%100000, y_rand()%100000);
+    lr_param_sprintf(param, "%08xd%02x%06x%03x", y_virtual_user_group, y_virtual_user_id & 255, ms.time & 0xFFFFFF, ms.millitm);
 }
 
 
@@ -833,4 +827,3 @@ y_read_file_into_parameter(char* filename, char* param)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
-
