@@ -137,7 +137,7 @@ long y_rand()
        long result = rand() << 15 | rand(); 
        //lr_log_message("y_rand: 30 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
 
-	   // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
+       // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
        //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
        lr_log_message("y_rand: final random roll = %x, RAND_MAX = %d", result, RAND_MAX);
 
