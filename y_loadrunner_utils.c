@@ -127,25 +127,20 @@ long y_rand()
    }
 
    {
-       // Because rand() does not return numbers above 32767 and we want to get the full 31 bits
-       // of randomness that a long affords us we are going to do roll multiple numbers and
-       // basically concatenate them together using bit shifts.
+       // Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits
+       // of randomness that a long affords us we are going to roll multiple numbers and basically 
+       // concatenate them together using bit shifts.
        // 
        // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
-       // because it will break people's expectations of what rand() does. )
+       // because it will break people's expectations of what rand() does.)
 
-       // This gets us 15 bits of randomness
-       long result;// = rand() & 0x000000000000FFFF; 
-       //lr_log_message("y_rand: first 15 random bits: = %d, RAND_MAX = %d", result, RAND_MAX);
+       long result = rand() << 15 | rand(); 
+       //lr_log_message("y_rand: 30 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
 
-       // left shift those 15 bits and add another 15 bits
-       result = rand() << 15 | rand(); 
-       //lr_log_message("y_rand: added second 15 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
-
+	   // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
        //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
        lr_log_message("y_rand: final random roll = %x, RAND_MAX = %d", result, RAND_MAX);
 
-       //lr_abort();
        return result;
    }
 }
