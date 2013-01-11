@@ -35,10 +35,6 @@ int y_scid;                                        // pointer to scenario or ses
 #define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
 
 
-// Have we initialized the random seed yet?
-int _y_random_seed_initialized = 0;
-
-
 // Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h>
 // is missing. We define it here mostly for documentation, as we do not have access
 // to the header files themselves and therefore cannot change this. 
@@ -106,6 +102,9 @@ random_number=y_rand();
 */
 long y_rand()
 {
+   // Have we initialized the random seed yet?
+   static int _y_random_seed_initialized = 0;
+
    if(!_y_random_seed_initialized)
    {
       int seed, tm, rnd;
@@ -145,21 +144,56 @@ long y_rand()
    }
 }
 
+// --------------------------------------------------------------------------------------------------
 
-// A unique parameter that is more predictable in length than the LR counterpart: Exactly 20 characters.
-// The user group name can get really really long..
-// 
-// The guarantees on this thing depend on the way LR lays out it's memory - specifically, where it puts the
-// vuser group name. Not sure that that can be helped. But collisions should be terribly unlikely, anyway.
+
+//! Create a hash of string input. 
+/*! See: http://www.cse.yorku.ca/~oz/hash.html 
+\return hash (unsigned long)
+\author Floris Kraak
+\start_example
+\end_example
+*/
+static unsigned long y_hash_sdbm(char* str)
+{
+    unsigned long hash = 0;
+    int c;
+    while (c = *str++)
+        hash = c + (hash << 6) + (hash << 16) - hash;
+    return hash;
+}
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Create a unique parameter that is more predictable in length than the LR counterpart: Exactly 24 characters.
+/*!
+@param[in] The name of a parameter to store the resulting string in.
+\return void
+\author Floris Kraak & André Luyer
+\start_example
+y_param_unique("test");
+\end_example
+*/
 void y_param_unique(char *param)
 {
     struct _timeb ms;
-    ftime(&ms);
-    lr_log_message("y_param_unique(%s) for user %d in group %s at time %d.%03d", param, y_virtual_user_id, y_virtual_user_group, ms.time, ms.millitm);
-    // Exactly 20 characters. No more, no less. Close enough for our purposes, I reckon.
-    lr_param_sprintf(param, "%08xd%02x%06x%03x", y_virtual_user_group, y_virtual_user_id & 255, ms.time & 0xFFFFFF, ms.millitm);
-}
+    static unsigned short i = 0;
+    static unsigned long vuser_group_hash = 0;
 
+    if(!vuser_group_hash) 
+    { 
+        y_setup();
+        vuser_group_hash = y_hash_sdbm(y_virtual_user_group);
+    }
+    ftime(&ms);
+
+    lr_log_message("y_param_unique(%s) in group %s (hash: %x) for user %d (%x) at time %d.%03d (%x.%x) with iterator %d (%x)", 
+        param, y_virtual_user_group, vuser_group_hash, y_virtual_user_id, y_virtual_user_id, ms.time, ms.millitm, ms.time, ms.millitm, i, i);
+
+    // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon.
+    lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
+}
 
 
 // --------------------------------------------------------------------------------------------------
