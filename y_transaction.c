@@ -90,15 +90,24 @@ y_trigger_func* _y_trigger_end_trans = NULL;
 y_trigger_func* _y_trigger_start_sub_trans = NULL;
 y_trigger_func* _y_trigger_end_sub_trans = NULL;
 
-// Transaction time measurements
-merc_timer_handle_t _y_trans_timer = "";
-merc_timer_handle_t _y_sub_trans_timer = "";
-
 // Transaction implementation pointers
 typedef int (y_trans_start_impl_func)(char* trans_name);
 typedef int (y_trans_end_impl_func)(char* trans_name, int status);
 y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
 y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
+
+
+// Functions
+
+// If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running.
+// Adding calls to lr_start_transaction() and lr_end_transaction() that are never actually used is enough to stop that from occurring.
+// Alternatively, the "y_start_trans_impl_func" and "y_end_trans_impl_func" pointers could be initialized to NULL. But that would stop y_start/y_end_transaction() from
+// actually recording transactions.. so we're not going to do that.
+void __y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_dereference_error_in_vugen_when_running()
+{
+    lr_start_transaction("y_workaround_transaction_to_prevent_null_dereference");
+    lr_end_transaction(  "y_workaround_transaction_to_prevent_null_dereference", LR_AUTO);
+}
 
 
 // Getters / Setters //
@@ -469,6 +478,12 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
     free(actual_trans_name);
 }
 
+void y_create_next_transaction_name( const char* transaction_name)
+{
+    y_create_new_transaction_name(transaction_name, y_get_action_prefix(), y_post_increment_transaction_nr());
+}
+
+
 
 // 
 // Todo: Find a way to make this share more code with y_create_new_transaction_name()
@@ -494,6 +509,15 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
     free(actual_trans_name);
 }
 
+
+void y_create_next_sub_transaction_name(const char* transaction_name)
+{
+    y_create_new_sub_transaction_name(transaction_name,
+                                    y_get_action_prefix(),
+                                    y_get_next_transaction_nr()-1,
+                                    y_post_increment_sub_transaction_nr());
+}
+
 //
 // y_start_transaction() / y_end_transaction()
 // These are drop-in replacements for the loadrunner functions 
@@ -506,7 +530,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 int y_start_transaction(char *transaction_name)
 {
     // This saves it's result in the 'y_current_transaction' parameter.
-    y_create_new_transaction_name(transaction_name, y_get_action_prefix(), y_post_increment_transaction_nr());
+    y_create_next_transaction_name(transaction_name);
 
     // Reset the sub transaction numbering.
     y_set_next_sub_transaction_nr(1);
@@ -521,10 +545,6 @@ int y_start_transaction(char *transaction_name)
     // Stops sub transactions from automagically
     // creating outer transactions for themselves.
     _trans_status = Y_TRANS_STATUS_STARTED;
-
-    // For external analysis of the responsetimes.
-    _y_trans_timer = lr_start_timer();
-    y_log_to_report(lr_eval_string("TimerOn {y_current_transaction}"));
 
     //return lr_start_transaction(lr_eval_string("{y_current_transaction}"));
     return _y_trans_start_impl(lr_eval_string("{y_current_transaction}"));
@@ -543,7 +563,6 @@ int y_start_transaction_with_number(char *transaction_name, int transaction_numb
 // to retain compatibility with lr_end_transaction().
 int y_end_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(_y_trans_timer); // <-- DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
     char *trans_name = lr_eval_string("{y_current_transaction}");
 
     // Fire the transaction end trigger. For processing the results of 
@@ -567,13 +586,6 @@ int y_end_transaction(char *transaction_name, int status)
     // so if a sub-transaction is created it may have to fake this.
     _trans_status = Y_TRANS_STATUS_NONE;
 
-    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
-    // For external analysis of the response times.
-    {
-        char logline[200];
-        sprintf(logline, "TimerOff {y_current_transaction}, duration: %f seconds.", duration);
-        y_log_to_report(lr_eval_string(logline));
-    }
     return status;
 }
 
@@ -598,18 +610,12 @@ void y_start_sub_transaction(char *transaction_name)
     }
 
 
-    y_create_new_sub_transaction_name(transaction_name,
-                                    y_get_action_prefix(),
-                                    y_get_next_transaction_nr()-1,
-                                    y_post_increment_sub_transaction_nr());
+    y_create_next_sub_transaction_name(transaction_name);
 
     // Fire the transaction start trigger.
     y_run_sub_transaction_start_trigger();
 
-    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
-    // For external analysis of the response times.
-    _y_sub_trans_timer = lr_start_timer();
-    y_log_to_report(lr_eval_string("TimerOn {y_current_sub_transaction}"));
+    // Actual sub transaction start
     lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
                              lr_eval_string("{y_current_transaction}"));
 }
@@ -624,8 +630,6 @@ void y_start_sub_transaction_with_number(char *transaction_name, int transaction
 
 int y_end_sub_transaction(char *transaction_name, int status)
 {
-    double duration = lr_end_timer(_y_sub_trans_timer); // <-- DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
-
     char *trans_name = lr_eval_string("{y_current_sub_transaction}");
 
     // Fire the transaction end trigger.
@@ -638,14 +642,6 @@ int y_end_sub_transaction(char *transaction_name, int status)
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_sub_transaction_status", status);
     lr_end_sub_transaction(trans_name, status);
-
-    // DEPRECATED. Use transaction triggers or transaction_implementation setters for this.
-    // For external analysis of the response times.
-    {
-        char logline[200];
-        sprintf(logline, "TimerOff {y_current_sub_transaction}, duration: %f seconds.", duration);
-        y_log_to_report(lr_eval_string(logline));
-    }
 
     // if we faked an outer transaction, fake closing it.
     //
