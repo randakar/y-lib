@@ -851,6 +851,10 @@ y_read_file_into_parameter(char* filename, char* param)
 
     // hexdump(bytes); // do some stuff with it
 
+    // Save the size for later use
+    lr_param_sprintf("y_byte_size_param_name", "y_size_%s", param);
+    lr_save_int(pos, lr_eval_string("{y_byte_size_param_name}"));
+
     lr_save_var(bytes, pos, 0, param);
     free(bytes); // free allocated memory
 }
