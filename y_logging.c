@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2013 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -44,12 +44,13 @@ unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for u
 char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
     struct tm *resulttime;
-    static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
+    static const size_t size = 24;
+    static char YMDHMSm[size]; // moet static zijn om te gebruiken als returnwaarde
 
     // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
     resulttime = (struct tm *)localtime(&time);
 
-    sprintf(YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
+    snprintf(YMDHMSm, size, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
         resulttime->tm_year + 1900,
         resulttime->tm_mon + 1,
         resulttime->tm_mday,
@@ -266,24 +267,29 @@ y_log_force_message(char *message)
 // --------------------------------------------------------------------------------------------------
 int y_write_to_log(char *filename, char *content)
 {
-    int string_length=0;
-    char *log;
+    size_t string_length;
+    char* log;
     int result;
 
     y_setup();
 
-    string_length =  strlen(content);
-    string_length += strlen(y_virtual_user_group);
-    string_length +=15;       // y_datetime() is altijd 15 chars lang.
-    string_length +=6;        // 6 chars voor id (is dat genoeg?!?)
-    string_length +=6;        // 6 chars voor scid (is dat genoeg?!?)
+    string_length = strlen(content)
+      + 15  // y_datetime() is altijd 15 chars lang.
+      + strlen(y_virtual_user_group) 
+      + 6   // y_virtual_user_id
+      + 6   // scid
+      + 1;  // null byte (end of line)
 
     log = y_mem_alloc(string_length);
     y_datetime();
-    sprintf(log, "%s,%s,%6d,%6d,%s", lr_eval_string("{DATE_TIME_STRING}"), y_virtual_user_group, y_virtual_user_id, y_scid, content);
+    snprintf(log, string_length, "%.15s,%s,%d,%d,%s", 
+       lr_eval_string("{DATE_TIME_STRING}"), 
+       y_virtual_user_group, 
+       abs(y_virtual_user_id) % 1000000, 
+       abs(y_scid) % 1000000, 
+       content);
 
     result = y_write_to_file(filename, log);
-
     free(log);
 
     return result;
