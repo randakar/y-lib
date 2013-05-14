@@ -166,7 +166,7 @@ static unsigned long y_hash_sdbm(char* str)
 // --------------------------------------------------------------------------------------------------
 
 
-//! Create a unique parameter that is more predictable in length than the LR counterpart: Exactly 24 characters.
+//! Create a unique parameter that is more predictable in length than the LR counterpart: Exactly 22 characters.
 /*!
 @param[in] The name of a parameter to store the resulting string in.
 \return void
@@ -177,6 +177,7 @@ y_param_unique("test");
 */
 void y_param_unique(char *param)
 {
+/*
     struct _timeb ms;
     static unsigned short i = 0;
     static unsigned long vuser_group_hash = 0;
@@ -191,8 +192,12 @@ void y_param_unique(char *param)
     lr_log_message("y_param_unique(%s) in group %s (hash: %x) for user %d (%x) at time %d.%03d (%x.%x) with iterator %d (%x)", 
         param, y_virtual_user_group, vuser_group_hash, y_virtual_user_id, y_virtual_user_id, ms.time, ms.millitm, ms.time, ms.millitm, i, i);
 
-    // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon.
-    lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
+    // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon. */
+    //lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
+
+    char buf[23];                   // UUID's are always 22 characters, plus null byte.
+    lr_generate_uuid_on_buf(buf);
+    lr_save_var(buf, 22, 0, param); // save & trim off ==
 }
 
 
@@ -857,6 +862,11 @@ y_read_file_into_parameter(char* filename, char* param)
 
     lr_save_var(bytes, pos, 0, param);
     free(bytes); // free allocated memory
+}
+
+y_user_data_point(char* param)
+{
+    lr_user_data_point(param, atof(y_get_parameter(param)) );
 }
 
 // --------------------------------------------------------------------------------------------------
