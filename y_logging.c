@@ -45,7 +45,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
     struct tm *resulttime;
     static const size_t size = 24;
-    static char YMDHMSm[size]; // moet static zijn om te gebruiken als returnwaarde
+    static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
 
     // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
     resulttime = (struct tm *)localtime(&time);
