@@ -127,9 +127,10 @@ char *y_array_alloc(int length, int bytesPerChar)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char* y_get_parameter_eval_string(const char *param_name)
 {
-    char *result = y_mem_alloc( strlen(param_name) +3 ); 
-                          // parameter name + "{}" + '\0' (end of string)
-    sprintf(result, "{%s}", param_name );
+    size_t size = strlen(param_name) +3; // parameter name + "{}" + '\0' (end of string)
+    char *result = y_mem_alloc( size ); 
+
+    snprintf(result, size, "{%s}", param_name );
     return result;
 }
 
@@ -234,19 +235,19 @@ char* y_get_parameter_in_malloc_string(const char *src_param)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_cleanse_parameter(const char* paramName)
 {
-   char *tmp = y_mem_alloc( strlen(paramName) +3 ); 
-                         // parameter name + "{}" + '\0' (end of string)
    char *result;
    unsigned long resultLen;
    size_t resultStrlen;
+   size_t param_size = strlen(paramName) +3; // parameter name + "{}" + '\0' (end of string)
+   char *tmp = y_mem_alloc( param_size );
 
    //lr_log_message("y_cleanse_parameter(%s)", paramName );
 
    // Get the contents of the parameter using lr_eval_string_ext() - we can't use the
    // regular version if we expect to find \x00 in there.
-   sprintf( tmp, "{%s}", paramName );
+   snprintf( tmp, param_size, "{%s}", paramName );
    lr_eval_string_ext(tmp, strlen(tmp), &result, &resultLen, 0, 0, -1);
-   free (tmp);
+   free(tmp);
 
    // replace NULL bytes (\x00) in the input with something else..
    for( resultStrlen = strlen(result);
@@ -604,8 +605,9 @@ y_replace( const char *parameter, const char *search, const char *replace)
    if ( rlen > slen)
    {
       // Reserve memory for -limit- replacements.
-      buffer = y_mem_alloc( plen + ((rlen-slen) * limit) );
-      sprintf( buffer, "%s", string );
+      size_t size = plen + ((rlen-slen) * limit);
+      buffer = y_mem_alloc( size );
+      snprintf( buffer, size, "%s", string );
    }
    else
    {
