@@ -19,7 +19,8 @@
 
 /***** String functions *****/
 
-int sprintf(char *buffer, const char *format_string, ...);
+int snprintf(char *buffer, size_t n, const char *format_string, ... ); /* Feature introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. */
+int sprintf(char *buffer, const char *format_string, ...); /* you should prefer snprintf over sprintf */
 int sscanf(const char *buffer, const char *format_string, ...);
 char *strchr(const char *string, int c);
 int strcmp(const char *string1, const char *string2);
@@ -224,6 +225,6 @@ int srand(unsigned int seed);
 
 /***** Windows API Functions *****/
 
-void sleep(DWORD dwMilliseconds); /* you should use lr_force_think_time() instead */
+void sleep(DWORD dwMilliseconds); /* you should use lr_force_think_time() or lr_usleep() instead */
 
 #endif /* _VUGEN_H_ */
