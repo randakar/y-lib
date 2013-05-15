@@ -74,7 +74,7 @@ int y_array_count( const char *pArrayName )
     // -- Loadrunner 8 and below
     int result;
     char *tmp = y_mem_alloc( strlen(pArrayName) +9 );  // 9 = strlen("{}_count") +1 -- the +1 is '\0'.
-    
+
     sprintf(tmp , "{%s_count}" , pArrayName );
     result = atoi(lr_eval_string(tmp));
     free(tmp);
@@ -162,6 +162,7 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
 {
     int size = y_array_count( pArray );
     char *tmp;
+    size_t tmp_size;
     char *result;
     unsigned long resultLen;
     size_t resultStrlen;
@@ -176,10 +177,11 @@ char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
     
     // This breaks if the index number is 10^12 or more  ;-)
     // I presume we have run out of memory by then ..
-    tmp = y_mem_alloc( strlen(pArray) +12 +4 ); // 12 characters for the index with 4 characters added: { _ } \0
-    sprintf( tmp , "{%s_%d}" , pArray , pIndex );
+    tmp_size = strlen(pArray) +12 +4; // 12 characters for the index with 4 characters added: { _ } \0
+    tmp = y_mem_alloc(tmp_size);
+    snprintf( tmp, tmp_size, "{%s_%d}", pArray, pIndex );
     lr_eval_string_ext(tmp, strlen(tmp), &result, &resultLen, 0, 0, -1);
-    free (tmp);    
+    free (tmp);
 
 
     // y_replace NULL bytes (\x00) in the input with something else..
@@ -228,7 +230,7 @@ void y_array_save(const char* value, const char* pArray, const int pIndex)
         }
 
         result = y_mem_alloc(len);
-        sprintf(result, "%s_%d", pArray, pIndex);
+        snprintf(result, len, "%s_%d", pArray, pIndex);
         lr_save_string(value, result);
         free(result);
     }
@@ -257,7 +259,7 @@ void y_array_save_count(const int count, const char *pArray)
         int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
         char* result = y_mem_alloc(len);
 
-        sprintf(result, "%s_count", pArray);
+        snprintf(result, len, "%s_count", pArray);
         lr_save_int(count, result);
         free(result);
     }
@@ -623,9 +625,10 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
     {
         char *left = y_array_get_no_zeroes(pArrayNameLeft, i);
         char *right = y_array_get_no_zeroes(pArrayNameRight, i);
-        char *result = y_mem_alloc(strlen(left)+strlen(separator)+strlen(right)+1);
+        size_t size = strlen(left)+strlen(separator)+strlen(right)+1;
+        char *result = y_mem_alloc(size);
 
-        sprintf(result, "%s%s%s", left, separator, right);
+        snprintf(result, size, "%s%s%s", left, separator, right);
         lr_eval_string_ext_free(&left);
         lr_eval_string_ext_free(&right);
         y_array_save(result, resultArray, i);
