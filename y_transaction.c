@@ -388,7 +388,7 @@ void y_start_transaction_block(char *action_prefix)
 
     // Start a transaction to measure total time spend in this block
     // 
-    //sprintf(_block_transaction, "%s_TOTAL", action_prefix);
+    //snprintf(_block_transaction, strlen(action_prefix)+7, "%s_TOTAL", action_prefix);
     //lr_start_transaction(_block_transaction);
 }
 
@@ -407,11 +407,12 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     int group_len = 0;
     int prefix_len = strlen(action_prefix);
     char *buffer;
+    size_t buffer_size;
 
-
-    // y_virtual_user_group is set only when _y_extra_logging is set.
-    // See logging.c -> y_setup_logging().
-    if( _y_add_group_to_trans && (y_virtual_user_group != NULL))
+    // y_virtual_user_group is set only if y_setup() is called.
+    // See y_loadrunner_utils.c
+    y_setup();
+    if( _y_add_group_to_trans )
     {
         group_len = strlen(y_virtual_user_group);
     }
@@ -427,7 +428,8 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
     }
 
     // allocate memory -- note this needs to be free()'ed afterwards!
-    buffer = y_mem_alloc(group_len + prefix_len + 1);
+    buffer_size = group_len + prefix_len + 1;
+    buffer = y_mem_alloc(buffer_size);
     buffer[0] = '\0';
 
     // start concatenating things together
@@ -435,11 +437,11 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
         int len = 0;
         if(group_len > 0)
         {
-            len = sprintf(buffer, "%s%s", y_virtual_user_group, seperator);
+            len = snprintf(buffer, buffer_size, "%s%s", y_virtual_user_group, seperator);
         }
         if(prefix_len > 0) 
         {
-            sprintf(buffer + len, "%s%s", action_prefix, seperator);
+            snprintf(buffer + len, buffer_size-len,"%s%s", action_prefix, seperator);
         }
     }
     return buffer;
@@ -472,7 +474,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
-    sprintf(actual_trans_name, "%s%02d_%s", actual_prefix, transaction_nr, transaction_name);
+    snprintf(actual_trans_name, trans_name_size, "%s%02d_%s", actual_prefix, transaction_nr, transaction_name);
     free(actual_prefix);
     y_set_current_transaction_name(actual_trans_name);
     free(actual_trans_name);
@@ -503,7 +505,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
-    sprintf(actual_trans_name, "%s%02d_%02d_%s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
+    snprintf(actual_trans_name, trans_name_size, "%s%02d_%02d_%s", actual_prefix, transaction_nr, sub_transaction_nr, transaction_name);
     free(actual_prefix);
     y_set_current_sub_transaction_name(actual_trans_name);
     free(actual_trans_name);
@@ -674,7 +676,8 @@ y_trans_web_link(char *transaction, char *linkname)
 {
     char *link = lr_eval_string(linkname);
     char *tmp, *trans;
-    
+    size_t size;
+
     if( !(strlen(link) > 0) )
     {
         lr_error_message("Zero-length link name - correlation error?");
@@ -682,9 +685,10 @@ y_trans_web_link(char *transaction, char *linkname)
         return;
     }
     
-    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);
-    sprintf(tmp, "Text=%s", link);
-    
+    size = strlen(link) + strlen("Text=") +1;
+    tmp = y_mem_alloc(size);
+    snprintf(tmp, size, "Text=%s", link);
+
     trans = lr_eval_string(transaction);
     y_start_transaction(trans);
     web_link(link, tmp, LAST);
@@ -710,6 +714,7 @@ y_trans_web_link(char *transaction, char *linkname)
 do {                                                                      \
     char *link = lr_eval_string(LINKNAME);                                \
     char *tmp, *trans;                                                    \
+    size_t size;                                                          \
                                                                           \
     if( !(strlen(link) > 0) )                                             \
     {                                                                     \
@@ -718,8 +723,9 @@ do {                                                                      \
         return;                                                           \
     }                                                                     \
                                                                           \
-    tmp = y_mem_alloc(strlen(link) + strlen("Text=") +1);                 \
-    sprintf(tmp, "Text=%s", link);                                        \
+    size = strlen(link) + strlen("Text=") +1;                             \
+    tmp = y_mem_alloc(size);                                              \
+    snprintf(tmp, size, "Text=%s", link);                                 \
                                                                           \
     trans = lr_eval_string(TRANSACTION);                                  \
     y_start_transaction(trans);                                           \
@@ -728,7 +734,6 @@ do {                                                                      \
                                                                           \
     free(tmp);                                                            \
 } while(0)
-
 
 
 
@@ -766,10 +771,10 @@ y_setup_step_waterfall()
 
     while ( step && (strcmp(step, "END") != 0) )
     {
-        tmp = y_mem_alloc( strlen(head) + strlen(step) +1);
-        // note: if the memory allocation fails we're in trouble!
+        size_t size = strlen(head) + strlen(step) +1;
+        tmp = y_mem_alloc(size);
 
-        sprintf(tmp, "%s%s", head, step);
+        snprintf(tmp, size, "%s%s", head, step);
 
         lr_save_string(stepchance, tmp);
         free(tmp);
@@ -789,14 +794,15 @@ y_setup_step_waterfall()
 y_waterfall_random_weighted_continue(char * stepname)
 {
     char *head = "step_chance_";
-    char *paramname = y_mem_alloc( strlen(head) + strlen(stepname) +3);
+    size_t size = strlen(head) + strlen(stepname) +3;
+    char *paramname = y_mem_alloc(size);
     char *chancestr;
     int chance = 100; // Default
     int rnum = (y_rand() % 100); // random number between 0 and 99
 
     lr_log_message("Weighted stop chance evaluation for %s", stepname);
 
-    sprintf( paramname, "%s%s%s%s", "{", head, stepname, "}" );
+    snprintf( paramname, size, "%s%s%s%s", "{", head, stepname, "}" );
     chancestr = lr_eval_string(paramname);
 
     if( (strlen(chancestr) > 0) && (strcmp(chancestr, paramname) != 0) )
