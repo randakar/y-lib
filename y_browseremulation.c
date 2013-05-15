@@ -285,8 +285,8 @@ void y_emulate_browser(const y_browser* browser)
         max_connections = 50;
     }
 
-    sprintf(str_max_connections,          "%d", max_connections);
-    sprintf(str_max_connections_per_host, "%d", browser->max_connections_per_host);
+    snprintf(str_max_connections,          sizeof str_max_connections,          "%10d", max_connections);
+    snprintf(str_max_connections_per_host, sizeof str_max_connections_per_host, "%10d", browser->max_connections_per_host);
 
     // Now finally set the correct settings for the chosen browser:
     web_set_sockets_option("MAX_CONNECTIONS_PER_HOST", str_max_connections_per_host);
