@@ -797,6 +797,30 @@ int y_workdays_from_today(int workdays)
     return result;
 }
 
+// Load the kernel32.dll file if not already loaded, so that we can use it to query windows for disk space usage.
+int y_load_kernel_dll()
+{
+    static int kernel_dll_loaded = 0;
+    int load_dll_result;
+
+    if( kernel_dll_loaded > 0)
+    {
+        // Nothing to do.
+        return;
+    }
+
+    // Try to load the dll.
+    if((load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
+    {
+        lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report disk space usage.", load_dll_result);
+        lr_abort();
+    }
+    else
+    {
+        kernel_dll_loaded = 1;
+    }
+    return load_dll_result;
+}
 
 //
 // In order to prevent our logs from filling up disks beyond capacity we need to know how much free space the log file system has.
@@ -804,33 +828,48 @@ int y_workdays_from_today(int workdays)
 // Note: This is not capable of handling disk sizes > 16 TB.
 // The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
 // Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
+// 
 double y_get_free_disk_space_percentage(char* folder_name)
 {
     size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
-    int load_dll_result;
-    static int kernel_dll_loaded = 0;
-    size_t free_bytes;
     double free_space_percentage;
 
-    if( kernel_dll_loaded == 0 && (load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
-    {
-        lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report free disk space.", load_dll_result);
-        lr_abort();
-    }
-    else
-    {
-        kernel_dll_loaded = 1;
-    }
-
+    y_load_kernel_dll(); // This will abort the script if it fails to load.
     GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
 
+    lr_log_message("GetDiskFreeSpaceA reports: SectorsPerCluster: %.lu, BytesPerSector: %.lu, NumberOfFreeClusters: %.lu, TotalNumberOfClusters: %.lu", 
+                                               SectorsPerCluster,       BytesPerSector,       NumberOfFreeClusters,       TotalNumberOfClusters);
+
     free_space_percentage = 100. * NumberOfFreeClusters / TotalNumberOfClusters;
-    free_bytes = SectorsPerCluster * BytesPerSector * NumberOfFreeClusters;
-    lr_log_message("Free disk space for folder %s: %.2lf%% (%.lu bytes)", folder_name, free_space_percentage, free_bytes);
+    lr_log_message("Free disk space percentage for folder %s: %.2lf%%", folder_name, free_space_percentage);
 
     return free_space_percentage;
 }
 
+
+//
+// In order to prevent our logs from filling up disks beyond capacity we need to know how much free space the log file system has.
+// 
+// Note: This is not capable of handling disk sizes > 16 TB.
+// The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
+// Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
+// 
+double y_get_free_disk_space_in_mebibytes(char* folder_name)
+{
+    size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
+    double free_mebibytes;
+
+    y_load_kernel_dll(); // This will abort the script if it fails to load.
+    GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
+
+    lr_log_message("GetDiskFreeSpaceA reports: SectorsPerCluster: %.lu, BytesPerSector: %.lu, NumberOfFreeClusters: %.lu, TotalNumberOfClusters: %.lu", 
+                                               SectorsPerCluster,       BytesPerSector,       NumberOfFreeClusters,       TotalNumberOfClusters);
+
+    free_mebibytes = SectorsPerCluster * BytesPerSector * (NumberOfFreeClusters / 1048576);
+    lr_log_message("Free disk space for folder %s : %f MebiBytes)", folder_name, free_mebibytes);
+
+    return free_mebibytes;
+}
 
 
 y_read_file_into_parameter(char* filename, char* param)
