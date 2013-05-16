@@ -262,8 +262,8 @@ y_browser* y_choose_browser()
 
 void y_emulate_browser(const y_browser* browser)
 {
-    char str_max_connections[10];
-    char str_max_connections_per_host[10];
+    char str_max_connections[12];
+    char str_max_connections_per_host[12];
     int max_connections;
 
 
