@@ -44,13 +44,12 @@ unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for u
 char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
     struct tm *resulttime;
-    static const size_t size = 24;
     static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
 
     // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
     resulttime = (struct tm *)localtime(&time);
 
-    snprintf(YMDHMSm, size, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
+    snprintf(YMDHMSm, sizeof YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
         resulttime->tm_year + 1900,
         resulttime->tm_mon + 1,
         resulttime->tm_mday,
@@ -276,7 +275,7 @@ int y_write_to_log(char *filename, char *content)
     string_length = strlen(content)
       + 15  // y_datetime() is altijd 15 chars lang.
       + strlen(y_virtual_user_group) 
-      + 6   // y_virtual_user_id
+      + 9   // y_virtual_user_id
       + 6   // scid
       + 1;  // null byte (end of line)
 
@@ -285,7 +284,7 @@ int y_write_to_log(char *filename, char *content)
     snprintf(log, string_length, "%.15s,%s,%d,%d,%s", 
        lr_eval_string("{DATE_TIME_STRING}"), 
        y_virtual_user_group, 
-       abs(y_virtual_user_id) % 1000000, 
+       abs(y_virtual_user_id) % 1000000000, 
        abs(y_scid) % 1000000, 
        content);
 
@@ -307,10 +306,55 @@ void y_disk_space_guard(double max_free_percentage)
     {
         y_setup();
         lr_set_transaction(lr_eval_string("---DISK SPACE LOW IN LOG FOLDER---"), 0, LR_FAIL);
-        lr_error_message("Disk space low in folder %s. %.2lf%% remaining. Logging turned off for user id %d for the remainder of the test!", log_folder, free_space_percentage, y_virtual_user_id);
+        lr_error_message("Disk space low in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!", 
+                         log_folder, free_space_percentage, max_free_percentage, y_virtual_user_id);
 
         y_log_turn_off_without_saving();
         y_log_save(); // make sure it is never accidentally enabled again through y_log_restore() ..
+    }
+}
+
+//
+// Detects excessive disk usage on the output disk by the test
+// by storing the maximum detected free space and comparing that to the current
+// once max disk usage is exceeded all logging is turned off and an error reported.
+// 
+void y_disk_space_usage_guard(double limit_mebibytes_used)
+{
+    char* log_folder = lr_get_attrib_string("out");
+    double free_mebibytes = y_get_free_disk_space_in_mebibytes(log_folder);
+    static double max_free_mebibytes = -1;
+    double mebibytes_used;
+
+    lr_log_message("y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s",
+                   free_mebibytes, max_free_mebibytes, limit_mebibytes_used, log_folder);
+
+    if(max_free_mebibytes < 0)
+    {
+        lr_log_message("Storing free space as detected maximum");
+        max_free_mebibytes = free_mebibytes;
+        return;
+    }
+    else if(max_free_mebibytes < free_mebibytes)
+    {
+        lr_log_message("Warning: Free disk space increased from %, test disk space usage measurements may have become unreliable.");
+        max_free_mebibytes = free_mebibytes;
+        return;
+    }
+
+    // Ok, so we used *something*. Now let's see if it exceeds our limit.
+
+    mebibytes_used = max_free_mebibytes - free_mebibytes;
+
+    if( mebibytes_used >= limit_mebibytes_used ) 
+    {
+        y_setup();
+        lr_set_transaction(lr_eval_string("---DISK SPACE USAGE TOO HIGH IN LOG FOLDER---"), 0, LR_FAIL);
+        lr_error_message("Disk space used by test in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
+                         log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
+
+        y_log_turn_off_without_saving();
+        y_log_save(); // make sure it is never accidentally enabled again through y_log_restore() ..      
     }
 }
 
