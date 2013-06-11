@@ -182,6 +182,12 @@ y_log_turn_off()
     y_log_turn_off_without_saving();
 }
 
+y_log_turn_off_permanently()
+{
+    y_log_turn_off_without_saving();
+    y_log_save(); // make sure it is never accidentally enabled again through y_log_restore()
+}
+
 y_log_set_brief()
 {
     //lr_log_message("Log level set to BRIEF.\n");
@@ -296,11 +302,22 @@ int y_write_to_log(char *filename, char *content)
 
 //
 // Detects low disk space situations and turns all logging off if not enough space is left.
-// 
+//
 void y_disk_space_guard(double max_free_percentage)
 {
+    static int disk_space_warning_given = 0;
+    double free_space_percentage;
     char* log_folder = lr_get_attrib_string("out");
-    double free_space_percentage = y_get_free_disk_space_percentage(log_folder);
+
+    // check already fired once before.
+    if( disk_space_warning_given )
+    {
+        // guard against accidental re-enablement of the logs by turning them off explicitly.
+        y_log_turn_off_permanently();
+        return;
+    }
+
+    free_space_percentage = y_get_free_disk_space_percentage(log_folder);
 
     if( free_space_percentage < max_free_percentage )
     {
@@ -309,8 +326,9 @@ void y_disk_space_guard(double max_free_percentage)
         lr_error_message("Disk space low in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!", 
                          log_folder, free_space_percentage, max_free_percentage, y_virtual_user_id);
 
-        y_log_turn_off_without_saving();
-        y_log_save(); // make sure it is never accidentally enabled again through y_log_restore() ..
+        disk_space_warning_given = 1; // turn off further warnings.
+
+        y_log_turn_off_permanently();
     }
 }
 
@@ -322,9 +340,21 @@ void y_disk_space_guard(double max_free_percentage)
 void y_disk_space_usage_guard(double limit_mebibytes_used)
 {
     char* log_folder = lr_get_attrib_string("out");
-    double free_mebibytes = y_get_free_disk_space_in_mebibytes(log_folder);
+    double free_mebibytes;
     static double max_free_mebibytes = -1;
     double mebibytes_used;
+    static int disk_space_warning_given = 0;
+
+    // check already fired once before.
+    if( disk_space_warning_given )
+    {
+        // guard against accidental re-enablement of the logs by turning them off explicitly.
+        y_log_turn_off_permanently();
+        return;
+    }
+
+
+    free_mebibytes = y_get_free_disk_space_in_mebibytes(log_folder);
 
     lr_log_message("y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s",
                    free_mebibytes, max_free_mebibytes, limit_mebibytes_used, log_folder);
@@ -337,7 +367,7 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     }
     else if(max_free_mebibytes < free_mebibytes)
     {
-        lr_log_message("Warning: Free disk space increased from %, test disk space usage measurements may have become unreliable.");
+        lr_output_message("Warning: Free disk space increased from %, test disk space usage measurements may have become unreliable.");
         max_free_mebibytes = free_mebibytes;
         return;
     }
@@ -350,11 +380,10 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     {
         y_setup();
         lr_set_transaction(lr_eval_string("---DISK SPACE USAGE TOO HIGH IN LOG FOLDER---"), 0, LR_FAIL);
-        lr_error_message("Disk space used by test in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
-                         log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
+        lr_output_message("Disk space used by test in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
+                           log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
 
-        y_log_turn_off_without_saving();
-        y_log_save(); // make sure it is never accidentally enabled again through y_log_restore() ..      
+        y_log_turn_off_permanently();
     }
 }
 
