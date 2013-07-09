@@ -138,7 +138,13 @@ void y_set_current_sub_transaction_name(char *trans_name)
 char *y_get_action_prefix()
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
-    return lr_eval_string("{y_action_prefix}");
+    if(y_is_empty_parameter("y_action_prefix"))
+    {
+        y_set_action_prefix("");
+        return "";
+    }
+    else 
+        return lr_eval_string("{y_action_prefix}");
 }
 
 
