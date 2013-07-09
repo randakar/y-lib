@@ -135,18 +135,6 @@ void y_set_current_sub_transaction_name(char *trans_name)
     lr_save_string(lr_eval_string(trans_name), "y_current_sub_transaction");
 }
 
-char *y_get_action_prefix()
-{
-    // Bother. Let's do this the eminently simple and predictable way, then:
-    if(y_is_empty_parameter("y_action_prefix"))
-    {
-        y_set_action_prefix("");
-        return "";
-    }
-    else 
-        return lr_eval_string("{y_action_prefix}");
-}
-
 
 void y_set_add_group_to_transaction(int add_group_to_trans)
 {
@@ -158,6 +146,19 @@ void y_set_action_prefix(char *action_prefix)
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
     lr_save_string(action_prefix, "y_action_prefix");
+}
+
+
+char *y_get_action_prefix()
+{
+    // Bother. Let's do this the eminently simple and predictable way, then:
+    if(y_is_empty_parameter("y_action_prefix"))
+    {
+        y_set_action_prefix("");
+        return "";
+    }
+    else 
+        return lr_eval_string("{y_action_prefix}");
 }
 
 
