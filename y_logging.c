@@ -325,9 +325,7 @@ void y_disk_space_guard(double max_free_percentage)
         lr_set_transaction(lr_eval_string("---DISK SPACE LOW IN LOG FOLDER---"), 0, LR_FAIL);
         lr_error_message("Disk space low in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!", 
                          log_folder, free_space_percentage, max_free_percentage, y_virtual_user_id);
-
         disk_space_warning_given = 1; // turn off further warnings.
-
         y_log_turn_off_permanently();
     }
 }
@@ -382,7 +380,7 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
         lr_set_transaction(lr_eval_string("---DISK SPACE USAGE TOO HIGH IN LOG FOLDER---"), 0, LR_FAIL);
         lr_output_message("Disk space used by test in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
                            log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
-
+        disk_space_warning_given = 1; // turn off further warnings.
         y_log_turn_off_permanently();
     }
 }
