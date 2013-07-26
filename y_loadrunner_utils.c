@@ -908,5 +908,56 @@ y_user_data_point(char* param)
     lr_user_data_point(param, atof(y_get_parameter(param)) );
 }
 
+
+
+// For simulating situations with limited amounts of connections on the client side. 
+//
+// In such a case we cannot use regular vuser based rampups, so instead we have to 
+// gradually lower the thinktime to get a similar effect. 
+// This will linearly decrease the thinktime based on the current time, until rampup_period has passed, at which point the resulting value will be zero.
+// 
+// For best effect, call this once during vuser_init(), then call this at least once every iteration, and store 
+// the result in a double that is subsequently given to lr_think_time().
+// Even better would be simply overloading lr_think_time() with your own version that calls this every time ;-)
+// 
+// Parameters:
+//   const time_t initial_thinktime = 10;       // Initial think time, in seconds.
+//   const int rampup_period = 1800;            // Rampup duration, in seconds.
+// 
+double y_calculate_thinktime_for_rampup(const double initial_thinktime, const int rampup_period)
+{
+    static time_t test_start_time = 0;             // Test starttijd in seconden sinds 1 jan 1970.
+    time_t current_time = time(&current_time);     // Huidige tijd, in seconden.
+    double delta;                                  // Verlopen tijd sinds test start in seconden.
+    double TT;                                     // Resulterende denktijd.
+
+    // Initialisatie.
+    if( test_start_time == 0 )
+    {
+        test_start_time = current_time;
+    }
+
+    // Calculate how much time has passed since test start. Note that 
+    delta = current_time - test_start_time;
+    lr_log_message("TT calculation: starttime %d, current time %d, delta %f", test_start_time, current_time, delta);
+
+    // When the ramp up has passed the resulting think time will be zero.
+    if( delta >= rampup_period)
+    {
+        TT = 0;
+        lr_log_message("TT: %f", TT);
+    }
+    else // During rampup think time will decrease linearly.
+    {
+        double rampup_time_remaining = rampup_period - delta;
+        double factor = rampup_time_remaining / rampup_period;
+        TT = initial_thinktime * factor;
+        lr_log_message("TT: %f, rampup_time_remaining: %f, factor %f", TT, rampup_time_remaining, factor);
+    }
+
+    lr_user_data_point("ThinkTime", TT);
+    return TT;
+}
+
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
