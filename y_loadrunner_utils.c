@@ -912,13 +912,19 @@ y_user_data_point(char* param)
 
 // For simulating situations with limited amounts of connections on the client side. 
 //
-// In such a case we cannot use regular vuser based rampups, so instead we have to 
-// gradually lower the thinktime to get a similar effect. 
+// In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect. 
 // This will linearly decrease the thinktime based on the current time, until rampup_period has passed, at which point the resulting value will be zero.
+// (Feel free to add some static number too this if you feel zero thinktime is too risky.)
 // 
-// For best effect, call this once during vuser_init(), then call this at least once every iteration, and store 
-// the result in a double that is subsequently given to lr_think_time().
-// Even better would be simply overloading lr_think_time() with your own version that calls this every time ;-)
+// For best effect, call this once during vuser_init(), then call this at least once every iteration. 
+// Store the result in a double that is subsequently given to lr_think_time().
+//
+// Another option is simply overloading lr_think_time() with your own version that calls this every time, like so:
+// 
+// void my_little_think_time()
+// { 
+//     lr_think_time(y_calculate_thinktime_for_rampup(3, 1800));
+// }
 // 
 // Parameters:
 //   const time_t initial_thinktime = 10;       // Initial think time, in seconds.
@@ -926,18 +932,18 @@ y_user_data_point(char* param)
 // 
 double y_calculate_thinktime_for_rampup(const double initial_thinktime, const int rampup_period)
 {
-    static time_t test_start_time = 0;             // Test starttijd in seconden sinds 1 jan 1970.
-    time_t current_time = time(&current_time);     // Huidige tijd, in seconden.
-    double delta;                                  // Verlopen tijd sinds test start in seconden.
-    double TT;                                     // Resulterende denktijd.
+    static time_t test_start_time = 0;             // Test starttime in seconds since 1 jan 1970.
+    time_t current_time = time(&current_time);     // Current time, in seconden since 1 jan 1970.
+    double delta;                                  // Elapsed time sinds test start, in seconds.
+    double TT;                                     // Resulting thinktime.
 
-    // Initialisatie.
+    // Initialisation.
     if( test_start_time == 0 )
     {
         test_start_time = current_time;
     }
 
-    // Calculate how much time has passed since test start. Note that 
+    // Calculate how much time has passed since test start. Note that delta is a floating point number, not an integer.
     delta = current_time - test_start_time;
     lr_log_message("TT calculation: starttime %d, current time %d, delta %f", test_start_time, current_time, delta);
 
