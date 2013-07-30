@@ -371,7 +371,6 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     }
 
     // Ok, so we used *something*. Now let's see if it exceeds our limit.
-
     mebibytes_used = max_free_mebibytes - free_mebibytes;
 
     if( mebibytes_used >= limit_mebibytes_used ) 
