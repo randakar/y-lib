@@ -588,7 +588,13 @@ int y_end_transaction(char *transaction_name, int status)
 
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_transaction_status", status);
-    //status = lr_end_transaction(trans_name, status);
+
+    // Debugging: report wasted time.
+    // People who implement their own triggers will have to do this themselves.
+    if( _y_trans_end_impl == lr_end_transaction )
+        lr_user_data_point( lr_eval_string("wasted_{y_current_transaction}"), lr_get_transaction_wasted_time(trans_name));
+
+    // End the transaction
     status = _y_trans_end_impl(trans_name, status);
 
     // Tell our subtransaction support that there is no outer transaction
@@ -609,7 +615,7 @@ int y_end_transaction(char *transaction_name, int status)
 // but as a fallback for situations where the sub transactions can not neccesarily
 // be predicted. (Think 'sudden popups from GUI apps' and similar cases.)
 // 
-void y_start_sub_transaction(char *transaction_name)
+int y_start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
     if( _trans_status == Y_TRANS_STATUS_NONE )
@@ -625,14 +631,15 @@ void y_start_sub_transaction(char *transaction_name)
     y_run_sub_transaction_start_trigger();
 
     // Actual sub transaction start
-    lr_start_sub_transaction(lr_eval_string("{y_current_sub_transaction}"), 
-                             lr_eval_string("{y_current_transaction}"));
+    return lr_start_sub_transaction(
+        lr_eval_string("{y_current_sub_transaction}"), 
+        lr_eval_string("{y_current_transaction}"));
 }
 
-void y_start_sub_transaction_with_number(char *transaction_name, int transaction_number)
+int y_start_sub_transaction_with_number(char *transaction_name, int transaction_number)
 {
     y_set_next_sub_transaction_nr(transaction_number);
-    y_start_sub_transaction(transaction_name);
+    return y_start_sub_transaction(transaction_name);
 }
 
 
@@ -650,7 +657,12 @@ int y_end_sub_transaction(char *transaction_name, int status)
 
     // Save the end status of this transaction. It won't be available after ending it.
     y_save_transaction_end_status(trans_name, "y_last_sub_transaction_status", status);
-    lr_end_sub_transaction(trans_name, status);
+
+    // Debugging: report wasted time.
+    lr_user_data_point( lr_eval_string("wasted_{y_current_sub_transaction}"), lr_get_transaction_wasted_time(trans_name));
+
+    // End the transaction
+    status = lr_end_sub_transaction(trans_name, status);
 
     // if we faked an outer transaction, fake closing it.
     //
