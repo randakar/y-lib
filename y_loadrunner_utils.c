@@ -923,18 +923,18 @@ y_user_data_point(char* param)
 // 
 // void my_little_think_time()
 // { 
-//     lr_think_time(y_calculate_thinktime_for_rampup(3, 1800));
+//     lr_think_time(y_calculate_thinktime_for_rampup_linearly(3, 1800));
 // }
 // 
 // Parameters:
 //   const time_t initial_thinktime = 10;       // Initial think time, in seconds.
 //   const int rampup_period = 1800;            // Rampup duration, in seconds.
 // 
-double y_calculate_thinktime_for_rampup(const double initial_thinktime, const int rampup_period)
+double y_calculate_thinktime_for_rampup_linear(const double initial_thinktime, const int rampup_period)
 {
     static time_t test_start_time = 0;             // Test starttime in seconds since 1 jan 1970.
     time_t current_time = time(&current_time);     // Current time, in seconden since 1 jan 1970.
-    double delta;                                  // Elapsed time sinds test start, in seconds.
+    double time_passed;                            // Elapsed time sinds test start, in seconds.
     double TT;                                     // Resulting thinktime.
 
     // Initialisation.
@@ -943,19 +943,19 @@ double y_calculate_thinktime_for_rampup(const double initial_thinktime, const in
         test_start_time = current_time;
     }
 
-    // Calculate how much time has passed since test start. Note that delta is a floating point number, not an integer.
-    delta = current_time - test_start_time;
-    lr_log_message("TT calculation: starttime %d, current time %d, delta %f", test_start_time, current_time, delta);
+    // Calculate how much time has passed since test start. Note that time_passed is a floating point number, not an integer.
+    time_passed = current_time - test_start_time;
+    lr_log_message("TT calculation: starttime %d, current time %d, time_passed %f", test_start_time, current_time, time_passed);
 
     // When the ramp up has passed the resulting think time will be zero.
-    if( delta >= rampup_period)
+    if( time_passed >= rampup_period)
     {
         TT = 0;
         lr_log_message("TT: %f", TT);
     }
     else // During rampup think time will decrease linearly.
     {
-        double rampup_time_remaining = rampup_period - delta;
+        double rampup_time_remaining = rampup_period - time_passed;
         double factor = rampup_time_remaining / rampup_period;
         TT = initial_thinktime * factor;
         lr_log_message("TT: %f, rampup_time_remaining: %f, factor %f", TT, rampup_time_remaining, factor);
@@ -964,6 +964,121 @@ double y_calculate_thinktime_for_rampup(const double initial_thinktime, const in
     lr_user_data_point("ThinkTime", TT);
     return TT;
 }
+
+
+
+// For simulating situations with limited amounts of connections on the client side. 
+//
+// In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect. 
+// 
+// This will calculate thinktime based on the formula:
+// 
+//     TT = threads/TPS(target) - response time, 
+// 
+// while increasing TPS linearly until rampup_period has passed, at which point the resulting value will be zero.
+// (Feel free to add some static number too this if you feel zero thinktime is too risky.)
+// 
+// For best effect, call this once in vuser_init and once for each transaction, preferably by overloading lr_think_time()
+// with your own version that calls this every time, like so:
+// 
+// void my_little_think_time()
+// { 
+//     lr_think_time(y_calculate_thinktime_for_rampup(0.2, 1800));
+// }
+// 
+// Parameters:
+//   double response_time = 0.2;            // Expected average responsetime. 
+//                                          //   IMPORTANT: Do NOT feed the actual response times back into this, or you risk response time spikes to cause an overload.
+//   const int rampup_period = 1800;        // How long the rampup should take, in seconds.
+//   const double TPS_initial = 0.1;        // Start rampup with this many transactions / sec in total, across all virtual users. Do not set this too low or thinktime values 
+//                                          // will get really large.
+//   const int virtual_users = 1;           // How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS.
+//
+double y_calculate_thinktime_for_rampup_ext(double response_time, const int rampup_period, const double TPS_initial, const int virtual_users)
+{
+    static time_t test_start_time = 0;             // Test starttime in seconds since 1 jan 1970.
+    time_t current_time = time(&current_time);     // Current time, in seconden since 1 jan 1970.
+    double time_passed;                            // Elapsed time sinds test start, in seconds.
+    double TT;                                     // Resulting thinktime.
+
+    // Initialisation.
+    // On the first call we store the current time as the test start time.
+    if( test_start_time == 0 )
+    {
+        test_start_time = current_time;
+    }
+
+    // Response times of zero can cause division by zero errors, so let's not accept that.
+    if( response_time < 0.00001 )
+    {
+        response_time = 0.00001;
+        lr_error_message("y_calculate_thinktime_for_rampup(): Response time cannot be 0, set to 0.01 ms instead.");
+    }
+
+
+    // Calculate how much time has passed since test start. Note that time_passed is a floating point number, not an integer.
+    time_passed = current_time - test_start_time;
+    lr_log_message("TT calculation: starttime %d, current time %d, time_passed %f, virtual_users %d, response_time %f, TPS_init %f, rampup_period %d",
+                                 test_start_time, current_time,    time_passed,    virtual_users,    response_time,    TPS_initial, rampup_period);
+
+
+    // When the ramp up has passed the resulting think time will be zero.
+    if( time_passed >= rampup_period)
+    {
+        TT = 0;
+        lr_log_message("TT: %f", TT);
+    }
+    else // During rampup we will have to calculate according to TT = threads/TPS(target) - response time,
+    {
+        double factor = time_passed / rampup_period; // multiplication factor for the target load.
+
+        double TPS_max = virtual_users * (1/response_time);
+        double TPS_target = ((TPS_max - TPS_initial) * factor) + TPS_initial;
+        TT = (virtual_users / TPS_target) - response_time;
+
+        lr_log_message("TT: %f, time_passed: %f, factor %f, TPS_init %f, TPS_max %f, TPS_target %f", 
+                        TT,     time_passed,     factor,    TPS_initial, TPS_max,    TPS_target);
+    }
+
+    lr_user_data_point("ThinkTime", TT);
+    return TT;
+}
+
+
+// For simulating situations with limited amounts of connections on the client side. 
+//
+// In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect. 
+// 
+// This will calculate thinktime based on the formula:
+// 
+//     TT = threads/TPS(target) - response time, 
+// 
+// while increasing TPS linearly until rampup_period has passed, at which point the resulting value will be zero.
+// (Feel free to add some static number too this if you feel zero thinktime is too risky.)
+// 
+// For best effect, call this once in vuser_init and once for each transaction, preferably by overloading lr_think_time()
+// with your own version that calls this every time, like so:
+// 
+// void my_little_think_time()
+// { 
+//     lr_think_time(y_calculate_thinktime_for_rampup(0.2, 1800));
+// }
+// 
+// Parameters:
+//   double response_time = 0.2;            // Expected average responsetime. 
+//                                          //   IMPORTANT: Do NOT feed the actual response times back into this, or you risk response time spikes to cause an overload.
+//   const int rampup_period = 1800;        // How long the rampup should take, in seconds.
+//
+double y_calculate_thinktime_for_rampup(double response_time, const int rampup_period)
+{
+    // These used to be parameters. I've kept them for documentation purposes, but I feel 
+    // these defaults are sane enough to allow me to internalize them.
+    const double TPS_initial = 0.1;                // Start rampup with this many transactions / sec in total, across all virtual users.
+    const int virtual_users = 1;                   // How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS.
+
+    return y_calculate_thinktime_for_rampup_ext(response_time, rampup_period, TPS_initial, virtual_users);
+}
+
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
