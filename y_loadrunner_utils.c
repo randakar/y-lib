@@ -1021,6 +1021,8 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
     // Calculate how much time has passed since test start and the previous call.
     time_passed = current_time - test_start_time;
     response_time = current_time - previous_time;
+    lr_user_data_point("TT_response_time", response_time);
+
 
     // Debugging//
     lr_log_message("TT calculation: starttime %f, current time %f, previous time %f, virtual_users %d, rampup_period %d",
@@ -1078,3 +1080,4 @@ double y_think_time_for_rampup(const int rampup_period, double TPS_max)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
+
