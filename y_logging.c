@@ -319,6 +319,13 @@ void y_disk_space_guard(double max_free_percentage)
 
     free_space_percentage = y_get_free_disk_space_percentage(log_folder);
 
+    // data point
+    {
+        char *hostname = lr_get_host_name();
+        lr_save_string(hostname, "y_hostname_generator");
+        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_percentage"), free_space_percentage);
+    }
+
     if( free_space_percentage < max_free_percentage )
     {
         y_setup();
@@ -371,7 +378,16 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     }
 
     // Ok, so we used *something*. Now let's see if it exceeds our limit.
+
     mebibytes_used = max_free_mebibytes - free_mebibytes;
+
+    // data points
+    {
+        char *hostname = lr_get_host_name();
+        lr_save_string(hostname, "y_hostname_generator");
+        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_mebibytes"), free_mebibytes);
+        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_used_mebibytes"), mebibytes_used);
+    }
 
     if( mebibytes_used >= limit_mebibytes_used ) 
     {
