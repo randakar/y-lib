@@ -12,6 +12,10 @@ The basic vision of Ylib is to provide even novice C programmers with a function
 In order to do so it relies heavily on Loadrunners' built in parameter functionality. Most functions will accept and process parameters whereever possible, and store their results in parameters as well. This means that for most simple use cases whoever writes the script will not need to think more about the underlying language than they absolutely have to.
 Many functions however do provide for more advanced concepts, such as extensive support for click flows (in the form of profiles), transaction hooks, and realistic browser emulation (supporting a list of browsers with various weights attached, rather than simply allowing for only a single user agent string and associated set of settings). 
 
+# Licence
+Ylib is an open source project and licensed under the terms of the GNU GPL, version 2.
+( Since ylib is used and distributed as a piece of source code violation of this license should be almost impossible. )
+
 # Proven 
 Ylib has been used for many years with good success in various large organisations with virtual user counts well into the tens of thousands. In it's current incarnation it provides the most advanced form of loadtesting possible using Loadrunner, and possible in several other tools as well..
 
