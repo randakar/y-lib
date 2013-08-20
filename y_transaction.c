@@ -21,7 +21,7 @@
 #define _TRANSACTION_C
 
 //
-// Transaction names take the form: '{action_prefix}_{transaction_nr}_{step_name}'
+// Transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'
 // This file helps do that automatically.
 //
 // 
@@ -141,24 +141,26 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
     _y_add_group_to_trans = add_group_to_trans;
 }
 
+// Complain loudly at compile time if somebody tries to use the old versions of these calls
+#define y_set_action_prefix 0_y_set_action_prefix_no_longer_exists_please_use_y_set_transaction_prefix
+#define y_get_action_prefix 0_y_get_action_prefix_no_longer_exists_please_use_y_get_transaction_prefix
 
-void y_set_action_prefix(char *action_prefix)
+void y_set_transaction_prefix(char *transaction_prefix)
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
-    lr_save_string(action_prefix, "y_action_prefix");
+    lr_save_string(transaction_prefix, "y_transaction_prefix");
 }
 
-
-char *y_get_action_prefix()
+char *y_get_transaction_prefix()
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
-    if(y_is_empty_parameter("y_action_prefix"))
+    if(y_is_empty_parameter("y_transaction_prefix"))
     {
-        y_set_action_prefix("");
+        y_set_transaction_prefix("");
         return "";
     }
     else 
-        return lr_eval_string("{y_action_prefix}");
+        return lr_eval_string("{y_transaction_prefix}");
 }
 
 
@@ -379,7 +381,7 @@ void y_end_transaction_block()
 {
     //lr_end_transaction(_block_transaction, LR_AUTO);
     //_block_transaction[0] = '\0';
-    y_set_action_prefix("");
+    y_set_transaction_prefix("");
 }
 
 // DEPRECATED
@@ -388,31 +390,33 @@ void y_end_action_block()
     y_end_transaction_block();
 }
 
-void y_start_transaction_block(char *action_prefix)
+void y_start_transaction_block(char *transaction_prefix)
 {
-    y_set_action_prefix(action_prefix);
+    y_set_transaction_prefix(transaction_prefix);
     y_set_next_transaction_nr(1);
 
     // Start a transaction to measure total time spend in this block
     // 
-    //snprintf(_block_transaction, strlen(action_prefix)+7, "%s_TOTAL", action_prefix);
+    //snprintf(_block_transaction, strlen(transaction_prefix)+7, "%s_TOTAL", transaction_prefix);
     //lr_start_transaction(_block_transaction);
 }
 
 
 // DEPRECATED
-void y_start_action_block(char *action_prefix)
+void y_start_action_block(char *transaction_prefix)
 {
-    y_start_transaction_block(action_prefix);
+    y_start_transaction_block(transaction_prefix);
 }
 
+// Complain loudly at compile time if somebody tries to use the old versions of this call
+#define y_calculate_actual_action_prefix 0_y_calculate_actual_action_prefix_no_longer_exists_please_use_y_calculate_actual_transaction_prefix
 
-char *y_calculate_actual_action_prefix(const char *action_prefix)
+char *y_calculate_actual_transaction_prefix(const char *transaction_prefix)
 {
     const char seperator[] = "_";
     const int seperator_len = sizeof seperator - 1; // strlen(seperator);
     int group_len = 0;
-    int prefix_len = strlen(action_prefix);
+    int prefix_len = strlen(transaction_prefix);
     char *buffer;
     size_t buffer_size;
 
@@ -448,7 +452,7 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
         }
         if(prefix_len > 0) 
         {
-            snprintf(buffer + len, buffer_size-len,"%s%s", action_prefix, seperator);
+            snprintf(buffer + len, buffer_size-len,"%s%s", transaction_prefix, seperator);
         }
     }
     return buffer;
@@ -463,14 +467,14 @@ char *y_calculate_actual_action_prefix(const char *action_prefix)
 //
 // 
 // Dirty trick that no longer needs to be used:
-//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _y_action_prefix, _trans_nr++); \
+//#define lr_start_transaction(transaction_name) y_start_new_transaction_name(transaction_name, _y_transaction_prefix, _trans_nr++); \
 //                                               lr_start_transaction(lr_eval_string("{y_current_transaction}"))
 //#define lr_end_transaction(transaction_name, status) lr_end_transaction(lr_eval_string("{y_current_transaction}"), status)
 //
-void y_create_new_transaction_name(const char *transaction_name, const char *action_prefix, int transaction_nr)
+void y_create_new_transaction_name(const char *transaction_name, const char *transaction_prefix, int transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    char *actual_prefix = y_calculate_actual_action_prefix(action_prefix);
+    char *actual_prefix = y_calculate_actual_transaction_prefix(transaction_prefix);
     int prefix_len = strlen(actual_prefix);
     int trans_name_size = prefix_len + trans_nr_len +1 + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
@@ -489,7 +493,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *act
 
 void y_create_next_transaction_name( const char* transaction_name)
 {
-    y_create_new_transaction_name(transaction_name, y_get_action_prefix(), y_post_increment_transaction_nr());
+    y_create_new_transaction_name(transaction_name, y_get_transaction_prefix(), y_post_increment_transaction_nr());
 }
 
 
@@ -497,11 +501,11 @@ void y_create_next_transaction_name( const char* transaction_name)
 // 
 // Todo: Find a way to make this share more code with y_create_new_transaction_name()
 //
-void y_create_new_sub_transaction_name(const char *transaction_name, const char *action_prefix, 
+void y_create_new_sub_transaction_name(const char *transaction_name, const char *transaction_prefix, 
                                        const int transaction_nr, const int sub_transaction_nr)
 {
     const int trans_nr_len = 2;    // eg. '01'
-    char *actual_prefix = y_calculate_actual_action_prefix(action_prefix);
+    char *actual_prefix = y_calculate_actual_transaction_prefix(transaction_prefix);
     int prefix_len = strlen(actual_prefix);
     int trans_name_size = prefix_len + (2 * (trans_nr_len +1)) + strlen(transaction_name) +1;
     char *actual_trans_name = y_mem_alloc( trans_name_size );
@@ -522,7 +526,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 void y_create_next_sub_transaction_name(const char* transaction_name)
 {
     y_create_new_sub_transaction_name(transaction_name,
-                                    y_get_action_prefix(),
+                                    y_get_transaction_prefix(),
                                     y_get_next_transaction_nr()-1,
                                     y_post_increment_sub_transaction_nr());
 }
