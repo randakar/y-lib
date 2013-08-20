@@ -360,7 +360,6 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
 
 
     free_mebibytes = y_get_free_disk_space_in_mebibytes(log_folder);
-
     lr_log_message("y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s",
                    free_mebibytes, max_free_mebibytes, limit_mebibytes_used, log_folder);
 
@@ -372,13 +371,12 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     }
     else if(max_free_mebibytes < free_mebibytes)
     {
-        lr_output_message("Warning: Free disk space increased from %, test disk space usage measurements may have become unreliable.");
+        lr_output_message("Warning: Free disk space increased from %f to %f, test disk space usage measurements may have become unreliable.", max_free_mebibytes, free_mebibytes);
         max_free_mebibytes = free_mebibytes;
         return;
     }
 
     // Ok, so we used *something*. Now let's see if it exceeds our limit.
-
     mebibytes_used = max_free_mebibytes - free_mebibytes;
 
     // data points
