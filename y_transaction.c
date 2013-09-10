@@ -379,6 +379,7 @@ y_save_transaction_end_status(char* transaction_name, const char* saveparam, int
 
 void y_start_transaction_block(char *transaction_prefix)
 {
+    lr_log_message("Starting transaction block %s", transaction_prefix);
     y_set_transaction_prefix(transaction_prefix);
     y_set_next_transaction_nr(1);
 
@@ -390,12 +391,19 @@ void y_start_transaction_block(char *transaction_prefix)
 
 void y_end_transaction_block()
 {
+    lr_log_message("Ending transaction block %s", y_get_transaction_prefix());
     y_set_transaction_prefix("");
 }
 
 
 void y_pause_transaction_block()
 {
+    lr_log_message("Pausing transaction block %s", y_get_transaction_prefix());
+    if( y_is_empty_parameter("y_transaction_prefix") )
+    {
+        lr_error_message("Attempt to pause transaction block when none has been started!");
+        return;
+    }
     lr_save_int( y_get_next_transaction_nr(), lr_eval_string("y_paused_transaction_block_{y_transaction_prefix}_trans_nr") );
     y_end_transaction_block();
 }
@@ -403,8 +411,20 @@ void y_pause_transaction_block()
 
 void y_resume_transaction_block(char *transaction_prefix)
 {
+    char *storage_param;
+    lr_log_message("Resuming transaction block %s", transaction_prefix);
+
+    lr_save_string(transaction_prefix, "y_resumed_transaction_block");
+    storage_param = lr_eval_string("y_paused_transaction_block_{y_resumed_transaction_block}_trans_nr");
+
+    if( y_is_empty_parameter(storage_param) )
+    {
+        lr_error_message("Attempt to resume transaction block %s but no such block has been paused.", transaction_prefix);
+        return;
+    }
+
     y_start_transaction_block(transaction_prefix);
-    y_set_next_transaction_nr(atoi(lr_eval_string(lr_eval_string("{y_paused_transaction_block_{y_transaction_prefix}_trans_nr}"))));
+    y_set_next_transaction_nr(atoi(lr_eval_string(storage_param)));
 }
 
 
