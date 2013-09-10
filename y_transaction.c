@@ -377,19 +377,6 @@ y_save_transaction_end_status(char* transaction_name, const char* saveparam, int
 // Transaction blocks. Prefix all transactions in a series with the same text.
 // 
 
-void y_end_transaction_block()
-{
-    //lr_end_transaction(_block_transaction, LR_AUTO);
-    //_block_transaction[0] = '\0';
-    y_set_transaction_prefix("");
-}
-
-// DEPRECATED
-void y_end_action_block()
-{
-    y_end_transaction_block();
-}
-
 void y_start_transaction_block(char *transaction_prefix)
 {
     y_set_transaction_prefix(transaction_prefix);
@@ -401,12 +388,39 @@ void y_start_transaction_block(char *transaction_prefix)
     //lr_start_transaction(_block_transaction);
 }
 
+void y_end_transaction_block()
+{
+    y_set_transaction_prefix("");
+}
+
+
+void y_pause_transaction_block()
+{
+    lr_save_int( y_get_next_transaction_nr(), lr_eval_string("y_paused_transaction_block_{y_transaction_prefix}_trans_nr") );
+    y_end_transaction_block();
+}
+
+
+void y_resume_transaction_block(char *transaction_prefix)
+{
+    y_start_transaction_block(transaction_prefix);
+    y_set_next_transaction_nr(atoi(lr_eval_string(lr_eval_string("{y_paused_transaction_block_{y_transaction_prefix}_trans_nr}"))));
+}
+
 
 // DEPRECATED
 void y_start_action_block(char *transaction_prefix)
 {
     y_start_transaction_block(transaction_prefix);
 }
+
+
+// DEPRECATED
+void y_end_action_block()
+{
+    y_end_transaction_block();
+}
+
 
 // Complain loudly at compile time if somebody tries to use the old versions of this call
 #define y_calculate_actual_action_prefix 0_y_calculate_actual_action_prefix_no_longer_exists_please_use_y_calculate_actual_transaction_prefix
