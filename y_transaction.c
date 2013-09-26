@@ -424,7 +424,7 @@ void y_resume_transaction_block(char *transaction_prefix)
     }
 
     y_start_transaction_block(transaction_prefix);
-    y_set_next_transaction_nr(atoi(lr_eval_string(storage_param)));
+    y_set_next_transaction_nr(atoi(y_get_parameter(storage_param)));
 }
 
 
