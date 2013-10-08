@@ -436,7 +436,7 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
     if( posPtr == NULL )
     {
         // Copy the original to the left hand output buffer.
-        strncpy(left, original, strlen(original));
+        strncpy(left, original, strlen(original)+1); // Let's not forget to copy the null byte, too.
         return;
     }
     //lr_log_message("pos = %d", pos);
@@ -445,11 +445,10 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
     strncpy(left, original, pos);
     left[pos] = '\0'; // make the cut by putting a null character at the end.
 
-    // Copy the right hand side starting from the position 
-    // just after the found string.
+    // Copy the right hand side starting from the position just after the found string.
     {
         char *start = posPtr + strlen(separator);
-        strncpy(right, start, strlen(start));
+        strncpy(right, start, strlen(start)+1); // Let's not forget to copy the null byte, too.
     }
 }
 // --------------------------------------------------------------------------------------------------
