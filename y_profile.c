@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2011 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2013 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,6 @@
 #include "y_loadrunner_utils.c"
 
 //
-// Todo: Write documentation
 // For example usage, see the bottom of this file.
 //
 
@@ -42,6 +41,7 @@ typedef int (y_profile_func)();
 // the total of the weights in the list of profiles.
 //
 // (Note to self: Implement support for time accounting)
+// (Note to self: Disregard the previous note, just port the PIF time accounting support to ylib)
 struct y_struct_profile
 {
     int number;
@@ -132,6 +132,29 @@ void y_exec_profile(y_profile *chosenProfile)
     }
 }
 
+// Fetch a specific item from a profile list array, by name.
+// You shouldn't need this. Or at least, not often. I've done without for years ;-)
+y_profile* y_get_profile_by_name(char *profile_name, y_profile profile_list[], int profile_count)
+{
+    int i;
+    lr_log_message("y_get_profile_by_name(%s)", profile_name);
+
+    for(i=0; i < profile_count; i++)
+    {
+        y_profile *prof = &profile_list[i];
+
+        //lr_log_message("Found name: %s", prof->name);
+        if( strcmp(profile_name, prof->name) == 0 )
+        {
+            //lr_log_message("Match: %s", prof->name);
+            return prof;
+        }
+    }
+    lr_log_message("Name not found: %s", profile_name);
+    return NULL;
+}
+
+
 /*
 //
 // Example usage
@@ -139,19 +162,21 @@ void y_exec_profile(y_profile *chosenProfile)
 
 Profile()
 {
-	// Define the weights
+    // Define the weights
     static y_profile profile_list[] = {
-		{ 0, "FO_PWM",  Profile_FO_PWM,  3700 },   // 37.00%
-		{ 1, "FO_PAM",  Profile_FO_PAM,  2100 },   // 21.00%
-		{ 2, "FO_SEAD", Profile_FO_SEAD,  200 },   //  2.00%
-		{ 3, "MO",      Profile_MO,      2500 },   // 25.00%
-	    { 4, "STAFF",   Profile_Staff,   1500 } }; // 15.00%
-	const int profile_count = (sizeof profile_list / sizeof profile_list[0]); 
+        { 0, "FO_PWM",  Profile_FO_PWM,  3700 },   // 37.00%
+        { 1, "FO_PAM",  Profile_FO_PAM,  2100 },   // 21.00%
+        { 2, "FO_SEAD", Profile_FO_SEAD,  200 },   //  2.00%
+        { 3, "MO",      Profile_MO,      2500 },   // 25.00%
+        { 4, "STAFF",   Profile_Staff,   1500 } }; // 15.00%
+    const int profile_count = (sizeof profile_list / sizeof profile_list[0]); 
 
-	// Choose a profile to execute
-	y_profile *chosenProfile = y_choose_profile(profile_list, profile_count);
+    // Choose a profile to execute
+    y_profile *chosenProfile = y_choose_profile(profile_list, profile_count);
 
-	// Execute the chosen profile.
-	y_exec_profile(chosenProfile);
+    // Execute the chosen profile.
+    y_exec_profile(chosenProfile);
 }    
 */
+// --------------------------------------------------------------------------------------------------
+#endif // _PROFILE_C
