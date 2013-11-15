@@ -215,6 +215,27 @@ char* y_get_parameter_in_malloc_string(const char *src_param)
 }
 
 
+// --------------------------------------------------------------------------------------------------
+// Semi-efficiënt parameter copy using lr_eval_string_ext() with appropriate freeing of memory.
+// @author Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+//                lr_save_string("text", "param_a");
+//                y_copy_param("param_a", "param_b");   // Results in an exact copy of the content of param_a being stored in param_b.
+//                lr_log_message(lr_eval_string("param_b: {param_b}")); // Prints "param_b: text".
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void y_copy_param(char* source_param, char* dest_param)
+{
+    unsigned long size;
+    char* buffer;
+    char* source = y_get_parameter_eval_string(source_param); // Puts the parameter name into parameter seperators { }. Resulting ptr must be freed.
+    lr_eval_string_ext(source, strlen(source), &buffer, &size, 0, 0, -1); // Evaluates the result and copies the data into buffer.
+    free(source);                              // Free the intermediate parameter name.
+    lr_save_var(buffer, size, 0, dest_param);  // Save the result.
+    lr_eval_string_ext_free(&buffer);          // Free the buffer.
+}
+
+
 
 // --------------------------------------------------------------------------------------------------
 // Clean a parameter by removing any embedded \x00 (null) characters from it.
