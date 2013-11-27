@@ -195,9 +195,15 @@ void y_param_unique(char *param)
     // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon. */
     //lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
 
-    char buf[23];                   // UUID's are always 22 characters, plus null byte.
+
+//     char buf[23];                   // UUID's are always 22 characters, plus null byte.
+//     lr_generate_uuid_on_buf(buf);
+//     lr_save_var(buf, 22, 0, param); // save & trim off ==
+
+    char buf[100]; // should be only 22 characters, but apparently not always ..
+    memset(buf, '\0', sizeof(buf) * sizeof(char));
     lr_generate_uuid_on_buf(buf);
-    lr_save_var(buf, 22, 0, param); // save & trim off ==
+    lr_save_var(buf, strlen(buf), 0, param); // save & trim off ==
 }
 
 
@@ -267,7 +273,7 @@ y_random_string_buffer_core(const char *parameter, int minimumLength, int maximu
    else if(maximumLength > minimumLength) {
       // Not an error
       max = y_rand_between(minimumLength, maximumLength);
-      lr_message("Max: %d", max);
+      lr_log_message("Max: %d", max);
    }
    else if(maximumLength == minimumLength) {
       // Not an error either
@@ -949,7 +955,7 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
     double response_time;                          // Elapsed time since previous call.
 
     ftime(&ts);
-    current_time = ts.time + ts.millitm / 1000;
+    current_time = ts.time + (ts.millitm / 1000);
 
     // Initialisation.
     // On the first call we store the current time as the test start time and the end time of the previous call.
@@ -963,7 +969,6 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
     // Calculate how much time has passed since test start and the previous call.
     time_passed = current_time - test_start_time;
     response_time = current_time - previous_time;
-    lr_user_data_point("TT_response_time", response_time); 
 
     // Debugging//
     lr_log_message("TT calculation: starttime %f, current time %f, previous time %f, virtual_users %d, rampup_period %d",
@@ -992,9 +997,23 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
         if( TT > 0 )
             lr_think_time(TT);
 
-        // Measure the next 'response' time.
-        ftime(&ts);
-        previous_time = ts.time + ts.millitm / 1000;
+        // Store the old time in our backup location.
+        //previous_time = current_time; 
+        // Do a new time measurement..
+        //ftime(&ts);
+        //current_time = ts.time + (ts.millitm / 1000);
+
+        // We measure the response time by comparing previous_time to a new measurement later, but that measurement 
+        // will have to be schewed a tad to account for rounding in the windows sleep() call used by lr_think_time().
+        //{
+            //double time_slept = current_time - previous_time;
+            //double deviation = TT - time_slept;
+            //previous_time = current_time + deviation;
+            //lr_log_message("Slept %f sec, deviation %f, current_time %f with deviation added: %f", time_slept, deviation, current_time, previous_time);
+        //}
+
+        // All of the above can be rewritten to:
+        previous_time = current_time + TT; // Note that the "current time" actually is the timestamp from *before* we slept.
 
         return TT;
     }
