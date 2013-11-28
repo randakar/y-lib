@@ -179,6 +179,105 @@ void y_setup_browser_emulation()
 }
 
 
+int y_setup_browser_emulation_from_file(char* filename)
+{
+    y_browser* previous_browser = NULL;
+    long fp = fopen(filename, "r");
+    char line[4096];
+
+    if (fp == NULL)
+    {
+        lr_error_message("Unable to open file %s", filename);
+        lr_abort();
+        return -1;
+    }
+    lr_log_message("Opened file %s", filename);
+
+    // Overflow protection
+    line[0] = '\0';
+    line[4095] = '\0';
+
+    // Now read the file line by line.
+    while(fgets(line, sizeof line, fp))
+    {
+        char* remove;
+        lr_log_message("Read line: %s", line);
+
+        // Remove comments and trailing newlines.
+        while( ((remove = strchr(line, '#'))  != NULL) ||
+               //((remove = strstr(line, "//")) != NULL) ||
+               ((remove = strchr(line, '\r')) != NULL) || 
+               ((remove = strchr(line, '\n')) != NULL) )
+        {
+            remove[0] = '\0';
+            //lr_log_message("Stripped line: %s", line);
+        }
+
+
+        { // start namespace for various temporary stack buffers
+
+            char name[4096];
+            char* user_agent;
+            size_t user_agent_offset;
+            size_t size;
+
+            y_browser* browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
+            int scanresult = sscanf(line, "%4095s	%*f%%	%d	%d	%d	%n",
+                name, &browser->chance, &browser->max_connections, &browser->max_connections_per_host, &user_agent_offset);
+
+            // Debug code
+// 			lr_log_message("Found %d matches", scanresult);
+// 			switch(scanresult)
+// 			{
+// 				case 5:
+// 					lr_log_message("Found at least one too many ..");
+// 				case 4:
+// 					lr_log_message("user_agent_offset: %d", user_agent_offset); // %n telt niet mee  blijkbaar.
+// 					lr_log_message("browser->max_connections_per_host: %d", browser->max_connections_per_host);
+// 				case 3:
+// 					lr_log_message("browser->max_connections: %d", browser->max_connections);
+// 				case 2:
+// 					lr_log_message("browser->chance: %d", browser->chance);
+// 				case 1:
+// 					lr_log_message("name: %s", name);
+// 			}
+            if(scanresult < 4)
+            {
+                lr_log_message("Non-matching line.");
+                continue;
+            }
+
+            // Store the name into the browser struct
+            size=strlen(name)+1;
+            browser->name = y_mem_alloc(size);
+            snprintf(browser->name, size, "%s", name);
+
+            // Store the user agent into the browser struct
+            user_agent = line + user_agent_offset;
+            size=strlen(user_agent)+1;
+            browser->user_agent_string = y_mem_alloc(size);
+            snprintf(browser->user_agent_string, size, "%s", user_agent);
+            browser->user_agent_string[size-1] = '\0';
+
+            // Report the result
+            y_log_browser(browser);
+
+            // Increment the global count of weights.
+            y_browser_list_chance_total += browser->chance;
+            lr_log_message("y_browseremulation.c: Adding weight: %d", y_browser_list_chance_total);
+
+            // Add it to the list.
+            if( y_browser_list_head == NULL )
+                y_browser_list_head = browser;
+            else
+                previous_browser->next = browser;
+            previous_browser = browser; // Replaces the previous tail element with the new one.
+        } // end namespace	
+    } // end while loop
+
+    //lr_log_message("Done."); // debugging
+}
+
 
 // Given a list of a specified length, calculate what number all weights added together add up to.
 // Do not call directly unless you have checked the list for sanity beforehand.
@@ -266,16 +365,9 @@ void y_emulate_browser(const y_browser* browser)
     char str_max_connections_per_host[12];
     int max_connections;
 
-
     // Debugging purposes .
     lr_log_message("Emulating browser:");
     y_log_browser(browser);
-    //browser->max_connections = 20000;
-    //browser->max_connections_per_host = 20000;
-
-    // This actually behaves pretty funky.. so let's not do this.
-    //y_save_browser_to_parameters(browser);
-
 
     // Loadrunner doesn't accept values higher than 50 for this sockets option, so we'll just log it and set it to 50.
     max_connections = browser->max_connections;
