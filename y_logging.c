@@ -305,6 +305,7 @@ int y_write_to_log(char *filename, char *content)
 //
 void y_disk_space_guard(double max_free_percentage)
 {
+    char* hostname;
     static int disk_space_warning_given = 0;
     double free_space_percentage;
     char* log_folder = lr_get_attrib_string("out");
@@ -320,18 +321,16 @@ void y_disk_space_guard(double max_free_percentage)
     free_space_percentage = y_get_free_disk_space_percentage(log_folder);
 
     // data point
-    {
-        char *hostname = lr_get_host_name();
-        lr_save_string(hostname, "y_hostname_generator");
-        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_percentage"), free_space_percentage);
-    }
+    hostname = lr_get_host_name();
+    lr_save_string(hostname, "y_hostname_generator");
+    lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_percentage"), free_space_percentage);
 
     if( free_space_percentage < max_free_percentage )
     {
         y_setup();
-        lr_set_transaction(lr_eval_string("---DISK SPACE LOW IN LOG FOLDER---"), 0, LR_FAIL);
-        lr_error_message("Disk space low in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!", 
-                         log_folder, free_space_percentage, max_free_percentage, y_virtual_user_id);
+        lr_set_transaction(lr_eval_string("---DISK SPACE LOW IN LOG FOLDER FOR {y_hostname_generator}---"), 0, LR_FAIL);
+        lr_error_message("Diskspace low on %s in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!", 
+                         hostname, log_folder, free_space_percentage, max_free_percentage, y_virtual_user_id);
         disk_space_warning_given = 1; // turn off further warnings.
         y_log_turn_off_permanently();
     }
@@ -344,6 +343,7 @@ void y_disk_space_guard(double max_free_percentage)
 // 
 void y_disk_space_usage_guard(double limit_mebibytes_used)
 {
+    char* hostname;
     char* log_folder = lr_get_attrib_string("out");
     double free_mebibytes;
     static double max_free_mebibytes = -1;
@@ -380,19 +380,17 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
     mebibytes_used = max_free_mebibytes - free_mebibytes;
 
     // data points
-    {
-        char *hostname = lr_get_host_name();
-        lr_save_string(hostname, "y_hostname_generator");
-        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_mebibytes"), free_mebibytes);
-        lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_used_mebibytes"), mebibytes_used);
-    }
+    hostname = lr_get_host_name();
+    lr_save_string(hostname, "y_hostname_generator");
+    lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_free_mebibytes"), free_mebibytes);
+    lr_user_data_point( lr_eval_string("disk_space_{y_hostname_generator}_used_mebibytes"), mebibytes_used);
 
     if( mebibytes_used >= limit_mebibytes_used ) 
     {
         y_setup();
-        lr_set_transaction(lr_eval_string("---DISK SPACE USAGE TOO HIGH IN LOG FOLDER---"), 0, LR_FAIL);
-        lr_output_message("Disk space used by test in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
-                           log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
+        lr_set_transaction(lr_eval_string("---DISKSPACE USAGE TOO HIGH IN LOG FOLDER FOR {y_hostname_generator}---"), 0, LR_FAIL);
+        lr_output_message("Disk space used on host %s in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!",
+                           hostname, log_folder, mebibytes_used, limit_mebibytes_used, y_virtual_user_id);
         disk_space_warning_given = 1; // turn off further warnings.
         y_log_turn_off_permanently();
     }
