@@ -226,21 +226,21 @@ int y_setup_browser_emulation_from_file(char* filename)
                 name, &browser->chance, &browser->max_connections, &browser->max_connections_per_host, &user_agent_offset);
 
             // Debug code
-// 			lr_log_message("Found %d matches", scanresult);
-// 			switch(scanresult)
-// 			{
-// 				case 5:
-// 					lr_log_message("Found at least one too many ..");
-// 				case 4:
-// 					lr_log_message("user_agent_offset: %d", user_agent_offset); // %n telt niet mee  blijkbaar.
-// 					lr_log_message("browser->max_connections_per_host: %d", browser->max_connections_per_host);
-// 				case 3:
-// 					lr_log_message("browser->max_connections: %d", browser->max_connections);
-// 				case 2:
-// 					lr_log_message("browser->chance: %d", browser->chance);
-// 				case 1:
-// 					lr_log_message("name: %s", name);
-// 			}
+//             lr_log_message("Found %d matches", scanresult);
+//             switch(scanresult)
+//             {
+//                 case 5:
+//                     lr_log_message("Found at least one too many ..");
+//                 case 4:
+//                     lr_log_message("user_agent_offset: %d", user_agent_offset); // %n telt niet mee  blijkbaar.
+//                     lr_log_message("browser->max_connections_per_host: %d", browser->max_connections_per_host);
+//                 case 3:
+//                     lr_log_message("browser->max_connections: %d", browser->max_connections);
+//                 case 2:
+//                     lr_log_message("browser->chance: %d", browser->chance);
+//                 case 1:
+//                     lr_log_message("name: %s", name);
+//             }
             if(scanresult < 4)
             {
                 lr_log_message("Non-matching line.");
@@ -272,7 +272,7 @@ int y_setup_browser_emulation_from_file(char* filename)
             else
                 previous_browser->next = browser;
             previous_browser = browser; // Replaces the previous tail element with the new one.
-        } // end namespace	
+        } // end namespace
     } // end while loop
 
     //lr_log_message("Done."); // debugging
