@@ -865,15 +865,15 @@ double y_get_free_disk_space_in_mebibytes(char* folder_name)
     size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
     double free_mebibytes;
 
+
     y_load_kernel_dll(); // This will abort the script if it fails to load.
     GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
 
     lr_log_message("GetDiskFreeSpaceA reports: SectorsPerCluster: %.lu, BytesPerSector: %.lu, NumberOfFreeClusters: %.lu, TotalNumberOfClusters: %.lu", 
                                                SectorsPerCluster,       BytesPerSector,       NumberOfFreeClusters,       TotalNumberOfClusters);
 
-    free_mebibytes = SectorsPerCluster * BytesPerSector * (NumberOfFreeClusters / 1048576);
+    free_mebibytes = (double)NumberOfFreeClusters / 1048576. * SectorsPerCluster * BytesPerSector; // Pas op voor overflows bij aanpassingen.
     lr_log_message("Free disk space for folder %s : %f MebiBytes)", folder_name, free_mebibytes);
-
     return free_mebibytes;
 }
 
