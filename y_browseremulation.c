@@ -257,7 +257,6 @@ int y_setup_browser_emulation_from_file(char* filename)
             size=strlen(user_agent)+1;
             browser->user_agent_string = y_mem_alloc(size);
             snprintf(browser->user_agent_string, size, "%s", user_agent);
-            browser->user_agent_string[size-1] = '\0';
 
             // Report the result
             y_log_browser(browser);
