@@ -220,9 +220,7 @@ int y_setup_browser_emulation_from_file(char* filename)
         { // start namespace for various temporary stack buffers
 
             char name[4096];
-            char* user_agent;
             size_t user_agent_offset;
-            size_t size;
 
             y_browser* browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
             int scanresult = sscanf(line, "%4095s	%*f%%	%d	%d	%d	%n",
