@@ -46,7 +46,7 @@ char *y_mem_alloc(const int size)
     }
     //lr_output_message("Dynamic allocation of %d bytes of memory", mem);
     
-    if ((buff = (char *)malloc(mem)) == NULL) 
+    if ((buff = (char *)malloc(mem)) == NULL)
     {
         // Fixme: implement some generic error handling facility to send this stuff to.
         lr_error_message("Insufficient memory available, requested %d", mem);
@@ -197,10 +197,10 @@ char* y_get_parameter(const char* paramName)
 //        example usage:
 //                char *test;
 //                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
-//                test=y_get_parameter("TestParam");
+//                test=y_get_parameter_in_malloc_string("TestParam");
 //                lr_message("Test: %s", test);
+//                free(test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 char* y_get_parameter_in_malloc_string(const char *src_param)
 {
     char *result;
@@ -214,6 +214,45 @@ char* y_get_parameter_in_malloc_string(const char *src_param)
     //lr_log_message("Copied result: %s", result);
 }
 
+// --------------------------------------------------------------------------------------------------
+// Get the content of the parameter named "src_param" and return it as a char *
+//
+// Like y_get_parameter, but the result will use lr_eval_string_ext() underneath, rather than 
+// calling lr_eval_string() on a parameter name.
+// 
+// WARNING: Memory allocated in this manner MUST be freed using "lr_eval_string_ext_free()" or you 
+// may run the virtual user out of memory.
+//
+// @author Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+//                char *test;
+//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+//                test=y_get_parameter_ext("TestParam");
+//                lr_message("Test: %s", test);
+//                lr_eval_string_ext_free(test);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+char* y_get_parameter_ext(const char *source_param)
+{
+    char* buffer;
+    unsigned long size;
+    char* source = y_get_parameter_eval_string(source_param); // Puts the parameter name into parameter seperators { }.
+    lr_eval_string_ext(source, strlen(source), &buffer, &size, 0, 0, -1); // Evaluates the result and copy the data into buffer.
+    free(source);                                             // Free the intermediate parameter name.
+    return buffer;
+}
+
+
+char* y_strdup(char* source)
+{
+    char* result = strdup(source);
+    if( result == NULL )
+    {
+        lr_error_message("Out of memory while calling strdup()");
+        lr_abort();
+    }
+    return result;
+}
 
 // --------------------------------------------------------------------------------------------------
 // Semi-efficiënt parameter copy using lr_eval_string_ext() with appropriate freeing of memory.
@@ -226,10 +265,10 @@ char* y_get_parameter_in_malloc_string(const char *src_param)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_copy_param(char* source_param, char* dest_param)
 {
-    unsigned long size;
     char* buffer;
-    char* source = y_get_parameter_eval_string(source_param); // Puts the parameter name into parameter seperators { }. Resulting ptr must be freed.
-    lr_eval_string_ext(source, strlen(source), &buffer, &size, 0, 0, -1); // Evaluates the result and copies the data into buffer.
+    unsigned long size;
+    char* source = y_get_parameter_eval_string(source_param); // Puts the parameter name into parameter seperators { }.
+    lr_eval_string_ext(source, strlen(source), &buffer, &size, 0, 0, -1); // Evaluates the result and copy the data into buffer.
     free(source);                              // Free the intermediate parameter name.
     lr_save_var(buffer, size, 0, dest_param);  // Save the result.
     lr_eval_string_ext_free(&buffer);          // Free the buffer.
@@ -709,7 +748,6 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    lr_save_string( parameter, paramName );
 }
 // --------------------------------------------------------------------------------------------------
-
 
 
 // --------------------------------------------------------------------------------------------------
