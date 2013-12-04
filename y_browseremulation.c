@@ -251,16 +251,9 @@ int y_setup_browser_emulation_from_file(char* filename)
                 continue;
             }
 
-            // Store the name into the browser struct
-            size=strlen(name)+1;
-            browser->name = y_mem_alloc(size);
-            snprintf(browser->name, size, "%s", name);
-
-            // Store the user agent into the browser struct
-            user_agent = line + user_agent_offset;
-            size=strlen(user_agent)+1;
-            browser->user_agent_string = y_mem_alloc(size);
-            snprintf(browser->user_agent_string, size, "%s", user_agent);
+            // Copy the char* fields into their own allocated memory and store that.
+            browser->name = y_strdup(name);
+            browser->user_agent_string = y_strdup(line + user_agent_offset);
 
             // Report the result
             //y_log_browser(browser);
