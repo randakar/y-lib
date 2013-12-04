@@ -132,21 +132,24 @@ void y_setup_browser_emulation()
 
     for(i=0; i < MAX_BROWSER_LIST_LENGTH; i++ )
     {
-        y_browser* browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
+        y_browser* browser;
+        char* browser_name = y_get_parameter_in_malloc_string("browser_name");
 
-        browser->name = y_get_parameter_in_malloc_string("browser_name");
-        if(strcmp(browser->name, "END") == 0)
+        if(strcmp(browser_name, "END") == 0)
         {
+            free(browser_name);
             lr_log_message("y_browseremulation.c: End of browser list initialisation");
             break;
         }
+        browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
+        browser->name = browser_name;
 
         // Fill out all remaining fields
         browser->next = NULL;
         browser->chance                   = atoi(y_get_parameter("browser_chance"));
         browser->max_connections_per_host = atoi(y_get_parameter("browser_max_connections_per_host"));
         browser->max_connections          = atoi(y_get_parameter("browser_max_connections"));
-        browser->user_agent_string = y_get_parameter_in_malloc_string("browser_user_agent_string");
+        browser->user_agent_string        = y_get_parameter_in_malloc_string("browser_user_agent_string");
 
         //lr_log_message("y_browseremulation.c: Adding browser");
         //y_log_browser(browser);
@@ -243,6 +246,7 @@ int y_setup_browser_emulation_from_file(char* filename)
 //             }
             if(scanresult < 4)
             {
+                free(browser);
                 lr_log_message("Non-matching line.");
                 continue;
             }
@@ -259,7 +263,7 @@ int y_setup_browser_emulation_from_file(char* filename)
             snprintf(browser->user_agent_string, size, "%s", user_agent);
 
             // Report the result
-            y_log_browser(browser);
+            //y_log_browser(browser);
 
             // Increment the global count of weights.
             y_browser_list_chance_total += browser->chance;
