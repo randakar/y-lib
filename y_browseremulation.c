@@ -104,6 +104,12 @@ int y_browser_list_chance_total = 0; // Cache rather than calculate on the fly..
 
 void y_log_browser(const y_browser* browser)
 {
+    if(browser == NULL)
+    {
+        lr_error_message("y_browser_emulation.c: Attempt to log content of NULL browser. Ignoring.");
+        return;
+    }
+
     lr_log_message("y_browseremulation.c: browser: %s, chance %d, max_conn_per_host %d, max_conn %d, user agent string: %s",
                    browser->name,
                    browser->chance,
@@ -115,6 +121,12 @@ void y_log_browser(const y_browser* browser)
 
 void y_save_browser_to_parameters(const y_browser* browser)
 {
+    if(browser == NULL)
+    {
+        lr_error_message("y_browser_emulation.c: Attempt to store the content of NULL browser into parameters. Aborting.");
+        lr_abort();
+    }
+
     lr_save_string(browser->name, "browser_name");
     lr_save_int(browser->chance, "browser_chance");
     lr_save_int(browser->max_connections_per_host, "browser_max_connections_per_host");
@@ -301,8 +313,14 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
 {
     int i, lowerbound, cursor = 0;
     int max = y_browser_list_chance_total;
-    long roll = y_rand() % max;
     y_browser* browser = NULL;
+    long roll;
+
+    if( max < 1 )
+    {
+        lr_error_message("y_browseremulation.c: Browser list not initialised before call to y_choose_browser_from_list(). Cannot choose, ignoring.");
+        return NULL;
+    }
 
     // The upper bound of the rand() function is determined by the RAND_MAX constant.
     // RAND_MAX is hardcoded in loadrunner to a value of exactly 32767.
@@ -322,6 +340,7 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     // 
     // TODO: Fix y_profile.c as well, as it almost assuredly suffers from the same issue.
 
+    roll = y_rand() % max;
     //lr_log_message("max = %d, RAND_MAX = %d, roll %d", max, RAND_MAX, roll);
     if( RAND_MAX < max)
     {
@@ -358,6 +377,12 @@ void y_emulate_browser(const y_browser* browser)
     char str_max_connections[12];
     char str_max_connections_per_host[12];
     int max_connections;
+
+    if( browser == NULL )
+    {
+        lr_error_message("y_browser_emulation.c: Attempt to emulate the NULL browser: Ignored.");
+        return;
+    }
 
     // Debugging purposes .
     lr_log_message("Emulating browser:");
