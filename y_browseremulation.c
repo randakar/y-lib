@@ -136,7 +136,11 @@ void y_save_browser_to_parameters(const y_browser* browser)
 
 
 
-void y_setup_browser_emulation()
+int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
+                                              const char* browser_chance_param,
+                                              const char* browser_max_connections_per_host_param,
+                                              const char* browser_max_connections_param,
+                                              const char* browser_user_agent_string_param)
 {
     int i;
     y_browser* previous_browser = NULL;
@@ -145,30 +149,64 @@ void y_setup_browser_emulation()
     for(i=0; i < MAX_BROWSER_LIST_LENGTH; i++ )
     {
         y_browser* browser;
-        char* browser_name = y_get_parameter_in_malloc_string("browser_name");
+        char* browser_name = y_get_parameter_with_malloc_or_null(browser_name_param);
 
+        if( browser_name == NULL )
+        {
+            lr_error_message("Browser name parameter %s does not exist. Aborting browser emulation setup.", browser_name_param);
+            return -1;
+        }
         if(strcmp(browser_name, "END") == 0)
         {
             free(browser_name);
             lr_log_message("y_browseremulation.c: End of browser list initialisation");
-            break;
+            return 0;
         }
+
+        // Allocate a browser object
         browser = (y_browser*) y_mem_alloc( sizeof browser[0] );
         browser->name = browser_name;
-
-        // Fill out all remaining fields
         browser->next = NULL;
-        browser->chance                   = atoi(y_get_parameter("browser_chance"));
-        browser->max_connections_per_host = atoi(y_get_parameter("browser_max_connections_per_host"));
-        browser->max_connections          = atoi(y_get_parameter("browser_max_connections"));
-        browser->user_agent_string        = y_get_parameter_in_malloc_string("browser_user_agent_string");
+
+        // The next bit is a bit verbose due to all of the checks on missing parameters,
+        // but really we're just filling out the remaining fields of the browser struct.
+        {
+            int error = 0;
+            char* browser_chance                   = y_get_parameter_or_null(browser_chance_param);
+            char* browser_max_connections_per_host = y_get_parameter_or_null(browser_max_connections_per_host_param);
+            char* browser_max_connections          = y_get_parameter_or_null(browser_max_connections_param);
+
+            if( browser_chance == NULL || browser_max_connections_per_host == NULL || browser_max_connections == NULL )
+            {
+                lr_error_message("Browser parameter missing. Aborting browser emulation setup. chance: %s:%s, max_connections_per_host %s:%s, max_connections %s:%s", 
+                                 browser_chance_param, browser_chance,
+                                 browser_max_connections_per_host_param, browser_max_connections_per_host,
+                                 browser_max_connections_param, browser_max_connections);
+                error = 1;
+            }
+            else if( (browser->user_agent_string = y_get_parameter_with_malloc_or_null(browser_user_agent_string_param)) == NULL )
+            {
+                lr_error_message("Browser user agent parameter %s does not exist. Aborting browser emulation setup.", browser_user_agent_string_param);
+                error = 1;
+            }
+
+            if( error )
+            {
+                free(browser_name);
+                free(browser);
+                return -1;
+            }
+            browser->chance                   = atoi(browser_chance);
+            browser->max_connections_per_host = atoi(browser_max_connections_per_host);
+            browser->max_connections          = atoi(browser_max_connections);
+        }
 
         //lr_log_message("y_browseremulation.c: Adding browser");
         //y_log_browser(browser);
 
         // Increment the global count of weights.
         y_browser_list_chance_total += browser->chance;
-        lr_log_message("y_browseremulation.c: Adding weight: %d", y_browser_list_chance_total);
+        //lr_log_message("y_browseremulation.c: Adding weight: %d", y_browser_list_chance_total);
 
         // Add it to the list.
         if( y_browser_list_head == NULL )
@@ -184,13 +222,19 @@ void y_setup_browser_emulation()
         // Get the next value for the new iteration.
         // This parameter should be set to "update each iteration", or this code will play havoc with it ..
         lr_advance_param("browser_name");
-    };
+    }
 
     if( i == (MAX_BROWSER_LIST_LENGTH) )
     {
         lr_log_message("Too many browsers to fit in browser list struct, max list size = %d", MAX_BROWSER_LIST_LENGTH);
         lr_abort();
     }
+}
+
+
+void y_setup_browser_emulation()
+{
+    y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
 }
 
 
@@ -281,6 +325,7 @@ int y_setup_browser_emulation_from_file(char* filename)
         } // end namespace
     } // end while loop
 
+    return 0;
     //lr_log_message("Done."); // debugging
 }
 
