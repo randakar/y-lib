@@ -144,8 +144,8 @@ char* y_get_parameter_eval_string(const char *param_name)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 int y_is_empty_parameter(const char *param_name)
 {
-    char *param_eval_string = y_get_parameter_eval_string(param_name);
-    char *param = lr_eval_string(param_eval_string);
+    char* param_eval_string = y_get_parameter_eval_string(param_name);
+    char* param = lr_eval_string(param_eval_string);
     
     int result = strlen(param) == 0 || strcmp(param, param_eval_string) == 0;
     free(param_eval_string);
@@ -173,15 +173,32 @@ int y_is_empty_parameter(const char *param_name)
 //                test=y_get_parameter("TestParam");
 //                lr_message("Test: %s", test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-char* y_get_parameter(const char* paramName)
+char* y_get_parameter(const char* param_name)
 {
-   char *tmp = y_get_parameter_eval_string(paramName);
-   char *parameter = lr_eval_string(tmp);
+   char* tmp = y_get_parameter_eval_string(param_name);
+   char* parameter = lr_eval_string(tmp);
    free(tmp);
    
    return parameter;
 }
 // --------------------------------------------------------------------------------------------------
+
+
+char* y_get_parameter_or_null(const char* param_name)
+{
+    char* param_eval_string = y_get_parameter_eval_string(param_name);
+    char* param = lr_eval_string(param_eval_string);
+
+    int exists = strcmp(param, param_eval_string) != 0; // Result doesn't match the param eval string (eg: '{param}')
+    //lr_log_message("y_get_parameter_or_null for param_name %s, pre-eval string is %s, lr_eval_string result is %s, exists: %d", param_name, param_eval_string, param, exists);
+    free(param_eval_string);
+    //lr_abort();
+
+    if(!exists)
+        return NULL;
+    else
+        return param;
+}
 
 // --------------------------------------------------------------------------------------------------
 // Get the content of the parameter named "src_param" and return it as a char *
@@ -201,11 +218,13 @@ char* y_get_parameter(const char* paramName)
 //                lr_message("Test: %s", test);
 //                free(test);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-char* y_get_parameter_in_malloc_string(const char *src_param)
+char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
     char *result;
-    char *src = y_get_parameter(src_param);
+    char *src = y_get_parameter_or_null(src_param);
     //lr_log_message("Copying source data: %s", src);
+    if(src == NULL)
+        return NULL;
 
     result = y_mem_alloc( strlen(src) +1);
     strcpy(result, src);
@@ -213,6 +232,8 @@ char* y_get_parameter_in_malloc_string(const char *src_param)
     return result;
     //lr_log_message("Copied result: %s", result);
 }
+#define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null
+
 
 // --------------------------------------------------------------------------------------------------
 // Get the content of the parameter named "src_param" and return it as a char *
