@@ -113,6 +113,34 @@ char *y_array_alloc(int length, int bytesPerChar)
 // --------------------------------------------------------------------------------------------------
 
 
+//
+// Determine how much space storing a number in a string requires.
+// 
+// example:
+// {
+//    int input = 12345;
+//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 12345 = 5"
+//    input = -12345;
+//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of -12345 = 6"
+//    input = 0;
+//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 0 = 1"
+// }
+// 
+size_t y_int_strlen(int number)
+{
+    size_t result = 1;
+    int power = abs(number);
+
+    // Negative numbers need more space.
+    if(number < 0)
+        result++;
+
+    // Every power of 10 we need another digit to store the number.
+    while(power = (power / 10))
+        result++;
+    return result;
+}
+
 
 // --------------------------------------------------------------------------------------------------
 // Given a parameter name, obtain the string required to fetch the contents of that parameter through
