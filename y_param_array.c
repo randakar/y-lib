@@ -128,7 +128,6 @@ char *y_array_get( const char *pArray, const int pIndex )
         lr_abort();
     }
 
-
     {
         // Calculate space requirements
         size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + size of index + {}_\0
@@ -136,8 +135,6 @@ char *y_array_get( const char *pArray, const int pIndex )
         snprintf( tmp , bufsize, "{%s_%d}" , pArray , pIndex );
     }
 
-    // This breaks if the index number is 10 billion or more  ;-)
-    // I presume we have run out of memory by then ..
     result = lr_eval_string(tmp);
     free (tmp);
     return result;
