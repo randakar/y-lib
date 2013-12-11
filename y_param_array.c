@@ -66,22 +66,23 @@ int _y_random_array_index = 0;
 //        lr_message("RESULT: %d", result);
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #ifdef Y_COMPAT_LR_8
-int y_array_count( const char *pArrayName )
+int y_array_count( const char *param_array_name )
 {
     // -- Loadrunner 9 and upwards
     // return lr_paramarr_len(pArrayName);
 
     // -- Loadrunner 8 and below
     int result;
-    char *tmp = y_mem_alloc( strlen(pArrayName) +9 );  // 9 = strlen("{}_count") +1 -- the +1 is '\0'.
+    size_t size = strlen(pArrayName) +9; // 9 = strlen("{}_count") +1 -- the +1 is '\0'
+    char *tmp = y_mem_alloc(size);
 
-    sprintf(tmp , "{%s_count}" , pArrayName );
+    snprintf(tmp , size, "{%s_count}" , param_array_name );
     result = atoi(lr_eval_string(tmp));
     free(tmp);
     return result;
 }
 #else
-#define y_array_count( pArrayName ) lr_paramarr_len(pArrayName) 
+#define y_array_count( param_array_name ) lr_paramarr_len(param_array_name) 
 #endif // Y_COMPAT_LR_8
 
 
@@ -119,7 +120,7 @@ char *y_array_get( const char *pArray, const int pIndex )
     int size = y_array_count( pArray );
     char *tmp;
     char *result;
-    
+
     //lr_log_message("y_array_get(%s,%d)", pArray, pIndex ); 
     if ( (pIndex > size) || (pIndex < 1) )
     {
@@ -127,13 +128,18 @@ char *y_array_get( const char *pArray, const int pIndex )
         lr_abort();
     }
 
-    tmp = y_mem_alloc( strlen(pArray) +10 +4 ); // 10 characters for the index, 4 characters added: { _ } \0
-    sprintf( tmp , "{%s_%d}" , pArray , pIndex );
+
+    {
+        // Calculate space requirements
+        size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + size of index + {}_\0
+        tmp = y_mem_alloc(bufsize); 
+        snprintf( tmp , bufsize, "{%s_%d}" , pArray , pIndex );
+    }
 
     // This breaks if the index number is 10 billion or more  ;-)
     // I presume we have run out of memory by then ..
     result = lr_eval_string(tmp);
-    free (tmp);    
+    free (tmp);
     return result;
 }
 #else
@@ -155,44 +161,62 @@ char *y_array_get( const char *pArray, const int pIndex )
 // Note: The output of this needs to be freed using lr_eval_string_ext_free();
 // See also the loadrunner documentation regarding lr_eval_string_ext();
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:     
-//         see y_array_get()
+//    example usage:
+// 
+//    {
+//       char* result;
+//       lr_save_string("bar", "foo_1");
+//       lr_save_string("baz", "foo_2");
+//       lr_save_int(2, "foo_count");
+//
+//       result = y_array_get_no_zeroes("foo", 1);
+//       lr_log_message("Result: %s", result); // Prints "Result: bar" 
+//       result = y_array_get_no_zeroes("foo", 2);
+//       lr_log_message("Result: %s", result); // Prints "Result: baz"
+//    }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-char *y_array_get_no_zeroes( const char *pArray, const int pIndex )
+char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 {
     int size = y_array_count( pArray );
-    char *tmp;
-    size_t tmp_size;
-    char *result;
-    unsigned long resultLen;
-    size_t resultStrlen;
-    
     //lr_log_message("y_array_get_no_zeroes(%s,%d)", pArray, pIndex );
-    
+
     if ( (pIndex > size) || (pIndex < 1) )
     {
         lr_error_message("Index out of bounds");
         lr_abort();
     }
-    
-    // This breaks if the index number is 10^12 or more  ;-)
-    // I presume we have run out of memory by then ..
-    tmp_size = strlen(pArray) +12 +4; // 12 characters for the index with 4 characters added: { _ } \0
-    tmp = y_mem_alloc(tmp_size);
-    snprintf( tmp, tmp_size, "{%s_%d}", pArray, pIndex );
-    lr_eval_string_ext(tmp, strlen(tmp), &result, &resultLen, 0, 0, -1);
-    free (tmp);
 
-
-    // y_replace NULL bytes (\x00) in the input with something else..
-    for( resultStrlen = strlen(result);
-         resultStrlen < resultLen;
-         resultStrlen = strlen(result))
+    // Start namespace
     {
-        result[resultStrlen] = ' ';
-    }
+        char *result;
+        size_t resultStrlen;
+        unsigned long resultLen;
 
-    return result;
+        {
+            // Calculate space requirements
+            size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + {}_\0
+
+            // Allocate the required memory
+            char* tmp = y_mem_alloc(bufsize);
+    
+            // Copy our data in.
+            snprintf(tmp, bufsize, "{%s_%d}", pArray, pIndex );
+    
+            // Now let lr_eval_string do the actual expansion
+            lr_eval_string_ext(tmp, bufsize, &result, &resultLen, 0, 0, -1);
+            free (tmp);
+        }
+
+        // replace NULL bytes (\x00) in the input with something else..
+        for( resultStrlen = strlen(result);
+             resultStrlen < resultLen;
+             resultStrlen = strlen(result))
+        {
+            result[resultStrlen] = ' ';
+        }
+    
+        return result;
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -220,16 +244,8 @@ void y_array_save(const char* value, const char* pArray, const int pIndex)
     }
     else
     {
-        int len = strlen(pArray) +3;
-        int power = pIndex;
-        char *result;
-
-        while(power = (power / 10))
-        {
-            len++;
-        }
-
-        result = y_mem_alloc(len);
+        int len = strlen(pArray) + y_int_strlen(pIndex) +2; // +2 = _\0
+        char *result = y_mem_alloc(len);
         snprintf(result, len, "%s_%d", pArray, pIndex);
         lr_save_string(value, result);
         free(result);
@@ -282,10 +298,9 @@ void y_array_save_count(const int count, const char *pArray)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void y_array_add( const char* pArray, const char* value )
 {
-    int size = y_array_count(pArray);
+    int size = y_array_count(pArray) +1;
     // hmm - should we check if the array does not exist?
     // Maybe not - there are cases where we care, and there are cases where we don't.
-    size++;
     y_array_save(value, pArray, size);
     y_array_save_count(size, pArray);
 }
@@ -353,15 +368,15 @@ char *y_array_get_random( const char *pArray )
 
     // -- Loadrunner 8 and below
     int count = y_array_count( pArray );
-    
+
     //lr_log_message("y_array_get_random(%s)", pArray);
-    
+
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
         return NULL;
     }
-    
+
     _y_random_array_index= (y_rand() % count) +1;
     return y_array_get(pArray, _y_random_array_index);
 }
@@ -383,15 +398,15 @@ char *y_array_get_random_no_zeroes( const char *pArray )
     // -- Loadrunner 8 and below
     int index;
     int count = y_array_count( pArray );
-    
+
     //lr_log_message("y_array_get_random(%s)", pArray);
-    
+
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
         return NULL;
     }
-    
+
     _y_random_array_index = (y_rand() % count) +1;
     return y_array_get_no_zeroes(pArray, _y_random_array_index);
 }
