@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ */ 
 
 /*****************************************************************************************************
   - VTS functies -
@@ -32,10 +32,10 @@ VTS installeren:
 1) Obtain VTS2 from Mercury Support Representatives. (Downloadable Binaries)
 2) Unzip the file into the main LoadRunner directory (using the directory structure provided).
    (eg. "..\Mercury Interactive\LoadRunner")
-
+   
 3) Register "vtsctls.ocx" in the "..\LoadRunner\bin" directory.
   (eg. regsvr32 "c:\Program Files\Mercury Interactive\LoadRunner\bin\vtsctls.ocx")
-
+  
 VTS starten:
     C:\Program Files\HP\LoadRunner\bin\vtconsole.exe
 *****************************************************************************************************/
@@ -46,9 +46,6 @@ VTS starten:
 #include "vts2.h"
 #include "y_string.c"
 #include "y_loadrunner_utils.c"
-
-// Global variables
-int _vts_setup_completed = 0;
 
 
 // Standardised error reporting for all VTS functions.
@@ -63,37 +60,35 @@ void VTS_report_error(char* errortext)
     free(buffer);
 }
 
-// Initialisation of the VTS client library etc.
+// Initialisation of the VTS client library.
 // @author Floris Kraak
 void VTS_setup()
 {
     int result;
-    if( _vts_setup_completed )
-    {
-        return;
-    }
+    static int setup_completed = 0;
 
-    //***************************
-    //* Load the client VTS DLL *
-    //***************************
+    if( setup_completed )
+        return;
+    
+    // Load the client VTS DLL // TODO: This is probably the wrong thing to do on LR 11.52, where the DLL doesn't need to be loaded.
     if( (result = lr_load_dll("vtclient.dll")) != 0 )
     {
         VTS_report_error("Unable to load Virtual Table Server client dll. Please check your VTS installation.");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
-    _vts_setup_completed = 1;
+    setup_completed = 1;
 }
 
 //
 // Translation facility for VTS return codes. Also reports any errors.
-//
+// 
 // @author Floris Kraak
 int VTS_process_returncode(int returncode)
 {
     char* errortext;
-
-    /**
+    
+    /** 
      * This is what the header file vts2.h tells us about error codes:
      *
      * //VTS Error Codes
@@ -175,7 +170,7 @@ int VTS_process_returncode(int returncode)
     // Report the error to the user. (The "All OK" case jumped out of this function earlier ..)
     VTS_report_error(errortext);
     // At this point it might be an idea to call lr_abort() or lr_exit(LR_EXIT_VUSER, LR_FAIL)
-
+    
     return returncode;
 }
 
@@ -195,14 +190,14 @@ int VTS_connect()
     // Connect to the Virtual Table Server and grab the Handle, and print it.
     //ppp = vtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
     ppp = lrvtc_connect(lr_eval_string("{VTSServer}"), atoi(lr_eval_string("{VTSPort}")), VTOPT_KEEP_ALIVE);
-
+    
     if( VTS_process_returncode(vtc_get_last_error(ppp)) != VTCERR_OK )
     {
         ppp = -1;
     }
 
     // lr_output_message(">> The VTS Handle is : %d", ppp);
-    lr_save_int(ppp, "VTS_ppp");
+    lr_save_int(ppp, "VTS_ppp"); // Deprecate this .. appears to be unused internally.
     return ppp;
 }
 
@@ -213,7 +208,7 @@ int VTS_connect()
 // verbinding met VTS verbreken
 int VTS_disconnect()
 {
-    lrvtc_disconnect();
+    lrvtc_disconnect(); // return code?
     return 0;
 }
 
@@ -223,8 +218,8 @@ int VTS_disconnect()
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
 
-// Voeg een waarde toe aan de onderkant van de tabel.
-// Als de unique vlag groter dan 0 is gebeurt dat alleen onder voorwaarde dat de waarde niet al
+// Voeg een waarde toe aan de onderkant van de tabel. 
+// Als de unique vlag groter dan 0 is gebeurt dat alleen onder voorwaarde dat de waarde niet al 
 // bestaat in de tabel.
 //
 // Todo: convert these functions to return a VTCERR rather than a simple int.
@@ -373,10 +368,10 @@ int VTS_readRandom(char* columnname, char* ParameterName)
     else
     {
         errortext = "INFO: VTS random read succeeded.";
-        lr_save_string(value,ParameterName);
+        lr_save_string(value,ParameterName);        
     }
-    vtc_free(value);
-    VTS_disconnect();
+    vtc_free(value);    
+    VTS_disconnect();   
 
     if(errorcode != 0)
     {
@@ -392,9 +387,9 @@ int VTS_readRandom(char* columnname, char* ParameterName)
 // ***************************************************************************************************
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
-// input: een waarde waarin de kolomnamen staan die uitgelezen moeten worden
-// output: parameter die de naam heeft van de kolomnamen.
-// verwerking: de waarde van de opgegeven kolom worden in een parameter gezet en vervolgens wordt deze waarden
+// input: een waarde waarin de kolomnamen staan die uitgelezen moeten worden 
+// output: parameter die de naam heeft van de kolomnamen. 
+// verwerking: de waarde van de opgegeven kolom worden in een parameter gezet en vervolgens wordt deze waarden 
 //             uit de database verwijderd. Zodoende kan een deze waarde nooit 2x gebruikt worden.
 int VTS_popfirst(char *columnname)
 {
@@ -403,13 +398,13 @@ int VTS_popfirst(char *columnname)
     int            size;
     unsigned short status;
     int            errorcode = 0;
-
+    
     if( ppp == -1 )
     {
         // VTS_connect() should have set the error message already.
         return -1;
     }
-
+    
     if( (rc = lrvtc_retrieve_message(columnname)) != 0)
     {
         lr_error_message("******************** VTS Error - Query Return Code = %d", rc);
@@ -433,7 +428,7 @@ int VTS_popfirst(char *columnname)
 //     Voeg data toe aan meerdere kolommen tegelijk, aan de onderkant van de database.
 //     De kolomnamen staan in 1 string, gescheiden door een punt-komma.
 //     De data staan in 1 string, gescheiden door een punt-komma.
-//
+// 
 // Voorbeeld:
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns_unique(char *columnnames, char *data)
@@ -466,19 +461,19 @@ int VTS_push_multiple_columns_unique(char *columnnames, char *data)
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // ***************************************************************************************************
 // VTS_popfirstMultipleColumns()
-//
+// 
 // Haal uit VTS de bovenste rij uit de opgegeven kolommen.
 // deze kolommen staan in 1 string, gescheiden door een punt-komma.
-//
+// 
 // Voorbeeld:
 //     VTS_popfirstMultipleColumns("Voornaam;Achternaam;Adres");
 //        Het resultaat wordt dan in {Voornaam}, {Acternaam} en {Adres} geplaatst.
-//
+// 
 //    snelheid:
 //     wanneer in VTS 1 miljoen records staan, en 1000x het volgende wordt uitgevoerd:
 //           VTS_push_multiple_columns("CRDNUM;UTN;EMBNM1", "123123123;123123123;JANSEN");
 //            VTS_popfirstMultipleColumns2("CRDNUM;UTN;EMBNM1");
-//     dan duurt dat ca. 12,5 sec. Dat is gemiddeld dus per push en pop: 12,5 msec.
+//     dan duurt dat ca. 12,5 sec. Dat is gemiddeld dus per push en pop: 12,5 msec. 
 int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 {
     PVCI           ppp = VTS_connect();
@@ -516,7 +511,7 @@ int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)
 //     Voeg data toe aan meerdere kolommen tegelijk, aan de onderkant van de database.
 //     De kolomnamen staan in 1 string, gescheiden door een punt-komma.
 //     De data staan in 1 string, gescheiden door een punt-komma.
-//
+// 
 // Voorbeeld:
 //     VTS_push_multiple_columns("VOORNAAM,ACHTERNAAM,ADRES", "Pietje;Puk;Wegiswegweg 3");
 int VTS_push_multiple_columns(char* columnnames, char* data)
