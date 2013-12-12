@@ -182,28 +182,19 @@ char *y_array_get( const char *pArray, const int pIndex )
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 {
-    int size = y_array_count( pArray );
     //lr_log_message("y_array_get_no_zeroes(%s,%d)", pArray, pIndex );
-
-    if ( (pIndex > size) || (pIndex < 1) )
+    if ( (pIndex > y_array_count(pArray)) || (pIndex < 1) )
     {
         lr_error_message("Parameter array %s does not exist or index %d out of bounds.", pArray, pIndex);
         lr_abort();
     }
-
-    // Start namespace
+    else
     {
-        char* result;
-        size_t resultStrlen;
-        unsigned long resultLen;
-
-        {
-            // Calculate space requirements
-            size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+2; // strlen() + _\0
-            char* tmp = y_mem_alloc(bufsize);
-            snprintf(tmp, bufsize, "%s_%d", pArray, pIndex );
-            return y_get_cleansed_parameter(tmp, ' '); // <-- Might want to make that configurable..
-        }
+        // Calculate space requirements
+        size_t bufsize = strlen(pArray) + y_int_strlen(pIndex) +2; // strlen() + _\0
+        char* tmp = y_mem_alloc(bufsize);
+        snprintf(tmp, bufsize, "%s_%d", pArray, pIndex );
+        return y_get_cleansed_parameter(tmp, ' '); // <-- Might want to make that configurable..
     }
 }
 // --------------------------------------------------------------------------------------------------
