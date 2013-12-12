@@ -171,6 +171,14 @@ char *y_array_get( const char *pArray, const int pIndex )
 //       result = y_array_get_no_zeroes("foo", 2);
 //       lr_log_message("Result: %s", result); // Prints "Result: baz"
 //    }
+//    {
+//       char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+//       char *tmp;
+//       lr_save_var(buffer, 11, 0, "broken_1");
+//       y_array_save_count(1, "broken");
+//       tmp = y_array_get_no_zeroes("broken", 1);
+//       lr_log_message("Result: '%s'", tmp); // prints "Result: ' b ro ken  '"
+//    }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 {
@@ -179,44 +187,26 @@ char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 
     if ( (pIndex > size) || (pIndex < 1) )
     {
-        lr_error_message("Index out of bounds");
+        lr_error_message("Parameter array %s does not exist or index %d out of bounds.", pArray, pIndex);
         lr_abort();
     }
 
     // Start namespace
     {
-        char *result;
+        char* result;
         size_t resultStrlen;
         unsigned long resultLen;
 
         {
             // Calculate space requirements
-            size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + {}_\0
-
-            // Allocate the required memory
+            size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+2; // strlen() + _\0
             char* tmp = y_mem_alloc(bufsize);
-    
-            // Copy our data in.
-            snprintf(tmp, bufsize, "{%s_%d}", pArray, pIndex );
-    
-            // Now let lr_eval_string do the actual expansion
-            lr_eval_string_ext(tmp, bufsize, &result, &resultLen, 0, 0, -1);
-            free (tmp);
+            snprintf(tmp, bufsize, "%s_%d", pArray, pIndex );
+            return y_get_cleansed_parameter(tmp, ' '); // <-- Might want to make that configurable..
         }
-
-        // replace NULL bytes (\x00) in the input with something else..
-        for( resultStrlen = strlen(result);
-             resultStrlen < resultLen;
-             resultStrlen = strlen(result))
-        {
-            result[resultStrlen] = ' ';
-        }
-    
-        return result;
     }
 }
 // --------------------------------------------------------------------------------------------------
-
 
 
 
@@ -392,7 +382,6 @@ char *y_array_get_random_no_zeroes( const char *pArray )
     //return lr_paramarr_random(pArray); 
     // I don't think the LR function is actually an good substitute in this case..
 
-    // -- Loadrunner 8 and below
     int index;
     int count = y_array_count( pArray );
 
