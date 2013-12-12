@@ -291,7 +291,12 @@ char* y_get_parameter_ext(const char *source_param)
     return buffer;
 }
 
-
+// --------------------------------------------------------------------------------------------------
+// Copy a string into a malloc'd piece of memory using strdup(), and lr_abort() if the allocation fails.
+//
+// See strdup() c++ documentation for what strdup does. This is just a simple wrapper around it.
+//
+// @author Floris Kraak
 char* y_strdup(char* source)
 {
     char* result = strdup(source);
@@ -323,54 +328,110 @@ void y_copy_param(char* source_param, char* dest_param)
     lr_eval_string_ext_free(&buffer);          // Free the buffer.
 }
 
-
-
 // --------------------------------------------------------------------------------------------------
-// Clean a parameter by removing any embedded \x00 (null) characters from it.
-// This would only happen if you have used to web_reg_save_param() and the result contains
-// a null-character. 
-// Any such characters are replaced with ' '. (space)
-// Since this changes existing parameters be careful what types of parameters 
-// you use this on.But when no null-character is found, the result is unaltered.
+// In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL
+// characters which make further processing harder. This will fetch a parameter but "cleanse" it
+// from such contamination, leaving the rest of the data unaltered.
+// 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            char *test;
-//            web_reg_save_param("TestParam", "LB=\"name=LastName\" Value=\"", "RB=\"", LAST);
-//            web_submit_data(...);                    // will fail, obiously.                                    
-//            lr_message(lr_eval_string("TestParam: {TestParam}\n"));            
-//            y_cleanse_parameter("TestParam");
-//            test=y_get_parameter("TestParam");
-//            lr_message("\nTest: >%s<\n", test);
+// example usage:
+// 
+// {
+//     char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+//     char *tmp;
+//     lr_save_var(buffer, 11, 0, "broken");
+//     tmp = y_get_cleansed_parameter("broken", '!');
+//     lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
+// }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-void y_cleanse_parameter(const char* paramName)
+char* y_get_cleansed_parameter(const char* param_name, char replacement)
 {
-   char *result;
-   unsigned long resultLen;
-   size_t resultStrlen;
-   size_t param_size = strlen(paramName) +3; // parameter name + "{}" + '\0' (end of string)
-   char *tmp = y_mem_alloc( param_size );
-
-   //lr_log_message("y_cleanse_parameter(%s)", paramName );
+   char* result;
+   unsigned long result_size;
+   size_t param_eval_size = strlen(param_name) +3; // parameter name + "{}" + '\0' (end of string)
+   char* param_eval_string = y_mem_alloc(param_eval_size);
+   //lr_log_message("y_cleanse_parameter(%s)", param_name );
 
    // Get the contents of the parameter using lr_eval_string_ext() - we can't use the
    // regular version if we expect to find \x00 in there.
-   snprintf( tmp, param_size, "{%s}", paramName );
-   lr_eval_string_ext(tmp, strlen(tmp), &result, &resultLen, 0, 0, -1);
-   free(tmp);
-
-   // replace NULL bytes (\x00) in the input with something else..
-   for( resultStrlen = strlen(result);
-        resultStrlen < resultLen;
-        resultStrlen = strlen(result))
+   snprintf( param_eval_string, param_eval_size, "{%s}", param_name );
+   lr_eval_string_ext(param_eval_string, param_eval_size-1, &result, &result_size, 0, 0, -1);
+   if( strcmp(param_eval_string, result) == 0 )
    {
-       result[resultStrlen] = ' ';
+       lr_error_message("y_get_cleansed_parameter: Parameter %s does not exist.", param_name);
+       lr_abort();
    }
+   free(param_eval_string);
 
-   // Put the result back into the original parameter.
-   lr_save_string(result, paramName);
-   lr_eval_string_ext_free(&result);
+   //lr_log_message("Cleansing param %s, result starts with '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
+   {
+      size_t result_strlen;
+      // Now replace NULL bytes (\x00) in the input with something else..
+      for( result_strlen = strlen(result); result_strlen < result_size; result_strlen = strlen(result))
+      {
+         result[result_strlen] = replacement;
+         //lr_log_message("Cleansing param %s, result now '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
+      }
+   }
+   return result;
 }
 // --------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------
+// Clean a parameter by replacing any embedded \x00 (null) characters with replacement_char.
+// This would normally only happen if you have used to web_reg_save_param() and the result contains
+// one or more null-character(s).
+// Any such characters are replaced with replacement_char.
+// Since this changes existing parameters be careful what types of parameters you use this on. 
+// But when no null-character is found, the result is unaltered.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+// {
+//    char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+//    lr_save_var(buffer, 11, 0, "broken");
+//    y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
+// }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+y_cleanse_parameter_ext(const char* param_name, char replacement)
+{
+    if( param_name && strlen(param_name) )
+    {
+        char* result = y_get_cleansed_parameter(param_name, replacement);
+        lr_save_string(result, param_name);
+        lr_eval_string_ext_free(&result);
+    }
+    else
+    {
+        lr_error_message("Empty or NULL parameter name passed to y_cleanse_parameter_ext(): %s", param_name);
+        lr_abort();
+    }
+}
+
+// --------------------------------------------------------------------------------------------------
+// Clean a parameter by removing any embedded \x00 (null) characters from it.
+// Any such characters are replaced with ' '. (space)
+// This would only happen if you have used to web_reg_save_param() and the result contains a 
+// null-character. 
+// Since this changes existing parameters be careful what types of parameters you use this on.
+// But when no null-character is found, the result is unaltered.
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+// {
+//    char buffer[1024] = { 'b', 'r','o', '\0', 'k', 'e', 'n', '\0'};
+//    lr_save_var(buffer, 8, 0, "broken");
+//    y_cleanse_parameter("broken"); // saves "bro ken " into the parameter called "broken"
+// }
+// lr_log_message("----");
+// {
+//    char buffer[1024] = { 'b', 'r','o', '\0', 'k', 'e', 'n', 'Z', 'z', 'Z'};
+//    lr_save_var(buffer, 7, 0, "broken");
+//    y_cleanse_parameter("broken"); // saves "bro ken" into the parameter called "broken"
+// }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void y_cleanse_parameter(const char* param_name)
+{
+    y_cleanse_parameter_ext(param_name, ' ');
+}
 
 
 // --------------------------------------------------------------------------------------------------
@@ -383,12 +444,16 @@ void y_cleanse_parameter(const char* paramName)
 //            y_uppercase_parameter("Test");
 //            lr_message(lr_eval_string("Altered: {Test}\n"));
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_uppercase_parameter(const char* paramName)
+y_uppercase_parameter(const char* param_name)
 {
-   char *result = y_get_parameter(paramName);
-   // Note that in Vugen files, you need to explicitly declare C functions that do not return integers.
-   strupr(result);
-   lr_save_string(result, paramName);
+    char *result = y_get_parameter_or_null(param_name);
+    if(result == NULL)
+    {
+        lr_error_message("Nonexistant parameter %s passed to y_uppercase_parameter(): Aborting.", param_name);
+        lr_abort();
+    }
+    strupr(result);
+    lr_save_string(result, param_name);
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -406,31 +471,35 @@ y_uppercase_parameter(const char* paramName)
 //            y_left( "Test", "Obelix", "Test2" );
 //            lr_message(lr_eval_string("New Param: {Test2}\n"));    // {Test2}=Astrix
 //
-//    note: the previous name of this function was: head() and y_head()
-//
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_left( const char *originalParameter, const char *search, const char *resultParameter )
+y_left( const char *original_parameter, const char *search, const char *result_parameter )
 {
-   char *buffer;
-   char *original = y_get_parameter(originalParameter);
-   char *posPtr = (char *)strstr(original, search);
-   int pos = (int)(posPtr - original);
+    char *original = y_get_parameter_or_null(original_parameter);
+    if( original == NULL )
+    {
+        lr_error_message("y_left(): Error: Parameter %s does not exist!", original_parameter);
+        lr_abort();
+    }
+    else
+    {
+        char *buffer;
+        char *posPtr = (char *)strstr(original, search);
+        int pos = (int)(posPtr - original);
+        //lr_log_message("y_left: original=%s, search=%s, resultParam=%s", original, search, resultParam);
 
-   //lr_log_message("y_head: original=%s, search=%s, resultParam=%s", original, search, resultParam);
+        if( posPtr == NULL )
+        {
+            lr_save_string(original, result_parameter);
+            return;
+        }
+        //lr_log_message("pos = %d", pos);
 
-   if( posPtr == NULL )
-   {
-      lr_save_string(original, resultParameter);
-      return;
-   }
-   //lr_log_message("pos = %d", pos);
-   
-   // Copy the original to a temporary buffer
-   buffer = y_mem_alloc(strlen(original)+1);
-   strcpy(buffer, original);
-   buffer[pos] = '\0';                             // make the cut
-   lr_save_string(buffer, resultParameter);        // save the result
-   free(buffer);
+        // Copy the original to a temporary buffer
+        buffer = y_strdup(original);
+        buffer[pos] = '\0'; // make the cut
+        lr_save_string(buffer, result_parameter); // save the result
+        free(buffer);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
