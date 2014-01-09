@@ -188,6 +188,7 @@ int rmdir(const char *path);
 #define LC_NUMERIC  4
 #define LC_TIME     5
 #define LC_MESSAGES 6
+char *setlocale(int category, const char *locale);
 
 struct lconv
 {
@@ -210,10 +211,7 @@ struct lconv
     char p_sign_posn;
     char n_sign_posn;
 };
-
-char *setlocale(int category, const char *locale);
-struct lconv* localeconv();
-
+struct lconv *localeconv(void);
 
 /***** Process Control Functions *****/
 
