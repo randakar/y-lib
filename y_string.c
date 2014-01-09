@@ -459,6 +459,50 @@ y_uppercase_parameter(const char* param_name)
 
 
 // --------------------------------------------------------------------------------------------------
+// Search for a specific substring inside a parameter using left and right boundaries and save that 
+// into a new parameter.
+// 
+// @author André Luyer + Marcel Jepma + Floris Kraak
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//        example usage:
+//   {
+//      char* str = "LorumIpsumLipsum";
+//      lr_save_string(str, "param");
+//      y_substr("param", "param", "Lorum", "Lipsum");
+//      lr_log_message(lr_eval_string("{param}")); // Prints "Ipsum".
+//   }
+//
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+void y_substr(const char *original_parameter, const char *result_parameter, const char *left, const char *right)
+{
+    char *p1;
+    char *str = y_get_parameter_or_null(original_parameter);
+    if( str == NULL )
+    {
+        lr_error_message("y_substr(): Error: Parameter %s does not exist!", original_parameter);
+        lr_abort();
+    }
+
+    // zoek start
+    if (left) {
+        p1 = strstr(str, left);
+        if (p1) str = p1 + strlen(left);
+        // else start is positie 0...
+    }
+
+    // zoek eind
+    if (right) {
+        p1 = strstr(str, right);
+        if (p1) {
+            lr_param_sprintf(result_parameter, "%.*s", p1 - str, str); // of sprintf
+            return;
+        }
+    }
+    lr_save_string(str, result_parameter);
+}
+
+
+// --------------------------------------------------------------------------------------------------
 // Split the string into 2 parts using the search string. Save the left part into the resultParameter.
 //
 // @author Floris Kraak
@@ -889,3 +933,4 @@ y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 
 // --------------------------------------------------------------------------------------------------
 #endif // _STRING_C
+
