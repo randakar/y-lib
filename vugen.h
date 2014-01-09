@@ -80,26 +80,26 @@ void *memset(void *buffer, int c, size_t n);
 
 typedef long time_t;
 struct tm {
-	int tm_sec; // seconds after the minute - [0,59]
-	int tm_min; // minutes after the hour - [0,59]
-	int tm_hour; // hours since midnight - [0,23]
-	int tm_mday; // day of the month - [1,31]
-	int tm_mon; // months since January - [0,11]
-	int tm_year; // years since 1900
-	int tm_wday; // days since Sunday - [0,6]
-	int tm_yday; // days since January 1 - [0,365]
-	int tm_isdst; // daylight savings time flag
-	#ifdef LINUX
-		int tm_gmtoff;
-		const char *tm_zone;
-	#endif
+    int tm_sec; // seconds after the minute - [0,59]
+    int tm_min; // minutes after the hour - [0,59]
+    int tm_hour; // hours since midnight - [0,23]
+    int tm_mday; // day of the month - [1,31]
+    int tm_mon; // months since January - [0,11]
+    int tm_year; // years since 1900
+    int tm_wday; // days since Sunday - [0,6]
+    int tm_yday; // days since January 1 - [0,365]
+    int tm_isdst; // daylight savings time flag
+    #ifdef LINUX
+        int tm_gmtoff;
+        const char *tm_zone;
+    #endif
 };
 
 struct _timeb { 
-	time_t time; 
-	unsigned short millitm; 
-	short timezone; 
-	short dstflag; 
+    time_t time; 
+    unsigned short millitm; 
+    short timezone; 
+    short dstflag; 
 }; 
 
 time_t time(time_t *timeptr);
@@ -137,31 +137,31 @@ long tmpfile(void);
 char *tmpnam(char *str);
 int setvbuf(long file_pointer, char * buffer, int mode, size_t size);
 
-#define	FILENAME_MAX	1024
-#define	L_tmpnam	FILENAME_MAX
+#define FILENAME_MAX 1024
+#define L_tmpnam FILENAME_MAX
 
 #ifndef SEEK_SET
-#define	SEEK_SET	0	/* set file offset to offset */
+#define SEEK_SET 0 /* set file offset to offset */
 #endif
 #ifndef SEEK_CUR
-#define	SEEK_CUR	1	/* set file offset to current plus offset */
+#define SEEK_CUR 1 /* set file offset to current plus offset */
 #endif
 #ifndef SEEK_END
-#define	SEEK_END	2	/* set file offset to EOF plus offset */
+#define SEEK_END 2 /* set file offset to EOF plus offset */
 #endif
-#define	_IOFBF	0		/* setvbuf should set fully buffered */
-#define	_IOLBF	1		/* setvbuf should set line buffered */
-#define	_IONBF	2		/* setvbuf should set unbuffered */
+#define _IOFBF 0  /* setvbuf should set fully buffered */
+#define _IOLBF 1  /* setvbuf should set line buffered */
+#define _IONBF 2  /* setvbuf should set unbuffered */
 
-#define	EOF	(-1)
+#define EOF (-1)
 
 /*
  * Routines in POSIX 1003.1:2001.
  */
-int	getw(long file_pointer);
-int	pclose(long file_pointer);
+int getw(long file_pointer);
+int pclose(long file_pointer);
 long popen(const char *command, const char *access_mode);
-int	putw(int word, long file_pointer);
+int putw(int word, long file_pointer);
 
 /***** File system functions *****/
 
@@ -181,14 +181,39 @@ int rmdir(const char *path);
  * number.
  * To print the default locale: lr_log_message("%s", setlocale(LC_ALL, NULL));
  */
-#define LC_ALL	    0
+#define LC_ALL      0
 #define LC_COLLATE  1
 #define LC_CTYPE    2
 #define LC_MONETARY 3
 #define LC_NUMERIC  4
 #define LC_TIME     5
 #define LC_MESSAGES 6
+
+struct lconv
+{
+    char *decimal_point;
+    char *thousands_sep;
+    char *grouping;
+    char *int_curr_symbol;
+    char *currency_symbol;
+    char *mon_decimal_point;
+    char *mon_thousands_sep;
+    char *mon_grouping;
+    char *positive_sign;
+    char *negative_sign;
+    char int_frac_digits;
+    char frac_digits;
+    char p_cs_precedes;
+    char p_sep_by_space;
+    char n_cs_precedes;
+    char n_sep_by_space;
+    char p_sign_posn;
+    char n_sign_posn;
+};
+
 char *setlocale(int category, const char *locale);
+struct lconv* localeconv();
+
 
 /***** Process Control Functions *****/
 
