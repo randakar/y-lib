@@ -458,8 +458,6 @@ y_uppercase_parameter(const char* param_name)
 // --------------------------------------------------------------------------------------------------
 
 
-
-
 // --------------------------------------------------------------------------------------------------
 // Split the string into 2 parts using the search string. Save the left part into the resultParameter.
 //
@@ -479,6 +477,12 @@ y_left( const char *original_parameter, const char *search, const char *result_p
     {
         lr_error_message("y_left(): Error: Parameter %s does not exist!", original_parameter);
         lr_abort();
+    }
+    else if( search == NULL || strlen(search) == 0 )
+    {
+        lr_save_string(original, result_parameter);
+        lr_log_message("Warning: Empty search parameter passed to y_left()");
+        return;
     }
     else
     {
@@ -520,24 +524,35 @@ y_left( const char *original_parameter, const char *search, const char *result_p
 //    note: previous name: head() and  y_head()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_right( const char *originalParameter, const char *search, const char *resultParameter)
+y_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
-    char *original = y_get_parameter(originalParameter);
-
-    char *posPtr = (char *)strstr(original, search);
-    int pos = (int)(posPtr - original);
-
-    //lr_log_message("y_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
-
-    if( posPtr == NULL )
+    char* original = y_get_parameter_or_null(original_parameter);
+    if( original == NULL )
     {
-        lr_save_string(original, resultParameter);
+        lr_error_message("y_right(): Error: Parameter %s does not exist!", original_parameter);
+        lr_abort();
+    }
+    else if( search == NULL || strlen(search) == 0 )
+    {
+        lr_save_string(original, result_parameter);
+        lr_log_message("Warning: Empty search parameter passed to y_right()");
         return;
     }
-
-    //lr_log_message("pos = %d", pos);
-    posPtr = posPtr + strlen(search);
-    lr_save_string(posPtr, resultParameter);
+    else
+    {
+        char* posPtr = (char *)strstr(original, search);
+        //int pos = (int)(posPtr - original);
+        //lr_log_message("y_right: original=%s, search=%s, resultParam=%s", original, search, result_parameter);
+    
+        if( posPtr == NULL )
+        {
+            lr_save_string(original, result_parameter);
+            return;
+        }
+        //lr_log_message("pos = %d", pos);
+        posPtr = posPtr + strlen(search);
+        lr_save_string(posPtr, result_parameter);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
@@ -556,37 +571,41 @@ y_right( const char *originalParameter, const char *search, const char *resultPa
 //    note: previous name: tail_tail()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_last_right( const char *originalParameter, const char *search, const char *resultParameter)
+y_last_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
-    char *result = y_get_parameter(originalParameter);
-    char *posPtr;
-    //int pos;
-
-    if( search == NULL || strlen(search) == 0 )
+    char *result = y_get_parameter(original_parameter);
+    if( result == NULL )
     {
-        lr_save_string(result, resultParameter);
-        //lr_log_message("Warning: Empty search parameter passed to y_last_right()");
+        lr_error_message("y_last_right(): Error: Parameter %s does not exist!", original_parameter);
+        lr_abort();
+    }
+    else if( search == NULL || strlen(search) == 0 )
+    {
+        lr_save_string(result, result_parameter);
+        lr_log_message("Warning: Empty search parameter passed to y_last_right()");
         return;
     }
-
-    //lr_log_message("y_last_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
-
-    do 
+    else
     {
-        posPtr = (char *)strstr(result, search);
-        //pos = (int)(posPtr - result);
-        //lr_log_message("pos = %d", pos);
-
-        // not found, save what we have as the result.
-        if( posPtr == NULL )
+        char *posPtr;
+        //lr_log_message("y_last_right: original=%s, search=%s, resultParam=%s", original, search, resultParameter);
+        do 
         {
-            lr_save_string(result, resultParameter);
-            return;
-        }
-        // found, update the result pointer and go find more..
-        result = posPtr + strlen(search);
-    } 
-    while(1);
+            posPtr = (char *)strstr(result, search);
+            //pos = (int)(posPtr - result);
+            //lr_log_message("pos = %d", pos);
+    
+            // not found, save what we have as the result.
+            if( posPtr == NULL )
+            {
+                lr_save_string(result, result_parameter);
+                return;
+            }
+            // found, update the result pointer and go find more..
+            result = posPtr + strlen(search);
+        } 
+        while(1);
+    }
 }
 // --------------------------------------------------------------------------------------------------
 
