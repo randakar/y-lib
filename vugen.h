@@ -1,25 +1,26 @@
-/*
- * vugen.h - A.U. Luyer - 2012-03-27
- * This header file contains the most used 'standard C functions' in vugen scripts
+/* vugen.h - A.U. Luyer - 2012-03-27
+ * Last update 2014-01-09
+ * This header file contains the most used 'standard C functions' in Vugen scripts.
  * By declaring these functions properly the compiler can check if these functions 
  * are used correctly and apply implicit conversions when necessary.
  * This header file 'de-strips' the compiler in Vugen.
- * It contains all the functions mentioned in the HP LoadRunner Online Function Reference.
+ * It contains all functions mentioned in the HP LoadRunner Online Function Reference.
  * NOTE: Sites like http://www.cplusplus.com/reference/clibrary/ explain the standard C functions
  * better than the HP LoadRunner Online Function Reference.
  *
  * Usage: add vugen.h to the script and add #include "vugen.h" to globals.h.
- * Or: add to include directory and add the include to lhrun.h on all Vugen machines en load generators.
+ * Or: add to include directory and add the include to lhrun.h on all Vugen machines and load generators.
  */
 
 #ifndef _VUGEN_H_
 #define _VUGEN_H_
 
-/* Note: typedef unsigned long size_t; already in lrun.h */
+/* typedef unsigned long size_t; */
+/* WARNING: lrun.h contains #define size_t int, which is incorrect */
 
 /***** String functions *****/
 
-int snprintf(char *buffer, size_t n, const char *format_string, ... ); /* Feature introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. */
+int snprintf(char *buffer, size_t n, const char *format_string, ...); /* Feature introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. */
 int sprintf(char *buffer, const char *format_string, ...); /* you should prefer snprintf over sprintf */
 int sscanf(const char *buffer, const char *format_string, ...);
 char *strchr(const char *string, int c);
@@ -41,7 +42,7 @@ char *strupr(char *string);
 
 /* Force a compile time error when strcat() is used. Because the use of strcat() is a very
  * strong indicator for poorly written code being compiled -- there is always a better solution!
- * Unfortunally the use of #error is not possible here.
+ * Unfortunately the use of #error is not possible here.
  * Original declaration: char *strcat(char *to, const char *from);
  */
 #define strcat(to, from) 0_DO_NOT_USE_strcat_THERE_IS_ALWAYS_A_BETTER_SOLUTION
@@ -71,7 +72,7 @@ int isxdigit(int character);
 
 void *memchr(const void *s, int c, size_t n);
 int memcmp(const void *s1, const void *s2, size_t n);
-/* prefer memmove over memcpy! The operation of memcpy is not garanteed on overlap */
+/* NOTE: The operation of memcpy is not guaranteed on overlap, use memmove instead */
 void *memcpy(void *dest, const void *src, size_t n);
 void *memmove(void *dest, const void *src, size_t n);
 void *memset(void *buffer, int c, size_t n);
@@ -80,15 +81,15 @@ void *memset(void *buffer, int c, size_t n);
 
 typedef long time_t;
 struct tm {
-    int tm_sec; // seconds after the minute - [0,59]
-    int tm_min; // minutes after the hour - [0,59]
-    int tm_hour; // hours since midnight - [0,23]
-    int tm_mday; // day of the month - [1,31]
-    int tm_mon; // months since January - [0,11]
-    int tm_year; // years since 1900
-    int tm_wday; // days since Sunday - [0,6]
-    int tm_yday; // days since January 1 - [0,365]
-    int tm_isdst; // daylight savings time flag
+    int tm_sec; /* seconds after the minute - [0,59] */
+    int tm_min; /* minutes after the hour - [0,59] */
+    int tm_hour; /* hours since midnight - [0,23] */
+    int tm_mday; /* day of the month - [1,31] */
+    int tm_mon; /* months since January - [0,11] */
+    int tm_year; /* years since 1900 */
+    int tm_wday; /* days since Sunday - [0,6] */
+    int tm_yday; /* days since January 1 - [0,365] */
+    int tm_isdst; /* daylight savings time flag */
     #ifdef LINUX
         int tm_gmtoff;
         const char *tm_zone;
@@ -113,8 +114,8 @@ struct tm *localtime(const time_t *timer);
 void tzset(void);
 
 /***** File functions *****/
-/* NOTE: the file functions use (FILE *), but because they are declared as (long)
- * in the on-line help we use it here also...
+/* NOTE: the file functions use (FILE *), but because they are declared as
+ * (long) in the on-line help, we use it here also...
  * So 'long file_pointer' instead of 'FILE *file_pointer'.
  * This 'happens' to be ok because sizeof(void *) == sizeof(long)
  */
@@ -175,11 +176,11 @@ int rmdir(const char *path);
 
 /***** locale.h functions *****/
 /* BEWARE: Vugen executes a setlocale(LC_ALL, "") before the start -- so the system's default locale
- * is active instead of setlocale(LC_ALL, "C") -- the minimale locale and the default for all C compilers...
- * This may cause functions like sscanf to behave unexpectically, for instance when the decimal point
+ * is active instead of the minimal locale and the default for all C compilers: setlocale(LC_ALL, "C").
+ * This may cause functions like sscanf to behave unexpectedly, for instance when the decimal point
  * is a comma (as in many European languages) sscanf(buf , "%lf", &double_var) will not yield the correct
  * number.
- * To print the default locale: lr_log_message("%s", setlocale(LC_ALL, NULL));
+ * To print the currently active locale use: lr_log_message("%s", setlocale(LC_ALL, NULL));
  */
 #define LC_ALL      0
 #define LC_COLLATE  1
@@ -190,8 +191,7 @@ int rmdir(const char *path);
 #define LC_MESSAGES 6
 char *setlocale(int category, const char *locale);
 
-struct lconv
-{
+struct lconv {
     char *decimal_point;
     char *thousands_sep;
     char *grouping;
@@ -210,6 +210,15 @@ struct lconv
     char n_sep_by_space;
     char p_sign_posn;
     char n_sign_posn;
+/*  
+The members below are not yet supported (not complying with the C standard of 1999 or later).
+    char int_n_cs_precedes;
+    char int_n_sep_by_space;
+    char int_n_sign_posn;
+    char int_p_cs_precedes;
+    char int_p_sep_by_space;
+    char int_p_sign_posn;
+*/
 };
 struct lconv *localeconv(void);
 
@@ -217,7 +226,7 @@ struct lconv *localeconv(void);
 
 char *getenv(const char *varname);
 int putenv(const char *envstring);
-int system(const char *string);
+int system(const char *string); /* popen function is more useful */
 
 /***** Memory Allocation Functions *****/
 
@@ -225,7 +234,7 @@ void *calloc(size_t num_elems, size_t elem_size);
 void free(void *mem_address);
 void *malloc(size_t num_bytes);
 void *realloc(void *mem_address, size_t size);
-/* Note: realloc(NULL, size) === malloc(size) */ 
+/* NOTE: realloc(NULL, size) === malloc(size) */ 
 
 /***** Mathematic Functions *****/
 
@@ -249,5 +258,6 @@ int srand(unsigned int seed);
 /***** Windows API Functions *****/
 
 void sleep(DWORD dwMilliseconds); /* you should use lr_force_think_time() or lr_usleep() instead */
+/* alternative: #define sleep(msec) lr_force_think_time(msec / 1000.) */
 
 #endif /* _VUGEN_H_ */
