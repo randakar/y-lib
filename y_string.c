@@ -392,7 +392,7 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
 //    y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
 // }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_cleanse_parameter_ext(const char* param_name, char replacement)
+void y_cleanse_parameter_ext(const char* param_name, char replacement)
 {
     if( param_name && strlen(param_name) )
     {
@@ -444,7 +444,7 @@ void y_cleanse_parameter(const char* param_name)
 //            y_uppercase_parameter("Test");
 //            lr_message(lr_eval_string("Altered: {Test}\n"));
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_uppercase_parameter(const char* param_name)
+void y_uppercase_parameter(const char* param_name)
 {
     char *result = y_get_parameter_or_null(param_name);
     if(result == NULL)
@@ -514,7 +514,7 @@ void y_substr(const char *original_parameter, const char *result_parameter, cons
 //            lr_message(lr_eval_string("New Param: {Test2}\n"));    // {Test2}=Astrix
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_left( const char *original_parameter, const char *search, const char *result_parameter )
+void y_left( const char *original_parameter, const char *search, const char *result_parameter )
 {
     char *original = y_get_parameter_or_null(original_parameter);
     if( original == NULL )
@@ -568,7 +568,7 @@ y_left( const char *original_parameter, const char *search, const char *result_p
 //    note: previous name: head() and  y_head()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_right( const char *original_parameter, const char *search, const char *result_parameter)
+void y_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
     char* original = y_get_parameter_or_null(original_parameter);
     if( original == NULL )
@@ -615,7 +615,7 @@ y_right( const char *original_parameter, const char *search, const char *result_
 //    note: previous name: tail_tail()
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_last_right( const char *original_parameter, const char *search, const char *result_parameter)
+void y_last_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
     char *result = y_get_parameter(original_parameter);
     if( result == NULL )
@@ -666,7 +666,7 @@ y_last_right( const char *original_parameter, const char *search, const char *re
 //
 // @author Floris Kraak
 //
-y_split_str( const char *original, const char *separator, char *left, char *right)
+void y_split_str( const char *original, const char *separator, char *left, char *right)
 {
     char *buffer;
     char *posPtr = (char *)strstr(original, separator);
@@ -708,7 +708,7 @@ y_split_str( const char *original, const char *separator, char *left, char *righ
 //            lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
 //            lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = DotWarner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
+void y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
 {
     char *item = y_get_parameter(originalParameter);
     int len = strlen(item);
@@ -765,7 +765,7 @@ y_split( const char *originalParameter, const char *separator, const char *leftP
 //            y_chop("Test");
 //            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "WackoYackoDot"
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_chop( const char* parameter )
+void y_chop( const char* parameter )
 {
     char *result;
     int i = 0;
@@ -817,7 +817,7 @@ y_chop( const char* parameter )
 //             lr_save_string("test123", "par1");
 //          y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_replace( const char *parameter, const char *search, const char *replace)
+void y_replace( const char *parameter, const char *search, const char *replace)
 {
    int slen, rlen, plen;      // lengte van search, replace, en basis string
    int i = 0;                 // aantal replacements
@@ -899,7 +899,7 @@ y_replace( const char *parameter, const char *search, const char *replace)
 //          lr_save_string("test123", "par1");
 //          y_remove_string_from_parameter("par1", "1");   // {par1} now has the value test23
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-y_remove_string_from_parameter(const char* paramName, const char* removeMe)
+void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 {
    char *parameter;
    char *removePtr;
