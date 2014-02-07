@@ -351,7 +351,7 @@ The total length of the line is minimal \e minimumLength and maimum \e maximumLe
 \author Raymond de Jongh
 \sa y_random_string_buffer_core
 */
-y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
+void y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 3, 8, 
    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -371,7 +371,7 @@ This function generates a string of numbers with a given minimum and maximum len
 \author Raymond de Jongh
 \sa y_random_string_buffer_core
 */
-y_random_number_buffer(const char *parameter, int minimumLength, int maximumLength)
+void y_random_number_buffer(const char *parameter, int minimumLength, int maximumLength)
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789");
 }
@@ -391,7 +391,7 @@ This function generates a string of non-alfa-characters with a given minimum and
 \author Raymond de Jongh
 \sa y_random_string_buffer_core
 */
-y_random_string_buffer_curses(const char *parameter, int minimumLength, int maximumLength)
+void y_random_string_buffer_curses(const char *parameter, int minimumLength, int maximumLength)
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "!@#$%^&*()");
 }
@@ -414,7 +414,7 @@ The total length of the line is minimal \e minimumLength and maimum \e maximumLe
 \author Raymond de Jongh
 \sa y_random_string_buffer_core
 */
-y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximumLength)
+void y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximumLength)
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
 }
@@ -509,7 +509,7 @@ web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
 \end_example
 \sa y_save_attribute_to_parameter()
 */
-y_save_attribute( char* param )
+void y_save_attribute( char* param )
 {
    y_save_attribute_to_parameter( param, param );
 }
@@ -533,10 +533,9 @@ web_add_auto_filter("Action=Include", "HostSuffix={nice_server}", LAST );
 \end_example
 \sa y_save_attribute()
 */
-y_save_attribute_to_parameter( char* attrib, char* param )
+void y_save_attribute_to_parameter( char* attrib, char* param )
 {
    char *tmp;
-
    if( (tmp = lr_get_attrib_string(attrib)) != NULL )
    {
       lr_save_string(tmp, param);
@@ -877,7 +876,7 @@ double y_get_free_disk_space_in_mebibytes(char* folder_name)
 }
 
 
-y_read_file_into_parameter(char* filename, char* param)
+void y_read_file_into_parameter(char* filename, char* param)
 {
     long pos;
     char *bytes;
@@ -908,7 +907,7 @@ y_read_file_into_parameter(char* filename, char* param)
     free(bytes); // free allocated memory
 }
 
-y_user_data_point(char* param)
+void y_user_data_point(char* param)
 {
     lr_user_data_point(param, atof(y_get_parameter(param)) );
 }
