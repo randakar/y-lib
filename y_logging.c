@@ -81,7 +81,7 @@ time_t y_timestamp()
 // --------------------------------------------------------------------------------------------------
 
 
-y_setup_logging()
+void y_setup_logging()
 {
     y_setup();
 
@@ -92,7 +92,7 @@ y_setup_logging()
 // Force a line to be logged to the logfile even if logging is off.
 // Only done if extra logging was enabled through a call to y_setup_logging();
 // 
-y_log_to_report(char *message)
+void y_log_to_report(char *message)
 {
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
 
@@ -114,7 +114,7 @@ y_log_to_report(char *message)
     }
 }
 
-y_log_error(char *message)
+void y_log_error(char *message)
 {
     char *msg = lr_eval_string(message);
     y_log_to_report(msg);
@@ -122,7 +122,7 @@ y_log_error(char *message)
     lr_fail_trans_with_error(msg);
 }
 
-y_log_warning(char *message)
+void y_log_warning(char *message)
 {
     char *msg;
     lr_save_string(lr_eval_string(message), "_log_msg");
@@ -131,14 +131,14 @@ y_log_warning(char *message)
     y_log_to_report(msg);
 }
 
-y_log_save()
+void y_log_save()
 {
     // Save the previous loglevel.
     _y_log_level = lr_get_debug_message();
     //lr_error_message("Saved loglevel %d", _y_log_level);
 }
 
-y_log_turn_off_without_saving()
+void y_log_turn_off_without_saving()
 {
     // Lots of debug code here. Good grief, this debug message interface is terrible.
 
@@ -176,19 +176,19 @@ y_log_turn_off_without_saving()
 
 
 // Save the current loglevel and turn off logging.
-y_log_turn_off()
+void y_log_turn_off()
 {
     y_log_save();
     y_log_turn_off_without_saving();
 }
 
-y_log_turn_off_permanently()
+void y_log_turn_off_permanently()
 {
     y_log_turn_off_without_saving();
     y_log_save(); // make sure it is never accidentally enabled again through y_log_restore()
 }
 
-y_log_set_brief()
+void y_log_set_brief()
 {
     //lr_log_message("Log level set to BRIEF.\n");
 
@@ -198,7 +198,7 @@ y_log_set_brief()
     //lr_log_message("Log level set to brief, from %d to %d", _y_log_level, lr_get_debug_message() );
 }
 
-y_log_set_extended()
+void y_log_set_extended()
 {
     //lr_log_message("Log level set to EXTENDED.\n");
 
@@ -211,7 +211,7 @@ y_log_set_extended()
 }
 
 // Restore the log level to the old state.
-y_log_restore()
+void y_log_restore()
 {
     //lr_log_message("Restoring log level to %d, current level %d.", _y_log_level, lr_get_debug_message());
 
@@ -228,7 +228,7 @@ y_log_restore()
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
 
-y_log_turn_on()
+void y_log_turn_on()
 {
     if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
     {
@@ -248,7 +248,7 @@ y_log_turn_on()
 //  y_log_force_message("Forced message");
 //  lr_log_message("After");
 // 
-y_log_force_message(char *message)
+void y_log_force_message(char *message)
 {
     y_log_set_extended();
     lr_log_message( message );
