@@ -241,8 +241,8 @@ y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd"); // could result in "
 \sa y_random_string_buffer
 \sa y_random_string_buffer_hex
 */
-y_random_string_buffer_core(const char *parameter, int minimumLength, int maximumLength, 
-                    int minWordLength, int maxWordLength, char *characterSet)
+void y_random_string_buffer_core(const char *parameter, int minimumLength, int maximumLength, 
+                                 int minWordLength, int maxWordLength, char *characterSet)
 {
    char *buffer;
    int charSetSize; // length of the characterSet
@@ -331,7 +331,6 @@ y_random_string_buffer_core(const char *parameter, int minimumLength, int maximu
 
    lr_save_string(buffer, parameter);
    free(buffer);
-   return 0;
 }
 
 
