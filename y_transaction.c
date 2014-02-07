@@ -343,7 +343,7 @@ int y_run_sub_transaction_end_trigger()
 //
 // Helper function to save the transaction end status before y_end_(sub_)transaction() closes them.
 // 
-y_save_transaction_end_status(char* transaction_name, const char* saveparam, int status)
+void y_save_transaction_end_status(char* transaction_name, const char* saveparam, int status)
 {
     int actual_status = lr_get_transaction_status(transaction_name);
 
@@ -729,7 +729,7 @@ int y_end_sub_transaction(char *transaction_name, int status)
 //
 // @author: Floris Kraak
 // 
-y_trans_web_link(char *transaction, char *linkname)
+void y_trans_web_link(char *transaction, char *linkname)
 {
     char *link = lr_eval_string(linkname);
     char *tmp, *trans;
@@ -819,7 +819,7 @@ do {                                                                      \
 //
 // @author: Floris Kraak
 //
-y_setup_step_waterfall()
+void y_setup_step_waterfall()
 {
     char *step = lr_eval_string("{step}");
     char *stepchance = lr_eval_string("{stepchance}");
@@ -848,7 +848,7 @@ y_setup_step_waterfall()
 // @see y_setup_step_waterfall 
 // @author: Floris Kraak
 //
-y_waterfall_random_weighted_continue(char * stepname)
+void y_waterfall_random_weighted_continue(char * stepname)
 {
     char *head = "step_chance_";
     size_t size = strlen(head) + strlen(stepname) +3;
