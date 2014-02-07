@@ -878,8 +878,6 @@ void y_waterfall_random_weighted_continue(char * stepname)
     else {
         lr_log_message("No stop!");
     }
-
-    return 0;
 }
 
 
