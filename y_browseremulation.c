@@ -221,7 +221,7 @@ int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
 
         // Get the next value for the new iteration.
         // This parameter should be set to "update each iteration", or this code will play havoc with it ..
-        lr_advance_param("browser_name");
+        lr_advance_param(browser_name_param);
     }
 
     if( i == (MAX_BROWSER_LIST_LENGTH) )
