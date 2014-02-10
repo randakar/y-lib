@@ -498,30 +498,6 @@ int y_rand_between(int lowerbound, int upperbound)
 /*!
 This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
 and stores it in a parameter of the same name.
-This function is a short cut of y_save_attribute_to_parameter()
-
-@param[in] param Argument Name of the attribute.
-\return A LR parameter with the same name as the Argument Name.
-\author Floris Kraak
-\start_example
-y_save_attribute("server");
-web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
-\end_example
-\sa y_save_attribute_to_parameter()
-*/
-void y_save_attribute( char* param )
-{
-   y_save_attribute_to_parameter( param, param );
-}
-
-
-// --------------------------------------------------------------------------------------------------
-
-
-//! Fetch attribute from vUser's command line.
-/*!
-This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
-and stores it in a parameter of the same name.
 
 @param[in] attrib Argument Name of the attribute.
 @param[out] param LR-parameter name in which the Argument Value is stored.
@@ -540,6 +516,29 @@ void y_save_attribute_to_parameter( char* attrib, char* param )
    {
       lr_save_string(tmp, param);
    }
+}
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Fetch attribute from vUser's command line.
+/*!
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
+and stores it in a parameter of the same name.
+This function is a short cut of y_save_attribute_to_parameter()
+
+@param[in] param Argument Name of the attribute.
+\return A LR parameter with the same name as the Argument Name.
+\author Floris Kraak
+\start_example
+y_save_attribute("server");
+web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
+\end_example
+\sa y_save_attribute_to_parameter()
+*/
+void y_save_attribute( char* param )
+{
+   y_save_attribute_to_parameter( param, param );
 }
 
 
