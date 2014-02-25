@@ -175,6 +175,11 @@ int y_post_increment_transaction_nr()
     return _y_transaction_nr++;
 }
 
+int y_increment_transaction_nr()
+{
+    return _y_transaction_nr++;
+}
+
 
 void y_set_next_transaction_nr(int trans_nr)
 {
@@ -193,6 +198,10 @@ int y_post_increment_sub_transaction_nr()
     return _y_sub_transaction_nr++;
 }
 
+int y_increment_sub_transaction_nr()
+{
+    return _y_sub_transaction_nr++;
+}
 
 void y_set_next_sub_transaction_nr(int trans_nr)
 {
@@ -204,9 +213,9 @@ void y_set_next_sub_transaction_nr(int trans_nr)
 // The most important change is that the internal transaction number now represents the *next* transaction number, not the previous one.
 #define y_set_transaction_nr 0y_set_transaction_nr_no_longer_exists_please_use_y_set_next_transaction_nr
 #define y_get_transaction_nr 0y_get_transaction_nr_no_longer_exists_please_use_y_get_next_transaction_nr
-#define y_get_and_increment_transaction_nr 0y_get_and_increment_transaction_nr_no_longer_exists_please_use_y_post_increment_transaction_nr
+#define y_get_and_increment_transaction_nr 0y_get_and_increment_transaction_nr_no_longer_exists_please_use_y_increment_transaction_nr
 #define y_get_sub_transaction_nr 0y_get_sub_transaction_nr_no_longer_exists_please_use_y_get_next_sub_transaction_nr
-#define y_get_and_increment_sub_transaction_nr 0y_get_and_increment_sub_transaction_nr_no_longer_exists_please_use_y_post_increment_sub_transaction_nr
+#define y_get_and_increment_sub_transaction_nr 0y_get_and_increment_sub_transaction_nr_no_longer_exists_please_use_y_increment_sub_transaction_nr
 #define y_set_sub_transaction_nr 0y_set_sub_transaction_nr_no_longer_exists_please_use_y_set_next_sub_transaction_nr
 
 
@@ -527,7 +536,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *tra
 
 void y_create_next_transaction_name( const char* transaction_name)
 {
-    y_create_new_transaction_name(transaction_name, y_get_transaction_prefix(), y_post_increment_transaction_nr());
+    y_create_new_transaction_name(transaction_name, y_get_transaction_prefix(), y_increment_transaction_nr());
 }
 
 
@@ -562,7 +571,7 @@ void y_create_next_sub_transaction_name(const char* transaction_name)
     y_create_new_sub_transaction_name(transaction_name,
                                     y_get_transaction_prefix(),
                                     y_get_next_transaction_nr()-1,
-                                    y_post_increment_sub_transaction_nr());
+                                    y_increment_sub_transaction_nr());
 }
 
 //
