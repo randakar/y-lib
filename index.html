@@ -1,82 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Y-lib by randakar</title>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Y-lib</h1>
+        <p>Ylib - libraries for the loadrunner performance test tool</p>
 
-	<title>randakar/y-lib @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #BFCACE;
-		  font-family: "Helvetica,Arial,FreeSans"; 
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #403531; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #403531; }
-    h3 { text-align: center; color: #403531; }
-    a { color: #403531; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
+        <p class="view"><a href="https://github.com/randakar/y-lib">View the Project on GitHub <small>randakar/y-lib</small></a></p>
 
-<body>
-  <a href="http://github.com/randakar/y-lib"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
 
-    <div class="download">
-      <a href="http://github.com/randakar/y-lib/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/randakar/y-lib/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+        <ul>
+          <li><a href="https://github.com/randakar/y-lib/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/randakar/y-lib/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/randakar/y-lib">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="what-is-ylib" class="anchor" href="#what-is-ylib"><span class="octicon octicon-link"></span></a>What is Ylib?</h1>
+
+<p>Ylib is a set of libraries that can be added to HP Loadrunner test scripts.</p>
+
+<h1>
+<a name="why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why?</h1>
+
+<p>The goal of Ylib is to make functionality and tools available that support performance testing and improve both development speed and test quality.</p>
+
+<p>Standard loadrunner libraries are very limited and provide only very basic support for the type of scripts that are needed when you scale up to larger and more complicated test scenarios. Ylib strives to complement and enhance these libraries whereever doing so makes sense. </p>
+
+<h1>
+<a name="design-goals--vision" class="anchor" href="#design-goals--vision"><span class="octicon octicon-link"></span></a>Design goals / Vision</h1>
+
+<p>The basic vision of Ylib is to provide even novice C programmers with a function library that is easy to use and does not require knowledge of C strings, character pointers or memory management. 
+In order to do so it relies heavily on Loadrunners' built in parameter functionality. Most functions will accept and process parameters whereever possible, and store their results in parameters as well. This means that for most simple use cases whoever writes the script will not need to think more about the underlying language than they absolutely have to.
+Many functions however do provide for more advanced concepts, such as extensive support for click flows (in the form of profiles), transaction hooks, and realistic browser emulation (supporting a list of browsers with various weights attached, rather than simply allowing for only a single user agent string and associated set of settings). </p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>Ylib is an open source project and licensed under the terms of the GNU GPL, version 2.
+( Since ylib is used and distributed as a piece of source code violation of this license should be almost impossible. )</p>
+
+<h1>
+<a name="proven" class="anchor" href="#proven"><span class="octicon octicon-link"></span></a>Proven</h1>
+
+<p>Ylib has been used for many years with good success in various large organisations with virtual user counts well into the tens of thousands. In it's current incarnation it provides the most advanced form of loadtesting possible using Loadrunner, and possible in several other tools as well..</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/randakar">randakar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-      
-    <h1><a href="http://github.com/randakar/y-lib">y-lib</a> 
-      <span class="small">by <a href="http://github.com/randakar">randakar</a></span></h1>
-
-    <div class="description">
-      YLib Ymor Loadrunner Libraries
-    </div>
-
-    <h2>License</h2>
-<p>General Public License (v2.0)</p>
-<h2>Authors</h2>
-<p>Floris Kraak (randakar@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Floris Kraak (randakar@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/randakar/y-lib/zipball/master">zip</a> or
-      <a href="http://github.com/randakar/y-lib/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/randakar/y-lib</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/randakar/y-lib">randakar/y-lib</a>
-    </div>
+    <script src="javascripts/scale.fix.js"></script>
     
-  </div>
-
-  
-</body>
+  </body>
 </html>
