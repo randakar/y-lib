@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2013 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  * Copyright (C) 2013 André Luyer
  *
@@ -912,6 +912,33 @@ void y_user_data_point(char* param)
 }
 
 
+double y_get_current_time()
+{
+    struct _timeb timebuffer;
+    ftime(&timebuffer);
+    return timebuffer.time + (timebuffer.millitm / 1000);
+}
+
+
+// 
+// Delay until a certain time.
+// Returns the amount of time waited, in seconds.
+// 
+double y_delay_until(double timestamp)
+{
+    double current_time = y_get_current_time();
+
+    if( current_time < timestamp )
+    {
+        double result = timestamp - current_time;
+        lr_force_think_time(result);
+        return result;
+    }
+    else
+        return 0;
+}
+
+
 // For simulating situations with limited amounts of connections on the client side. 
 //
 // In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect.
@@ -944,15 +971,11 @@ void y_user_data_point(char* param)
 //
 double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, double TPS_max, const int virtual_users)
 {
-    static double test_start_time = 0;             // Test starttime in seconds since 1 jan 1970.
-    static double previous_time = 0;               // Timestamp of the last call to this, after think time.
-    struct _timeb ts;                              // timeb buffer to hold the current time.
-    double current_time;                           // Current time, in seconds since 1 jan 1970.
-    double time_passed;                            // Elapsed time since test start, in seconds.
-    double response_time;                          // Elapsed time since previous call.
-
-    ftime(&ts);
-    current_time = ts.time + (ts.millitm / 1000);
+    static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
+    static double previous_time = 0;                 // Timestamp of the last call to this, after think time.
+    double time_passed;                              // Elapsed time since test start, in seconds.
+    double response_time;                            // Elapsed time since previous call.
+    double current_time = y_get_current_time();      // Current time, in seconds since 1 jan 1970.
 
     // Initialisation.
     // On the first call we store the current time as the test start time and the end time of the previous call.
