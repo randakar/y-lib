@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2013 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
@@ -74,10 +74,16 @@ char* y_get_datetimestamp()
 //
 // Hmn, do we even still need this?
 // 
-time_t y_timestamp()
-{
-    return time(NULL);
-}
+// -- removed. See y_get_current_time() in y_loadrunner_utils.c
+// 
+// time_t y_timestamp()
+// {
+//     return time(NULL);
+// }
+#define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
+
+
+
 // --------------------------------------------------------------------------------------------------
 
 
