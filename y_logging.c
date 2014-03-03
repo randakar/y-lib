@@ -146,37 +146,13 @@ void y_log_save()
 
 void y_log_turn_off_without_saving()
 {
-    // Lots of debug code here. Good grief, this debug message interface is terrible.
-
-    //unsigned int a, b, c, d, e;
-
-    //lr_log_message("Auto log has value %d", LR_MSG_CLASS_AUTO_LOG);
-
-    // First disable the 'extended' log types.
-    //lr_set_debug_message(LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE, LR_SWITCH_OFF);
-    //a = lr_get_debug_message();
-
-    // Set it to 'brief' so we cannot be in extended logging anymore.
-    //lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
-    //b = lr_get_debug_message();
-
-    // Disable the auto logging
-    //lr_set_debug_message(LR_MSG_CLASS_JIT_LOG_ON_ERROR, LR_SWITCH_OFF);
-    //a = lr_get_debug_message();
-
-    // None of the above seems necessary, after extensive testing in LR 11.
-    // No guarantees for earlier loadrunner versions though ..
+    // Good grief, this debug message interface is terrible.
 
     // Turn all logging off. Which has the really weird side effect of turning auto logging on again.
     lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
-    //a = lr_get_debug_message();
 
     // Disable the auto logging again, but using a different bit flag.
     lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
-    //b = lr_get_debug_message();
-
-    //lr_error_message("Log stages: a=%d, b=%d", a, b);
-
     //lr_error_message("All logging turned off, log level now %d", lr_get_debug_message() );
 }
 
@@ -259,8 +235,6 @@ void y_log_force_message(char *message)
     y_log_set_extended();
     lr_log_message( message );
     y_log_restore();
-
-    //lr_error_message("Forced message done");
 }
 
 // --------------------------------------------------------------------------------------------------
