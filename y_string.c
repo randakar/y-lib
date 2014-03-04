@@ -25,15 +25,22 @@
 #include "vugen.h"
 
 
-// --------------------------------------------------------------------------------------------------
-// Allocates a block of memory for a string
-// Adds some simple checks to catch common errors.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            char *test = y_mem_alloc(999);
-//            ..
-//            free(test);
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Ylib wrapper for malloc()
+
+Allocates a block of memory.
+Adds some simple checks to catch common errors.
+
+Example usage:
+\code
+char *example_string = "some_text";
+int size = strlen(example_string)+1;
+char *example_string_copy = y_mem_alloc(size);
+snprintf(example_string_copy, size, "%s", example_string);
+lr_log_message("Copy of example string contains: %s", example_string_copy);
+free(test);
+\endcode
+*/
 char *y_mem_alloc(const int size)
 {
     char *buff;
