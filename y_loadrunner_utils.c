@@ -939,6 +939,29 @@ double y_delay_until(double timestamp)
 }
 
 
+//
+// Delay for DELAY_IN_SECONDS seconds, but only the first time the current position in the code is reached.
+// 
+// The particular usecase this was made for is a case where users need to register themselves prior to the actual testrun. 
+// We want to seperate this registration period from the actual rampup, so when each user finishes registering
+// we want a delay. But we only want it once, and we will only know that we're done registering when we hit the regular load path
+// for the first time. Hence: delay_once
+// 
+// This is a macro because a function call would make it impossible to use it more than once in a script.
+// 
+#define Y_DELAY_ONCE( DELAY_IN_SECONDS )       \
+{                                           \
+    static int delay_done = 0;                 \
+                                               \
+    if( !delay_done )                          \
+    {                                          \
+        delay_done = 1;                        \
+        lr_force_think_time(DELAY_IN_SECONDS); \
+    }                                          \
+}
+
+
+
 // For simulating situations with limited amounts of connections on the client side. 
 //
 // In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect.
