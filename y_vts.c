@@ -80,10 +80,15 @@ void VTS_setup()
     setup_completed = 1;
 }
 
-//
-// Translation facility for VTS return codes. Also reports any errors.
-// 
-// @author Floris Kraak
+
+/*!
+\brief Error translation and reporting facility for VTS return codes.
+This will emit VTS errors using lr_error_message() in human readable form, if the code represents a VTS error.
+
+\param returncode An error code as returned by VTS
+\returns the returncode
+\author Floris Kraak
+*/
 int VTS_process_returncode(int returncode)
 {
     char* errortext;
@@ -91,6 +96,7 @@ int VTS_process_returncode(int returncode)
     /** 
      * This is what the header file vts2.h tells us about error codes:
      *
+     * \code
      * //VTS Error Codes
      * #define  VTCERR_OK                            0
      * #define  VTCERR_INVALID_CONNECTION_INFO  -10000
@@ -107,6 +113,8 @@ int VTS_process_returncode(int returncode)
      * #define  VTCERR_OPERATION_ERROR_BASE     -11000
      * #define  VTCERR_SERVER_IS_BUSY           (VTCERR_OPERATION_ERROR_BASE - 0xFF)
      * #define  VTCERR_CLIENT_REQUEST_ERROR     (VTCERR_OPERATION_ERROR_BASE - 0xFE)
+     * \endcode
+     *
      **/
 
     // Encode the above information in a simple lookup table.
