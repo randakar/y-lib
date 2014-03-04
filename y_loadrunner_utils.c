@@ -91,14 +91,17 @@ int y_is_vugen_run()
 // --------------------------------------------------------------------------------------------------
 
 
-//!   Generate a random (integer) number between 0 and RAND_MAX (2147483648)
-/*!   Seeds the random number generator only the first time this function is called.
-\return random number (integer)
-\author Floris Kraak
-\start_example
+/*!
+\brief Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint).
+Seeds the random number generator - but only the first time this function is called.
+
+Example:
+\code
 int random_number;
 random_number=y_rand();
-\end_example
+\endcode
+\return Random number (integer) between 0 and 31-bit maxint - slightly over 1 billion.
+\author Floris Kraak
 */
 long y_rand()
 {
@@ -151,8 +154,8 @@ long y_rand()
 /*! See: http://www.cse.yorku.ca/~oz/hash.html 
 \return hash (unsigned long)
 \author Floris Kraak
-\start_example
-\end_example
+\code
+\endcode
 */
 static unsigned long y_hash_sdbm(char* str)
 {
@@ -165,15 +168,16 @@ static unsigned long y_hash_sdbm(char* str)
 
 // --------------------------------------------------------------------------------------------------
 
-
-//! Create a unique parameter that is more predictable in length than the LR counterpart: Exactly 22 characters.
 /*!
-@param[in] The name of a parameter to store the resulting string in.
+\brief Create a unique parameter.
+\param param The name of a parameter to store the resulting string in.
 \return void
 \author Floris Kraak & André Luyer
-\start_example
+
+Example:
+\code
 y_param_unique("test");
-\end_example
+\endcode
 */
 void y_param_unique(char *param)
 {
@@ -224,7 +228,7 @@ The total length of the line is minimal \e minimumLength and maimum \e maximumLe
 @param[in] characterSet The string is build from this string of characters
 \return void
 \author Floris Kraak / Raymond de Jongh
-\start_example
+\code
 // Generates a string of minimal 3 and max 20 characters, 
 // with words of minimal 1 and maximal 3 charactes.
 // Chooses only characters a, c, d or d.
@@ -234,7 +238,7 @@ y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd");
 // with words of minimal 1 and maximal 3 charactes.
 // Chooses only characters a, c, d or d.
 y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd"); // could result in "ccc db dac c"
-\end_example
+\endcode
 
 \sa y_random_number_buffer
 \sa y_random_string_buffer_curses
@@ -438,9 +442,9 @@ that would make this decision.
 \return 0: no, random number lies outside the boundaries\n
       1: yes, random number lies inside the boundaries\n
       <0: input made no sense.
-\start_example
+\code
 y_rand_in_sliding_window(1, 10, 20); // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
-\end_example
+\endcode
 */
 int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 {
@@ -472,10 +476,10 @@ int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 @param[in] upperbound Upper boundary of the generated number
 \return random number
 \author Floris Kraak
-\start_example
+\code
 int random;        
 random = y_rand_between(0, 10);        // generate a random number between 0 and 10 (including 0 and 10!)
-\end_example
+\endcode
 */
 int y_rand_between(int lowerbound, int upperbound)
 {
@@ -503,10 +507,10 @@ and stores it in a parameter of the same name.
 @param[out] param LR-parameter name in which the Argument Value is stored.
 \return A LR parameter with the same name as the Argument Name.
 \author Floris Kraak
-\start_example
+\code
 y_save_attribute_to_parameter("server", "nice_server");
 web_add_auto_filter("Action=Include", "HostSuffix={nice_server}", LAST );
-\end_example
+\endcode
 \sa y_save_attribute()
 */
 void y_save_attribute_to_parameter( char* attrib, char* param )
@@ -530,10 +534,10 @@ This function is a short cut of y_save_attribute_to_parameter()
 @param[in] param Argument Name of the attribute.
 \return A LR parameter with the same name as the Argument Name.
 \author Floris Kraak
-\start_example
+\code
 y_save_attribute("server");
 web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
-\end_example
+\endcode
 \sa y_save_attribute_to_parameter()
 */
 void y_save_attribute( char* param )
@@ -553,7 +557,7 @@ This function will translate the codes into human readable errors which are then
 @param[in] result code from lr_rendezvous()
 \return None
 \author Floris Kraak
-\start_example
+\code
 {
     int result = lr_rendezvous("03_Portefeuille");
 
@@ -563,7 +567,7 @@ This function will translate the codes into human readable errors which are then
 
     y_log_rendezvous_result(result);
 }
-\end_example
+\endcode
 \sa y_log_rendezvous_result()
 */
 void y_log_rendezvous_result(int result)
@@ -615,7 +619,7 @@ Don't forget to use y_breadcrumb_reset() to clear the parameter at the start of 
 @param[in] breadcrumb
 \return LR parameter {breadcrumb}
 \author Raymond de Jongh
-\start_example
+\code
 y_breadcrumb_reset();    // clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.
 y_breadcrumb("start");
 // .... some code....
@@ -623,7 +627,7 @@ y_breadcrumb("processing data")
 //... some code ....
 y_breadcrumb("finished")
 The result is that {breadcrumb} contains "start;processing data;finished"   
-\end_example
+\endcode
 \sa y_breadcrumb_reset()
 */
 void y_breadcrumb(char *breadcrumb)
@@ -666,13 +670,13 @@ void y_breadcrumb(char *breadcrumb)
 \return 0: everthing went fine\n
 <0: failed
 \author Raymond de Jongh
-\start_example
+\code
 int result;
 result=y_write_to_file("c:\\temp.txt", "This is a test");
 if (result != 0)
 {   // o dear, something went wrong!
 }
-\end_example
+\endcode
 \sa y_breadcrumb_reset()
 */
 int y_write_to_file(char *filename, char *content)
@@ -711,10 +715,10 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)
 
 \return current date/time into LR-parameter {DATE_TIME_STRING}.
 \author Raymond de Jongh
-\start_example
+\code
 y_datetime();
 lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
-\end_example
+\endcode
 */
 void y_datetime()
 {
@@ -731,7 +735,7 @@ Calculate the difference in days between today and a date X workdays into the fu
 
 \return How many days into the future X workdays will be.
 \author Floris Kraak
-\start_example
+\code
 // Reserve a meeting room in 'reservationOffset' days.
 int daysOffSet = y_workdays_from_today( atoi(lr_eval_string("{reservationOffset}")) );
 lr_save_datetime("%d-%m-%Y", DATE_NOW + (daysOffSet*ONE_DAY), "ReservationDate");
@@ -739,7 +743,7 @@ lr_save_datetime("%d-%m-%Y", DATE_NOW + (daysOffSet*ONE_DAY), "ReservationDate")
 lr_vuser_status_message(
 lr_eval_string("Running with offset {reservationOffset} at day offset %d"),
 daysOffSet);
-\end_example
+\endcode
 */
 int y_workdays_from_today(int workdays)
 {
