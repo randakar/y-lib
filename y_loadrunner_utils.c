@@ -57,12 +57,16 @@ int y_scid;                                        // pointer to scenario or ses
 
 
 
-//!   y_setup()
-/*!   Used by y_rand(), and (possibly) others.
-Runs lr_whoami and sets vUserId and vUserGroup as global(!) variables.
+/*!   
+\brief Ylib setup - determines and stores the identity of the virtual user.
+
+This runs lr_whoami and sets y_virtual_user_id and y_virtual_user_group as global variables.
+Called y_rand() (for it's seed), y_is_vugen_run() and others dynamically.
+
 \return void
 \author Floris Kraak
-\warning uses 2 global variables: y_virtual_user_id and y_virtual_user_group. Use with care!
+\warning Only call this if you need the y_virtual_user_id and y_virtual_group variables to be set.
+Ylib functions that need this will call it when required.
 */
 void y_setup()
 {
