@@ -713,21 +713,22 @@ void y_last_right( const char *original_parameter, const char *search, const cha
         while(1);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Split a string into 2 parts based on a search string
+\param [in] original The string to search.
+\param [in] separator The string to use as a seperation marker between the two parts.
+\param [in] left A preallocated char* buffer to hold the left hand side of the result.
+\param [in] right A preallocated char* buffer to hold the right hand side of the result.
 
-// --------------------------------------------------------------------------------------------------
-// y_split a string in two based on a search parameter.
-//
-// Note: Unlike the others this one does not use parameter, but raw char pointers instead.
-// This mostly to accomodate the primary user - y_array_split();
-// Both output buffers need to be pre-allocated! 
-//
-// For the parameter version use y_split().
-//
-// @author Floris Kraak
-//
+\warning Unlike the others this one does not use parameter, but raw char pointers instead.
+This mostly to accomodate the primary user - y_array_split();
+
+For the parameter version use y_split().
+
+\author Floris Kraak
+*/
 void y_split_str( const char *original, const char *separator, char *left, char *right)
 {
     char *buffer;
@@ -754,22 +755,28 @@ void y_split_str( const char *original, const char *separator, char *left, char 
         strncpy(right, start, strlen(start)+1); // Let's not forget to copy the null byte, too.
     }
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Split a parameter in two based on a seperating string.
+\param [in] originalParameter The parameter to search.
+\param [in] separator The string to use as a seperation marker between the two parts.
+\param [in] leftParameter The parameter that will hold the left hand side of the split result.
+\param [in] rightParameter The parameter that will hold the right hand side of the split result.
 
-// --------------------------------------------------------------------------------------------------
-// y_split a string in two based on a seperating string.
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            lr_save_string("WackoYackoDotWarner", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
-//            y_split("Test", "Yacko", "Left", "Right");           // Use "Yacko" as the separator
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
-//            lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
-//            lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = DotWarner
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter.
+
+\b Example:
+\code
+lr_save_string("WackoYackoDotWarner", "Test");
+lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
+y_split("Test", "Yacko", "Left", "Right");           // Use "Yacko" as the separator
+lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}    = WackoYackoDotWarner
+lr_message(lr_eval_string("Left    : {Left}\n"));    // {Left}    = Wacko
+lr_message(lr_eval_string("Right   : {Right}\n"));   // {Right}   = DotWarner
+\endcode
+\author Floris Kraak
+*/
 void y_split( const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)
 {
     char *item = y_get_parameter(originalParameter);
@@ -812,21 +819,25 @@ void y_split( const char *originalParameter, const char *separator, const char *
         free(right);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Remove leading and trailing whitespace from a parameter.
+\param [in] parameter The parameter to chop.
 
-// --------------------------------------------------------------------------------------------------
-// Remove leading and trailing whitespace from a parameter. Does not support Unicode so use with care.
-//    Whitespace can be: " "(=space)        "\r"(=carrige return)    "\n"(=line feed)    "\t"(=tab)
-// @author: Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
+This does not support unicode, so it may not catch everything.
+Notably: Whitespace can be: " "(=space)        "\r"(=carrige return)    "\n"(=line feed)    "\t"(=tab)
+The result is stored in the original parameter.
+
+\b Example:
+\code
 //            lr_save_string("  WackoYackoDot ", "Test");
 //            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "  WackoYackoDot "
 //            y_chop("Test");
 //            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "WackoYackoDot"
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\endcode
+\author: Floris Kraak
+*/
 void y_chop( const char* parameter )
 {
     char *result;
@@ -861,24 +872,23 @@ void y_chop( const char* parameter )
     
     lr_save_string(result, parameter);
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Search and replace inside a parameter.
+\param [in] parameter The parameter to search.
+\param [in] search What to search for.
+\param [in] replace What to replace it with.
 
-// --------------------------------------------------------------------------------------------------
-// Search and replace.
-// Find 'search' in 'parameter' and replace it with 'replace'.
-// Replaces the originally passed-in parameter with the new one.
-//
-// Note: This one has a built-in search/y_replace limit when
-// search > y_replace. It won't do it more than 'limit' times.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:     
-//             lr_save_string("test123", "par1");
-//          y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This replaces the content of the originally passed-in parameter with the new content when done.
+
+\note This one has a built-in search/y_replace limit when search > y_replace. After 1000 replacements it will stop.
+\b Example:
+\code
+lr_save_string("test123", "par1");
+y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
+\endcode
+*/
 void y_replace( const char *parameter, const char *search, const char *replace)
 {
    int slen, rlen, plen;      // lengte van search, replace, en basis string
