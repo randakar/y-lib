@@ -49,15 +49,21 @@
 <div class="title">y_string.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Contains low level string and memory manipulation functions, insofar not provided by the C standard.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="vugen_8h_source.html">vugen.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8eb7d5c19127eb6fe246a36adcaf3551">_STRING_C</a></td></tr>
+<tr class="memdesc:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Double-include protection for <a class="el" href="y__string_8c.html" title="Contains low level string and memory manipulation functions, insofar not provided by the C standard...">y_string.c</a>.  <a href="#a8eb7d5c19127eb6fe246a36adcaf3551">More...</a><br/></td></tr>
 <tr class="separator:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5">y_get_int_from_char</a>(c)&#160;&#160;&#160;(<a class="el" href="vugen_8h.html#a2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td></tr>
+<tr class="memdesc:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <em>single</em> character 0-9 to an int.  <a href="#aecc6f4f2a809c8f7ef600a36d3c60df5">More...</a><br/></td></tr>
 <tr class="separator:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7859b6668105d69bd9d9c7189bf9f34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ae7859b6668105d69bd9d9c7189bf9f34">y_get_parameter_malloc_string</a>&#160;&#160;&#160;0_please_use_y_get_parameter_with_malloc_or_null</td></tr>
+<tr class="memdesc:ae7859b6668105d69bd9d9c7189bf9f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function removal - throws a compile error with instructions on what to do if someone tries to use the old function.  <a href="#ae7859b6668105d69bd9d9c7189bf9f34">More...</a><br/></td></tr>
 <tr class="separator:ae7859b6668105d69bd9d9c7189bf9f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -66,53 +72,79 @@ Functions</h2></td></tr>
 <tr class="memdesc:a44660f85cba534a4c186c29ec698c4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ylib wrapper for <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>  <a href="#a44660f85cba534a4c186c29ec698c4fb">More...</a><br/></td></tr>
 <tr class="separator:a44660f85cba534a4c186c29ec698c4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a697dba8aa84b866198cb29d2c1e4823f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a697dba8aa84b866198cb29d2c1e4823f">y_array_alloc</a> (int length, int bytesPerChar)</td></tr>
+<tr class="memdesc:a697dba8aa84b866198cb29d2c1e4823f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a character array and initializes all elements to zero As <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>. Adds some simple checks to catch common errors.  <a href="#a697dba8aa84b866198cb29d2c1e4823f">More...</a><br/></td></tr>
 <tr class="separator:a697dba8aa84b866198cb29d2c1e4823f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae32fba754c61429341686d6a5e387a06"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a> (int number)</td></tr>
+<tr class="memdesc:ae32fba754c61429341686d6a5e387a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate how much space storing the decimal representation of a number into a string requires.  <a href="#ae32fba754c61429341686d6a5e387a06">More...</a><br/></td></tr>
 <tr class="separator:ae32fba754c61429341686d6a5e387a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab903d513f84dc0cd3f7af7acf67e2fb2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a> (const char *param_name)</td></tr>
+<tr class="memdesc:ab903d513f84dc0cd3f7af7acf67e2fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain the string required to fetch the contents of a parameter through lr_eval_string().  <a href="#ab903d513f84dc0cd3f7af7acf67e2fb2">More...</a><br/></td></tr>
 <tr class="separator:ab903d513f84dc0cd3f7af7acf67e2fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0778c8b8f3da732862ab82176857be8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ac0778c8b8f3da732862ab82176857be8">y_is_empty_parameter</a> (const char *param_name)</td></tr>
+<tr class="memdesc:ac0778c8b8f3da732862ab82176857be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this.  <a href="#ac0778c8b8f3da732862ab82176857be8">More...</a><br/></td></tr>
 <tr class="separator:ac0778c8b8f3da732862ab82176857be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8252a459f15c52a8680fff9ddbd7356c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a> (const char *param_name)</td></tr>
+<tr class="memdesc:a8252a459f15c52a8680fff9ddbd7356c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char *.  <a href="#a8252a459f15c52a8680fff9ddbd7356c">More...</a><br/></td></tr>
 <tr class="separator:a8252a459f15c52a8680fff9ddbd7356c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af81efb56d5afc4806cdc79f64ba3d675"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#af81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a> (const char *param_name)</td></tr>
+<tr class="memdesc:af81efb56d5afc4806cdc79f64ba3d675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char *, or return NULL if it wasn't set.  <a href="#af81efb56d5afc4806cdc79f64ba3d675">More...</a><br/></td></tr>
 <tr class="separator:af81efb56d5afc4806cdc79f64ba3d675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0c6a383cf2934da4acc1451a1cdea21"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a> (const char *src_param)</td></tr>
+<tr class="memdesc:ac0c6a383cf2934da4acc1451a1cdea21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (malloc version)  <a href="#ac0c6a383cf2934da4acc1451a1cdea21">More...</a><br/></td></tr>
 <tr class="separator:ac0c6a383cf2934da4acc1451a1cdea21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a> (const char *source_param)</td></tr>
+<tr class="memdesc:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)  <a href="#aa80c4db4c75cdc0c03aad6f69b3dff3c">More...</a><br/></td></tr>
 <tr class="separator:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a> (char *source)</td></tr>
+<tr class="memdesc:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.  <a href="#a8cba325c05b63bbbdc499702c4f5c6e9">More...</a><br/></td></tr>
 <tr class="separator:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b01815915da19b48aaca1a7a5ba30b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a> (char *source_param, char *dest_param)</td></tr>
+<tr class="memdesc:a7b01815915da19b48aaca1a7a5ba30b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a parameter to a new name. This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory.  <a href="#a7b01815915da19b48aaca1a7a5ba30b2">More...</a><br/></td></tr>
 <tr class="separator:a7b01815915da19b48aaca1a7a5ba30b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc166c412bf848068685f7c391658bd"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a9fc166c412bf848068685f7c391658bd">y_get_cleansed_parameter</a> (const char *param_name, char replacement)</td></tr>
+<tr class="memdesc:a9fc166c412bf848068685f7c391658bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.  <a href="#a9fc166c412bf848068685f7c391658bd">More...</a><br/></td></tr>
 <tr class="separator:a9fc166c412bf848068685f7c391658bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36d93cd0fa4942600d58fcb81bf6f106"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a> (const char *param_name, char replacement)</td></tr>
+<tr class="memdesc:a36d93cd0fa4942600d58fcb81bf6f106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean a parameter by replacing any embedded NULL (null) characters with a replacement character.  <a href="#a36d93cd0fa4942600d58fcb81bf6f106">More...</a><br/></td></tr>
 <tr class="separator:a36d93cd0fa4942600d58fcb81bf6f106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c65e959425f4624e427649ec8c7b22b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a> (const char *param_name)</td></tr>
+<tr class="memdesc:a2c65e959425f4624e427649ec8c7b22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean a parameter by replacing any embedded NULL (null) characters with a space. This is identical to <a class="el" href="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106" title="Clean a parameter by replacing any embedded NULL (null) characters with a replacement character...">y_cleanse_parameter_ext()</a> with " " (a single space) selected as the replacement character.  <a href="#a2c65e959425f4624e427649ec8c7b22b">More...</a><br/></td></tr>
 <tr class="separator:a2c65e959425f4624e427649ec8c7b22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20420f9a082c1e2a89b70409d6008931"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a20420f9a082c1e2a89b70409d6008931">y_uppercase_parameter</a> (const char *param_name)</td></tr>
+<tr class="memdesc:a20420f9a082c1e2a89b70409d6008931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the content of a parameter to UPPERCASE.  <a href="#a20420f9a082c1e2a89b70409d6008931">More...</a><br/></td></tr>
 <tr class="separator:a20420f9a082c1e2a89b70409d6008931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c487cce1d850e956bcd5af4c4acac73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a6c487cce1d850e956bcd5af4c4acac73">y_substr</a> (const char *original_parameter, const char *result_parameter, const char *left, const char *right)</td></tr>
+<tr class="memdesc:a6c487cce1d850e956bcd5af4c4acac73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save a substring of a parameter into a new parameter. Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter.  <a href="#a6c487cce1d850e956bcd5af4c4acac73">More...</a><br/></td></tr>
 <tr class="separator:a6c487cce1d850e956bcd5af4c4acac73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abced95074b83aebcfb1454f15890c2b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5">y_left</a> (const char *original_parameter, const char *search, const char *result_parameter)</td></tr>
+<tr class="memdesc:abced95074b83aebcfb1454f15890c2b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a string into 2 parts using the search string. Save the left part into the result parameter.  <a href="#abced95074b83aebcfb1454f15890c2b5">More...</a><br/></td></tr>
 <tr class="separator:abced95074b83aebcfb1454f15890c2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fa8cb819a971b562b07cf9ab9c84bba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba">y_right</a> (const char *original_parameter, const char *search, const char *result_parameter)</td></tr>
+<tr class="memdesc:a8fa8cb819a971b562b07cf9ab9c84bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a string into 2 parts using the search string. Save the right part into the result parameter.  <a href="#a8fa8cb819a971b562b07cf9ab9c84bba">More...</a><br/></td></tr>
 <tr class="separator:a8fa8cb819a971b562b07cf9ab9c84bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad96e67d8e69e1df570958aa1e1d5e97e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ad96e67d8e69e1df570958aa1e1d5e97e">y_last_right</a> (const char *original_parameter, const char *search, const char *result_parameter)</td></tr>
+<tr class="memdesc:ad96e67d8e69e1df570958aa1e1d5e97e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a string into 2 parts using the search string. Save the rightmost part into the result parameter. This is almost the same as <a class="el" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba" title="Split a string into 2 parts using the search string. Save the right part into the result parameter...">y_right()</a>, but doesn't stop at the first match - instead, it uses the <em>last</em> match. It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression..  <a href="#ad96e67d8e69e1df570958aa1e1d5e97e">More...</a><br/></td></tr>
 <tr class="separator:ad96e67d8e69e1df570958aa1e1d5e97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18ccd408f76375cb48aceed43aa76bff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff">y_split_str</a> (const char *original, const char *separator, char *left, char *right)</td></tr>
+<tr class="memdesc:a18ccd408f76375cb48aceed43aa76bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a string into 2 parts based on a search string.  <a href="#a18ccd408f76375cb48aceed43aa76bff">More...</a><br/></td></tr>
 <tr class="separator:a18ccd408f76375cb48aceed43aa76bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae264f7c6576cb429747b914657ff8e92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92">y_split</a> (const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)</td></tr>
+<tr class="memdesc:ae264f7c6576cb429747b914657ff8e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a parameter in two based on a seperating string. If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter.  <a href="#ae264f7c6576cb429747b914657ff8e92">More...</a><br/></td></tr>
 <tr class="separator:ae264f7c6576cb429747b914657ff8e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27ae9506d1f756e8138c9eb85d098308"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308">y_chop</a> (const char *parameter)</td></tr>
+<tr class="memdesc:a27ae9506d1f756e8138c9eb85d098308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove leading and trailing whitespace from a parameter.  <a href="#a27ae9506d1f756e8138c9eb85d098308">More...</a><br/></td></tr>
 <tr class="separator:a27ae9506d1f756e8138c9eb85d098308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ff7d0f5c99aad7760fa9f32d0d21d25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25">y_replace</a> (const char *parameter, const char *search, const char *replace)</td></tr>
+<tr class="memdesc:a9ff7d0f5c99aad7760fa9f32d0d21d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and replace inside a parameter. This replaces the content of the originally passed-in parameter with the new content when done.  <a href="#a9ff7d0f5c99aad7760fa9f32d0d21d25">More...</a><br/></td></tr>
 <tr class="separator:a9ff7d0f5c99aad7760fa9f32d0d21d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdcde34b0a15516dd5b47b29196cf61b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#abdcde34b0a15516dd5b47b29196cf61b">y_remove_string_from_parameter</a> (const char *paramName, const char *removeMe)</td></tr>
+<tr class="memdesc:abdcde34b0a15516dd5b47b29196cf61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all occurrences of a specified text from a parameter.  <a href="#abdcde34b0a15516dd5b47b29196cf61b">More...</a><br/></td></tr>
 <tr class="separator:abdcde34b0a15516dd5b47b29196cf61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contains low level string and memory manipulation functions, insofar not provided by the C standard. </p>
+<p>The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice. Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters. This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter). </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a8eb7d5c19127eb6fe246a36adcaf3551"></a>
 <div class="memitem">
 <div class="memproto">
@@ -122,6 +154,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Double-include protection for <a class="el" href="y__string_8c.html" title="Contains low level string and memory manipulation functions, insofar not provided by the C standard...">y_string.c</a>. </p>
 
 </div>
 </div>
@@ -139,6 +173,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Convert a <em>single</em> character 0-9 to an int. </p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> i = <a class="code" href="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5">y_get_int_from_char</a>(<span class="charliteral">&#39;9&#39;</span>);</div>
+<div class="line">lr_message(<span class="stringliteral">&quot;i = %d&quot;</span>, i);  <span class="comment">// result is &quot;i = 9&quot;</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ae7859b6668105d69bd9d9c7189bf9f34"></a>
@@ -150,6 +190,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Function removal - throws a compile error with instructions on what to do if someone tries to use the old function. </p>
 
 </div>
 </div>
@@ -178,6 +220,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Allocates a character array and initializes all elements to zero As <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>. Adds some simple checks to catch common errors. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Expected number of characters. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytesPerChar</td><td>How much space a single character requires. Usually this should contain "sizeof(char)". </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a>. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a27ae9506d1f756e8138c9eb85d098308"></a>
@@ -193,6 +246,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Remove leading and trailing whitespace from a parameter. </p>
+<p>This does not support unicode, so it may not catch everything. Supported whitespace is: " "(=space) "\r"(=carrige return) "\n"(=line feed) "\t"(=tab) The result is stored in the original parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">parameter</td><td>The parameter to chop.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;  WackoYackoDot &quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: &gt;{Test}&lt;\n&quot;</span>));    <span class="comment">// {Test}= &quot;  WackoYackoDot &quot;</span></div>
+<div class="line"><a class="code" href="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308">y_chop</a>(<span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: &gt;{Test}&lt;\n&quot;</span>));    <span class="comment">// {Test}= &quot;WackoYackoDot&quot;</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>: Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -210,6 +278,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Clean a parameter by replacing any embedded NULL (null) characters with a space. This is identical to <a class="el" href="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106" title="Clean a parameter by replacing any embedded NULL (null) characters with a replacement character...">y_cleanse_parameter_ext()</a> with " " (a single space) selected as the replacement character. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Since this changes existing parameters be careful what types of parameters you use this on.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   <span class="keywordtype">char</span> buffer[11] = { <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;r&#39;</span>,<span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;k&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;n&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;\0&#39;</span> };</div>
+<div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken&quot;</span>);</div>
+<div class="line">   <a class="code" href="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>); <span class="comment">// will save &quot; b ro ken  &quot; into the &quot;broken&quot; parameter.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a36d93cd0fa4942600d58fcb81bf6f106"></a>
@@ -236,6 +319,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Clean a parameter by replacing any embedded NULL (null) characters with a replacement character. </p>
+<p>This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s). Any such characters are replaced with replacement_char and the result is stored in the original parameter. When no null-character is found, the result is unaltered.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">replacement</td><td>A character that replaces any embedded nulls found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Since this changes existing parameters be careful what types of parameters you use this on.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   <span class="keywordtype">char</span> buffer[11] = { <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;r&#39;</span>,<span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;k&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;n&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;\0&#39;</span> };</div>
+<div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken&quot;</span>);</div>
+<div class="line">   <a class="code" href="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>); <span class="comment">// will save &quot;!b!ro!ken!!&quot; into the &quot;broken&quot; parameter.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a7b01815915da19b48aaca1a7a5ba30b2"></a>
@@ -261,6 +361,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Copy a parameter to a new name. This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source_param</td><td>The parameter to copy. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dest_param</td><td>The name of the parameter to copy the first parameter to.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;text&quot;</span>, <span class="stringliteral">&quot;param_a&quot;</span>);</div>
+<div class="line"><a class="code" href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a>(<span class="stringliteral">&quot;param_a&quot;</span>, <span class="stringliteral">&quot;param_b&quot;</span>);   <span class="comment">// Results in an exact copy of the content of param_a being stored in param_b.</span></div>
+<div class="line">lr_log_message(lr_eval_string(<span class="stringliteral">&quot;param_b: {param_b}&quot;</span>)); <span class="comment">// Prints &quot;param_b: text&quot;.</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -288,6 +402,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">replacement</td><td>A character that replaces any embedded nulls found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The resulting parameter content.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   <span class="keywordtype">char</span> buffer[11] = { <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;r&#39;</span>,<span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;k&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;n&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;\0&#39;</span> };</div>
+<div class="line">   <span class="keywordtype">char</span> *tmp;</div>
+<div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken&quot;</span>);</div>
+<div class="line">   tmp = <a class="code" href="y__string_8c.html#a9fc166c412bf848068685f7c391658bd">y_get_cleansed_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>);</div>
+<div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, tmp); <span class="comment">// Prints &quot;Result: !b!ro!ken!!&quot;.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a8252a459f15c52a8680fff9ddbd7356c"></a>
@@ -303,6 +435,23 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the content of a parameter and return it as a char *. </p>
+<p>This is useful mostly for code that wants to manipulate parameter contents but not care about the name of the parameter itself. (Something which applies to most of ylib ..)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The name of the parameter to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A char* buffer containing the contents of the parameter, allocated by lr_eval_string(). </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
+<div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
+<div class="line">test=<a class="code" href="y__string_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
+<div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -320,6 +469,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Obtain the string required to fetch the contents of a parameter through lr_eval_string(). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter name to construct the eval text for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a char* allocated with <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The return argument will need to be freed via a call to <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="aa80c4db4c75cdc0c03aad6f69b3dff3c"></a>
@@ -335,6 +495,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) </p>
+<p>Like y_get_parameter, but the result will use lr_eval_string_ext() to acquire it's memory, rather than getting it from lr_eval_string. This can be useful when you want your data to remain in memory instead of getting freed at the end of each iteration. An example is the browser emulation code in y_emulate_browser.c, which sets up a linked list that has to stay allocated throughout the duration of the test. (And therefore never needs to be freed. But I digress.)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source_param</td><td>The name of the parameter to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A char* buffer containing the contents of the parameter, allocated with lr_eval_string_ext() </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Memory allocated in this manner must be freed using lr_eval_string_ext_free() or it will linger.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
+<div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
+<div class="line">test=<a class="code" href="y__string_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
+<div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
+<div class="line">lr_eval_string_ext_free(test);</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -352,6 +530,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get the content of a parameter and return it as a char *, or return NULL if it wasn't set. </p>
+<p>This will return null in the most typical case: A parameter saved with web_reg_save_param(), but never filled. The actual check employed here is a test that looks if the parameter content matches the parameter name surrounded by brackets.</p>
+<p>If the parameter was never filled, lr_eval_string() will return that. However, in many more elaborate cases we really need to know if it was never filled to begin with. This function mimics the behaviour we really want to see in LR, but don't have. (At least, not in LR 11.05, the version I'm working with.)</p>
+<p>It would be really nice if there was a loadrunner built-in that did this.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The name of the parameter to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A char* buffer containing the contents of the parameter, allocated by lr_eval_string(), or NULL. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration. </dd>
+<dd>
+If the content of the parameter matches the name of the parameter surrounded by brackets this function will return NULL even if it's not empty.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
+<div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
+<div class="line">test=<a class="code" href="y__string_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
+<div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ac0c6a383cf2934da4acc1451a1cdea21"></a>
@@ -367,6 +566,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the content of a parameter and return it as a char * (malloc version) </p>
+<p>This is like <a class="el" href="y__string_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, but the result will use memory allocated with <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, instead of acquired from lr_eval_string().</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_param</td><td>The name of the parameter to fetch. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A char* buffer containing the contents of the parameter, allocated with <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Memory allocated in this manner must be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> or it will linger.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
+<div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
+<div class="line">test=y_get_parameter_in_malloc_string(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
+<div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
+<div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -384,6 +601,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calculate how much space storing the decimal representation of a number into a string requires. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">number</td><td>An integer number that needs to be stored in a string in decimal notation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters required.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> input = 12345;</div>
+<div class="line">lr_log_message(<span class="stringliteral">&quot;Length of %d = %d&quot;</span>, input, <a class="code" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a>(input)); <span class="comment">// Prints &quot;Length of 12345 = 5&quot;</span></div>
+<div class="line">input = -12345;</div>
+<div class="line">lr_log_message(<span class="stringliteral">&quot;Length of %d = %d&quot;</span>, input, <a class="code" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a>(input)); <span class="comment">// Prints &quot;Length of -12345 = 6&quot;</span></div>
+<div class="line">input = 0;</div>
+<div class="line">lr_log_message(<span class="stringliteral">&quot;Length of %d = %d&quot;</span>, input, <a class="code" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a>(input)); <span class="comment">// Prints &quot;Length of 0 = 1&quot;</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="ac0778c8b8f3da732862ab82176857be8"></a>
@@ -399,6 +632,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The name of the parameter to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if the parameter is empty, a non-zero number otherwise. </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -432,6 +675,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Split a string into 2 parts using the search string. Save the rightmost part into the result parameter. This is almost the same as <a class="el" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba" title="Split a string into 2 parts using the search string. Save the right part into the result parameter...">y_right()</a>, but doesn't stop at the first match - instead, it uses the <em>last</em> match. It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression.. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">original_parameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">search</td><td>The text preceding the text we're looking for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result_parameter</td><td>The name of the parameter to store the result in.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;AstrixObelixIdefix&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));    <span class="comment">// {Test}=AstrixObelixIdefix</span></div>
+<div class="line"><a class="code" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba">y_right</a>( <span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;Obelix&quot;</span>, <span class="stringliteral">&quot;Test4&quot;</span> );</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test4}\n&quot;</span>));    <span class="comment">//    {Test4}=Idefix</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="abced95074b83aebcfb1454f15890c2b5"></a>
@@ -464,6 +723,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Split a string into 2 parts using the search string. Save the left part into the result parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">original_parameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">search</td><td>The text after the text we're looking for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result_parameter</td><td>The name of the parameter to store the result in.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;AstrixObelixIdefix&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));    <span class="comment">// {Test}=AstrixObelixIdefix</span></div>
+<div class="line"><a class="code" href="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5">y_left</a>( <span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;Obelix&quot;</span>, <span class="stringliteral">&quot;Test2&quot;</span> );</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test2}\n&quot;</span>));    <span class="comment">// {Test2}=Astrix</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a44660f85cba534a4c186c29ec698c4fb"></a>
@@ -482,7 +757,15 @@ Functions</h2></td></tr>
 
 <p>Ylib wrapper for <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a> </p>
 <p>Allocates a block of memory. Adds some simple checks to catch common errors.</p>
-<p>Example usage: </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Number of bytes required. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>.</dd></dl>
+<p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *example_string = <span class="stringliteral">&quot;some_text&quot;</span>;</div>
 <div class="line"><span class="keywordtype">int</span> size = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(example_string)+1;</div>
 <div class="line"><span class="keywordtype">char</span> *example_string_copy = <a class="code" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(size);</div>
@@ -516,6 +799,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Remove all occurrences of a specified text from a parameter. </p>
+<p>This is a lighter weight alternative to the <a class="el" href="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25" title="Search and replace inside a parameter. This replaces the content of the originally passed-in paramete...">y_replace()</a> function in cases where just want to remove text, rather than replace it with something else. Stores the result in the original parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">paramName</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">removeMe</td><td>The text to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;par1&quot;</span>);</div>
+<div class="line"><a class="code" href="y__string_8c.html#abdcde34b0a15516dd5b47b29196cf61b">y_remove_string_from_parameter</a>(<span class="stringliteral">&quot;par1&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>);   <span class="comment">// {par1} now has the value test23</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a9ff7d0f5c99aad7760fa9f32d0d21d25"></a>
@@ -548,6 +844,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Search and replace inside a parameter. This replaces the content of the originally passed-in parameter with the new content when done. </p>
+<dl class="section note"><dt>Note</dt><dd>This one has a built-in search/y_replace limit. After 1000 replacements it will stop. If 1000 replacements in a single parameter does not suffice consider using other methods.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">parameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">search</td><td>What to search for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">replace</td><td>What to replace it with.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;par1&quot;</span>);</div>
+<div class="line"><a class="code" href="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25">y_replace</a>(<span class="stringliteral">&quot;par1&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;ing1&quot;</span>);        <span class="comment">// {par1} now has the value testing123</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="a8fa8cb819a971b562b07cf9ab9c84bba"></a>
@@ -579,6 +889,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Split a string into 2 parts using the search string. Save the right part into the result parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">original_parameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">search</td><td>The text preceding the text we're looking for. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result_parameter</td><td>The name of the parameter to store the result in.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;AstrixObelixIdefix&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));    <span class="comment">// {Test}=AstrixObelixIdefix</span></div>
+<div class="line"><a class="code" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba">y_right</a>( <span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;Obelix&quot;</span>, <span class="stringliteral">&quot;Test4&quot;</span> );</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test4}\n&quot;</span>));    <span class="comment">//    {Test4}=Idefix</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -618,6 +944,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Split a parameter in two based on a seperating string. If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">originalParameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">separator</td><td>The string to use as a seperation marker between the two parts. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">leftParameter</td><td>The parameter that will hold the left hand side of the split result. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rightParameter</td><td>The parameter that will hold the right hand side of the split result.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;WackoYackoDotWarner&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));    <span class="comment">// {Test}    = WackoYackoDotWarner</span></div>
+<div class="line"><a class="code" href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92">y_split</a>(<span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;Yacko&quot;</span>, <span class="stringliteral">&quot;Left&quot;</span>, <span class="stringliteral">&quot;Right&quot;</span>);           <span class="comment">// Use &quot;Yacko&quot; as the separator</span></div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));    <span class="comment">// {Test}    = WackoYackoDotWarner</span></div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Left    : {Left}\n&quot;</span>));    <span class="comment">// {Left}    = Wacko</span></div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Right   : {Right}\n&quot;</span>));   <span class="comment">// {Right}   = DotWarner</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a18ccd408f76375cb48aceed43aa76bff"></a>
@@ -656,6 +1001,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Split a string into 2 parts based on a search string. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Unlike the others this one does not use parameter, but raw char pointers instead. This mostly to accomodate <a class="el" href="y__param__array_8c.html#a77bf16e04dfa2d8a5cd7575d654dd787">y_array_split()</a>. For the parameter version use <a class="el" href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92" title="Split a parameter in two based on a seperating string. If the seperator is not found in the original ...">y_split()</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">original</td><td>The string to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">separator</td><td>The string to use as a seperation marker between the two parts. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">left</td><td>A preallocated char* buffer to hold the left hand side of the result. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">right</td><td>A preallocated char* buffer to hold the right hand side of the result. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a8cba325c05b63bbbdc499702c4f5c6e9"></a>
@@ -671,6 +1029,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>The string to copy. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of the string, allocated via <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>. </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 </div>
 </div>
@@ -710,6 +1078,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Save a substring of a parameter into a new parameter. Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">original_parameter</td><td>The parameter to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result_parameter</td><td>The name of the parameter to store the result in. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">left</td><td>The left boundary - the text immediately preceding the substring in question. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">right</td><td>The right boundary.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span>* str = <span class="stringliteral">&quot;LorumIpsumLipsum&quot;</span>;</div>
+<div class="line">lr_save_string(str, <span class="stringliteral">&quot;param&quot;</span>);</div>
+<div class="line"><a class="code" href="y__string_8c.html#a6c487cce1d850e956bcd5af4c4acac73">y_substr</a>(<span class="stringliteral">&quot;param&quot;</span>, <span class="stringliteral">&quot;param&quot;</span>, <span class="stringliteral">&quot;Lorum&quot;</span>, <span class="stringliteral">&quot;Lipsum&quot;</span>);</div>
+<div class="line">lr_log_message(lr_eval_string(<span class="stringliteral">&quot;{param}&quot;</span>)); <span class="comment">// Prints &quot;Ipsum&quot;.</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>André Luyer, Marcel Jepma &amp; Floris Kraak </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a20420f9a082c1e2a89b70409d6008931"></a>
@@ -726,12 +1111,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Convert the content of a parameter to UPPERCASE. </p>
+<p>This will replace the content of the paramenter named in 'param_name' with the uppercased version. Does not affect non-alphabetic characters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to convert to uppercase.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;aBcDeFgHiJ &amp;*45#$@#)!({}&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: {Test}\n&quot;</span>));</div>
+<div class="line"><a class="code" href="y__string_8c.html#a20420f9a082c1e2a89b70409d6008931">y_uppercase_parameter</a>(<span class="stringliteral">&quot;Test&quot;</span>);</div>
+<div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Altered: {Test}\n&quot;</span>)); <span class="comment">// prints &quot;Altered: ABCDEFGHIJ &amp;*45#$@#)!({}&quot;.</span></div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 10:02:46 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 17:24:10 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
