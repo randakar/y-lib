@@ -404,7 +404,7 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
    //lr_log_message("y_cleanse_parameter(%s)", param_name );
 
    // Get the contents of the parameter using lr_eval_string_ext() - we can't use the
-   // regular version if we expect to find \x00 in there.
+   // regular version if we expect to find NULL in there.
    snprintf( param_eval_string, param_eval_size, "{%s}", param_name );
    lr_eval_string_ext(param_eval_string, param_eval_size-1, &result, &result_size, 0, 0, -1);
    if( strcmp(param_eval_string, result) == 0 )
@@ -417,7 +417,7 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
    //lr_log_message("Cleansing param %s, result starts with '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
    {
       size_t result_strlen;
-      // Now replace NULL bytes (\x00) in the input with something else..
+      // Now replace NULL bytes (NULL) in the input with something else..
       for( result_strlen = strlen(result); result_strlen < result_size; result_strlen = strlen(result))
       {
          result[result_strlen] = replacement;
@@ -428,7 +428,7 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
 }
 
 /*!
-\brief Clean a parameter by replacing any embedded \x00 (null) characters with a replacement character.
+\brief Clean a parameter by replacing any embedded NULL (null) characters with a replacement character.
 \param [in] param_name The parameter to cleanse of nulls.
 \param [in] replacement A character that replaces any embedded nulls found.
 
@@ -462,7 +462,7 @@ void y_cleanse_parameter_ext(const char* param_name, char replacement)
 }
 
 /*!
-\brief Clean a parameter by replacing any embedded \x00 (null) characters with a space.
+\brief Clean a parameter by replacing any embedded NULL (null) characters with a space.
 \param [in] param_name The parameter to cleanse of nulls.
 
 This is identical to y_cleanse_parameter_ext() with " " (a single space) selected as the replacement character.
@@ -520,12 +520,11 @@ void y_uppercase_parameter(const char* param_name)
 Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter.
 
 \b example:
-{
-   char* str = "LorumIpsumLipsum";
-   lr_save_string(str, "param");
-   y_substr("param", "param", "Lorum", "Lipsum");
-   lr_log_message(lr_eval_string("{param}")); // Prints "Ipsum".
-}
+\code
+char* str = "LorumIpsumLipsum";
+lr_save_string(str, "param");
+y_substr("param", "param", "Lorum", "Lipsum");
+lr_log_message(lr_eval_string("{param}")); // Prints "Ipsum".
 \endcode
 \author André Luyer, Marcel Jepma & Floris Kraak
 */
