@@ -679,7 +679,7 @@ lr_message(lr_eval_string("New Param: {Test4}\n"));    //    {Test4}=Idefix
 */
 void y_last_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
-    char *result = y_get_parameter(original_parameter);
+    char *result = y_get_parameter_or_null(original_parameter);
     if( result == NULL )
     {
         lr_error_message("y_last_right(): Error: Parameter %s does not exist!", original_parameter);
