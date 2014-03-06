@@ -22,8 +22,17 @@
 #define _STRING_C
 // --------------------------------------------------------------------------------------------------
 
-#include "vugen.h"
+/*!
+\file y_string.c
+\brief Contains low level string and memory manipulation functions, insofar not provided by the C standard.
 
+The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice.
+Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters.
+This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter).
+*/
+
+
+#include "vugen.h"
 
 /*!
 \brief Ylib wrapper for malloc()
@@ -31,7 +40,7 @@
 Allocates a block of memory.
 Adds some simple checks to catch common errors.
 
-Example usage:
+\b Example:
 \code
 char *example_string = "some_text";
 int size = strlen(example_string)+1;
@@ -55,24 +64,21 @@ char *y_mem_alloc(const int size)
     
     if ((buff = (char *)malloc(mem)) == NULL)
     {
-        // Fixme: implement some generic error handling facility to send this stuff to.
         lr_error_message("Insufficient memory available, requested %d", mem);
         // If this happens you're pretty much screwed anyway.
-        lr_abort();
+        lr_abort(); 
     }
     return buff;
 }
 // --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Allocates a character array and initializes all elements to zero
 
-// --------------------------------------------------------------------------------------------------
-// Allocates a character array and initializes all elements to zero
-// Adds some simple checks to catch common errors.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+As y_mem_alloc, but using the 'calloc' function, rather than 'malloc().
+Adds some simple checks to catch common errors.
+*/
 char *y_array_alloc(int length, int bytesPerChar)
 {
     char *buff;
@@ -98,16 +104,17 @@ char *y_array_alloc(int length, int bytesPerChar)
 // --------------------------------------------------------------------------------------------------
 
 
+/*!
+\def y_get_int_from_char 
+\brief Convert a *single* character 0-9 to an int
 
-// --------------------------------------------------------------------------------------------------
-// Convert a *single* character 0-9 to an int
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//                int i;
-//            i=y_get_int_from_char('9');
-//                lr_message("i = %d", i + 1);        // result is "i = 10"
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+int i =y_get_int_from_char('9');
+lr_message("i = %d", i + 1);        // result is "i = 10"
+\endcode
+\author Floris Kraak
+*/
 /* int y_get_int_from_char(const char character)
 {
     char tmp[2];
