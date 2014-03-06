@@ -83,7 +83,7 @@ char *y_mem_alloc(const int size)
 \returns A pre-zeroed block of memory of the requisite size allocated using calloc().
 \warning The memory resulting from this call will need to be freed using free().
 
-As y_mem_alloc, but using the 'calloc' function, rather than 'malloc().
+As y_mem_alloc(), but using the 'calloc' function, rather than 'malloc().
 Adds some simple checks to catch common errors.
 */
 char *y_array_alloc(int length, int bytesPerChar)
@@ -825,15 +825,19 @@ void y_split( const char *originalParameter, const char *separator, const char *
 \param [in] parameter The parameter to chop.
 
 This does not support unicode, so it may not catch everything.
-Notably: Whitespace can be: " "(=space)        "\r"(=carrige return)    "\n"(=line feed)    "\t"(=tab)
+Supported whitespace is: 
+  " "(=space)
+  "\r"(=carrige return)
+  "\n"(=line feed)
+  "\t"(=tab)
 The result is stored in the original parameter.
 
 \b Example:
 \code
-//            lr_save_string("  WackoYackoDot ", "Test");
-//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "  WackoYackoDot "
-//            y_chop("Test");
-//            lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "WackoYackoDot"
+lr_save_string("  WackoYackoDot ", "Test");
+lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "  WackoYackoDot "
+y_chop("Test");
+lr_message(lr_eval_string("Original: >{Test}<\n"));    // {Test}= "WackoYackoDot"
 \endcode
 \author: Floris Kraak
 */
@@ -888,7 +892,7 @@ lr_save_string("test123", "par1");
 y_replace("par1", "1", "ing1");        // {par1} now has the value testing123
 \endcode
 */
-void y_replace( const char *parameter, const char *search, const char *replace)
+void y_replace( const char *parameter, const char *search, const char *replace )
 {
    int slen, rlen, plen;      // lengte van search, replace, en basis string
    int i = 0;                 // aantal replacements
@@ -957,19 +961,22 @@ void y_replace( const char *parameter, const char *search, const char *replace)
       free(buffer);
    }
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Remove all occurrences of a specified text from a parameter.
+\param [in] paramName The parameter to search.
+\param [in] removeMe The text to remove.
 
-// --------------------------------------------------------------------------------------------------
-// Lightweight alternative to the y_replace() function.
-// Remove all occorrances of 'removeMe' in the parameter named 'paramName'
-// Stores the result in the original parameter.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:     
-//          lr_save_string("test123", "par1");
-//          y_remove_string_from_parameter("par1", "1");   // {par1} now has the value test23
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This is a lighter weight alternative to the y_replace() function in cases where just want to remove text, rather than replace it with something else.
+Stores the result in the original parameter.
+
+\b Example:
+\code
+lr_save_string("test123", "par1");
+y_remove_string_from_parameter("par1", "1");   // {par1} now has the value test23
+\endcode
+*/
 void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 {
    char *parameter;
