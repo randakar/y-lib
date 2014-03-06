@@ -17,10 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
 #ifndef _STRING_C
+/*!
+\brief Double-include protection for y_string.c
+*/
 #define _STRING_C
-// --------------------------------------------------------------------------------------------------
 
 /*!
 \file y_string.c
@@ -31,11 +32,13 @@ Most string manipulation functions in the y-lib library take loadrunner paramete
 This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter).
 */
 
-
 #include "vugen.h"
 
 /*!
 \brief Ylib wrapper for malloc()
+\param [in] size Number of bytes required.
+\returns A pre-zeroed block of memory of the requisite size allocated using calloc()
+\warning The memory resulting from this call will need to be freed using free().
 
 Allocates a block of memory.
 Adds some simple checks to catch common errors.
@@ -70,11 +73,15 @@ char *y_mem_alloc(const int size)
     }
     return buff;
 }
-// --------------------------------------------------------------------------------------------------
 
 
 /*!
 \brief Allocates a character array and initializes all elements to zero
+\param [in] length Expected number of characters.
+\param [in] bytesPerChar How much space a single character requires. Usually this should contain "sizeof(char)".
+
+\returns A pre-zeroed block of memory of the requisite size allocated using calloc().
+\warning The memory resulting from this call will need to be freed using free().
 
 As y_mem_alloc, but using the 'calloc' function, rather than 'malloc().
 Adds some simple checks to catch common errors.
@@ -101,7 +108,6 @@ char *y_array_alloc(int length, int bytesPerChar)
     }
     return buff;
 }
-// --------------------------------------------------------------------------------------------------
 
 
 /*!
@@ -110,36 +116,28 @@ char *y_array_alloc(int length, int bytesPerChar)
 
 \b Example:
 \code
-int i =y_get_int_from_char('9');
-lr_message("i = %d", i + 1);        // result is "i = 10"
+int i = y_get_int_from_char('9');
+lr_message("i = %d", i);  // result is "i = 9"
 \endcode
 \author Floris Kraak
 */
-/* int y_get_int_from_char(const char character)
-{
-    char tmp[2];
-    tmp[0] = character;
-    tmp[1] = '\0';
-    return atoi(tmp);  
-}*/
 #define y_get_int_from_char(c) (isdigit(c) ? c - ‘0’: 0)
 
-// --------------------------------------------------------------------------------------------------
 
-
-//
-// Determine how much space storing a number in a string requires.
-// 
-// example:
-// {
-//    int input = 12345;
-//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 12345 = 5"
-//    input = -12345;
-//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of -12345 = 6"
-//    input = 0;
-//    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 0 = 1"
-// }
-// 
+/*!
+\brief Determines how much space storing decimal representation of a number into a string requires.
+\param [in] number An integer number that needs to be stored in a string in decimal notation.
+\returns The number of characters required.
+\b Example:
+\code
+    int input = 12345;
+    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 12345 = 5"
+    input = -12345;
+    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of -12345 = 6"
+    input = 0;
+    lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 0 = 1"
+\endcode
+*/
 size_t y_int_strlen(int number)
 {
     size_t result = 1;
@@ -156,17 +154,13 @@ size_t y_int_strlen(int number)
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// Given a parameter name, obtain the string required to fetch the contents of that parameter through
-// lr_eval_string().
-// 
-// Note: the return argument will need to be freed.
-// 
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-// 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Given a parameter name, obtain the string required to fetch the contents of that parameter through lr_eval_string().
+\param [in] param_name The parameter name to construct the eval text for.
+\returns a char* allocated with y_mem_alloc()
+\warning The return argument will need to be freed via a call to free()
+\author Floris Kraak
+*/
 char* y_get_parameter_eval_string(const char *param_name)
 {
     size_t size = strlen(param_name) +3; // parameter name + "{}" + '\0' (end of string)
@@ -176,14 +170,14 @@ char* y_get_parameter_eval_string(const char *param_name)
     return result;
 }
 
-// --------------------------------------------------------------------------------------------------
-// Test if the given parameter is empty or not yet set (these are two different things..)
-// 
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-// 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Test if the given parameter is empty or not yet set. 
+These are two different things.. 
+It would be nice if loadrunner had a builtin for this.
+\param [in] param_name The name of the parameter to 
+\returns 0 if the parameter is empty, a non-zero number otherwise.
+\author Floris Kraak
+*/
 int y_is_empty_parameter(const char *param_name)
 {
     char* param_eval_string = y_get_parameter_eval_string(param_name);
@@ -195,26 +189,24 @@ int y_is_empty_parameter(const char *param_name)
     return result;
 }
 
+/*!
+\brief Get the content of a parameter and return it as a char *
+\param [in] param_name The name of the parameter to
+\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string().
 
-// --------------------------------------------------------------------------------------------------
-// Get the content of the parameter named "paramName" and return it as a char *
-//
-// Todo: Make a derivative function getParameterNoZeroes() which uses lr_eval_string_ext()
-// and replaces all \x00 characters in the result with something else, like y_array_get_no_zeroes() does.
-// Then every user of this function should start using it.
-// Alternative: Make a function that cleans parameters of embedded null bytes and tell users to use that
-// before doing anything else with possible tainted values.
-// I think I like that one better to be honest. For the Array_ subset it's not that bad given the better
-// memory management but for this one .. muh.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//                char *test;
-//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
-//                test=y_get_parameter("TestParam");
-//                lr_message("Test: %s", test);
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This is useful mostly for code that wants to manipulate parameter contents but not care about the name of the parameter itself.
+
+\warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
+
+\b Example:
+\code
+char *test;
+lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+test=y_get_parameter("TestParam");
+lr_message("Test: %s", test);
+\endcode
+\author Floris Kraak
+*/
 char* y_get_parameter(const char* param_name)
 {
    char* tmp = y_get_parameter_eval_string(param_name);
