@@ -36,12 +36,13 @@ This usually makes it easy to correlate a value (capturing it in a parameter), p
 
 /*!
 \brief Ylib wrapper for malloc()
-\param [in] size Number of bytes required.
-\returns A pre-zeroed block of memory of the requisite size allocated using calloc()
-\warning The memory resulting from this call will need to be freed using free().
 
 Allocates a block of memory.
 Adds some simple checks to catch common errors.
+
+\param [in] size Number of bytes required.
+\returns A pre-zeroed block of memory of the requisite size allocated using calloc()
+\warning The memory resulting from this call will need to be freed using free().
 
 \b Example:
 \code
@@ -77,14 +78,13 @@ char *y_mem_alloc(const int size)
 
 /*!
 \brief Allocates a character array and initializes all elements to zero
-\param [in] length Expected number of characters.
-\param [in] bytesPerChar How much space a single character requires. Usually this should contain "sizeof(char)".
-
-\returns A pre-zeroed block of memory of the requisite size allocated using calloc().
-\warning The memory resulting from this call will need to be freed using free().
-
 As y_mem_alloc(), but using the 'calloc' function, rather than 'malloc().
 Adds some simple checks to catch common errors.
+
+\param [in] length Expected number of characters.
+\param [in] bytesPerChar How much space a single character requires. Usually this should contain "sizeof(char)".
+\returns A pre-zeroed block of memory of the requisite size allocated using calloc().
+\warning The memory resulting from this call will need to be freed using free().
 */
 char *y_array_alloc(int length, int bytesPerChar)
 {
@@ -128,6 +128,7 @@ lr_message("i = %d", i);  // result is "i = 9"
 \brief Calculate how much space storing the decimal representation of a number into a string requires.
 \param [in] number An integer number that needs to be stored in a string in decimal notation.
 \returns The number of characters required.
+
 \b Example:
 \code
     int input = 12345;
@@ -171,8 +172,8 @@ char* y_get_parameter_eval_string(const char *param_name)
 }
 
 /*!
-\brief Test if the given parameter is empty or not yet set. 
-These are two different things.. 
+\brief Test if the given parameter is empty or not yet set.
+(These are two different things..)
 It would be nice if loadrunner had a builtin for this.
 \param [in] param_name The name of the parameter to 
 \returns 0 if the parameter is empty, a non-zero number otherwise.
@@ -191,12 +192,12 @@ int y_is_empty_parameter(const char *param_name)
 
 /*!
 \brief Get the content of a parameter and return it as a char *
-\param [in] param_name The name of the parameter to fetch.
-\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string().
 
 This is useful mostly for code that wants to manipulate parameter contents but not care about the name of the parameter itself.
 (Something which applies to most of ylib ..)
 
+\param [in] param_name The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string().
 \warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
 
 \b Example:
@@ -220,8 +221,6 @@ char* y_get_parameter(const char* param_name)
 
 /*!
 \brief Get the content of a parameter and return it as a char *, or return NULL if it wasn't set.
-\param [in] param_name The name of the parameter to fetch.
-\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string(), or NULL.
 
 This will return null in the most typical case: A parameter saved with web_reg_save_param(), but never filled.
 The actual check employed here is a test that looks if the parameter content matches the parameter name surrounded by brackets.
@@ -232,6 +231,8 @@ if it was never filled to begin with. This function mimics the behaviour we real
 
 It would be really nice if there was a loadrunner built-in that did this.
 
+\param [in] param_name The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string(), or NULL.
 \warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
 \warning If the content of the parameter matches the name of the parameter surrounded by brackets this function will return NULL even if it's not empty.
 
@@ -263,12 +264,13 @@ char* y_get_parameter_or_null(const char* param_name)
 
 /*!
 \brief Get the content of a parameter and return it as a char * (malloc version)
+
+This is like y_get_parameter(), but the result will use memory allocated with y_mem_alloc(), instead of acquired from lr_eval_string().
+
 \param [in] src_param The name of the parameter to fetch.
 \returns A char* buffer containing the contents of the parameter, allocated with y_mem_alloc()
-
-This is like y_get_parameter, but the result will use memory allocated with y_mem_alloc(), instead of acquired from lr_eval_string().
-
 \warning Memory allocated in this manner must be freed using free() or it will linger.
+
 \b Example:
 \code
 char *test;
@@ -277,7 +279,7 @@ test=y_get_parameter_in_malloc_string("TestParam");
 lr_message("Test: %s", test);
 free(test);
 \endcode
-\@author Floris Kraak
+@author Floris Kraak
 */
 char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
@@ -293,13 +295,16 @@ char* y_get_parameter_with_malloc_or_null(const char *src_param)
     return result;
     //lr_log_message("Copied result: %s", result);
 }
+
+/*!
+\def y_get_parameter_malloc_string
+\brief Function removal - throws a compile error with instructions on what to do if someone tries to use the old function.
+*/
 #define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null
 
 
 /*!
 \brief Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)
-\param [in] source_param The name of the parameter to fetch.
-\returns A char* buffer containing the contents of the parameter, allocated with lr_eval_string_ext()
 
 Like y_get_parameter, but the result will use lr_eval_string_ext() to acquire it's memory,
 rather than getting it from lr_eval_string.
@@ -307,7 +312,10 @@ This can be useful when you want your data to remain in memory instead of gettin
 An example is the browser emulation code in y_emulate_browser.c, which sets up a linked list that has to stay allocated throughout the duration of the test.
 (And therefore never needs to be freed. But I digress.)
 
+\param [in] source_param The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated with lr_eval_string_ext()
 \warning Memory allocated in this manner must be freed using lr_eval_string_ext_free() or it will linger.
+
 \b Example:
 \code
 char *test;
@@ -330,12 +338,11 @@ char* y_get_parameter_ext(const char *source_param)
 
 /*!
 \brief Copy a string into a malloc'd piece of memory using strdup(), and lr_abort() if the allocation fails.
-\param [in] source The string to copy.
-\returns A copy of the string, allocated via strdup().
-
-See strdup() c++ documentation for what strdup does. 
+See the strdup() c++ documentation for what strdup does. 
 This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.
 
+\param [in] source The string to copy.
+\returns A copy of the string, allocated via strdup().
 \author Floris Kraak
 */
 char* y_strdup(char* source)
@@ -377,12 +384,12 @@ void y_copy_param(char* source_param, char* dest_param)
 
 /*!
 \brief Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any.
+In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
+This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
+
 \param [in] param_name The parameter to cleanse of nulls.
 \param [in] replacement A character that replaces any embedded nulls found.
 \returns The resulting parameter content.
-
-In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
-This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
 
 \b Example:
 \code
@@ -429,14 +436,15 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
 
 /*!
 \brief Clean a parameter by replacing any embedded NULL (null) characters with a replacement character.
-\param [in] param_name The parameter to cleanse of nulls.
-\param [in] replacement A character that replaces any embedded nulls found.
 
 This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s).
 Any such characters are replaced with replacement_char and the result is stored in the original parameter.
 When no null-character is found, the result is unaltered.
 
+\param [in] param_name The parameter to cleanse of nulls.
+\param [in] replacement A character that replaces any embedded nulls found.
 \warning Since this changes existing parameters be careful what types of parameters you use this on.
+
 \b Example:
 \code
 {
@@ -463,11 +471,11 @@ void y_cleanse_parameter_ext(const char* param_name, char replacement)
 
 /*!
 \brief Clean a parameter by replacing any embedded NULL (null) characters with a space.
-\param [in] param_name The parameter to cleanse of nulls.
-
 This is identical to y_cleanse_parameter_ext() with " " (a single space) selected as the replacement character.
 
+\param [in] param_name The parameter to cleanse of nulls.
 \warning Since this changes existing parameters be careful what types of parameters you use this on.
+
 \b Example:
 \code
 {
@@ -484,10 +492,11 @@ void y_cleanse_parameter(const char* param_name)
 
 /*!
 \brief Convert the content of a parameter to UPPERCASE. 
-\param [in] param_name The parameter to convert to uppercase.
 
 This will replace the content of the paramenter named in 'param_name' with the uppercased version.
 Does not affect non-alphabetic characters.
+
+\param [in] param_name The parameter to convert to uppercase.
 
 \b Example:
 \code
@@ -512,12 +521,12 @@ void y_uppercase_parameter(const char* param_name)
 
 /*!
 \brief Save a substring of a parameter into a new parameter.
+Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter.
+
 \param [in] original_parameter The parameter to search.
 \param [in] result_parameter The name of the parameter to store the result in.
 \param [in] left The left boundary - the text immediately preceding the substring in question.
 \param [in] right The right boundary.
-
-Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter.
 
 \b example:
 \code
@@ -660,12 +669,12 @@ void y_right( const char *original_parameter, const char *search, const char *re
 
 /*!
 \brief Split a string into 2 parts using the search string. Save the rightmost part into the result parameter.
+This is almost the same as y_right(), but doesn't stop at the first match - instead, it uses the *last* match.
+It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression..
+
 \param [in] original_parameter The parameter to search.
 \param [in] search The text preceding the text we're looking for.
 \param [in] result_parameter The name of the parameter to store the result in.
-
-This is almost the same as y_right(), but doesn't stop at the first match - instead, it uses the *last* match.
-It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression..
 
 \b Example:
 \code
@@ -716,16 +725,15 @@ void y_last_right( const char *original_parameter, const char *search, const cha
 
 /*!
 \brief Split a string into 2 parts based on a search string
+
+\warning Unlike the others this one does not use parameter, but raw char pointers instead.
+This mostly to accomodate y_array_split().
+For the parameter version use y_split().
+
 \param [in] original The string to search.
 \param [in] separator The string to use as a seperation marker between the two parts.
 \param [in] left A preallocated char* buffer to hold the left hand side of the result.
 \param [in] right A preallocated char* buffer to hold the right hand side of the result.
-
-\warning Unlike the others this one does not use parameter, but raw char pointers instead.
-This mostly to accomodate the primary user - y_array_split();
-
-For the parameter version use y_split().
-
 \author Floris Kraak
 */
 void y_split_str( const char *original, const char *separator, char *left, char *right)
@@ -758,12 +766,12 @@ void y_split_str( const char *original, const char *separator, char *left, char 
 
 /*!
 \brief Split a parameter in two based on a seperating string.
+If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter.
+
 \param [in] originalParameter The parameter to search.
 \param [in] separator The string to use as a seperation marker between the two parts.
 \param [in] leftParameter The parameter that will hold the left hand side of the split result.
 \param [in] rightParameter The parameter that will hold the right hand side of the split result.
-
-If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter.
 
 \b Example:
 \code
@@ -822,7 +830,6 @@ void y_split( const char *originalParameter, const char *separator, const char *
 
 /*!
 \brief Remove leading and trailing whitespace from a parameter.
-\param [in] parameter The parameter to chop.
 
 This does not support unicode, so it may not catch everything.
 Supported whitespace is: 
@@ -831,6 +838,8 @@ Supported whitespace is:
   "\n"(=line feed)
   "\t"(=tab)
 The result is stored in the original parameter.
+
+\param [in] parameter The parameter to chop.
 
 \b Example:
 \code
@@ -879,13 +888,15 @@ void y_chop( const char* parameter )
 
 /*!
 \brief Search and replace inside a parameter.
+This replaces the content of the originally passed-in parameter with the new content when done.
+
+\note This one has a built-in search/y_replace limit. After 1000 replacements it will stop.
+If 1000 replacements in a single parameter does not suffice consider using other methods.
+
 \param [in] parameter The parameter to search.
 \param [in] search What to search for.
 \param [in] replace What to replace it with.
 
-This replaces the content of the originally passed-in parameter with the new content when done.
-
-\note This one has a built-in search/y_replace limit when search > y_replace. After 1000 replacements it will stop.
 \b Example:
 \code
 lr_save_string("test123", "par1");
@@ -965,11 +976,12 @@ void y_replace( const char *parameter, const char *search, const char *replace )
 
 /*!
 \brief Remove all occurrences of a specified text from a parameter.
-\param [in] paramName The parameter to search.
-\param [in] removeMe The text to remove.
 
 This is a lighter weight alternative to the y_replace() function in cases where just want to remove text, rather than replace it with something else.
 Stores the result in the original parameter.
+
+\param [in] paramName The parameter to search.
+\param [in] removeMe The text to remove.
 
 \b Example:
 \code
