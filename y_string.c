@@ -125,7 +125,7 @@ lr_message("i = %d", i);  // result is "i = 9"
 
 
 /*!
-\brief Determines how much space storing decimal representation of a number into a string requires.
+\brief Calculate how much space storing the decimal representation of a number into a string requires.
 \param [in] number An integer number that needs to be stored in a string in decimal notation.
 \returns The number of characters required.
 \b Example:
@@ -155,7 +155,7 @@ size_t y_int_strlen(int number)
 
 
 /*!
-\brief Given a parameter name, obtain the string required to fetch the contents of that parameter through lr_eval_string().
+\brief Obtain the string required to fetch the contents of a parameter through lr_eval_string().
 \param [in] param_name The parameter name to construct the eval text for.
 \returns a char* allocated with y_mem_alloc()
 \warning The return argument will need to be freed via a call to free()
