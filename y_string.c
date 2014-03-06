@@ -191,10 +191,11 @@ int y_is_empty_parameter(const char *param_name)
 
 /*!
 \brief Get the content of a parameter and return it as a char *
-\param [in] param_name The name of the parameter to
+\param [in] param_name The name of the parameter to fetch.
 \returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string().
 
 This is useful mostly for code that wants to manipulate parameter contents but not care about the name of the parameter itself.
+(Something which applies to most of ylib ..)
 
 \warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
 
@@ -215,9 +216,34 @@ char* y_get_parameter(const char* param_name)
    
    return parameter;
 }
-// --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Get the content of a parameter and return it as a char *, or return NULL if it wasn't set.
+\param [in] param_name The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string(), or NULL.
+
+This will return null in the most typical case: A parameter saved with web_reg_save_param(), but never filled.
+The actual check employed here is a test that looks if the parameter content matches the parameter name surrounded by brackets.
+
+If the parameter was never filled, lr_eval_string() will return that. However, in many more elaborate cases we really need to know
+if it was never filled to begin with. This function mimics the behaviour we really want to see in LR, but don't have.
+(At least, not in LR 11.05, the version I'm working with.)
+
+It would be really nice if there was a loadrunner built-in that did this.
+
+\warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
+\warning If the content of the parameter matches the name of the parameter surrounded by brackets this function will return NULL even if it's not empty.
+
+\b Example:
+\code
+char *test;
+lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+test=y_get_parameter("TestParam");
+lr_message("Test: %s", test);
+\endcode
+\author Floris Kraak
+*/
 char* y_get_parameter_or_null(const char* param_name)
 {
     char* param_eval_string = y_get_parameter_eval_string(param_name);
@@ -234,24 +260,25 @@ char* y_get_parameter_or_null(const char* param_name)
         return param;
 }
 
-// --------------------------------------------------------------------------------------------------
-// Get the content of the parameter named "src_param" and return it as a char *
-//
-// Like y_get_parameter, but the result will use memory allocated with malloc(), rather than gotten
-// from loadrunner memory by calling lr_eval_string() on a parameter name.
-// 
-// WARNING: Memory allocated in this manner MUST be freed using "free()" if called more than once per
-// loadtest, or you will run the virtual user out of memory.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//                char *test;
-//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
-//                test=y_get_parameter_in_malloc_string("TestParam");
-//                lr_message("Test: %s", test);
-//                free(test);
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*!
+\brief Get the content of a parameter and return it as a char * (malloc version)
+\param [in] src_param The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated with y_mem_alloc()
+
+This is like y_get_parameter, but the result will use memory allocated with y_mem_alloc(), instead of acquired from lr_eval_string().
+
+\warning Memory allocated in this manner must be freed using free() or it will linger.
+\b Example:
+\code
+char *test;
+lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+test=y_get_parameter_in_malloc_string("TestParam");
+lr_message("Test: %s", test);
+free(test);
+\endcode
+\@author Floris Kraak
+*/
 char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
     char *result;
@@ -269,24 +296,28 @@ char* y_get_parameter_with_malloc_or_null(const char *src_param)
 #define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null
 
 
-// --------------------------------------------------------------------------------------------------
-// Get the content of the parameter named "src_param" and return it as a char *
-//
-// Like y_get_parameter, but the result will use lr_eval_string_ext() underneath, rather than 
-// calling lr_eval_string() on a parameter name.
-// 
-// WARNING: Memory allocated in this manner MUST be freed using "lr_eval_string_ext_free()" or you 
-// may run the virtual user out of memory.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//                char *test;
-//                lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
-//                test=y_get_parameter_ext("TestParam");
-//                lr_message("Test: %s", test);
-//                lr_eval_string_ext_free(test);
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)
+\param [in] source_param The name of the parameter to fetch.
+\returns A char* buffer containing the contents of the parameter, allocated with lr_eval_string_ext()
+
+Like y_get_parameter, but the result will use lr_eval_string_ext() to acquire it's memory,
+rather than getting it from lr_eval_string.
+This can be useful when you want your data to remain in memory instead of getting freed at the end of each iteration.
+An example is the browser emulation code in y_emulate_browser.c, which sets up a linked list that has to stay allocated throughout the duration of the test.
+(And therefore never needs to be freed. But I digress.)
+
+\warning Memory allocated in this manner must be freed using lr_eval_string_ext_free() or it will linger.
+\b Example:
+\code
+char *test;
+lr_save_string("test123", "TestParam");        // save the string "test123" into parameter {TestParam}
+test=y_get_parameter_ext("TestParam");
+lr_message("Test: %s", test);
+lr_eval_string_ext_free(test);
+\endcode
+\author Floris Kraak
+*/
 char* y_get_parameter_ext(const char *source_param)
 {
     char* buffer;
@@ -297,12 +328,16 @@ char* y_get_parameter_ext(const char *source_param)
     return buffer;
 }
 
-// --------------------------------------------------------------------------------------------------
-// Copy a string into a malloc'd piece of memory using strdup(), and lr_abort() if the allocation fails.
-//
-// See strdup() c++ documentation for what strdup does. This is just a simple wrapper around it.
-//
-// @author Floris Kraak
+/*!
+\brief Copy a string into a malloc'd piece of memory using strdup(), and lr_abort() if the allocation fails.
+\param [in] source The string to copy.
+\returns A copy of the string, allocated via strdup().
+
+See strdup() c++ documentation for what strdup does. 
+This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.
+
+\author Floris Kraak
+*/
 char* y_strdup(char* source)
 {
     char* result = strdup(source);
@@ -314,15 +349,20 @@ char* y_strdup(char* source)
     return result;
 }
 
-// --------------------------------------------------------------------------------------------------
-// Semi-efficiënt parameter copy using lr_eval_string_ext() with appropriate freeing of memory.
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//                lr_save_string("text", "param_a");
-//                y_copy_param("param_a", "param_b");   // Results in an exact copy of the content of param_a being stored in param_b.
-//                lr_log_message(lr_eval_string("param_b: {param_b}")); // Prints "param_b: text".
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Copy a parameter to a new name.
+This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory.
+\param [in] source_param The parameter to copy.
+\param [in] dest_param The name of the parameter to copy the first parameter to.
+
+\b Example:
+\code
+lr_save_string("text", "param_a");
+y_copy_param("param_a", "param_b");   // Results in an exact copy of the content of param_a being stored in param_b.
+lr_log_message(lr_eval_string("param_b: {param_b}")); // Prints "param_b: text".
+\endcode
+\author Floris Kraak
+*/
 void y_copy_param(char* source_param, char* dest_param)
 {
     char* buffer;
@@ -334,22 +374,27 @@ void y_copy_param(char* source_param, char* dest_param)
     lr_eval_string_ext_free(&buffer);          // Free the buffer.
 }
 
-// --------------------------------------------------------------------------------------------------
-// In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL
-// characters which make further processing harder. This will fetch a parameter but "cleanse" it
-// from such contamination, leaving the rest of the data unaltered.
-// 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// example usage:
-// 
-// {
-//     char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-//     char *tmp;
-//     lr_save_var(buffer, 11, 0, "broken");
-//     tmp = y_get_cleansed_parameter("broken", '!');
-//     lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
-// }
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*!
+\brief Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any.
+\param [in] param_name The parameter to cleanse of nulls.
+\param [in] replacement A character that replaces any embedded nulls found.
+\returns The resulting parameter content.
+
+In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
+This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
+
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   char *tmp;
+   lr_save_var(buffer, 11, 0, "broken");
+   tmp = y_get_cleansed_parameter("broken", '!');
+   lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
+}
+\endcode
+*/
 char* y_get_cleansed_parameter(const char* param_name, char replacement)
 {
    char* result;
@@ -381,23 +426,26 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
    }
    return result;
 }
-// --------------------------------------------------------------------------------------------------
 
-// --------------------------------------------------------------------------------------------------
-// Clean a parameter by replacing any embedded \x00 (null) characters with replacement_char.
-// This would normally only happen if you have used to web_reg_save_param() and the result contains
-// one or more null-character(s).
-// Any such characters are replaced with replacement_char.
-// Since this changes existing parameters be careful what types of parameters you use this on. 
-// But when no null-character is found, the result is unaltered.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-// {
-//    char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-//    lr_save_var(buffer, 11, 0, "broken");
-//    y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
-// }
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Clean a parameter by replacing any embedded \x00 (null) characters with a replacement character.
+\param [in] param_name The parameter to cleanse of nulls.
+\param [in] replacement A character that replaces any embedded nulls found.
+
+This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s).
+Any such characters are replaced with replacement_char and the result is stored in the original parameter.
+When no null-character is found, the result is unaltered.
+
+\warning Since this changes existing parameters be careful what types of parameters you use this on.
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   lr_save_var(buffer, 11, 0, "broken");
+   y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
+}
+\endcode
+*/
 void y_cleanse_parameter_ext(const char* param_name, char replacement)
 {
     if( param_name && strlen(param_name) )
@@ -413,43 +461,43 @@ void y_cleanse_parameter_ext(const char* param_name, char replacement)
     }
 }
 
-// --------------------------------------------------------------------------------------------------
-// Clean a parameter by removing any embedded \x00 (null) characters from it.
-// Any such characters are replaced with ' '. (space)
-// This would only happen if you have used to web_reg_save_param() and the result contains a 
-// null-character. 
-// Since this changes existing parameters be careful what types of parameters you use this on.
-// But when no null-character is found, the result is unaltered.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-// {
-//    char buffer[1024] = { 'b', 'r','o', '\0', 'k', 'e', 'n', '\0'};
-//    lr_save_var(buffer, 8, 0, "broken");
-//    y_cleanse_parameter("broken"); // saves "bro ken " into the parameter called "broken"
-// }
-// lr_log_message("----");
-// {
-//    char buffer[1024] = { 'b', 'r','o', '\0', 'k', 'e', 'n', 'Z', 'z', 'Z'};
-//    lr_save_var(buffer, 7, 0, "broken");
-//    y_cleanse_parameter("broken"); // saves "bro ken" into the parameter called "broken"
-// }
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Clean a parameter by replacing any embedded \x00 (null) characters with a space.
+\param [in] param_name The parameter to cleanse of nulls.
+
+This is identical to y_cleanse_parameter_ext() with " " (a single space) selected as the replacement character.
+
+\warning Since this changes existing parameters be careful what types of parameters you use this on.
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   lr_save_var(buffer, 11, 0, "broken");
+   y_cleanse_parameter("broken"); // will save " b ro ken  " into the "broken" parameter.
+}
+\endcode
+*/
 void y_cleanse_parameter(const char* param_name)
 {
     y_cleanse_parameter_ext(param_name, ' ');
 }
 
+/*!
+\brief Convert the content of a parameter to UPPERCASE. 
+\param [in] param_name The parameter to convert to uppercase.
 
-// --------------------------------------------------------------------------------------------------
-// Convert the content of a parameter to UPPERCASE. Does not affect non-alphabetic characters.
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            lr_save_string("aBcDeFgHiJ &*45#$@#)!({}", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));
-//            y_uppercase_parameter("Test");
-//            lr_message(lr_eval_string("Altered: {Test}\n"));
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This will replace the content of the paramenter named in 'param_name' with the uppercased version.
+Does not affect non-alphabetic characters.
+
+\b Example:
+\code
+lr_save_string("aBcDeFgHiJ &*45#$@#)!({}", "Test");
+lr_message(lr_eval_string("Original: {Test}\n"));
+y_uppercase_parameter("Test");
+lr_message(lr_eval_string("Altered: {Test}\n")); // prints "Altered: ABCDEFGHIJ &*45#$@#)!({}".
+\endcode
+\author Floris Kraak
+*/
 void y_uppercase_parameter(const char* param_name)
 {
     char *result = y_get_parameter_or_null(param_name);
@@ -461,24 +509,26 @@ void y_uppercase_parameter(const char* param_name)
     strupr(result);
     lr_save_string(result, param_name);
 }
-// --------------------------------------------------------------------------------------------------
 
+/*!
+\brief Save a substring of a parameter into a new parameter.
+\param [in] original_parameter The parameter to search.
+\param [in] result_parameter The name of the parameter to store the result in.
+\param [in] left The left boundary - the text immediately preceding the substring in question.
+\param [in] right The right boundary.
 
-// --------------------------------------------------------------------------------------------------
-// Search for a specific substring inside a parameter using left and right boundaries and save that 
-// into a new parameter.
-// 
-// @author André Luyer + Marcel Jepma + Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//   {
-//      char* str = "LorumIpsumLipsum";
-//      lr_save_string(str, "param");
-//      y_substr("param", "param", "Lorum", "Lipsum");
-//      lr_log_message(lr_eval_string("{param}")); // Prints "Ipsum".
-//   }
-//
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter.
+
+\b example:
+{
+   char* str = "LorumIpsumLipsum";
+   lr_save_string(str, "param");
+   y_substr("param", "param", "Lorum", "Lipsum");
+   lr_log_message(lr_eval_string("{param}")); // Prints "Ipsum".
+}
+\endcode
+\author André Luyer, Marcel Jepma & Floris Kraak
+*/
 void y_substr(const char *original_parameter, const char *result_parameter, const char *left, const char *right)
 {
     char *p1;
@@ -508,18 +558,21 @@ void y_substr(const char *original_parameter, const char *result_parameter, cons
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// Split the string into 2 parts using the search string. Save the left part into the resultParameter.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            lr_save_string("AstrixObelixIdefix", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
-//            y_left( "Test", "Obelix", "Test2" );
-//            lr_message(lr_eval_string("New Param: {Test2}\n"));    // {Test2}=Astrix
-//
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*!
+\brief Split a string into 2 parts using the search string. Save the left part into the result parameter.
+\param [in] original_parameter The parameter to search.
+\param [in] search The text after the text we're looking for.
+\param [in] result_parameter The name of the parameter to store the result in.
+
+\b Example:
+\code
+lr_save_string("AstrixObelixIdefix", "Test");
+lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
+y_left( "Test", "Obelix", "Test2" );
+lr_message(lr_eval_string("New Param: {Test2}\n"));    // {Test2}=Astrix
+\endcode
+\author Floris Kraak
+*/
 void y_left( const char *original_parameter, const char *search, const char *result_parameter )
 {
     char *original = y_get_parameter_or_null(original_parameter);
@@ -558,22 +611,21 @@ void y_left( const char *original_parameter, const char *search, const char *res
 // --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Split a string into 2 parts using the search string. Save the right part into the result parameter.
+\param [in] original_parameter The parameter to search.
+\param [in] search The text preceding the text we're looking for.
+\param [in] result_parameter The name of the parameter to store the result in.
 
-// --------------------------------------------------------------------------------------------------
-// Split the string into 2 parts, using the search string. Save the right part into the 
-// resultParameter.
-//
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            lr_save_string("AstrixObelixIdefix", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
-//            y_right( "Test", "Obelix", "Test4" );
-//            lr_message(lr_eval_string("New Param: {Test4}\n"));    //    {Test4}=Idefix
-//
-//    note: previous name: head() and  y_head()
-//
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+lr_save_string("AstrixObelixIdefix", "Test");
+lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
+y_right( "Test", "Obelix", "Test4" );
+lr_message(lr_eval_string("New Param: {Test4}\n"));    //    {Test4}=Idefix
+\endcode
+\author Floris Kraak
+*/
 void y_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
     char* original = y_get_parameter_or_null(original_parameter);
@@ -607,20 +659,24 @@ void y_right( const char *original_parameter, const char *search, const char *re
 // --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Split a string into 2 parts using the search string. Save the rightmost part into the result parameter.
+\param [in] original_parameter The parameter to search.
+\param [in] search The text preceding the text we're looking for.
+\param [in] result_parameter The name of the parameter to store the result in.
 
-// --------------------------------------------------------------------------------------------------
-// Same as y_right(), but don't stop at the first match, rather use the last match instead.
-// @author Floris Kraak
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//        example usage:
-//            lr_save_string("WackoYackoDotWarner", "Test");
-//            lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=WackoYackoDotWarner
-//            y_last_right( "Test", "ot", "Test2" );
-//            lr_message(lr_eval_string("New Param: {Test2}\n"));
-//
-//    note: previous name: tail_tail()
-//
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This is almost the same as y_right(), but doesn't stop at the first match - instead, it uses the *last* match.
+It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression..
+
+\b Example:
+\code
+lr_save_string("AstrixObelixIdefix", "Test");
+lr_message(lr_eval_string("Original: {Test}\n"));    // {Test}=AstrixObelixIdefix
+y_right( "Test", "Obelix", "Test4" );
+lr_message(lr_eval_string("New Param: {Test4}\n"));    //    {Test4}=Idefix
+\endcode
+\author Floris Kraak
+*/
 void y_last_right( const char *original_parameter, const char *search, const char *result_parameter)
 {
     char *result = y_get_parameter(original_parameter);
