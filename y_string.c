@@ -17,11 +17,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+/*! 
+\file y_string.c
+\brief Y-lib string function library
+*/
+
 #ifndef _STRING_C
 /*!
+\cond include_protection
 \brief Double-include protection for y_string.c
 */
 #define _STRING_C
+//! \endcond include_protection
 
 /*!
 \file y_string.c
