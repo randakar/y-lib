@@ -12,6 +12,11 @@
  * Or: add to include directory and add the include to lhrun.h on all Vugen machines and load generators.
  */
 
+/*!
+\file vugen.h
+\brief Standard C function headers
+*/
+
 #ifndef _VUGEN_H_
 #define _VUGEN_H_
 
