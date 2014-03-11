@@ -22,13 +22,9 @@
 \file y_string.c
 \brief Y-lib string function library
 */
-
-#ifndef _STRING_C
-/*!
-\cond include_protection
-\brief Double-include protection for y_string.c
-*/
-#define _STRING_C
+#ifndef _Y_STRING_C_
+//! \cond include_protection
+#define _Y_STRING_C_
 //! \endcond include_protection
 
 /*!
@@ -1030,5 +1026,5 @@ void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 
 
 // --------------------------------------------------------------------------------------------------
-#endif // _STRING_C
+#endif // _Y_STRING_C_
 
