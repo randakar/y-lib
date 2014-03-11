@@ -1,21 +1,21 @@
-/* vugen.h - A.U. Luyer - 2012-03-27
- * Last update 2014-01-09
+/*!
+ * \file vugen.h
+ * \brief Standard C function headers
+ *
  * This header file contains the most used 'standard C functions' in Vugen scripts.
  * By declaring these functions properly the compiler can check if these functions 
  * are used correctly and apply implicit conversions when necessary.
+ *
  * This header file 'de-strips' the compiler in Vugen.
  * It contains all functions mentioned in the HP LoadRunner Online Function Reference.
- * NOTE: Sites like http://www.cplusplus.com/reference/clibrary/ explain the standard C functions
+ * \note Sites like http://www.cplusplus.com/reference/clibrary/ explain the standard C functions
  * better than the HP LoadRunner Online Function Reference.
  *
- * Usage: add vugen.h to the script and add #include "vugen.h" to globals.h.
+ * \b Usage: Automatically included as part of y-lib.
+ * Alternatively: add vugen.h to the script and add \code #include "vugen.h" \endcode to globals.h.
  * Or: add to include directory and add the include to lhrun.h on all Vugen machines and load generators.
+ * \author A.U. Luyer
  */
-
-/*!
-\file vugen.h
-\brief Standard C function headers
-*/
 
 #ifndef _VUGEN_H_
 #define _VUGEN_H_
