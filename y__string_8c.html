@@ -50,15 +50,14 @@
 </div><!--header-->
 <div class="contents">
 
-<p>Contains low level string and memory manipulation functions, insofar not provided by the C standard.  
+<p>Y-lib string function library.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="vugen_8h_source.html">vugen.h</a>&quot;</code><br/>
-</div><table class="memberdecls">
+</div>
+<p><a href="y__string_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8eb7d5c19127eb6fe246a36adcaf3551">_STRING_C</a></td></tr>
-<tr class="memdesc:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Double-include protection for <a class="el" href="y__string_8c.html" title="Contains low level string and memory manipulation functions, insofar not provided by the C standard...">y_string.c</a>.  <a href="#a8eb7d5c19127eb6fe246a36adcaf3551">More...</a><br/></td></tr>
-<tr class="separator:a8eb7d5c19127eb6fe246a36adcaf3551"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5">y_get_int_from_char</a>(c)&#160;&#160;&#160;(<a class="el" href="vugen_8h.html#a2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td></tr>
 <tr class="memdesc:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <em>single</em> character 0-9 to an int.  <a href="#aecc6f4f2a809c8f7ef600a36d3c60df5">More...</a><br/></td></tr>
 <tr class="separator:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -96,7 +95,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)  <a href="#aa80c4db4c75cdc0c03aad6f69b3dff3c">More...</a><br/></td></tr>
 <tr class="separator:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a> (char *source)</td></tr>
-<tr class="memdesc:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.  <a href="#a8cba325c05b63bbbdc499702c4f5c6e9">More...</a><br/></td></tr>
+<tr class="memdesc:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.  <a href="#a8cba325c05b63bbbdc499702c4f5c6e9">More...</a><br/></td></tr>
 <tr class="separator:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b01815915da19b48aaca1a7a5ba30b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a> (char *source_param, char *dest_param)</td></tr>
 <tr class="memdesc:a7b01815915da19b48aaca1a7a5ba30b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a parameter to a new name. This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory.  <a href="#a7b01815915da19b48aaca1a7a5ba30b2">More...</a><br/></td></tr>
@@ -142,23 +141,12 @@ Functions</h2></td></tr>
 <tr class="separator:abdcde34b0a15516dd5b47b29196cf61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains low level string and memory manipulation functions, insofar not provided by the C standard. </p>
+<div class="textblock"><p>Y-lib string function library. </p>
+<p>Contains low level string and memory manipulation functions, insofar not provided by the C standard.</p>
 <p>The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice. Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters. This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter). </p>
+
+<p>Definition in file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a8eb7d5c19127eb6fe246a36adcaf3551"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _STRING_C</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Double-include protection for <a class="el" href="y__string_8c.html" title="Contains low level string and memory manipulation functions, insofar not provided by the C standard...">y_string.c</a>. </p>
-
-</div>
-</div>
 <a class="anchor" id="aecc6f4f2a809c8f7ef600a36d3c60df5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -179,6 +167,8 @@ Functions</h2></td></tr>
 <div class="line">lr_message(<span class="stringliteral">&quot;i = %d&quot;</span>, i);  <span class="comment">// result is &quot;i = 9&quot;</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00128">128</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ae7859b6668105d69bd9d9c7189bf9f34"></a>
@@ -192,6 +182,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function removal - throws a compile error with instructions on what to do if someone tries to use the old function. </p>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00307">307</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -231,6 +223,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a>. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>. </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00093">93</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a27ae9506d1f756e8138c9eb85d098308"></a>
@@ -261,6 +255,8 @@ Functions</h2></td></tr>
 <div class="line"><a class="code" href="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308">y_chop</a>(<span class="stringliteral">&quot;Test&quot;</span>);</div>
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Original: &gt;{Test}&lt;\n&quot;</span>));    <span class="comment">// {Test}= &quot;WackoYackoDot&quot;</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>: Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00857">857</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -293,6 +289,8 @@ Functions</h2></td></tr>
 <div class="line">   <a class="code" href="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>); <span class="comment">// will save &quot; b ro ken  &quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00492">492</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a36d93cd0fa4942600d58fcb81bf6f106"></a>
@@ -336,6 +334,8 @@ Functions</h2></td></tr>
 <div class="line">   <a class="code" href="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>); <span class="comment">// will save &quot;!b!ro!ken!!&quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00461">461</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7b01815915da19b48aaca1a7a5ba30b2"></a>
@@ -375,6 +375,8 @@ Functions</h2></td></tr>
 <div class="line"><a class="code" href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a>(<span class="stringliteral">&quot;param_a&quot;</span>, <span class="stringliteral">&quot;param_b&quot;</span>);   <span class="comment">// Results in an exact copy of the content of param_a being stored in param_b.</span></div>
 <div class="line">lr_log_message(lr_eval_string(<span class="stringliteral">&quot;param_b: {param_b}&quot;</span>)); <span class="comment">// Prints &quot;param_b: text&quot;.</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00377">377</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -420,6 +422,8 @@ Functions</h2></td></tr>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, tmp); <span class="comment">// Prints &quot;Result: !b!ro!ken!!&quot;.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00409">409</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8252a459f15c52a8680fff9ddbd7356c"></a>
@@ -453,6 +457,8 @@ Functions</h2></td></tr>
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00216">216</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ab903d513f84dc0cd3f7af7acf67e2fb2"></a>
@@ -479,6 +485,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>a char* allocated with <a class="el" href="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The return argument will need to be freed via a call to <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00169">169</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -513,6 +521,8 @@ Functions</h2></td></tr>
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
 <div class="line">lr_eval_string_ext_free(test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00333">333</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -551,6 +561,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00252">252</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ac0c6a383cf2934da4acc1451a1cdea21"></a>
@@ -585,6 +597,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00288">288</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ae32fba754c61429341686d6a5e387a06"></a>
@@ -617,6 +631,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">input = 0;</div>
 <div class="line">lr_log_message(<span class="stringliteral">&quot;Length of %d = %d&quot;</span>, input, <a class="code" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a>(input)); <span class="comment">// Prints &quot;Length of 0 = 1&quot;</span></div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00146">146</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ac0778c8b8f3da732862ab82176857be8"></a>
@@ -642,6 +658,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if the parameter is empty, a non-zero number otherwise. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00186">186</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -691,6 +709,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test4}\n&quot;</span>));    <span class="comment">//    {Test4}=Idefix</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00692">692</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abced95074b83aebcfb1454f15890c2b5"></a>
@@ -739,6 +759,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test2}\n&quot;</span>));    <span class="comment">// {Test2}=Astrix</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00588">588</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a44660f85cba534a4c186c29ec698c4fb"></a>
@@ -773,6 +795,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_log_message(<span class="stringliteral">&quot;Copy of example string contains: %s&quot;</span>, example_string_copy);</div>
 <div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00061">61</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abdcde34b0a15516dd5b47b29196cf61b"></a>
@@ -812,6 +836,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;par1&quot;</span>);</div>
 <div class="line"><a class="code" href="y__string_8c.html#abdcde34b0a15516dd5b47b29196cf61b">y_remove_string_from_parameter</a>(<span class="stringliteral">&quot;par1&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>);   <span class="comment">// {par1} now has the value test23</span></div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00996">996</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a9ff7d0f5c99aad7760fa9f32d0d21d25"></a>
@@ -858,6 +884,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="fragment"><div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;par1&quot;</span>);</div>
 <div class="line"><a class="code" href="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25">y_replace</a>(<span class="stringliteral">&quot;par1&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>, <span class="stringliteral">&quot;ing1&quot;</span>);        <span class="comment">// {par1} now has the value testing123</span></div>
 </div><!-- fragment --> 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00910">910</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8fa8cb819a971b562b07cf9ab9c84bba"></a>
@@ -905,6 +933,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line"><a class="code" href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba">y_right</a>( <span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;Obelix&quot;</span>, <span class="stringliteral">&quot;Test4&quot;</span> );</div>
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;New Param: {Test4}\n&quot;</span>));    <span class="comment">//    {Test4}=Idefix</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00641">641</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -963,6 +993,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Right   : {Right}\n&quot;</span>));   <span class="comment">// {Right}   = DotWarner</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00791">791</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a18ccd408f76375cb48aceed43aa76bff"></a>
@@ -1014,6 +1046,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00743">743</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8cba325c05b63bbbdc499702c4f5c6e9"></a>
@@ -1030,15 +1064,17 @@ If the content of the parameter matches the name of the parameter surrounded by 
       </table>
 </div><div class="memdoc">
 
-<p>Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. </p>
+<p>Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>The string to copy. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A copy of the string, allocated via <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup()</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of the string, allocated via <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00352">352</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
 
 </div>
 </div>
@@ -1095,6 +1131,8 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_log_message(lr_eval_string(<span class="stringliteral">&quot;{param}&quot;</span>)); <span class="comment">// Prints &quot;Ipsum&quot;.</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>André Luyer, Marcel Jepma &amp; Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00544">544</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a20420f9a082c1e2a89b70409d6008931"></a>
@@ -1126,12 +1164,14 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">lr_message(lr_eval_string(<span class="stringliteral">&quot;Altered: {Test}\n&quot;</span>)); <span class="comment">// prints &quot;Altered: ABCDEFGHIJ &amp;*45#$@#)!({}&quot;.</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
+<p>Definition at line <a class="el" href="y__string_8c_source.html#l00514">514</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 17:24:10 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 13 2014 09:52:54 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

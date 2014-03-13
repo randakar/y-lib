@@ -13,7 +13,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a03f9875d1bbb1e1cf7762b0a0e633af9"><param name="Name" value="_LOGGING_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#a9b38e25d0662fd8d75068df8b8906e01"><param name="Name" value="_PARAM_ARRAY_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__profile_8c.html#acf53fbbf885abf25588b1c4eba35f47a"><param name="Name" value="_PROFILE_C"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8eb7d5c19127eb6fe246a36adcaf3551"><param name="Name" value="_STRING_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__timeb.html"><param name="Name" value="_timeb"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__timeb.html#a43a79bdcf9506128af4cfa1d08ce722f"><param name="Name" value="dstflag"></OBJECT>
@@ -679,7 +678,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html"><param name="Name" value="y_string.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8eb7d5c19127eb6fe246a36adcaf3551"><param name="Name" value="_STRING_C"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a697dba8aa84b866198cb29d2c1e4823f"><param name="Name" value="y_array_alloc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308"><param name="Name" value="y_chop"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="Name" value="y_cleanse_parameter"></OBJECT>
@@ -816,8 +814,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a9bd62e667d911b26ebd5e4474512dea8"><param name="Name" value="Y_TRANS_STATUS_AUTO_STARTED"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a3cd413fda78838a298f3a20d3c9abca1"><param name="Name" value="Y_TRANS_STATUS_NONE"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1d92bb711f1339755401fc2bd888e7bb"><param name="Name" value="Y_TRANS_STATUS_STARTED"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a4967a9e9cfcee3a09564b52394bb3b14"><param name="Name" value="Y_TRANS_WEB_LINK"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a7e6757e8923016916ff2ed54c462dc28"><param name="Name" value="y_trans_web_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a4967a9e9cfcee3a09564b52394bb3b14"><param name="Name" value="Y_TRANS_WEB_LINK"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1d68e4dcb0ab1e22daf3046673f4629f"><param name="Name" value="y_trigger_func"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a882f93c4823bcf37acfdc030e89d1e37"><param name="Name" value="y_waterfall_random_weighted_continue"></OBJECT>
   </UL>
