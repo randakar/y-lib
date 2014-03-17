@@ -71,17 +71,9 @@ char* y_get_datetimestamp()
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
 }
 
-//
-// Hmn, do we even still need this?
-// 
-// -- removed. See y_get_current_time() in y_loadrunner_utils.c
-// 
-// time_t y_timestamp()
-// {
-//     return time(NULL);
-// }
+//! \cond function_removal
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
-
+//! \endcond function_removal
 
 
 // --------------------------------------------------------------------------------------------------

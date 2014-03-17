@@ -20,7 +20,6 @@
 #define _Y_BROWSER_EMULATION_C
 
 #include "y_string.c"
-// #include "y_loadrunner_utils.c"
 
 /*-------------------------------------------------------------
 Initial code for supporting (more) realistic browser emulation.

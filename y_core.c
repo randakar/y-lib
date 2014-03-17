@@ -409,12 +409,9 @@ char* y_get_parameter_with_malloc_or_null(const char *src_param)
     //lr_log_message("Copied result: %s", result);
 }
 
-/*!
-\def y_get_parameter_malloc_string
-\brief Function removal - throws a compile error with instructions on what to do if someone tries to use the old function.
-*/
+//! \cond function_removal
 #define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null
-
+//! \endcond function_removal
 
 /*!
 \brief Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)

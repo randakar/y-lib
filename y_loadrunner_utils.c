@@ -25,14 +25,16 @@
 #include "vugen.h"
 #include "y_core.c"
 
-
-// Complain loudly with a compiler error if people still use the old variants of certain functions.
-#define _vUserID 0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run
-#define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
-
 //
 // This file contains loadrunner specific helper functions.
 //
+
+//! \cond function_removal
+#define _vUserID 0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run
+#define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
+//! \endcond function_removal
+
+
 
 
 //! Create a hash of string input. 
