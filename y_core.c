@@ -20,21 +20,16 @@
 
 /*! 
 \file y_core.c
-\brief Y-lib core support functions
+\brief Contains core ylib support functions needed for the functioning of the library.
+
+This file contains two types of functions:
+1) Functions that are needed to make the rest of y_lib work properly.
+2) Functions that are deemed important enough that almost all scripts are expected to use them to some extend or other.
 */
 #ifndef _Y_CORE_C_
 //! \cond include_protection
 #define _Y_CORE_C_
 //! \endcond include_protection
-
-/*!
-\file y_core.c
-\brief Contains core ylib support functions needed for the functioning of the library.
-
-This file contains two types of functions:
-1) Functions that are needed to make the rest of y_lib work properly
-2) Functions that are deemed important enough that almost all scripts are expected to use them to some extend or other.
-*/
 
 #include "vugen.h"
 
