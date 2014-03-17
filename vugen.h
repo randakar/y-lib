@@ -25,39 +25,73 @@
 
 /***** String functions *****/
 
-int snprintf(char *buffer, size_t n, const char *format_string, ...); /* Feature introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. */
-int sprintf(char *buffer, const char *format_string, ...); /* you should prefer snprintf over sprintf */
+//! \brief Documented at http://www.cplusplus.com/reference/cstdio/snprintf/.
+//!
+//! Feature introduced by the latest revision of the C++ standard (2011). Older compilers may not support it.
+int snprintf(char *buffer, size_t n, const char *format_string, ...);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdio/sprintf/.
+//! 
+//! You should prefer snprintf over sprintf.
+int sprintf(char *buffer, const char *format_string, ...); 
+//! \brief Documented at http://www.cplusplus.com/reference/cstdio/sscanf/.
 int sscanf(const char *buffer, const char *format_string, ...);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strchr/.
 char *strchr(const char *string, int c);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strcmp/.
 int strcmp(const char *string1, const char *string2);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strcpy/.
 char *strcpy(char *dest, const char *source);
+//! \brief Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html .
 char *strdup(const char *string);
+//! \brief Documented at http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/stricmp.htm .
 int stricmp(const char *string1, const char *string2);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strlen/.
 size_t strlen(const char *string);
+//! \brief Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strlwr.html .
 char *strlwr(char *string);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strncat/.
 char *strncat(char *to_string, const char *from_string, size_t n);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strncmp/.
 int strncmp(const char *string1, const char *string2, size_t n);
+//! \brief Documented at http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.htm.
 int strnicmp(const char *string1, const char *string2, size_t num);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strrchr/.
 char *strrchr(const char *string, int c);
+//! \brief Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strset.html .
 char *strset(char *string1, int character);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strspn/.
 size_t *strspn(const char *string, const char *skipset);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strstr/.
 char *strstr(const char *string1, const char *string2);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strtok/.
 char *strtok(char *string, const char *delimiters);
+//! \brief Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strupr.html .
 char *strupr(char *string);
 
-/* Force a compile time error when strcat() is used. Because the use of strcat() is a very
- * strong indicator for poorly written code being compiled -- there is always a better solution!
- * Unfortunately the use of #error is not possible here.
- * Original declaration: char *strcat(char *to, const char *from);
- */
+/*!
+ * \def strcat
+ * \brief Force a compile time error when strcat() is used. 
+ *
+ * Because the use of strcat() is a very strong indicator for poorly written code being compiled -- there is always a better solution!
+ *
+ * Unfortunately the use of \#error is not possible here.
+ * \note Original declaration: char *strcat(char *to, const char *from);
+ !*/
 #define strcat(to, from) 0_DO_NOT_USE_strcat_THERE_IS_ALWAYS_A_BETTER_SOLUTION
 
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/atof/.
 double atof(const char *string);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/atoi/.
 int atoi(const char *string);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/atol/.
 long atol(const char *string);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/itoa/.
 int itoa(int value, char *str, int radix);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/strtol/.
 long strtol(const char *string, char **endptr, int radix);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/strtoul/.
 unsigned long int strtoul(const char *str, char **endptr, int base);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/strtod/.
 double strtod(const char *str, char **endptr);
 
 /* ctype.h -- http://www.acm.uiuc.edu/webmonkeys/book/c_guide/ */
