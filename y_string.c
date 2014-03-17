@@ -21,20 +21,16 @@
 /*! 
 \file y_string.c
 \brief Y-lib string function library
+
+Contains low level string and memory manipulation functions, insofar not provided by the C standard.
+The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice.
+Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters.
+This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter).
 */
 #ifndef _Y_STRING_C_
 //! \cond include_protection
 #define _Y_STRING_C_
 //! \endcond include_protection
-
-/*!
-\file y_string.c
-\brief Contains low level string and memory manipulation functions, insofar not provided by the C standard.
-
-The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice.
-Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters.
-This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter).
-*/
 
 #include "y_core.c"
 
@@ -253,7 +249,6 @@ void y_left( const char *original_parameter, const char *search, const char *res
         free(buffer);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
 
 /*!
@@ -301,7 +296,6 @@ void y_right( const char *original_parameter, const char *search, const char *re
         lr_save_string(posPtr, result_parameter);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
 
 /*!
@@ -655,7 +649,6 @@ void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
    // store it in the original parameter
    lr_save_string( parameter, paramName );
 }
-// --------------------------------------------------------------------------------------------------
 
 
 /*!
@@ -708,14 +701,7 @@ This function uses a given set of characters to create words, separated by space
 The words are minimal \e minWordLength characters long, and maximum \e minWordLength characters.
 The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
 
-@param[out] parameter Name of the LR-parameter in which the result is stored
-@param[in] minimumLength Minumum length of the string
-@param[in] maximumLength Maximum length of the string
-@param[in] minWordLength Minimum length of the words within the string
-@param[in] maxWordLength Minimum length of the words within the string
-@param[in] characterSet The string is build from this string of characters
-\return void
-\author Floris Kraak / Raymond de Jongh
+\b Example:
 \code
 // Generates a string of minimal 3 and max 20 characters, 
 // with words of minimal 1 and maximal 3 charactes.
@@ -727,6 +713,15 @@ y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd");
 // Chooses only characters a, c, d or d.
 y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd"); // could result in "ccc db dac c"
 \endcode
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+@param[in] minWordLength Minimum length of the words within the string
+@param[in] maxWordLength Minimum length of the words within the string
+@param[in] characterSet The string is build from this string of characters
+\return void
+\author Floris Kraak / Raymond de Jongh
 
 \sa y_random_number_buffer
 \sa y_random_string_buffer_curses
@@ -825,16 +820,12 @@ void y_random_string_buffer_core(const char *parameter, int minimumLength, int m
    free(buffer);
 }
 
-
-// --------------------------------------------------------------------------------------------------
-
-
 //! Returns a random string with (pseudo) words created from a given string of characters
 /*!
 This function uses a given set of characters to create words, separated by spaces.
 The words are minimal 3 characters long, and maximum 8 characters long.
 Should you need other word lenghts, use y_random_number_buffer_core().
-The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
+The total length of the line is minimal \e minimumLength and maximum \e maximumLength long.
 
 @param[out] parameter Name of the LR-parameter in which the result is stored
 @param[in] minimumLength Minumum length of the string
@@ -848,9 +839,6 @@ void y_random_string_buffer(const char *parameter, int minimumLength, int maximu
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 3, 8, 
    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 }
-
-
-// --------------------------------------------------------------------------------------------------
 
 
 //! Returns a random string of numbers with a given minimum and maximum length.
@@ -869,9 +857,6 @@ void y_random_number_buffer(const char *parameter, int minimumLength, int maximu
 }
 
 
-// --------------------------------------------------------------------------------------------------
-
-
 //! Returns a string containing only the "shift-1...shift 9 characters (on a US-keyboard).
 /*!
 This function generates a string of non-alfa-characters with a given minimum and maximum length.
@@ -887,9 +872,6 @@ void y_random_string_buffer_curses(const char *parameter, int minimumLength, int
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "!@#$%^&*()");
 }
-
-
-// --------------------------------------------------------------------------------------------------
 
 
 //! Generates a random string with a hexadecimal number, of a given minimum and maximum length
@@ -911,7 +893,5 @@ void y_random_string_buffer_hex(const char *parameter, int minimumLength, int ma
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
 }
 
-
-// --------------------------------------------------------------------------------------------------
 #endif // _Y_STRING_C_
 

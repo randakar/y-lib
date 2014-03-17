@@ -99,7 +99,7 @@ Recommended practice:
 Use this to create script debugging code that will hit all of the functional code inside the script when run in vugen, 
 but the full (semi-randomized) realistic scenario when it runs as part of a loadtest.
 
-\note This relies on the y_virtual_user_id variable (setup by y_setup() via a call to lr_whoami() as an indication of where the script is running. 
+\note This relies on the y_virtual_user_id variable as an indication of where the script is running.
 Inside vugen that variable should be -1; Otherwise, it contains a non-negative number.
 This can be manipulated to your advantage, but may break if HP ever changes that convention.
 
