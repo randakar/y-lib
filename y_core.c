@@ -66,9 +66,10 @@ This runs lr_whoami and sets y_virtual_user_id and y_virtual_user_group as globa
 Called y_rand() (for it's seed), y_is_vugen_run() and others dynamically.
 
 \return void
-\author Floris Kraak
 \warning Only call this if you need the y_virtual_user_id and y_virtual_group variables to be set.
 Ylib functions that need this will call it when required.
+\sa y_rand()
+\author Floris Kraak
 */
 void y_setup()
 {
@@ -118,6 +119,7 @@ Action()
       loadtest_clickflow();
 }
 \endcode
+\sa y_setup()
 */
 int y_is_vugen_run()
 {
@@ -126,16 +128,11 @@ int y_is_vugen_run()
 }
 
 
-// --------------------------------------------------------------------------------------------------
-//// Random number generator control ////
-
-
-/*!
-\brief Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint).
+/*! \brief Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint).
 Seeds the random number generator - but only the first time this function is called.
 \return Random number (integer) between 0 and Y_RAND_MAX: 31-bit maxint - slightly over 1 billion.
 
-Example:
+\b Example:
 \code
 int random_number;
 random_number=y_rand();
@@ -206,6 +203,7 @@ snprintf(example_string_copy, size, "%s", example_string);
 lr_log_message("Copy of example string contains: %s", example_string_copy);
 free(test);
 \endcode
+\sa y_array_alloc(), malloc()
 */
 char *y_mem_alloc(const int size)
 {
@@ -238,6 +236,7 @@ Adds some simple checks to catch common errors.
 \param [in] bytesPerChar How much space a single character requires. Usually this should contain "sizeof(char)".
 \returns A pre-zeroed block of memory of the requisite size allocated using calloc().
 \warning The memory resulting from this call will need to be freed using free().
+\sa y_mem_alloc(), calloc()
 */
 char *y_array_alloc(int length, int bytesPerChar)
 {
@@ -268,6 +267,7 @@ char *y_array_alloc(int length, int bytesPerChar)
 \param [in] param_name The parameter name to construct the eval text for.
 \returns a char* allocated with y_mem_alloc()
 \warning The return argument will need to be freed via a call to free()
+\sa y_get_parameter(), y_get_parameter_ext(), y_get_parameter_or_null()
 \author Floris Kraak
 */
 char* y_get_parameter_eval_string(const char *param_name)
@@ -285,6 +285,7 @@ char* y_get_parameter_eval_string(const char *param_name)
 It would be nice if loadrunner had a builtin for this.
 \param [in] param_name The name of the parameter to 
 \returns 0 if the parameter is empty, a non-zero number otherwise.
+\sa y_get_parameter_eval_string()
 \author Floris Kraak
 */
 int y_is_empty_parameter(const char *param_name)
@@ -315,6 +316,7 @@ lr_save_string("test123", "TestParam");        // save the string "test123" into
 test=y_get_parameter("TestParam");
 lr_message("Test: %s", test);
 \endcode
+\sa y_is_empty_parameter(), y_get_parameter_ext(), y_get_parameter_or_null()
 \author Floris Kraak
 */
 char* y_get_parameter(const char* param_name)
@@ -351,6 +353,7 @@ lr_save_string("test123", "TestParam");        // save the string "test123" into
 test=y_get_parameter("TestParam");
 lr_message("Test: %s", test);
 \endcode
+\sa y_get_parameter(), y_is_empty_parameter()
 \author Floris Kraak
 */
 char* y_get_parameter_or_null(const char* param_name)
@@ -387,7 +390,7 @@ test=y_get_parameter_in_malloc_string("TestParam");
 lr_message("Test: %s", test);
 free(test);
 \endcode
-@author Floris Kraak
+\author Floris Kraak
 */
 char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
@@ -430,6 +433,7 @@ lr_message("Test: %s", test);
 lr_eval_string_ext_free(test);
 \endcode
 \author Floris Kraak
+\sa y_get_parameter(), lr_eval_string_ext()
 */
 char* y_get_parameter_ext(const char *source_param)
 {
