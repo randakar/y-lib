@@ -28,12 +28,12 @@
 //! \endcond include_protection
 
 /*!
-\file y_string.c
-\brief Contains low level string and memory manipulation functions, insofar not provided by the C standard.
+\file y_core.c
+\brief Contains core ylib support functions needed for the functioning of the library.
 
-The philosophy of ylib is that the script engineer should not be required to worry about C-strings and C-like memory manipulation when parameters will suffice.
-Most string manipulation functions in the y-lib library take loadrunner parameters as arguments and place their output in one or more of these parameters.
-This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter).
+This file contains two types of functions:
+1) Functions that are needed to make the rest of y_lib work properly
+2) Functions that are deemed important enough that almost all scripts are expected to use them to some extend or other.
 */
 
 #include "vugen.h"
@@ -44,14 +44,24 @@ char* y_virtual_user_group = NULL;                 // virtual user group
 int y_scid;                                        // pointer to scenario or session step identifier. See "lr_whoami()";
 
 
-// Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h>
-// is missing. We define it here mostly for documentation, as we do not have access
-// to the header files themselves and therefore cannot change this. 
-// #define RAND_MAX 32767
-//
-// With some slight changes to y_rand() this constant can be increased by quite a bit ..
-// 
-#define RAND_MAX 1073741823
+/*!
+\def RAND_MAX
+\brief RAND_MAX constant for use with rand() - 15 bits integer.
+
+Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h> is missing. 
+We define it here mostly for documentation, as we do not have access to the header files themselves and therefore cannot change this. 
+\author Floris Kraak
+*/
+#define RAND_MAX 32767
+
+/*!
+\def Y_RAND_MAX 
+\brief Alternate RAND_MAX constant for use with y_rand.
+
+y_rand() provides for a far bigger ceiling to the random number generator: 31 bits, instead of 15.
+\author Floris Kraak
+*/
+#define Y_RAND_MAX 1073741823
 
 
 /*!   
@@ -93,7 +103,7 @@ int y_is_vugen_run()
 
 
 /*!
-\brief Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint).
+\brief Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint).
 Seeds the random number generator - but only the first time this function is called.
 
 Example:
@@ -138,11 +148,11 @@ long y_rand()
        // because it will break people's expectations of what rand() does.)
 
        long result = rand() << 15 | rand(); 
-       //lr_log_message("y_rand: 30 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
+       //lr_log_message("y_rand: 30 random bits = %d, Y_RAND_MAX = %d", result, Y_RAND_MAX);
 
        // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
        //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
-       lr_log_message("y_rand: final random roll = %x, RAND_MAX = %d", result, RAND_MAX);
+       //lr_log_message("y_rand: final random roll = %x, Y_RAND_MAX = %d", result, Y_RAND_MAX);
 
        return result;
    }
