@@ -161,7 +161,7 @@ Search for a specific substring inside a parameter using left and right boundari
 \param [in] left The left boundary - the text immediately preceding the substring in question.
 \param [in] right The right boundary.
 
-\b example:
+\b Example:
 \code
 char* str = "LorumIpsumLipsum";
 lr_save_string(str, "param");

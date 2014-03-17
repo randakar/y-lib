@@ -84,6 +84,7 @@ For that reason, we are likely to remove it in the near future.
 \code
 y_rand_in_sliding_window(1, 10, 20); // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
 \endcode
+\sa y_rand(), y_flow_list.c
 */
 int y_rand_in_sliding_window(int lowerbound, int upperbound, int rand_max)
 {
@@ -120,6 +121,7 @@ int y_rand_in_sliding_window(int lowerbound, int upperbound, int rand_max)
 int random;        
 random = y_rand_between(0, 10);        // generate a random number between 0 and 10 (including 0 and 10!)
 \endcode
+\sa y_rand()
 \author Floris Kraak
 */
 int y_rand_between(int lowerbound, int upperbound)
@@ -137,7 +139,7 @@ int y_rand_between(int lowerbound, int upperbound)
 
 
 /*! \brief Fetch attribute from vUser's command line and store it in a parameter.
-This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in a parameter of the same name.
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter.
 
 @param[in] attrib Argument Name of the attribute.
 @param[out] param LR-parameter name in which the Argument Value is stored.
@@ -162,20 +164,19 @@ void y_save_attribute_to_parameter( char* attrib, char* param )
 // --------------------------------------------------------------------------------------------------
 
 
-//! Fetch attribute from vUser's command line.
-/*!
-This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
-and stores it in a parameter of the same name.
-This function is a short cut of y_save_attribute_to_parameter()
+//! 
+/*! \brief Fetch attribute from vUser's command lin and store it in a parameter of the same name.
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name.
+This function is a shortcut to y_save_attribute_to_parameter()
 
 @param[in] param Argument Name of the attribute.
 \return A LR parameter with the same name as the Argument Name.
-\author Floris Kraak
 \code
 y_save_attribute("server");
 web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
 \endcode
 \sa y_save_attribute_to_parameter()
+\author Floris Kraak
 */
 void y_save_attribute( char* param )
 {
@@ -193,7 +194,6 @@ This function will translate the codes into human readable errors which are then
 
 @param[in] result code from lr_rendezvous()
 \return None
-\author Floris Kraak
 \code
 {
     int result = lr_rendezvous("03_Portefeuille");
@@ -205,7 +205,7 @@ This function will translate the codes into human readable errors which are then
     y_log_rendezvous_result(result);
 }
 \endcode
-\sa y_log_rendezvous_result()
+\author Floris Kraak
 */
 void y_log_rendezvous_result(int result)
 {
@@ -248,14 +248,13 @@ void y_log_rendezvous_result(int result)
 /*!
 Adds (another) string (read: step) to the LR-parameter {breadcrumb}
 Use this to keep track of the steps taken by the script. Very useful if you have a script which
-does things in a random order and you want to know (in the end) which order it used.
-You can, ofcourse, write this to a (log)file.
+does things in a random order and you want to know (in the end) which order it actually used.
+You can, of course, write this to a (log)file.
 Don't forget to use y_breadcrumb_reset() to clear the parameter at the start of the script.
 (else you end up with a very long breadcrumb (breadstick?).)
 
 @param[in] breadcrumb
 \return LR parameter {breadcrumb}
-\author Raymond de Jongh
 \code
 y_breadcrumb_reset();    // clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.
 y_breadcrumb("start");
@@ -266,6 +265,7 @@ y_breadcrumb("finished")
 The result is that {breadcrumb} contains "start;processing data;finished"   
 \endcode
 \sa y_breadcrumb_reset()
+\author Raymond de Jongh
 */
 void y_breadcrumb(char *breadcrumb)
 {
@@ -284,15 +284,13 @@ void y_breadcrumb(char *breadcrumb)
 // --------------------------------------------------------------------------------------------------
 
 
-//! Resets the breadcrumb 
-/*! Use this function to start a new breadcrumb or to reset an existing one.
+/*!
+\def y_breadcrumb_reset()
+\brief Resets the breadcrumb 
+Use this macro to start a new breadcrumb or to reset an existing one.
 \author Raymond de Jongh
 \sa y_breadcrumb()
 */
-/*void y_breadcrumb_reset()
-{
-    lr_save_string("", "breadcrumb");
-}*/
 #define y_breadcrumb_reset() lr_save_string("", "breadcrumb")
 
 
@@ -306,7 +304,6 @@ void y_breadcrumb(char *breadcrumb)
 @param[in] content String which is saved into the file
 \return 0: everthing went fine\n
 <0: failed
-\author Raymond de Jongh
 \code
 int result;
 result=y_write_to_file("c:\\temp.txt", "This is a test");
@@ -314,6 +311,7 @@ if (result != 0)
 {   // o dear, something went wrong!
 }
 \endcode
+\author Raymond de Jongh
 \sa y_breadcrumb_reset()
 */
 int y_write_to_file(char *filename, char *content)
@@ -349,13 +347,16 @@ int y_write_to_file(char *filename, char *content)
 /*!
 Stores the current date/time into LR-parameter {DATE_TIME_STRING} in this format:\n
 YYYYMMDD,HHMMSS (yes, separated by a comma.)
-
 \return current date/time into LR-parameter {DATE_TIME_STRING}.
-\author Raymond de Jongh
+
+\deprecated
+\note This doesn't add much. People should be able to call lr_save_datetime() themselves, right?
+Putting it on the deprecation list for that reason.
 \code
 y_datetime();
 lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
 \endcode
+\author Raymond de Jongh
 */
 void y_datetime()
 {
@@ -369,18 +370,17 @@ void y_datetime()
 //! Calculate the difference in days between today and X workdays into the future.
 /*!
 Calculate the difference in days between today and a date X workdays into the future.
-
 \return How many days into the future X workdays will be.
-\author Floris Kraak
+
+\b Example:
 \code
 // Reserve a meeting room in 'reservationOffset' days.
 int daysOffSet = y_workdays_from_today( atoi(lr_eval_string("{reservationOffset}")) );
 lr_save_datetime("%d-%m-%Y", DATE_NOW + (daysOffSet*ONE_DAY), "ReservationDate");
 
-lr_vuser_status_message(
-lr_eval_string("Running with offset {reservationOffset} at day offset %d"),
-daysOffSet);
+lr_vuser_status_message(lr_eval_string("Running with offset {reservationOffset} at day offset %d"), daysOffSet);
 \endcode
+\author Floris Kraak
 */
 int y_workdays_from_today(int workdays)
 {
@@ -441,7 +441,13 @@ int y_workdays_from_today(int workdays)
     return result;
 }
 
-// Load the kernel32.dll file if not already loaded, so that we can use it to query windows for disk space usage.
+/*!
+\brief Load the kernel32.dll file if not already loaded.
+Internal function that we need so so that we can use kernel32.dll to query windows for disk space usage.
+
+\author Floris Kraak
+\sa y_disk_space_guard(), y_disk_space_usage_guard()
+*/
 int y_load_kernel_dll()
 {
     static int kernel_dll_loaded = 0;
@@ -466,13 +472,20 @@ int y_load_kernel_dll()
     return load_dll_result;
 }
 
-//
-// In order to prevent our logs from filling up disks beyond capacity we need to know how much free space the log file system has.
-// 
-// Note: This is not capable of handling disk sizes > 16 TB.
-// The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
-// Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
-// 
+/*! \brief Get the free diskspace percentage on the target folder on the load generator.
+
+In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has.
+This function provides that number, relative to the total disk space size.
+
+\param [in] folder_name The name of the folder to report on.
+\return The percentage of free space, as a double.
+
+\note This is not capable of handling disk sizes > 16 TB.
+The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
+Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
+\sa y_get_free_disk_space_in_mebibytes()
+\author Floris Kraak
+*/
 double y_get_free_disk_space_percentage(char* folder_name)
 {
     size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
@@ -490,14 +503,20 @@ double y_get_free_disk_space_percentage(char* folder_name)
     return free_space_percentage;
 }
 
+/*! \brief get the amount of free disk space in the target folder in mebibytes (SI unit)
 
-//
-// In order to prevent our logs from filling up disks beyond capacity we need to know how much free space the log file system has.
-// 
-// Note: This is not capable of handling disk sizes > 16 TB.
-// The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
-// Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
-// 
+In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has.
+This function provides that number, in absolute terms.
+
+\param [in] folder_name The name of the folder to report on.
+\return The amount of mebibytes free, as a double.
+
+\note This is not capable of handling disk sizes > 16 TB.
+The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
+Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
+\sa y_get_free_disk_space_percentage()
+\author Floris Kraak
+*/
 double y_get_free_disk_space_in_mebibytes(char* folder_name)
 {
     size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
