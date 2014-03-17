@@ -1,4 +1,4 @@
-/*
+/R/*
  * Ylib Loadrunner function library.
  * Copyright (C) 2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
@@ -373,25 +373,25 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     // (y_loadrunner_utils.c does that instead, now  ..)
     // 
     // y_rand() depends on rand() for it's output, so that cannot go above 32767.
+    // Update: y_rand() uses Y_RAND_MAX now - slightly over 1 billion.
     // Unfortunately, the list with weights that we use has numbers bigger than that. 
     // 
     // So we'll need to get a bit creative, and multiply the result of y_rand() with
-    // the maximum (the total of the browser chances) divided by RAND_MAX to scale things up again.
+    // the maximum (the total of the browser chances) divided by Y_RAND_MAX to scale things up again.
     // 
     // Ugly? Yes. Necessary? Very ..
     // 
     // Update: y_rand() now returns a 31 bit number, giving it an upper bound of 2147483647.
     // That should reduce the need for this code by a bit ..
     // 
-    // TODO: Fix y_profile.c as well, as it almost assuredly suffers from the same issue.
 
     roll = y_rand() % max;
     //lr_log_message("max = %d, RAND_MAX = %d, roll %d", max, RAND_MAX, roll);
-    if( RAND_MAX < max)
+    if( Y_RAND_MAX < max)
     {
         roll = roll * ((max / RAND_MAX));
     }
-    lr_log_message("Roll: %d", roll);
+    //lr_log_message("Roll: %d", roll);
 
     for( browser = browser_list_head; browser != NULL; browser = browser->next)
     {
