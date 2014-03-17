@@ -21,8 +21,9 @@
 
 /*! 
 \file y_loadrunner_utils.c
-\brief Collection of miscellaneous functions.
+\brief Collection of miscellaneous support functions.
 
+This file contains loadrunner specific helper functions.
 If we don't have somewhere else to put some piece of code, this is where it will probably end up.
 */
 #ifndef _LOADRUNNER_UTILS_C
@@ -31,24 +32,21 @@ If we don't have somewhere else to put some piece of code, this is where it will
 #include "vugen.h"
 #include "y_core.c"
 
-//
-// This file contains loadrunner specific helper functions.
-//
-
 //! \cond function_removal
 #define _vUserID 0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run
 #define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
 //! \endcond function_removal
 
 
+/*! \brief Create a hash of string input. 
 
+A fairly simple hash that can be used to compare long input texts with each other.
+This uses the sdbm algorithm, described at http://www.cse.yorku.ca/~oz/hash.html.
 
-//! Create a hash of string input. 
-/*! See: http://www.cse.yorku.ca/~oz/hash.html 
+\param [in] str The string to create a hash from.
+\sa http://www.cse.yorku.ca/~oz/hash.html 
 \return hash (unsigned long)
 \author Floris Kraak
-\code
-\endcode
 */
 static unsigned long y_hash_sdbm(char* str)
 {
@@ -62,38 +60,43 @@ static unsigned long y_hash_sdbm(char* str)
 // --------------------------------------------------------------------------------------------------
 
 
-//! Check whether or not a random number lies between 2 given boundaries
-/*!
-Generate a random number between (and including) 0 and randMax, and tell us if that number lies 
-between the lower and upper bounds or not. (attention: boundaries are included!)
+/*! \brief Generate random number and test if it lies between 2 given boundaries.
+
+This will generate a random number between (and including) 0 and rand_max, and tell us if that number lies between the lower and upper bounds or not. 
+Boundaries are included!
 
 This is useful for pathing decisions: Say that at point P in a script a choice has to be made
 between continuing with actions A, B, and C. The decision is made based on a percentage:
 A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code
 that would make this decision.
+
+\note y_flow_list.c provides a better and more intuitive alternative for this one.
+For that reason, we are likely to remove it in the near future.
+
+@deprecated
 @param[in] lowerbound Minumum value
 @param[in] upperbound Maximum value
-@param[in] randMax Upper boundary of the random number
+@param[in] rand_max Upper boundary of the random number
 \author Floris Kraak
 \return 0: no, random number lies outside the boundaries\n
-      1: yes, random number lies inside the boundaries\n
-      <0: input made no sense.
+        1: yes, random number lies inside the boundaries\n
+       <0: input made no sense.
 \code
 y_rand_in_sliding_window(1, 10, 20); // Returns 1 if the random number rolled is 4, and 0 if the random number was 11.
 \endcode
 */
-int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
+int y_rand_in_sliding_window(int lowerbound, int upperbound, int rand_max)
 {
     int roll;
 
-    if( (0>lowerbound) || (lowerbound>upperbound) || (upperbound > randMax) || (randMax <= 0))
+    if( (0>lowerbound) || (lowerbound>upperbound) || (upperbound > rand_max) || (rand_max <= 0))
     {
         lr_error_message("y_rand_in_sliding_window called with nonsensical arguments: ( 0 <= %d < %d <= %d ) == FALSE",
-                        lowerbound, upperbound, randMax);
+                        lowerbound, upperbound, rand_max);
         return -1;
     }
 
-    roll = y_rand_between(0, randMax);
+    roll = y_rand_between(0, rand_max);
     if( (roll >= lowerbound) && (roll <= upperbound) )
     {
         return 1;
@@ -106,16 +109,18 @@ int y_rand_in_sliding_window(int lowerbound, int upperbound, int randMax)
 // --------------------------------------------------------------------------------------------------
 
 
-//! Create a random number (integer), between two boundaries. (the boundaries are included!)
+//! Create a random number between two boundaries. (the boundaries are included!)
 /*! When the lower boundary equals the upper boundary, y_rand_between() simply returns the lower boundary.
 @param[in] lowerbound Lower boundary of the generated number
 @param[in] upperbound Upper boundary of the generated number
 \return random number
-\author Floris Kraak
+
+\b Example:
 \code
 int random;        
 random = y_rand_between(0, 10);        // generate a random number between 0 and 10 (including 0 and 10!)
 \endcode
+\author Floris Kraak
 */
 int y_rand_between(int lowerbound, int upperbound)
 {
@@ -131,23 +136,19 @@ int y_rand_between(int lowerbound, int upperbound)
 }
 
 
-// --------------------------------------------------------------------------------------------------
-
-
-//! Fetch attribute from vUser's command line.
-/*!
-This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes))
-and stores it in a parameter of the same name.
+/*! \brief Fetch attribute from vUser's command line and store it in a parameter.
+This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in a parameter of the same name.
 
 @param[in] attrib Argument Name of the attribute.
 @param[out] param LR-parameter name in which the Argument Value is stored.
 \return A LR parameter with the same name as the Argument Name.
-\author Floris Kraak
+\b Example:
 \code
 y_save_attribute_to_parameter("server", "nice_server");
 web_add_auto_filter("Action=Include", "HostSuffix={nice_server}", LAST );
 \endcode
 \sa y_save_attribute()
+\author Floris Kraak
 */
 void y_save_attribute_to_parameter( char* attrib, char* param )
 {
