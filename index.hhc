@@ -275,6 +275,21 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_browser_list_chance_total"><param name="Local" value="y__browseremulation_8c.html#a958cd8cf55393f27fa5b69f240308fc3"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_browser_list_head"><param name="Local" value="y__browseremulation_8c.html#a9eb177cdb387264c27bfd8534c5b8b2a"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="y_core.c"><param name="Local" value="y__core_8c.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_malloc_string"><param name="Local" value="y__core_8c.html#ae7859b6668105d69bd9d9c7189bf9f34"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_array_alloc"><param name="Local" value="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_cleanse_parameter"><param name="Local" value="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_cleanse_parameter_ext"><param name="Local" value="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_cleansed_parameter"><param name="Local" value="y__core_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter"><param name="Local" value="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_eval_string"><param name="Local" value="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_ext"><param name="Local" value="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_or_null"><param name="Local" value="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_with_malloc_or_null"><param name="Local" value="y__core_8c.html#ac0c6a383cf2934da4acc1451a1cdea21"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_is_empty_parameter"><param name="Local" value="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_mem_alloc"><param name="Local" value="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_flow_list.c"><param name="Local" value="y__flow__list_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_flow"><param name="Local" value="structy__struct__flow.html"><param name="ImageNumber" value="1"></OBJECT>
@@ -401,23 +416,11 @@
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_string.c"><param name="Local" value="y__string_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_int_from_char"><param name="Local" value="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_malloc_string"><param name="Local" value="y__string_8c.html#ae7859b6668105d69bd9d9c7189bf9f34"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_array_alloc"><param name="Local" value="y__string_8c.html#a697dba8aa84b866198cb29d2c1e4823f"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_chop"><param name="Local" value="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_cleanse_parameter"><param name="Local" value="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_cleanse_parameter_ext"><param name="Local" value="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_copy_param"><param name="Local" value="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_cleansed_parameter"><param name="Local" value="y__string_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter"><param name="Local" value="y__string_8c.html#a8252a459f15c52a8680fff9ddbd7356c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_eval_string"><param name="Local" value="y__string_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_ext"><param name="Local" value="y__string_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_or_null"><param name="Local" value="y__string_8c.html#af81efb56d5afc4806cdc79f64ba3d675"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_parameter_with_malloc_or_null"><param name="Local" value="y__string_8c.html#ac0c6a383cf2934da4acc1451a1cdea21"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_int_strlen"><param name="Local" value="y__string_8c.html#ae32fba754c61429341686d6a5e387a06"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_is_empty_parameter"><param name="Local" value="y__string_8c.html#ac0778c8b8f3da732862ab82176857be8"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_last_right"><param name="Local" value="y__string_8c.html#ad96e67d8e69e1df570958aa1e1d5e97e"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_left"><param name="Local" value="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_mem_alloc"><param name="Local" value="y__string_8c.html#a44660f85cba534a4c186c29ec698c4fb"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_remove_string_from_parameter"><param name="Local" value="y__string_8c.html#abdcde34b0a15516dd5b47b29196cf61b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_replace"><param name="Local" value="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_right"><param name="Local" value="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba"><param name="ImageNumber" value="11"></OBJECT>

@@ -15,6 +15,7 @@ main="Y-lib","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10
 _r_e_a_d_m_e_8md_source.html
 vugen_8h_source.html
 y__browseremulation_8c_source.html
+y__core_8c_source.html
 y__flow__list_8c_source.html
 y__lib_8c_source.html
 y__loadrunner__utils_8c_source.html
@@ -27,6 +28,7 @@ y__vts_8c_source.html
 _r_e_a_d_m_e_8md.html
 vugen_8h.html
 y__browseremulation_8c.html
+y__core_8c.html
 y__flow__list_8c.html
 y__lib_8c.html
 y__loadrunner__utils_8c.html
