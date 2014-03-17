@@ -30,7 +30,7 @@ This usually makes it easy to correlate a value (capturing it in a parameter), p
 #ifndef _Y_STRING_C_
 //! \cond include_protection
 #define _Y_STRING_C_
-//! \endcond include_protection
+//! \endcond
 
 #include "y_core.c"
 
