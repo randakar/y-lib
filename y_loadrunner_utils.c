@@ -19,6 +19,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/*! 
+\file y_loadrunner_utils.c
+\brief Collection of miscellaneous functions.
+
+If we don't have somewhere else to put some piece of code, this is where it will probably end up.
+*/
 #ifndef _LOADRUNNER_UTILS_C
 #define _LOADRUNNER_UTILS_C
 
