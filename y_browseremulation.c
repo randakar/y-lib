@@ -1,4 +1,4 @@
-/R/*
+/*
  * Ylib Loadrunner function library.
  * Copyright (C) 2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
