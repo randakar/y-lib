@@ -658,6 +658,260 @@ void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 // --------------------------------------------------------------------------------------------------
 
 
+/*!
+\brief Create a unique parameter.
+\param param The name of a parameter to store the resulting string in.
+\return void
+\author Floris Kraak & André Luyer
+
+Example:
+\code
+y_param_unique("test");
+\endcode
+*/
+void y_param_unique(char *param)
+{
+/*
+    struct _timeb ms;
+    static unsigned short i = 0;
+    static unsigned long vuser_group_hash = 0;
+
+    if(!vuser_group_hash) 
+    { 
+        y_setup();
+        vuser_group_hash = y_hash_sdbm(y_virtual_user_group);
+    }
+    ftime(&ms);
+
+    lr_log_message("y_param_unique(%s) in group %s (hash: %x) for user %d (%x) at time %d.%03d (%x.%x) with iterator %d (%x)", 
+        param, y_virtual_user_group, vuser_group_hash, y_virtual_user_id, y_virtual_user_id, ms.time, ms.millitm, ms.time, ms.millitm, i, i);
+
+    // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon. */
+    //lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
+
+
+//     char buf[23];                   // UUID's are always 22 characters, plus null byte.
+//     lr_generate_uuid_on_buf(buf);
+//     lr_save_var(buf, 22, 0, param); // save & trim off ==
+
+    char buf[100]; // should be only 22 characters, but apparently not always ..
+    memset(buf, '\0', sizeof(buf) * sizeof(char));
+    lr_generate_uuid_on_buf(buf);
+    lr_save_var(buf, strlen(buf), 0, param); // save & trim off ==
+}
+
+
+
+//! Generates a random string with (pseudo) words created from a given string of characters
+/*!
+This function uses a given set of characters to create words, separated by spaces.
+The words are minimal \e minWordLength characters long, and maximum \e minWordLength characters.
+The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+@param[in] minWordLength Minimum length of the words within the string
+@param[in] maxWordLength Minimum length of the words within the string
+@param[in] characterSet The string is build from this string of characters
+\return void
+\author Floris Kraak / Raymond de Jongh
+\code
+// Generates a string of minimal 3 and max 20 characters, 
+// with words of minimal 1 and maximal 3 charactes.
+// Chooses only characters a, c, d or d.
+y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd");
+
+// Generates some sort of mock morse-code of exactly 30 characters.
+// with words of minimal 1 and maximal 3 charactes.
+// Chooses only characters a, c, d or d.
+y_random_string_buffer_core("uitvoer", 3,20, 1, 3, "abcd"); // could result in "ccc db dac c"
+\endcode
+
+\sa y_random_number_buffer
+\sa y_random_string_buffer_curses
+\sa y_random_string_buffer
+\sa y_random_string_buffer_hex
+*/
+void y_random_string_buffer_core(const char *parameter, int minimumLength, int maximumLength, 
+                                 int minWordLength, int maxWordLength, char *characterSet)
+{
+   char *buffer;
+   int charSetSize; // length of the characterSet
+   int length = 0;
+   int max = -1;
+
+   char randomNumber;
+   int lettersInWord;
+
+   charSetSize=strlen(characterSet);
+
+   //lr_message("minimumLength %d -- maximumLength %d -- minWordLength %d -- maxWordLength %d", 
+   //      minimumLength, maximumLength, minWordLength, maxWordLength);
+
+   // error checks - lots of code that saves us headaches later
+   if( minimumLength < 0 ) {
+      lr_error_message( "minimumLength less than 0 (%d)", minimumLength );
+   }
+   else if( maximumLength < 1 ) {
+      lr_error_message( "maximumLength less than 1 (%d)", maximumLength );
+   }
+   else if( maximumLength > (1024 * 1024) ) {
+      lr_error_message( "maximumLength too big (%d)", maximumLength );
+   }
+   else if( maximumLength < minimumLength ) {
+      lr_error_message( "minimumLength (%d) bigger than maximumLength (%d)", minimumLength, maximumLength );
+   }
+   else if(maximumLength > minimumLength) {
+      // Not an error
+      max = y_rand_between(minimumLength, maximumLength);
+      lr_log_message("Max: %d", max);
+   }
+   else if(maximumLength == minimumLength) {
+      // Not an error either
+      max = maximumLength;
+   }
+   else {
+      lr_error_message("This can never happen. If we reach this point it's a bug.");
+   }
+
+   // if we got an error
+   if( max < 0 )
+   {
+      lr_set_transaction_status(LR_FAIL);
+      lr_exit(LR_EXIT_ITERATION_AND_CONTINUE, LR_FAIL);
+   }
+
+   // get memory for the buffer
+   buffer = (char *)y_mem_alloc( max +1 );
+   // note: if this fails y_mem_alloc() aborts the script, so no error handling needed.
+
+   while( length < max )
+   {
+//      lr_message("Length: %d   max: %d", length, max);
+//      lettersInWord = ((y_rand() % 8) + 2);
+      if( maxWordLength == 0 )
+      {
+         lettersInWord = maximumLength;
+      }
+      else
+      {
+         lettersInWord = y_rand_between(minWordLength, maxWordLength);
+         if( lettersInWord < 0 )
+         {
+            lr_error_message( "y_rand_between() returned an errorcode (%d)", lettersInWord );
+            lr_set_transaction_status(LR_FAIL);
+            lr_exit(LR_EXIT_ITERATION_AND_CONTINUE, LR_FAIL);
+         }
+      }
+
+      while( lettersInWord-- && (length < (max)) )
+      {
+         randomNumber = (char) (y_rand() % charSetSize);
+         buffer[length++] = characterSet[randomNumber];
+      }
+
+      if( maxWordLength != 0 )
+      {
+         if( length < max -1 )
+         {
+            buffer[length++] = ' ';
+         }
+      }
+   }
+   buffer[max] = '\0';
+
+   lr_save_string(buffer, parameter);
+   free(buffer);
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Returns a random string with (pseudo) words created from a given string of characters
+/*!
+This function uses a given set of characters to create words, separated by spaces.
+The words are minimal 3 characters long, and maximum 8 characters long.
+Should you need other word lenghts, use y_random_number_buffer_core().
+The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+void y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 3, 8, 
+   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Returns a random string of numbers with a given minimum and maximum length.
+/*!
+This function generates a string of numbers with a given minimum and maximum length.
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+void y_random_number_buffer(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Returns a string containing only the "shift-1...shift 9 characters (on a US-keyboard).
+/*!
+This function generates a string of non-alfa-characters with a given minimum and maximum length.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+void y_random_string_buffer_curses(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "!@#$%^&*()");
+}
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+//! Generates a random string with a hexadecimal number, of a given minimum and maximum length
+/*!
+This function generates a string with a hexadecimal number.
+
+Should you need other word lenghts, use y_random_number_buffer_core().
+The total length of the line is minimal \e minimumLength and maimum \e maximumLength long.
+
+@param[out] parameter Name of the LR-parameter in which the result is stored
+@param[in] minimumLength Minumum length of the string
+@param[in] maximumLength Maximum length of the string
+\return void
+\author Raymond de Jongh
+\sa y_random_string_buffer_core
+*/
+void y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximumLength)
+{
+   y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
+}
+
+
 // --------------------------------------------------------------------------------------------------
 #endif // _Y_STRING_C_
 

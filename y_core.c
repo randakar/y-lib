@@ -38,6 +38,117 @@ This usually makes it easy to correlate a value (capturing it in a parameter), p
 
 #include "vugen.h"
 
+// Reserved space to hold lr_whoami() output.
+int y_virtual_user_id = 0;                         // virtual user id
+char* y_virtual_user_group = NULL;                 // virtual user group
+int y_scid;                                        // pointer to scenario or session step identifier. See "lr_whoami()";
+
+
+// Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h>
+// is missing. We define it here mostly for documentation, as we do not have access
+// to the header files themselves and therefore cannot change this. 
+// #define RAND_MAX 32767
+//
+// With some slight changes to y_rand() this constant can be increased by quite a bit ..
+// 
+#define RAND_MAX 1073741823
+
+
+/*!   
+\brief Ylib setup - determines and stores the identity of the virtual user.
+
+This runs lr_whoami and sets y_virtual_user_id and y_virtual_user_group as global variables.
+Called y_rand() (for it's seed), y_is_vugen_run() and others dynamically.
+
+\return void
+\author Floris Kraak
+\warning Only call this if you need the y_virtual_user_id and y_virtual_group variables to be set.
+Ylib functions that need this will call it when required.
+*/
+void y_setup()
+{
+    // if this is filled y_setup() has already been called.
+    if( y_virtual_user_group != NULL )
+    {
+        return;
+    }
+
+    // Loadrunner sets the locale to "", causing scripts running in locales other than en_US to misbehave.
+    // Let's set it to something sensible, that actually works for people who don't want to mess with this stuff.
+    setlocale(LC_ALL, "C");
+
+    // Global variables, handle with care
+    lr_whoami(&y_virtual_user_id, &y_virtual_user_group, &y_scid);
+}
+
+int y_is_vugen_run()
+{
+    y_setup();
+    return (y_virtual_user_id == -1);
+}
+
+
+// --------------------------------------------------------------------------------------------------
+//// Random number generator control ////
+
+
+/*!
+\brief Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint).
+Seeds the random number generator - but only the first time this function is called.
+
+Example:
+\code
+int random_number;
+random_number=y_rand();
+\endcode
+\return Random number (integer) between 0 and 31-bit maxint - slightly over 1 billion.
+\author Floris Kraak
+*/
+long y_rand()
+{
+   // Have we initialized the random seed yet?
+   static int _y_random_seed_initialized = 0;
+
+   if(!_y_random_seed_initialized)
+   {
+      int seed, tm, rnd;
+      y_setup();
+
+      // Seed the random number generator for later use.
+      // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
+      // In case the script itself already initialized the random number generator, use a random number from 
+      // there as well.
+
+      tm = (int)time(NULL);
+      rnd = rand();
+
+      //lr_log_message("Seed values - time: %d, y_virtual_user_id: %d, y_virtual_user_group: %d, rand: %d", tm, y_virtual_user_id, (int)y_virtual_user_group, rnd);
+      seed = tm%10000 + y_virtual_user_id + ((int)y_virtual_user_group)%1000 + rnd%1000;
+      //lr_log_message("Initialising random seed: %d", seed);
+      srand( seed );
+      _y_random_seed_initialized = 1;
+   }
+
+   {
+       // Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits
+       // of randomness that a long affords us we are going to roll multiple numbers and basically 
+       // concatenate them together using bit shifts.
+       // 
+       // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
+       // because it will break people's expectations of what rand() does.)
+
+       long result = rand() << 15 | rand(); 
+       //lr_log_message("y_rand: 30 random bits = %d, RAND_MAX = %d", result, RAND_MAX);
+
+       // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
+       //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
+       lr_log_message("y_rand: final random roll = %x, RAND_MAX = %d", result, RAND_MAX);
+
+       return result;
+   }
+}
+
+
 /*!
 \brief Ylib wrapper for malloc()
 
@@ -294,6 +405,8 @@ char* y_get_parameter_ext(const char *source_param)
     free(source);                                             // Free the intermediate parameter name.
     return buffer;
 }
+
+
 
 
 /*!
