@@ -38,6 +38,7 @@ y__profile_8c.html
 y__string_8c.html
 y__transaction_8c.html
 y__vts_8c.html
+deprecated.html
 struct__timeb.html
 structlconv.html
 structtm.html
@@ -45,6 +46,7 @@ structy__struct__browser.html
 structy__struct__flow.html
 structy__struct__profile.html
 index.html
+pages.html
 annotated.html
 classes.html
 functions.html

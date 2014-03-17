@@ -30,6 +30,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -44,14 +45,16 @@
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">y_loadrunner_utils.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Collection of miscellaneous support functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="vugen_8h_source.html">vugen.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="y__string_8c_source.html">y_string.c</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="y__core_8c_source.html">y_core.c</a>&quot;</code><br/>
 </div>
 <p><a href="y__loadrunner__utils_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -59,60 +62,29 @@
 Macros</h2></td></tr>
 <tr class="memitem:a3b4b09ec1d578ba8db23755194925d99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a3b4b09ec1d578ba8db23755194925d99">_LOADRUNNER_UTILS_C</a></td></tr>
 <tr class="separator:a3b4b09ec1d578ba8db23755194925d99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb08140c01e02e91683eef33ba367d07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#afb08140c01e02e91683eef33ba367d07">_vUserID</a>&#160;&#160;&#160;0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run</td></tr>
-<tr class="separator:afb08140c01e02e91683eef33ba367d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95b385f3237749d89e48db45006b2583"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a95b385f3237749d89e48db45006b2583">_vUserGroup</a>&#160;&#160;&#160;0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group</td></tr>
-<tr class="separator:a95b385f3237749d89e48db45006b2583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a690f251553b39fd4f31894826141b61a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a690f251553b39fd4f31894826141b61a">RAND_MAX</a>&#160;&#160;&#160;1073741823</td></tr>
-<tr class="separator:a690f251553b39fd4f31894826141b61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d8d307cc6497d0ae26051c7b5272adf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf">y_breadcrumb_reset</a>()&#160;&#160;&#160;lr_save_string(&quot;&quot;, &quot;breadcrumb&quot;)</td></tr>
-<tr class="memdesc:a5d8d307cc6497d0ae26051c7b5272adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the breadcrumb.  <a href="#a5d8d307cc6497d0ae26051c7b5272adf">More...</a><br/></td></tr>
+<tr class="memdesc:a5d8d307cc6497d0ae26051c7b5272adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one.  <a href="#a5d8d307cc6497d0ae26051c7b5272adf">More...</a><br/></td></tr>
 <tr class="separator:a5d8d307cc6497d0ae26051c7b5272adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8aa00bc42e12484cc21af8bb58158ab5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a8aa00bc42e12484cc21af8bb58158ab5">y_delay_once</a>(delay_in_seconds)</td></tr>
 <tr class="separator:a8aa00bc42e12484cc21af8bb58158ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7350ca6bb0383b2169ef4eaae3b091e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a> ()</td></tr>
-<tr class="memdesc:a7350ca6bb0383b2169ef4eaae3b091e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ylib setup - determines and stores the identity of the virtual user.  <a href="#a7350ca6bb0383b2169ef4eaae3b091e7">More...</a><br/></td></tr>
-<tr class="separator:a7350ca6bb0383b2169ef4eaae3b091e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00aa2e3c4dbd5c6d8b9c1c9d643fc399"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a00aa2e3c4dbd5c6d8b9c1c9d643fc399">y_is_vugen_run</a> ()</td></tr>
-<tr class="separator:a00aa2e3c4dbd5c6d8b9c1c9d643fc399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab31dd572cc0f21dae3583c83770d5fab"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#ab31dd572cc0f21dae3583c83770d5fab">y_rand</a> ()</td></tr>
-<tr class="memdesc:ab31dd572cc0f21dae3583c83770d5fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint). Seeds the random number generator - but only the first time this function is called.  <a href="#ab31dd572cc0f21dae3583c83770d5fab">More...</a><br/></td></tr>
-<tr class="separator:ab31dd572cc0f21dae3583c83770d5fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ad4afc7aabf4e2fcc7752ba227ae226"><td class="memItemLeft" align="right" valign="top">static unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a4ad4afc7aabf4e2fcc7752ba227ae226">y_hash_sdbm</a> (char *str)</td></tr>
-<tr class="memdesc:a4ad4afc7aabf4e2fcc7752ba227ae226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a hash of string input.  <a href="#a4ad4afc7aabf4e2fcc7752ba227ae226">More...</a><br/></td></tr>
-<tr class="separator:a4ad4afc7aabf4e2fcc7752ba227ae226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0213fca8c623a194e44b3a846a834729"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a0213fca8c623a194e44b3a846a834729">y_param_unique</a> (char *param)</td></tr>
-<tr class="memdesc:a0213fca8c623a194e44b3a846a834729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a unique parameter.  <a href="#a0213fca8c623a194e44b3a846a834729">More...</a><br/></td></tr>
-<tr class="separator:a0213fca8c623a194e44b3a846a834729"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e11c4662cca5dd346ad89590d5eef24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24">y_random_string_buffer_core</a> (const char *parameter, int minimumLength, int maximumLength, int minWordLength, int maxWordLength, char *characterSet)</td></tr>
-<tr class="memdesc:a3e11c4662cca5dd346ad89590d5eef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random string with (pseudo) words created from a given string of characters.  <a href="#a3e11c4662cca5dd346ad89590d5eef24">More...</a><br/></td></tr>
-<tr class="separator:a3e11c4662cca5dd346ad89590d5eef24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab751d549b344736ced6cf495d019ebc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#ab751d549b344736ced6cf495d019ebc6">y_random_string_buffer</a> (const char *parameter, int minimumLength, int maximumLength)</td></tr>
-<tr class="memdesc:ab751d549b344736ced6cf495d019ebc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random string with (pseudo) words created from a given string of characters.  <a href="#ab751d549b344736ced6cf495d019ebc6">More...</a><br/></td></tr>
-<tr class="separator:ab751d549b344736ced6cf495d019ebc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91e3109c43cfdf0f6378b943d39871bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a91e3109c43cfdf0f6378b943d39871bd">y_random_number_buffer</a> (const char *parameter, int minimumLength, int maximumLength)</td></tr>
-<tr class="memdesc:a91e3109c43cfdf0f6378b943d39871bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random string of numbers with a given minimum and maximum length.  <a href="#a91e3109c43cfdf0f6378b943d39871bd">More...</a><br/></td></tr>
-<tr class="separator:a91e3109c43cfdf0f6378b943d39871bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac658f815d53b5fbda9abe49b34148e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#aac658f815d53b5fbda9abe49b34148e1">y_random_string_buffer_curses</a> (const char *parameter, int minimumLength, int maximumLength)</td></tr>
-<tr class="memdesc:aac658f815d53b5fbda9abe49b34148e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string containing only the "shift-1...shift 9 characters (on a US-keyboard).  <a href="#aac658f815d53b5fbda9abe49b34148e1">More...</a><br/></td></tr>
-<tr class="separator:aac658f815d53b5fbda9abe49b34148e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cbde93e30abaf3392c172f8f83e5889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a8cbde93e30abaf3392c172f8f83e5889">y_random_string_buffer_hex</a> (const char *parameter, int minimumLength, int maximumLength)</td></tr>
-<tr class="memdesc:a8cbde93e30abaf3392c172f8f83e5889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random string with a hexadecimal number, of a given minimum and maximum length.  <a href="#a8cbde93e30abaf3392c172f8f83e5889">More...</a><br/></td></tr>
-<tr class="separator:a8cbde93e30abaf3392c172f8f83e5889"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00ea8d9b98bae830e5f3cc29b5614f03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a00ea8d9b98bae830e5f3cc29b5614f03">y_rand_in_sliding_window</a> (int lowerbound, int upperbound, int randMax)</td></tr>
-<tr class="memdesc:a00ea8d9b98bae830e5f3cc29b5614f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether or not a random number lies between 2 given boundaries.  <a href="#a00ea8d9b98bae830e5f3cc29b5614f03">More...</a><br/></td></tr>
-<tr class="separator:a00ea8d9b98bae830e5f3cc29b5614f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2701ea7aad9299f785e75f5007c57a5"><td class="memItemLeft" align="right" valign="top">static function_removal <br class="typebreak"/>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#af2701ea7aad9299f785e75f5007c57a5">y_hash_sdbm</a> (char *str)</td></tr>
+<tr class="memdesc:af2701ea7aad9299f785e75f5007c57a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a hash of string input.  <a href="#af2701ea7aad9299f785e75f5007c57a5">More...</a><br/></td></tr>
+<tr class="separator:af2701ea7aad9299f785e75f5007c57a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae983b9ef76c2dac577cd9bb17920b6ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#ae983b9ef76c2dac577cd9bb17920b6ea">y_rand_in_sliding_window</a> (int lowerbound, int upperbound, int rand_max)</td></tr>
+<tr class="memdesc:ae983b9ef76c2dac577cd9bb17920b6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random number and test if it lies between 2 given boundaries.  <a href="#ae983b9ef76c2dac577cd9bb17920b6ea">More...</a><br/></td></tr>
+<tr class="separator:ae983b9ef76c2dac577cd9bb17920b6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa50b7745f6d186a97d1dc21eebf52bb3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#aa50b7745f6d186a97d1dc21eebf52bb3">y_rand_between</a> (int lowerbound, int upperbound)</td></tr>
-<tr class="memdesc:aa50b7745f6d186a97d1dc21eebf52bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a random number (integer), between two boundaries. (the boundaries are included!)  <a href="#aa50b7745f6d186a97d1dc21eebf52bb3">More...</a><br/></td></tr>
+<tr class="memdesc:aa50b7745f6d186a97d1dc21eebf52bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a random number between two boundaries. (the boundaries are included!)  <a href="#aa50b7745f6d186a97d1dc21eebf52bb3">More...</a><br/></td></tr>
 <tr class="separator:aa50b7745f6d186a97d1dc21eebf52bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ab75c887e62a77eef38c8b5806f4631"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631">y_save_attribute_to_parameter</a> (char *attrib, char *param)</td></tr>
-<tr class="memdesc:a1ab75c887e62a77eef38c8b5806f4631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch attribute from vUser's command line.  <a href="#a1ab75c887e62a77eef38c8b5806f4631">More...</a><br/></td></tr>
+<tr class="memdesc:a1ab75c887e62a77eef38c8b5806f4631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch attribute from vUser's command line and store it in a parameter. This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter.  <a href="#a1ab75c887e62a77eef38c8b5806f4631">More...</a><br/></td></tr>
 <tr class="separator:a1ab75c887e62a77eef38c8b5806f4631"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64eb755ec09827fed663697cdbe50593"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a64eb755ec09827fed663697cdbe50593">y_save_attribute</a> (char *param)</td></tr>
-<tr class="memdesc:a64eb755ec09827fed663697cdbe50593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch attribute from vUser's command line.  <a href="#a64eb755ec09827fed663697cdbe50593">More...</a><br/></td></tr>
+<tr class="memdesc:a64eb755ec09827fed663697cdbe50593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch attribute from vUser's command lin and store it in a parameter of the same name. This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to <a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631" title="Fetch attribute from vUser&#39;s command line and store it in a parameter. This will fetch an attribute f...">y_save_attribute_to_parameter()</a>  <a href="#a64eb755ec09827fed663697cdbe50593">More...</a><br/></td></tr>
 <tr class="separator:a64eb755ec09827fed663697cdbe50593"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3671570eefb1129ab15401916c07b05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#ab3671570eefb1129ab15401916c07b05">y_log_rendezvous_result</a> (int result)</td></tr>
 <tr class="memdesc:ab3671570eefb1129ab15401916c07b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process the result code of lr_rendezvous() call to log human readable errors.  <a href="#ab3671570eefb1129ab15401916c07b05">More...</a><br/></td></tr>
@@ -130,10 +102,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:afa6f1aa6d2647d9f58308c1864bd9eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the difference in days between today and X workdays into the future.  <a href="#afa6f1aa6d2647d9f58308c1864bd9eb6">More...</a><br/></td></tr>
 <tr class="separator:afa6f1aa6d2647d9f58308c1864bd9eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab38ac7501bf33d86e9fa82a53f43b95b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#ab38ac7501bf33d86e9fa82a53f43b95b">y_load_kernel_dll</a> ()</td></tr>
+<tr class="memdesc:ab38ac7501bf33d86e9fa82a53f43b95b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the kernel32.dll file if not already loaded. Internal function that we need so so that we can use kernel32.dll to query windows for disk space usage.  <a href="#ab38ac7501bf33d86e9fa82a53f43b95b">More...</a><br/></td></tr>
 <tr class="separator:ab38ac7501bf33d86e9fa82a53f43b95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09204e6a1bad95cf41fbc2a575c357a5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5">y_get_free_disk_space_percentage</a> (char *folder_name)</td></tr>
+<tr class="memdesc:a09204e6a1bad95cf41fbc2a575c357a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the free diskspace percentage on the target folder on the load generator.  <a href="#a09204e6a1bad95cf41fbc2a575c357a5">More...</a><br/></td></tr>
 <tr class="separator:a09204e6a1bad95cf41fbc2a575c357a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2318c8db530202522ef982ce1f0e4a77"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77">y_get_free_disk_space_in_mebibytes</a> (char *folder_name)</td></tr>
+<tr class="memdesc:a2318c8db530202522ef982ce1f0e4a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the amount of free disk space in the target folder in mebibytes (SI unit)  <a href="#a2318c8db530202522ef982ce1f0e4a77">More...</a><br/></td></tr>
 <tr class="separator:a2318c8db530202522ef982ce1f0e4a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39dac5aa77a24d6ff51bc66e82ff7c9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a39dac5aa77a24d6ff51bc66e82ff7c9b">y_read_file_into_parameter</a> (char *filename, char *param)</td></tr>
 <tr class="separator:a39dac5aa77a24d6ff51bc66e82ff7c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,17 +122,13 @@ Functions</h2></td></tr>
 <tr class="separator:a375a16360f75738d68c6b8c706e84eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a123bd2be5b33b914a321e11a7122dba6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a123bd2be5b33b914a321e11a7122dba6">y_think_time_for_rampup</a> (const int rampup_period, double TPS_max)</td></tr>
 <tr class="separator:a123bd2be5b33b914a321e11a7122dba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a312065213820734af47b86c233a26c0d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a> = 0</td></tr>
-<tr class="separator:a312065213820734af47b86c233a26c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36fcd2d9a92671f11bfebf8b7bfa34ae"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a> = NULL</td></tr>
-<tr class="separator:a36fcd2d9a92671f11bfebf8b7bfa34ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ebd23898db36692c02dd58d9649f4a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a></td></tr>
-<tr class="separator:a1ebd23898db36692c02dd58d9649f4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Collection of miscellaneous support functions. </p>
+<p>This file contains loadrunner specific helper functions. If we don't have somewhere else to put some piece of code, this is where it will probably end up. </p>
+
+<p>Definition in file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a3b4b09ec1d578ba8db23755194925d99"></a>
 <div class="memitem">
 <div class="memproto">
@@ -168,49 +139,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00023">23</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a95b385f3237749d89e48db45006b2583"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _vUserGroup&#160;&#160;&#160;0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00035">35</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afb08140c01e02e91683eef33ba367d07"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _vUserID&#160;&#160;&#160;0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00034">34</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a690f251553b39fd4f31894826141b61a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RAND_MAX&#160;&#160;&#160;1073741823</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00045">45</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00030">30</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -227,12 +156,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Resets the breadcrumb. </p>
-<pre class="fragment">Use this function to start a new breadcrumb or to reset an existing one.
-</pre> <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
+<p>Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one. </p>
+<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a2c0e016c236c66f5ce29ec6cf26c258f" title="Keep track of the steps in the script. ">y_breadcrumb()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00663">663</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00294">294</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -259,7 +187,7 @@ Variables</h2></td></tr>
 <div class="line">    }                                          \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00960">960</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00612">612</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -279,15 +207,14 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Keep track of the steps in the script. </p>
-<p>Adds (another) string (read: step) to the LR-parameter {breadcrumb} Use this to keep track of the steps taken by the script. Very useful if you have a script which does things in a random order and you want to know (in the end) which order it used. You can, ofcourse, write this to a (log)file. Don't forget to use <a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb. ">y_breadcrumb_reset()</a> to clear the parameter at the start of the script. (else you end up with a very long breadcrumb (breadstick?).)</p>
+<p>Adds (another) string (read: step) to the LR-parameter {breadcrumb} Use this to keep track of the steps taken by the script. Very useful if you have a script which does things in a random order and you want to know (in the end) which order it actually used. You can, of course, write this to a (log)file. Don't forget to use <a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one...">y_breadcrumb_reset()</a> to clear the parameter at the start of the script. (else you end up with a very long breadcrumb (breadstick?).)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">breadcrumb</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>LR parameter {breadcrumb} </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf">y_breadcrumb_reset</a>();    <span class="comment">// clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.</span></div>
+<dl class="section return"><dt>Returns</dt><dd>LR parameter {breadcrumb} <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf">y_breadcrumb_reset</a>();    <span class="comment">// clean the breadcrumb-variable. (previous data in {breadcrumb} is deleted.</span></div>
 <div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a2c0e016c236c66f5ce29ec6cf26c258f">y_breadcrumb</a>(<span class="stringliteral">&quot;start&quot;</span>);</div>
 <div class="line"><span class="comment">// .... some code....</span></div>
 <div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a2c0e016c236c66f5ce29ec6cf26c258f">y_breadcrumb</a>(<span class="stringliteral">&quot;processing data&quot;</span>)</div>
@@ -295,9 +222,10 @@ Variables</h2></td></tr>
 <div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a2c0e016c236c66f5ce29ec6cf26c258f">y_breadcrumb</a>(&quot;finished&quot;)</div>
 <div class="line">The result is that {breadcrumb} contains <span class="stringliteral">&quot;start;processing data;finished&quot;</span>   </div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb. ">y_breadcrumb_reset()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one...">y_breadcrumb_reset()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00637">637</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00270">270</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -316,13 +244,15 @@ Variables</h2></td></tr>
 
 <p>Saves the current date/time into a LR-parameter. </p>
 <p>Stores the current date/time into LR-parameter {DATE_TIME_STRING} in this format:<br/>
-YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
-<dl class="section return"><dt>Returns</dt><dd>current date/time into LR-parameter {DATE_TIME_STRING}. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a>();</div>
+YYYYMMDD,HHMMSS (yes, separated by a comma.) </p>
+<dl class="section return"><dt>Returns</dt><dd>current date/time into LR-parameter {DATE_TIME_STRING}.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This doesn't add much. People should be able to call lr_save_datetime() themselves, right? Putting it on the deprecation list for that reason. <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a>();</div>
 <div class="line">lr_message(<span class="stringliteral">&quot;Current date/time: %s&quot;</span>, lr_eval_string(<span class="stringliteral">&quot;{DATE_TIME_STRING}&quot;</span>));</div>
 </div><!-- fragment --> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00727">727</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00361">361</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -340,7 +270,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00935">935</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00587">587</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -357,7 +287,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00923">923</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00575">575</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -375,7 +305,20 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00868">868</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>get the amount of free disk space in the target folder in mebibytes (SI unit) </p>
+<p>In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has. This function provides that number, in absolute terms.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">folder_name</td><td>The name of the folder to report on. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The amount of mebibytes free, as a double.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is not capable of handling disk sizes &gt; 16 TB. The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all. Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen .. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5" title="Get the free diskspace percentage on the target folder on the load generator. ">y_get_free_disk_space_percentage()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00520">520</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -393,11 +336,24 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00843">843</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Get the free diskspace percentage on the target folder on the load generator. </p>
+<p>In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has. This function provides that number, relative to the total disk space size.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">folder_name</td><td>The name of the folder to report on. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The percentage of free space, as a double.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is not capable of handling disk sizes &gt; 16 TB. The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all. Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen .. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77" title="get the amount of free disk space in the target folder in mebibytes (SI unit) ">y_get_free_disk_space_in_mebibytes()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00489">489</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4ad4afc7aabf4e2fcc7752ba227ae226"></a>
+<a class="anchor" id="af2701ea7aad9299f785e75f5007c57a5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -405,7 +361,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned long y_hash_sdbm </td>
+          <td class="memname">static function_removal unsigned long y_hash_sdbm </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -420,28 +376,18 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
 </div><div class="memdoc">
 
 <p>Create a hash of string input. </p>
-<pre class="fragment">See: http://www.cse.yorku.ca/~oz/hash.html 
-</pre> <dl class="section return"><dt>Returns</dt><dd>hash (unsigned long) </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"></div><!-- fragment --> </dd></dl>
+<p>A fairly simple hash that can be used to compare long input texts with each other. This uses the sdbm algorithm, described at <a href="http://www.cse.yorku.ca/~oz/hash.html">http://www.cse.yorku.ca/~oz/hash.html</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>The string to create a hash from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a href="http://www.cse.yorku.ca/~oz/hash.html">http://www.cse.yorku.ca/~oz/hash.html</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>hash (unsigned long) </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00164">164</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a00aa2e3c4dbd5c6d8b9c1c9d643fc399"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int y_is_vugen_run </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00088">88</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00051">51</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -458,7 +404,11 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00812">812</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Load the kernel32.dll file if not already loaded. Internal function that we need so so that we can use kernel32.dll to query windows for disk space usage. </p>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard()</a>, <a class="el" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00451">451</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -484,8 +434,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"><div class="line">{</div>
+<dl class="section return"><dt>Returns</dt><dd>None <div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="keywordtype">int</span> result = lr_rendezvous(<span class="stringliteral">&quot;03_Portefeuille&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec">y_start_transaction</a>(<span class="stringliteral">&quot;Rendezvous_me&quot;</span>);</div>
@@ -495,63 +444,9 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
 <div class="line">    <a class="code" href="y__loadrunner__utils_8c.html#ab3671570eefb1129ab15401916c07b05">y_log_rendezvous_result</a>(result);</div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#ab3671570eefb1129ab15401916c07b05" title="Process the result code of lr_rendezvous() call to log human readable errors. ">y_log_rendezvous_result()</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00577">577</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0213fca8c623a194e44b3a846a834729"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_param_unique </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>param</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create a unique parameter. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">param</td><td>The name of a parameter to store the resulting string in. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak &amp; André Luyer</dd></dl>
-<p>Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a0213fca8c623a194e44b3a846a834729">y_param_unique</a>(<span class="stringliteral">&quot;test&quot;</span>);</div>
-</div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00186">186</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab31dd572cc0f21dae3583c83770d5fab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">long y_rand </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint). Seeds the random number generator - but only the first time this function is called. </p>
-<p>Example: </p>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> random_number;</div>
-<div class="line">random_number=<a class="code" href="y__loadrunner__utils_8c.html#ab31dd572cc0f21dae3583c83770d5fab">y_rand</a>();</div>
-</div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>Random number (integer) between 0 and 31-bit maxint - slightly over 1 billion. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00110">110</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00210">210</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -579,7 +474,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Create a random number (integer), between two boundaries. (the boundaries are included!) </p>
+<p>Create a random number between two boundaries. (the boundaries are included!) </p>
 <pre class="fragment">When the lower boundary equals the upper boundary, y_rand_between() simply returns the lower boundary.
 </pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -588,16 +483,18 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>random number </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"><div class="line"><span class="keywordtype">int</span> random;        </div>
+<dl class="section return"><dt>Returns</dt><dd>random number</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> random;        </div>
 <div class="line">random = <a class="code" href="y__loadrunner__utils_8c.html#aa50b7745f6d186a97d1dc21eebf52bb3">y_rand_between</a>(0, 10);        <span class="comment">// generate a random number between 0 and 10 (including 0 and 10!)</span></div>
-</div><!-- fragment --> </dd></dl>
+</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00488">488</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00127">127</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a00ea8d9b98bae830e5f3cc29b5614f03"></a>
+<a class="anchor" id="ae983b9ef76c2dac577cd9bb17920b6ea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -617,7 +514,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>randMax</em>&#160;</td>
+          <td class="paramname"><em>rand_max</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -627,301 +524,27 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Check whether or not a random number lies between 2 given boundaries. </p>
-<p>Generate a random number between (and including) 0 and randMax, and tell us if that number lies between the lower and upper bounds or not. (attention: boundaries are included!)</p>
-<p>This is useful for pathing decisions: Say that at point P in a script a choice has to be made between continuing with actions A, B, and C. The decision is made based on a percentage: A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code that would make this decision. </p>
+<p>Generate random number and test if it lies between 2 given boundaries. </p>
+<p>This will generate a random number between (and including) 0 and rand_max, and tell us if that number lies between the lower and upper bounds or not. Boundaries are included!</p>
+<p>This is useful for pathing decisions: Say that at point P in a script a choice has to be made between continuing with actions A, B, and C. The decision is made based on a percentage: A = 10% chance, B = 50% chance, C = 40% chance. This function was written to support the code that would make this decision.</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="y__flow__list_8c.html">y_flow_list.c</a> provides a better and more intuitive alternative for this one. For that reason, we are likely to remove it in the near future.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">lowerbound</td><td>Minumum value </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">upperbound</td><td>Maximum value </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">randMax</td><td>Upper boundary of the random number </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rand_max</td><td>Upper boundary of the random number </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>0: no, random number lies outside the boundaries<br/>
  1: yes, random number lies inside the boundaries<br/>
- &lt;0: input made no sense. <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a00ea8d9b98bae830e5f3cc29b5614f03">y_rand_in_sliding_window</a>(1, 10, 20); <span class="comment">// Returns 1 if the random number rolled is 4, and 0 if the random number was 11.</span></div>
+ &lt;0: input made no sense. <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#ae983b9ef76c2dac577cd9bb17920b6ea">y_rand_in_sliding_window</a>(1, 10, 20); <span class="comment">// Returns 1 if the random number rolled is 4, and 0 if the random number was 11.</span></div>
 </div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a>, <a class="el" href="y__flow__list_8c.html">y_flow_list.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00453">453</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a91e3109c43cfdf0f6378b943d39871bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_random_number_buffer </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>parameter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minimumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maximumLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a random string of numbers with a given minimum and maximum length. </p>
-<p>This function generates a string of numbers with a given minimum and maximum length. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">parameter</td><td>Name of the LR-parameter in which the result is stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minimumLength</td><td>Minumum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maximumLength</td><td>Maximum length of the string </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24" title="Generates a random string with (pseudo) words created from a given string of characters. ">y_random_string_buffer_core</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00382">382</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab751d549b344736ced6cf495d019ebc6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_random_string_buffer </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>parameter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minimumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maximumLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a random string with (pseudo) words created from a given string of characters. </p>
-<p>This function uses a given set of characters to create words, separated by spaces. The words are minimal 3 characters long, and maximum 8 characters long. Should you need other word lenghts, use y_random_number_buffer_core(). The total length of the line is minimal <em>minimumLength</em> and maimum <em>maximumLength</em> long.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">parameter</td><td>Name of the LR-parameter in which the result is stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minimumLength</td><td>Minumum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maximumLength</td><td>Maximum length of the string </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24" title="Generates a random string with (pseudo) words created from a given string of characters. ">y_random_string_buffer_core</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00362">362</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3e11c4662cca5dd346ad89590d5eef24"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_random_string_buffer_core </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>parameter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minimumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maximumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minWordLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxWordLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>characterSet</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generates a random string with (pseudo) words created from a given string of characters. </p>
-<p>This function uses a given set of characters to create words, separated by spaces. The words are minimal <em>minWordLength</em> characters long, and maximum <em>minWordLength</em> characters. The total length of the line is minimal <em>minimumLength</em> and maimum <em>maximumLength</em> long.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">parameter</td><td>Name of the LR-parameter in which the result is stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minimumLength</td><td>Minumum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maximumLength</td><td>Maximum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minWordLength</td><td>Minimum length of the words within the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maxWordLength</td><td>Minimum length of the words within the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">characterSet</td><td>The string is build from this string of characters </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak / Raymond de Jongh <div class="fragment"><div class="line"><span class="comment">// Generates a string of minimal 3 and max 20 characters, </span></div>
-<div class="line"><span class="comment">// with words of minimal 1 and maximal 3 charactes.</span></div>
-<div class="line"><span class="comment">// Chooses only characters a, c, d or d.</span></div>
-<div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24">y_random_string_buffer_core</a>(<span class="stringliteral">&quot;uitvoer&quot;</span>, 3,20, 1, 3, <span class="stringliteral">&quot;abcd&quot;</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Generates some sort of mock morse-code of exactly 30 characters.</span></div>
-<div class="line"><span class="comment">// with words of minimal 1 and maximal 3 charactes.</span></div>
-<div class="line"><span class="comment">// Chooses only characters a, c, d or d.</span></div>
-<div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24">y_random_string_buffer_core</a>(<span class="stringliteral">&quot;uitvoer&quot;</span>, 3,20, 1, 3, <span class="stringliteral">&quot;abcd&quot;</span>); <span class="comment">// could result in &quot;ccc db dac c&quot;</span></div>
-</div><!-- fragment --></dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a91e3109c43cfdf0f6378b943d39871bd" title="Returns a random string of numbers with a given minimum and maximum length. ">y_random_number_buffer</a> </dd>
-<dd>
-<a class="el" href="y__loadrunner__utils_8c.html#aac658f815d53b5fbda9abe49b34148e1" title="Returns a string containing only the &quot;shift-1...shift 9 characters (on a US-keyboard). ">y_random_string_buffer_curses</a> </dd>
-<dd>
-<a class="el" href="y__loadrunner__utils_8c.html#ab751d549b344736ced6cf495d019ebc6" title="Returns a random string with (pseudo) words created from a given string of characters. ">y_random_string_buffer</a> </dd>
-<dd>
-<a class="el" href="y__loadrunner__utils_8c.html#a8cbde93e30abaf3392c172f8f83e5889" title="Generates a random string with a hexadecimal number, of a given minimum and maximum length...">y_random_string_buffer_hex</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00252">252</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aac658f815d53b5fbda9abe49b34148e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_random_string_buffer_curses </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>parameter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minimumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maximumLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a string containing only the "shift-1...shift 9 characters (on a US-keyboard). </p>
-<p>This function generates a string of non-alfa-characters with a given minimum and maximum length.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">parameter</td><td>Name of the LR-parameter in which the result is stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minimumLength</td><td>Minumum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maximumLength</td><td>Maximum length of the string </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24" title="Generates a random string with (pseudo) words created from a given string of characters. ">y_random_string_buffer_core</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00402">402</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8cbde93e30abaf3392c172f8f83e5889"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_random_string_buffer_hex </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>parameter</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minimumLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maximumLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generates a random string with a hexadecimal number, of a given minimum and maximum length. </p>
-<p>This function generates a string with a hexadecimal number.</p>
-<p>Should you need other word lenghts, use y_random_number_buffer_core(). The total length of the line is minimal <em>minimumLength</em> and maimum <em>maximumLength</em> long.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">parameter</td><td>Name of the LR-parameter in which the result is stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">minimumLength</td><td>Minumum length of the string </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maximumLength</td><td>Maximum length of the string </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a3e11c4662cca5dd346ad89590d5eef24" title="Generates a random string with (pseudo) words created from a given string of characters. ">y_random_string_buffer_core</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00425">425</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00089">89</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -949,7 +572,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00886">886</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00538">538</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -967,21 +590,20 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Fetch attribute from vUser's command line. </p>
-<p>This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a short cut of <a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631" title="Fetch attribute from vUser&#39;s command line. ">y_save_attribute_to_parameter()</a></p>
+<p>Fetch attribute from vUser's command lin and store it in a parameter of the same name. This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to <a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631" title="Fetch attribute from vUser&#39;s command line and store it in a parameter. This will fetch an attribute f...">y_save_attribute_to_parameter()</a> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>Argument Name of the attribute. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A LR parameter with the same name as the Argument Name. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a64eb755ec09827fed663697cdbe50593">y_save_attribute</a>(<span class="stringliteral">&quot;server&quot;</span>);</div>
+<dl class="section return"><dt>Returns</dt><dd>A LR parameter with the same name as the Argument Name. <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a64eb755ec09827fed663697cdbe50593">y_save_attribute</a>(<span class="stringliteral">&quot;server&quot;</span>);</div>
 <div class="line">web_add_auto_filter(<span class="stringliteral">&quot;Action=Include&quot;</span>, <span class="stringliteral">&quot;HostSuffix={server}&quot;</span>, LAST );</div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631" title="Fetch attribute from vUser&#39;s command line. ">y_save_attribute_to_parameter()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631" title="Fetch attribute from vUser&#39;s command line and store it in a parameter. This will fetch an attribute f...">y_save_attribute_to_parameter()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00547">547</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00181">181</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1009,8 +631,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Fetch attribute from vUser's command line. </p>
-<p>This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name.</p>
+<p>Fetch attribute from vUser's command line and store it in a parameter. This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">attrib</td><td>Argument Name of the attribute. </td></tr>
@@ -1018,36 +639,13 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A LR parameter with the same name as the Argument Name. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631">y_save_attribute_to_parameter</a>(<span class="stringliteral">&quot;server&quot;</span>, <span class="stringliteral">&quot;nice_server&quot;</span>);</div>
+<dl class="section return"><dt>Returns</dt><dd>A LR parameter with the same name as the Argument Name. <b>Example:</b> <div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#a1ab75c887e62a77eef38c8b5806f4631">y_save_attribute_to_parameter</a>(<span class="stringliteral">&quot;server&quot;</span>, <span class="stringliteral">&quot;nice_server&quot;</span>);</div>
 <div class="line">web_add_auto_filter(<span class="stringliteral">&quot;Action=Include&quot;</span>, <span class="stringliteral">&quot;HostSuffix={nice_server}&quot;</span>, LAST );</div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a64eb755ec09827fed663697cdbe50593" title="Fetch attribute from vUser&#39;s command line. ">y_save_attribute()</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00520">520</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7350ca6bb0383b2169ef4eaae3b091e7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_setup </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Ylib setup - determines and stores the identity of the virtual user. </p>
-<p>This runs lr_whoami and sets y_virtual_user_id and y_virtual_user_group as global variables. Called <a class="el" href="y__loadrunner__utils_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and RAND_MAX (31 bit maxint). Seeds the random number ge...">y_rand()</a> (for it's seed), <a class="el" href="y__loadrunner__utils_8c.html#a00aa2e3c4dbd5c6d8b9c1c9d643fc399">y_is_vugen_run()</a> and others dynamically.</p>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a64eb755ec09827fed663697cdbe50593" title="Fetch attribute from vUser&#39;s command lin and store it in a parameter of the same name. This will fetch an attribute from the vUser&#39;s command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to y_save_attribute_to_parameter() ">y_save_attribute()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Only call this if you need the y_virtual_user_id and y_virtual_group variables to be set. Ylib functions that need this will call it when required. </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00071">71</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00155">155</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1075,7 +673,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l01081">1081</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00733">733</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1115,7 +713,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l01003">1003</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00655">655</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +731,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00917">917</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00569">569</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1152,18 +750,17 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
 </div><div class="memdoc">
 
 <p>Calculate the difference in days between today and X workdays into the future. </p>
-<p>Calculate the difference in days between today and a date X workdays into the future.</p>
-<dl class="section return"><dt>Returns</dt><dd>How many days into the future X workdays will be. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak <div class="fragment"><div class="line"><span class="comment">// Reserve a meeting room in &#39;reservationOffset&#39; days.</span></div>
+<p>Calculate the difference in days between today and a date X workdays into the future. </p>
+<dl class="section return"><dt>Returns</dt><dd>How many days into the future X workdays will be.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line"><span class="comment">// Reserve a meeting room in &#39;reservationOffset&#39; days.</span></div>
 <div class="line"><span class="keywordtype">int</span> daysOffSet = <a class="code" href="y__loadrunner__utils_8c.html#afa6f1aa6d2647d9f58308c1864bd9eb6">y_workdays_from_today</a>( <a class="code" href="vugen_8h.html#ac5aa18897f547ff20f10c777c6a58f0a">atoi</a>(lr_eval_string(<span class="stringliteral">&quot;{reservationOffset}&quot;</span>)) );</div>
 <div class="line">lr_save_datetime(<span class="stringliteral">&quot;%d-%m-%Y&quot;</span>, DATE_NOW + (daysOffSet*ONE_DAY), <span class="stringliteral">&quot;ReservationDate&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">lr_vuser_status_message(</div>
-<div class="line">lr_eval_string(<span class="stringliteral">&quot;Running with offset {reservationOffset} at day offset %d&quot;</span>),</div>
-<div class="line">daysOffSet);</div>
-</div><!-- fragment --> </dd></dl>
+<div class="line">lr_vuser_status_message(lr_eval_string(<span class="stringliteral">&quot;Running with offset {reservationOffset} at day offset %d&quot;</span>), daysOffSet);</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00752">752</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00385">385</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -1201,66 +798,23 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.)</p>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0: everthing went fine<br/>
-&lt;0: failed </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh <div class="fragment"><div class="line"><span class="keywordtype">int</span> result;</div>
+&lt;0: failed <div class="fragment"><div class="line"><span class="keywordtype">int</span> result;</div>
 <div class="line">result=<a class="code" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a>(<span class="stringliteral">&quot;c:\\temp.txt&quot;</span>, <span class="stringliteral">&quot;This is a test&quot;</span>);</div>
 <div class="line"><span class="keywordflow">if</span> (result != 0)</div>
 <div class="line">{   <span class="comment">// o dear, something went wrong!</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb. ">y_breadcrumb_reset()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one...">y_breadcrumb_reset()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00686">686</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a1ebd23898db36692c02dd58d9649f4a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int y_scid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00031">31</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a36fcd2d9a92671f11bfebf8b7bfa34ae"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* y_virtual_user_group = NULL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00030">30</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a312065213820734af47b86c233a26c0d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int y_virtual_user_id = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00029">29</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00317">317</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 17 2014 15:06:25 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 17 2014 17:18:14 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

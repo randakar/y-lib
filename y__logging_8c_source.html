@@ -30,6 +30,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -118,361 +119,351 @@
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8">y_make_datetimestamp</a>( timebuffer.<a class="code" href="struct__timeb.html#a928964f8921238f2f1cd9b00156c2193">time</a>, timebuffer.<a class="code" href="struct__timeb.html#a975ceacec134ed49ae57e8f5c4818508">millitm</a>);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// Hmn, do we even still need this?</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">// -- removed. See y_get_current_time() in y_loadrunner_utils.c</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">// time_t y_timestamp()</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">// {</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">//     return time(NULL);</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">// }</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ab38c13834ecc87892a772c3bc66be5f9">   83</a></span>&#160;<span class="preprocessor">#define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a92ceb6df73ce9a4a131ad18f2c0ee386">   82</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a92ceb6df73ce9a4a131ad18f2c0ee386">y_setup_logging</a>()</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">// Make the extra logging facility available to the user.</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f">_y_extra_logging</a> = 1;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff">   90</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff">y_setup_logging</a>()</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// Make the extra logging facility available to the user.</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f">_y_extra_logging</a> = 1;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">// Force a line to be logged to the logfile even if logging is off.</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">// Only done if extra logging was enabled through a call to y_setup_logging();</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">  101</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(<span class="keywordtype">char</span> *message)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordtype">char</span> *logLine = <span class="stringliteral">&quot;%s: VUserId: %d, Host: %s, %s&quot;</span>;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="comment">// Only add extra logging if it has been turned on.</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">if</span>( <a class="code" href="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f">_y_extra_logging</a> ) </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordtype">int</span> log_level = lr_get_debug_message();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// Force a line to be logged to the logfile even if logging is off.</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// Only done if extra logging was enabled through a call to y_setup_logging();</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">   93</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(<span class="keywordtype">char</span> *message)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">char</span> *logLine = <span class="stringliteral">&quot;%s: VUserId: %d, Host: %s, %s&quot;</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">// Only add extra logging if it has been turned on.</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">if</span>( <a class="code" href="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f">_y_extra_logging</a> ) </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">int</span> log_level = lr_get_debug_message();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        lr_set_debug_message(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            LR_SWITCH_ON);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        lr_log_message(logLine, <a class="code" href="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886">y_get_datetimestamp</a>(), <a class="code" href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a>, lr_get_host_name(), lr_eval_string(message));</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        lr_set_debug_message(</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            LR_SWITCH_ON);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        lr_set_debug_message(log_level, LR_SWITCH_ON);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="comment">//lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        lr_log_message(logLine, <a class="code" href="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886">y_get_datetimestamp</a>(), <a class="code" href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a>, lr_get_host_name(), lr_eval_string(message));</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        lr_set_debug_message(log_level, LR_SWITCH_ON);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="comment">//lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">  115</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">y_log_error</a>(<span class="keywordtype">char</span> *message)</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">char</span> *msg = lr_eval_string(message);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(msg);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment">//lr_error_message(msg); </span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    lr_fail_trans_with_error(msg);</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">  123</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">y_log_error</a>(<span class="keywordtype">char</span> *message)</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">  123</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">y_log_warning</a>(<span class="keywordtype">char</span> *message)</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;{</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">char</span> *msg = lr_eval_string(message);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(msg);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment">//lr_error_message(msg); </span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    lr_fail_trans_with_error(msg);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">  131</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">y_log_warning</a>(<span class="keywordtype">char</span> *message)</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;{</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">char</span> *msg;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    lr_save_string(lr_eval_string(message), <span class="stringliteral">&quot;_log_msg&quot;</span>);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    msg = lr_eval_string(<span class="stringliteral">&quot;Warning: {_log_msg}&quot;</span>);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(msg);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">  140</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>()</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;{</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="comment">// Save the previous loglevel.</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a> = lr_get_debug_message();</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="comment">//lr_error_message(&quot;Saved loglevel %d&quot;, _y_log_level);</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">  147</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>()</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="comment">// Good grief, this debug message interface is terrible.</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">char</span> *msg;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    lr_save_string(lr_eval_string(message), <span class="stringliteral">&quot;_log_msg&quot;</span>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    msg = lr_eval_string(<span class="stringliteral">&quot;Warning: {_log_msg}&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <a class="code" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>(msg);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">  132</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>()</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;{</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment">// Save the previous loglevel.</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a> = lr_get_debug_message();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="comment">//lr_error_message(&quot;Saved loglevel %d&quot;, _y_log_level);</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">  139</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>()</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;{</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="comment">// Good grief, this debug message interface is terrible.</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">// Turn all logging off. Which has the really weird side effect of turning auto logging on again.</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="comment">// Disable the auto logging again, but using a different bit flag.</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="comment">//lr_error_message(&quot;All logging turned off, log level now %d&quot;, lr_get_debug_message() );</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;}</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="comment">// Turn all logging off. Which has the really weird side effect of turning auto logging on again.</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="comment">// Disable the auto logging again, but using a different bit flag.</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="comment">//lr_error_message(&quot;All logging turned off, log level now %d&quot;, lr_get_debug_message() );</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">// Save the current loglevel and turn off logging.</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">  153</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>()</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;{</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>();</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;}</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">// Save the current loglevel and turn off logging.</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">  161</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>()</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">  167</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>()</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;{</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>(); <span class="comment">// make sure it is never accidentally enabled again through y_log_restore()</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">  173</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">y_log_set_brief</a>()</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;{</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to BRIEF.\n&quot;);</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to brief, from %d to %d&quot;, _y_log_level, lr_get_debug_message() );</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">  183</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>()</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;{</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to EXTENDED.\n&quot;);</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">  159</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>()</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;{</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a>(); <span class="comment">// make sure it is never accidentally enabled again through y_log_restore()</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">  165</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">y_log_set_brief</a>()</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to BRIEF.\n&quot;);</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>();</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to brief, from %d to %d&quot;, _y_log_level, lr_get_debug_message() );</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;}</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">  175</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>()</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;{</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level set to EXTENDED.\n&quot;);</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    lr_set_debug_message(</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        LR_SWITCH_ON);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level extended from %d to %d&quot;, _y_log_level, lr_get_debug_message() );</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>();</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    lr_set_debug_message(</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        LR_SWITCH_ON);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">// Restore the log level to the old state.</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">  188</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>()</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;{</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="comment">//lr_log_message(&quot;Restoring log level to %d, current level %d.&quot;, _y_log_level, lr_get_debug_message());</span></div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">//lr_log_message(&quot;Log level extended from %d to %d&quot;, _y_log_level, lr_get_debug_message() );</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">// Restore the log level to the old state.</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">  196</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>()</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;{</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">//lr_log_message(&quot;Restoring log level to %d, current level %d.&quot;, _y_log_level, lr_get_debug_message());</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    lr_set_debug_message(<a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a>, LR_SWITCH_ON);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="comment">// None of this debug code does what we want. Only y_log_turn_off_without_saving() (above) seems to work ..</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="comment">//lr_set_debug_message(~Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="comment">//lr_set_debug_message(~_y_log_level, LR_SWITCH_OFF); </span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="comment">//lr_set_debug_message(~_y_log_level &amp; Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="comment">//lr_error_message(&quot;Attempted to restore loglevel to %d, now it is %d&quot;, _y_log_level, lr_get_debug_message());</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="comment">// Of course if the previous state was &quot;OFF&quot; the user will never see this either ;-)</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;}</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">  213</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">y_log_turn_on</a>()</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;{</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a> == LR_MSG_CLASS_DISABLE_LOG)</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    {</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>();</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    {</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>();</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">// Log a message forcefully, bypassing all log settings.</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">// Typically used for generating datafiles within scripts with the loglevel set to OFF.</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="comment">// Testcase:</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">//  lr_log_message(&quot;Before&quot;);</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment">//  y_log_force_message(&quot;Forced message&quot;);</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">//  lr_log_message(&quot;After&quot;);</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">  233</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">y_log_force_message</a>(<span class="keywordtype">char</span> *message)</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;{</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>();</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    lr_log_message( message );</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>();</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">// y_write_to_log()</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">//     writes &quot;content&quot; (a string) to a (log)file.</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment">//     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment">//        separated by commas. This function relies on y_write_to_file();</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment">// @author: Raymond de Jongh</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment">// Example:</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment">//     y_write_to_log(&quot;c:\\logfile.txt&quot;, &quot;Everything went great&quot;);</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="comment">//     This will result that the file (c:\logfile.txt) has this content:</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment">//        20091126,215212,SomeGroup,3,4,Everything went great</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">//     Ofcourse, the ID&#39;s and groupname will be different as this is just an example.</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">  253</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">y_write_to_log</a>(<span class="keywordtype">char</span> *filename, <span class="keywordtype">char</span> *content)</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;{</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordtype">size_t</span> string_length;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keywordtype">char</span>* <a class="code" href="vugen_8h.html#adb302c9aafbaa5e180d9f60ee954bb82">log</a>;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordtype">int</span> result;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <a class="code" href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    string_length = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(content)</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      + 15  <span class="comment">// y_datetime() is altijd 15 chars lang.</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(<a class="code" href="y__loadrunner__utils_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>) </div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      + 9   <span class="comment">// y_virtual_user_id</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      + 6   <span class="comment">// scid</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      + 1;  <span class="comment">// null byte (end of line)</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    log = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(string_length);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <a class="code" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a>();</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <a class="code" href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(log, string_length, <span class="stringliteral">&quot;%.15s,%s,%d,%d,%s&quot;</span>, </div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;       lr_eval_string(<span class="stringliteral">&quot;{DATE_TIME_STRING}&quot;</span>), </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;       <a class="code" href="y__loadrunner__utils_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>, </div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;       <a class="code" href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a>(<a class="code" href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a>) % 1000000000, </div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;       <a class="code" href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a>(<a class="code" href="y__loadrunner__utils_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a>) % 1000000, </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;       content);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    result = <a class="code" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a>(filename, log);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(log);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">// Detects low disk space situations and turns all logging off if not enough space is left.</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">  286</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard</a>(<span class="keywordtype">double</span> max_free_percentage)</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;{</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordtype">char</span>* hostname;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> disk_space_warning_given = 0;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordtype">double</span> free_space_percentage;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordtype">char</span>* log_folder = lr_get_attrib_string(<span class="stringliteral">&quot;out&quot;</span>);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <a class="code" href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a>();</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    lr_set_debug_message(<a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a>, LR_SWITCH_ON);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="comment">// None of this debug code does what we want. Only y_log_turn_off_without_saving() (above) seems to work ..</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment">//lr_set_debug_message(~Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">//lr_set_debug_message(~_y_log_level, LR_SWITCH_OFF); </span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="comment">//lr_set_debug_message(~_y_log_level &amp; Y_ALL_LOG_FLAGS, LR_SWITCH_OFF);</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">//lr_error_message(&quot;Attempted to restore loglevel to %d, now it is %d&quot;, _y_log_level, lr_get_debug_message());</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="comment">// Of course if the previous state was &quot;OFF&quot; the user will never see this either ;-)</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;}</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">  205</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">y_log_turn_on</a>()</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;{</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a> == LR_MSG_CLASS_DISABLE_LOG)</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    {</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    }</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>();</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    }</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">// Log a message forcefully, bypassing all log settings.</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="comment">// Typically used for generating datafiles within scripts with the loglevel set to OFF.</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">// Testcase:</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="comment">//  lr_log_message(&quot;Before&quot;);</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="comment">//  y_log_force_message(&quot;Forced message&quot;);</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="comment">//  lr_log_message(&quot;After&quot;);</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">  225</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">y_log_force_message</a>(<span class="keywordtype">char</span> *message)</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;{</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <a class="code" href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a>();</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    lr_log_message( message );</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;}</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="comment">// y_write_to_log()</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="comment">//     writes &quot;content&quot; (a string) to a (log)file.</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">//     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">//        separated by commas. This function relies on y_write_to_file();</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">// @author: Raymond de Jongh</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="comment">// Example:</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">//     y_write_to_log(&quot;c:\\logfile.txt&quot;, &quot;Everything went great&quot;);</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">//     This will result that the file (c:\logfile.txt) has this content:</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">//        20091126,215212,SomeGroup,3,4,Everything went great</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment">//     Ofcourse, the ID&#39;s and groupname will be different as this is just an example.</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">  245</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">y_write_to_log</a>(<span class="keywordtype">char</span> *filename, <span class="keywordtype">char</span> *content)</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;{</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">size_t</span> string_length;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="keywordtype">char</span>* <a class="code" href="vugen_8h.html#adb302c9aafbaa5e180d9f60ee954bb82">log</a>;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordtype">int</span> result;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <a class="code" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    string_length = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(content)</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      + 15  <span class="comment">// y_datetime() is altijd 15 chars lang.</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(<a class="code" href="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>) </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      + 9   <span class="comment">// y_virtual_user_id</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      + 6   <span class="comment">// scid</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      + 1;  <span class="comment">// null byte (end of line)</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    log = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(string_length);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a>();</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <a class="code" href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(log, string_length, <span class="stringliteral">&quot;%.15s,%s,%d,%d,%s&quot;</span>, </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;       lr_eval_string(<span class="stringliteral">&quot;{DATE_TIME_STRING}&quot;</span>), </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;       <a class="code" href="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>, </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;       <a class="code" href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a>(<a class="code" href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a>) % 1000000000, </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;       <a class="code" href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a>(<a class="code" href="y__core_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a>) % 1000000, </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;       content);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    result = <a class="code" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a>(filename, log);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(log);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">// Detects low disk space situations and turns all logging off if not enough space is left.</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno"><a class="line" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">  278</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard</a>(<span class="keywordtype">double</span> max_free_percentage)</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;{</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordtype">char</span>* hostname;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> disk_space_warning_given = 0;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keywordtype">double</span> free_space_percentage;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordtype">char</span>* log_folder = lr_get_attrib_string(<span class="stringliteral">&quot;out&quot;</span>);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="comment">// check already fired once before.</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">if</span>( disk_space_warning_given )</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    {</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="comment">// guard against accidental re-enablement of the logs by turning them off explicitly.</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="comment">// check already fired once before.</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span>( disk_space_warning_given )</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    {</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="comment">// guard against accidental re-enablement of the logs by turning them off explicitly.</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    }</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    free_space_percentage = <a class="code" href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5">y_get_free_disk_space_percentage</a>(log_folder);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="comment">// data point</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    hostname = lr_get_host_name();</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    lr_save_string(hostname, <span class="stringliteral">&quot;y_hostname_generator&quot;</span>);</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_free_percentage&quot;</span>), free_space_percentage);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">if</span>( free_space_percentage &lt; max_free_percentage )</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    {</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        <a class="code" href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        lr_set_transaction(lr_eval_string(<span class="stringliteral">&quot;---DISK SPACE LOW IN LOG FOLDER FOR {y_hostname_generator}---&quot;</span>), 0, LR_FAIL);</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Diskspace low on %s in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!&quot;</span>, </div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                         hostname, log_folder, free_space_percentage, max_free_percentage, <a class="code" href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a>);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        disk_space_warning_given = 1; <span class="comment">// turn off further warnings.</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;}</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">// Detects excessive disk usage on the output disk by the test</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">// by storing the maximum detected free space and comparing that to the current</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="comment">// once max disk usage is exceeded all logging is turned off and an error reported.</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00324"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">  324</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard</a>(<span class="keywordtype">double</span> limit_mebibytes_used)</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;{</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordtype">char</span>* hostname;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordtype">char</span>* log_folder = lr_get_attrib_string(<span class="stringliteral">&quot;out&quot;</span>);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordtype">double</span> free_mebibytes;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> max_free_mebibytes = -1;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordtype">double</span> mebibytes_used;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> disk_space_warning_given = 0;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    free_space_percentage = <a class="code" href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5">y_get_free_disk_space_percentage</a>(log_folder);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="comment">// data point</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    hostname = lr_get_host_name();</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    lr_save_string(hostname, <span class="stringliteral">&quot;y_hostname_generator&quot;</span>);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_free_percentage&quot;</span>), free_space_percentage);</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">if</span>( free_space_percentage &lt; max_free_percentage )</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    {</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <a class="code" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        lr_set_transaction(lr_eval_string(<span class="stringliteral">&quot;---DISK SPACE LOW IN LOG FOLDER FOR {y_hostname_generator}---&quot;</span>), 0, LR_FAIL);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Diskspace low on %s in folder %s. %.2lf%% remaining, exceeding the limit of %.21f%% Logging turned off for user id %d for the remainder of the test!&quot;</span>, </div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                         hostname, log_folder, free_space_percentage, max_free_percentage, <a class="code" href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a>);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        disk_space_warning_given = 1; <span class="comment">// turn off further warnings.</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    }</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;}</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="comment">// Detects excessive disk usage on the output disk by the test</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">// by storing the maximum detected free space and comparing that to the current</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">// once max disk usage is exceeded all logging is turned off and an error reported.</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">// </span></div>
+<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">  316</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard</a>(<span class="keywordtype">double</span> limit_mebibytes_used)</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;{</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordtype">char</span>* hostname;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordtype">char</span>* log_folder = lr_get_attrib_string(<span class="stringliteral">&quot;out&quot;</span>);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">double</span> free_mebibytes;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> max_free_mebibytes = -1;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordtype">double</span> mebibytes_used;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> disk_space_warning_given = 0;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="comment">// check already fired once before.</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordflow">if</span>( disk_space_warning_given )</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="comment">// guard against accidental re-enablement of the logs by turning them off explicitly.</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    }</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="comment">// check already fired once before.</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordflow">if</span>( disk_space_warning_given )</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="comment">// guard against accidental re-enablement of the logs by turning them off explicitly.</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    free_mebibytes = <a class="code" href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77">y_get_free_disk_space_in_mebibytes</a>(log_folder);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    lr_log_message(<span class="stringliteral">&quot;y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s&quot;</span>,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                   free_mebibytes, max_free_mebibytes, limit_mebibytes_used, log_folder);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">if</span>(max_free_mebibytes &lt; 0)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    {</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        lr_log_message(<span class="stringliteral">&quot;Storing free space as detected maximum&quot;</span>);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        max_free_mebibytes = free_mebibytes;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    }</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(max_free_mebibytes &lt; free_mebibytes)</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    {</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        lr_output_message(<span class="stringliteral">&quot;Warning: Free disk space increased from %f to %f, test disk space usage measurements may have become unreliable.&quot;</span>, max_free_mebibytes, free_mebibytes);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        max_free_mebibytes = free_mebibytes;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    }</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="comment">// Ok, so we used *something*. Now let&#39;s see if it exceeds our limit.</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    mebibytes_used = max_free_mebibytes - free_mebibytes;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="comment">// data points</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    hostname = lr_get_host_name();</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    lr_save_string(hostname, <span class="stringliteral">&quot;y_hostname_generator&quot;</span>);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_free_mebibytes&quot;</span>), free_mebibytes);</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_used_mebibytes&quot;</span>), mebibytes_used);</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordflow">if</span>( mebibytes_used &gt;= limit_mebibytes_used ) </div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    {</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <a class="code" href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        lr_set_transaction(lr_eval_string(<span class="stringliteral">&quot;---DISKSPACE USAGE TOO HIGH IN LOG FOLDER FOR {y_hostname_generator}---&quot;</span>), 0, LR_FAIL);</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        lr_output_message(<span class="stringliteral">&quot;Disk space used on host %s in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!&quot;</span>,</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                           hostname, log_folder, mebibytes_used, limit_mebibytes_used, <a class="code" href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a>);</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        disk_space_warning_given = 1; <span class="comment">// turn off further warnings.</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">#endif // _LOGGING_C</span></div>
-<div class="ttc" id="y__logging_8c_html_ad9d19e56f169b8181a349e5219264731"><div class="ttname"><a href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">y_log_force_message</a></div><div class="ttdeci">void y_log_force_message(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00233">y_logging.c:233</a></div></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    free_mebibytes = <a class="code" href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77">y_get_free_disk_space_in_mebibytes</a>(log_folder);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    lr_log_message(<span class="stringliteral">&quot;y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s&quot;</span>,</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                   free_mebibytes, max_free_mebibytes, limit_mebibytes_used, log_folder);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordflow">if</span>(max_free_mebibytes &lt; 0)</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    {</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        lr_log_message(<span class="stringliteral">&quot;Storing free space as detected maximum&quot;</span>);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;        max_free_mebibytes = free_mebibytes;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    }</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(max_free_mebibytes &lt; free_mebibytes)</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    {</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        lr_output_message(<span class="stringliteral">&quot;Warning: Free disk space increased from %f to %f, test disk space usage measurements may have become unreliable.&quot;</span>, max_free_mebibytes, free_mebibytes);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        max_free_mebibytes = free_mebibytes;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="comment">// Ok, so we used *something*. Now let&#39;s see if it exceeds our limit.</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    mebibytes_used = max_free_mebibytes - free_mebibytes;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="comment">// data points</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    hostname = lr_get_host_name();</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    lr_save_string(hostname, <span class="stringliteral">&quot;y_hostname_generator&quot;</span>);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_free_mebibytes&quot;</span>), free_mebibytes);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    lr_user_data_point( lr_eval_string(<span class="stringliteral">&quot;disk_space_{y_hostname_generator}_used_mebibytes&quot;</span>), mebibytes_used);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordflow">if</span>( mebibytes_used &gt;= limit_mebibytes_used ) </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;        <a class="code" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>();</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        lr_set_transaction(lr_eval_string(<span class="stringliteral">&quot;---DISKSPACE USAGE TOO HIGH IN LOG FOLDER FOR {y_hostname_generator}---&quot;</span>), 0, LR_FAIL);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        lr_output_message(<span class="stringliteral">&quot;Disk space used on host %s in folder %s was %f mebibytes, reaching the limit of %f. Logging turned off for user id %d for the remainder of the test!&quot;</span>,</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;                           hostname, log_folder, mebibytes_used, limit_mebibytes_used, <a class="code" href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a>);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        disk_space_warning_given = 1; <span class="comment">// turn off further warnings.</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        <a class="code" href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a>();</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    }</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">#endif // _LOGGING_C</span></div>
+<div class="ttc" id="y__logging_8c_html_ad9d19e56f169b8181a349e5219264731"><div class="ttname"><a href="y__logging_8c.html#ad9d19e56f169b8181a349e5219264731">y_log_force_message</a></div><div class="ttdeci">void y_log_force_message(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00225">y_logging.c:225</a></div></div>
 <div class="ttc" id="vugen_8h_html_a2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
 <div class="ttc" id="vugen_8h_html_afd4f329c8efb45c0dfff44525047a0fa"><div class="ttname"><a href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a></div><div class="ttdeci">int abs(int n)</div></div>
 <div class="ttc" id="structtm_html_af414eb7c86cc3099595211eee4d4211b"><div class="ttname"><a href="structtm.html#af414eb7c86cc3099595211eee4d4211b">tm::tm_min</a></div><div class="ttdeci">int tm_min</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00124">vugen.h:124</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a516cb215f2125635444363eeb2eb8803"><div class="ttname"><a href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard</a></div><div class="ttdeci">void y_disk_space_usage_guard(double limit_mebibytes_used)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00324">y_logging.c:324</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a7350ca6bb0383b2169ef4eaae3b091e7"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a></div><div class="ttdeci">void y_setup()</div><div class="ttdoc">Ylib setup - determines and stores the identity of the virtual user. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00071">y_loadrunner_utils.c:71</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a516cb215f2125635444363eeb2eb8803"><div class="ttname"><a href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard</a></div><div class="ttdeci">void y_disk_space_usage_guard(double limit_mebibytes_used)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00316">y_logging.c:316</a></div></div>
 <div class="ttc" id="y__logging_8c_html_a4bf5151c03baf1f6667d611121c0b04f"><div class="ttname"><a href="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f">_y_extra_logging</a></div><div class="ttdeci">int _y_extra_logging</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00031">y_logging.c:31</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a7841e4b695b3dbae20f9d9276eecc07a"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a></div><div class="ttdeci">void y_datetime()</div><div class="ttdoc">Saves the current date/time into a LR-parameter. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00727">y_loadrunner_utils.c:727</a></div></div>
+<div class="ttc" id="y__loadrunner__utils_8c_html_a7841e4b695b3dbae20f9d9276eecc07a"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a></div><div class="ttdeci">void y_datetime()</div><div class="ttdoc">Saves the current date/time into a LR-parameter. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00361">y_loadrunner_utils.c:361</a></div></div>
 <div class="ttc" id="vugen_8h_html"><div class="ttname"><a href="vugen_8h.html">vugen.h</a></div><div class="ttdoc">Standard C function headers. </div></div>
 <div class="ttc" id="vugen_8h_html_aa9336f97d394e8e02d97b9ff4fb0aca2"><div class="ttname"><a href="vugen_8h.html#aa9336f97d394e8e02d97b9ff4fb0aca2">localtime</a></div><div class="ttdeci">struct tm * localtime(const time_t *timer)</div></div>
 <div class="ttc" id="structtm_html_ab8d8904bad43b0c8b96e61941c5b5310"><div class="ttname"><a href="structtm.html#ab8d8904bad43b0c8b96e61941c5b5310">tm::tm_mday</a></div><div class="ttdeci">int tm_mday</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00126">vugen.h:126</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a1ebd23898db36692c02dd58d9649f4a1"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a></div><div class="ttdeci">int y_scid</div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00031">y_loadrunner_utils.c:31</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a1975c6dcb009fd4ebc670efa3805bf3c"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a></div><div class="ttdeci">int y_write_to_file(char *filename, char *content)</div><div class="ttdoc">Write a string to a file. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00686">y_loadrunner_utils.c:686</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a9704bca5562196d581411d31fcc690f0"><div class="ttname"><a href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a></div><div class="ttdeci">void y_log_restore()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00196">y_logging.c:196</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a7cca27937c3caa6dbcfa8d5c5b3894cc"><div class="ttname"><a href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a></div><div class="ttdeci">void y_log_set_extended()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00183">y_logging.c:183</a></div></div>
+<div class="ttc" id="y__loadrunner__utils_8c_html_a1975c6dcb009fd4ebc670efa3805bf3c"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a></div><div class="ttdeci">int y_write_to_file(char *filename, char *content)</div><div class="ttdoc">Write a string to a file. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00317">y_loadrunner_utils.c:317</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a9704bca5562196d581411d31fcc690f0"><div class="ttname"><a href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a></div><div class="ttdeci">void y_log_restore()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00188">y_logging.c:188</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a7cca27937c3caa6dbcfa8d5c5b3894cc"><div class="ttname"><a href="y__logging_8c.html#a7cca27937c3caa6dbcfa8d5c5b3894cc">y_log_set_extended</a></div><div class="ttdeci">void y_log_set_extended()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00175">y_logging.c:175</a></div></div>
 <div class="ttc" id="structtm_html_a33adf78fd6476b2120ce3b9c4a852053"><div class="ttname"><a href="structtm.html#a33adf78fd6476b2120ce3b9c4a852053">tm::tm_year</a></div><div class="ttdeci">int tm_year</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00128">vugen.h:128</a></div></div>
-<div class="ttc" id="y__logging_8c_html_acd38a10a5e25caf792c6c6c5be68ab5e"><div class="ttname"><a href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">y_write_to_log</a></div><div class="ttdeci">int y_write_to_log(char *filename, char *content)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00253">y_logging.c:253</a></div></div>
+<div class="ttc" id="y__logging_8c_html_acd38a10a5e25caf792c6c6c5be68ab5e"><div class="ttname"><a href="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e">y_write_to_log</a></div><div class="ttdeci">int y_write_to_log(char *filename, char *content)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00245">y_logging.c:245</a></div></div>
 <div class="ttc" id="y__logging_8c_html_af5f7233cc156519f399367ba558adba8"><div class="ttname"><a href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8">y_make_datetimestamp</a></div><div class="ttdeci">char * y_make_datetimestamp(time_t time, unsigned short millitm)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00044">y_logging.c:44</a></div></div>
 <div class="ttc" id="y__logging_8c_html_a87f1bf12dadd78cdaf0defa128fae999"><div class="ttname"><a href="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999">_y_log_level</a></div><div class="ttdeci">unsigned int _y_log_level</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00032">y_logging.c:32</a></div></div>
 <div class="ttc" id="vugen_8h_html_ac9626ce5468b43d954c3598c1ffe9725"><div class="ttname"><a href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a></div><div class="ttdeci">int snprintf(char *buffer, size_t n, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/snprintf/. </div></div>
 <div class="ttc" id="vugen_8h_html_a824afaa48b313f905546cf45822800fc"><div class="ttname"><a href="vugen_8h.html#a824afaa48b313f905546cf45822800fc">time_t</a></div><div class="ttdeci">long time_t</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00121">vugen.h:121</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a168c850ea18a4c7201ea9816337729aa"><div class="ttname"><a href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a></div><div class="ttdeci">void y_log_save()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00140">y_logging.c:140</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a440898bcda285688344b7147e26ff5b7"><div class="ttname"><a href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a></div><div class="ttdeci">void y_log_to_report(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00101">y_logging.c:101</a></div></div>
-<div class="ttc" id="y__logging_8c_html_a9699f5d59ff8a52ff94352d41b033ea5"><div class="ttname"><a href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">y_log_error</a></div><div class="ttdeci">void y_log_error(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00123">y_logging.c:123</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a36fcd2d9a92671f11bfebf8b7bfa34ae"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a></div><div class="ttdeci">char * y_virtual_user_group</div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00030">y_loadrunner_utils.c:30</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a168c850ea18a4c7201ea9816337729aa"><div class="ttname"><a href="y__logging_8c.html#a168c850ea18a4c7201ea9816337729aa">y_log_save</a></div><div class="ttdeci">void y_log_save()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00132">y_logging.c:132</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a440898bcda285688344b7147e26ff5b7"><div class="ttname"><a href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a></div><div class="ttdeci">void y_log_to_report(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00093">y_logging.c:93</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a9699f5d59ff8a52ff94352d41b033ea5"><div class="ttname"><a href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">y_log_error</a></div><div class="ttdeci">void y_log_error(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00115">y_logging.c:115</a></div></div>
 <div class="ttc" id="structtm_html_a112ac36fa2f593777138a417cf031e17"><div class="ttname"><a href="structtm.html#a112ac36fa2f593777138a417cf031e17">tm::tm_mon</a></div><div class="ttdeci">int tm_mon</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00127">vugen.h:127</a></div></div>
-<div class="ttc" id="y__logging_8c_html_ae92fd3a1d985c02c4d630dd1af17580b"><div class="ttname"><a href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a></div><div class="ttdeci">void y_log_turn_off_permanently()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00167">y_logging.c:167</a></div></div>
+<div class="ttc" id="y__logging_8c_html_ae92fd3a1d985c02c4d630dd1af17580b"><div class="ttname"><a href="y__logging_8c.html#ae92fd3a1d985c02c4d630dd1af17580b">y_log_turn_off_permanently</a></div><div class="ttdeci">void y_log_turn_off_permanently()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00159">y_logging.c:159</a></div></div>
 <div class="ttc" id="y__logging_8c_html_a9b402b9377251d1b78db7507c76fd886"><div class="ttname"><a href="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886">y_get_datetimestamp</a></div><div class="ttdeci">char * y_get_datetimestamp()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00066">y_logging.c:66</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a312065213820734af47b86c233a26c0d"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a></div><div class="ttdeci">int y_virtual_user_id</div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00029">y_loadrunner_utils.c:29</a></div></div>
-<div class="ttc" id="y__logging_8c_html_ad22b9fb4ae6f4a47b69cd37b9f33ceff"><div class="ttname"><a href="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff">y_setup_logging</a></div><div class="ttdeci">void y_setup_logging()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00090">y_logging.c:90</a></div></div>
+<div class="ttc" id="y__core_8c_html_ac32abec766134398dc7084de96068f9a"><div class="ttname"><a href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a></div><div class="ttdeci">include_protection int y_virtual_user_id</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00037">y_core.c:37</a></div></div>
 <div class="ttc" id="vugen_8h_html_adb302c9aafbaa5e180d9f60ee954bb82"><div class="ttname"><a href="vugen_8h.html#adb302c9aafbaa5e180d9f60ee954bb82">log</a></div><div class="ttdeci">double log(double x)</div></div>
-<div class="ttc" id="y__logging_8c_html_a0fdf23d9bb8acc2375d3680976336e3a"><div class="ttname"><a href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a></div><div class="ttdeci">void y_log_turn_off()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00161">y_logging.c:161</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a0fdf23d9bb8acc2375d3680976336e3a"><div class="ttname"><a href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a></div><div class="ttdeci">void y_log_turn_off()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00153">y_logging.c:153</a></div></div>
 <div class="ttc" id="vugen_8h_html_a02b53b2075c6fd6d1d695bf8176991a0"><div class="ttname"><a href="vugen_8h.html#a02b53b2075c6fd6d1d695bf8176991a0">ftime</a></div><div class="ttdeci">void ftime(struct _timeb *time1)</div></div>
-<div class="ttc" id="y__logging_8c_html_a945fff57d0f423529adf29ec8efc1e6a"><div class="ttname"><a href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">y_log_turn_on</a></div><div class="ttdeci">void y_log_turn_on()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00213">y_logging.c:213</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a945fff57d0f423529adf29ec8efc1e6a"><div class="ttname"><a href="y__logging_8c.html#a945fff57d0f423529adf29ec8efc1e6a">y_log_turn_on</a></div><div class="ttdeci">void y_log_turn_on()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00205">y_logging.c:205</a></div></div>
+<div class="ttc" id="y__core_8c_html_a7350ca6bb0383b2169ef4eaae3b091e7"><div class="ttname"><a href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a></div><div class="ttdeci">void y_setup()</div><div class="ttdoc">Ylib setup - determines and stores the identity of the virtual user. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00074">y_core.c:74</a></div></div>
 <div class="ttc" id="structtm_html"><div class="ttname"><a href="structtm.html">tm</a></div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00122">vugen.h:122</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html"><div class="ttname"><a href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a></div></div>
-<div class="ttc" id="y__logging_8c_html_adfccbf59127c2e9106022bb3b4dc8329"><div class="ttname"><a href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard</a></div><div class="ttdeci">void y_disk_space_guard(double max_free_percentage)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00286">y_logging.c:286</a></div></div>
+<div class="ttc" id="y__loadrunner__utils_8c_html"><div class="ttname"><a href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a></div><div class="ttdoc">Collection of miscellaneous support functions. </div></div>
+<div class="ttc" id="y__logging_8c_html_adfccbf59127c2e9106022bb3b4dc8329"><div class="ttname"><a href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard</a></div><div class="ttdeci">void y_disk_space_guard(double max_free_percentage)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00278">y_logging.c:278</a></div></div>
 <div class="ttc" id="struct__timeb_html_a975ceacec134ed49ae57e8f5c4818508"><div class="ttname"><a href="struct__timeb.html#a975ceacec134ed49ae57e8f5c4818508">_timeb::millitm</a></div><div class="ttdeci">unsigned short millitm</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00140">vugen.h:140</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a2318c8db530202522ef982ce1f0e4a77"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77">y_get_free_disk_space_in_mebibytes</a></div><div class="ttdeci">double y_get_free_disk_space_in_mebibytes(char *folder_name)</div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00868">y_loadrunner_utils.c:868</a></div></div>
-<div class="ttc" id="y__logging_8c_html_ac5edd02a051826b8871ddacb48fa3bb7"><div class="ttname"><a href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">y_log_set_brief</a></div><div class="ttdeci">void y_log_set_brief()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00173">y_logging.c:173</a></div></div>
-<div class="ttc" id="y__logging_8c_html_afc385840588ec59b6d002d755b0e0415"><div class="ttname"><a href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a></div><div class="ttdeci">void y_log_turn_off_without_saving()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00147">y_logging.c:147</a></div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html_a09204e6a1bad95cf41fbc2a575c357a5"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5">y_get_free_disk_space_percentage</a></div><div class="ttdeci">double y_get_free_disk_space_percentage(char *folder_name)</div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00843">y_loadrunner_utils.c:843</a></div></div>
+<div class="ttc" id="y__loadrunner__utils_8c_html_a2318c8db530202522ef982ce1f0e4a77"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77">y_get_free_disk_space_in_mebibytes</a></div><div class="ttdeci">double y_get_free_disk_space_in_mebibytes(char *folder_name)</div><div class="ttdoc">get the amount of free disk space in the target folder in mebibytes (SI unit) </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00520">y_loadrunner_utils.c:520</a></div></div>
+<div class="ttc" id="y__logging_8c_html_ac5edd02a051826b8871ddacb48fa3bb7"><div class="ttname"><a href="y__logging_8c.html#ac5edd02a051826b8871ddacb48fa3bb7">y_log_set_brief</a></div><div class="ttdeci">void y_log_set_brief()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00165">y_logging.c:165</a></div></div>
+<div class="ttc" id="y__logging_8c_html_afc385840588ec59b6d002d755b0e0415"><div class="ttname"><a href="y__logging_8c.html#afc385840588ec59b6d002d755b0e0415">y_log_turn_off_without_saving</a></div><div class="ttdeci">void y_log_turn_off_without_saving()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00139">y_logging.c:139</a></div></div>
+<div class="ttc" id="y__loadrunner__utils_8c_html_a09204e6a1bad95cf41fbc2a575c357a5"><div class="ttname"><a href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5">y_get_free_disk_space_percentage</a></div><div class="ttdeci">double y_get_free_disk_space_percentage(char *folder_name)</div><div class="ttdoc">Get the free diskspace percentage on the target folder on the load generator. </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00489">y_loadrunner_utils.c:489</a></div></div>
+<div class="ttc" id="y__core_8c_html_a1ebd23898db36692c02dd58d9649f4a1"><div class="ttname"><a href="y__core_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a></div><div class="ttdeci">int y_scid</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00039">y_core.c:39</a></div></div>
 <div class="ttc" id="structtm_html_a4d098a9a5c03a00b2ee61e10851de81e"><div class="ttname"><a href="structtm.html#a4d098a9a5c03a00b2ee61e10851de81e">tm::tm_sec</a></div><div class="ttdeci">int tm_sec</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00123">vugen.h:123</a></div></div>
-<div class="ttc" id="y__logging_8c_html_ace528d55b1ad1149709aaaadb00730ae"><div class="ttname"><a href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">y_log_warning</a></div><div class="ttdeci">void y_log_warning(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00131">y_logging.c:131</a></div></div>
+<div class="ttc" id="y__logging_8c_html_ace528d55b1ad1149709aaaadb00730ae"><div class="ttname"><a href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">y_log_warning</a></div><div class="ttdeci">void y_log_warning(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00123">y_logging.c:123</a></div></div>
+<div class="ttc" id="y__logging_8c_html_a92ceb6df73ce9a4a131ad18f2c0ee386"><div class="ttname"><a href="y__logging_8c.html#a92ceb6df73ce9a4a131ad18f2c0ee386">y_setup_logging</a></div><div class="ttdeci">function_removal void y_setup_logging()</div><div class="ttdef"><b>Definition:</b> <a href="y__logging_8c_source.html#l00082">y_logging.c:82</a></div></div>
 <div class="ttc" id="structtm_html_a3e7ca4e37f1abcaf56b8a916c38eb9fe"><div class="ttname"><a href="structtm.html#a3e7ca4e37f1abcaf56b8a916c38eb9fe">tm::tm_hour</a></div><div class="ttdeci">int tm_hour</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00125">vugen.h:125</a></div></div>
-<div class="ttc" id="y__core_8c_html_a44660f85cba534a4c186c29ec698c4fb"><div class="ttname"><a href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(const int size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00061">y_core.c:61</a></div></div>
+<div class="ttc" id="y__core_8c_html_a36fcd2d9a92671f11bfebf8b7bfa34ae"><div class="ttname"><a href="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a></div><div class="ttdeci">char * y_virtual_user_group</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00038">y_core.c:38</a></div></div>
+<div class="ttc" id="y__core_8c_html_a44660f85cba534a4c186c29ec698c4fb"><div class="ttname"><a href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(const int size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00208">y_core.c:208</a></div></div>
 <div class="ttc" id="struct__timeb_html_a928964f8921238f2f1cd9b00156c2193"><div class="ttname"><a href="struct__timeb.html#a928964f8921238f2f1cd9b00156c2193">_timeb::time</a></div><div class="ttdeci">time_t time</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00139">vugen.h:139</a></div></div>
 <div class="ttc" id="vugen_8h_html_a557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div></div>
 <div class="ttc" id="struct__timeb_html"><div class="ttname"><a href="struct__timeb.html">_timeb</a></div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00138">vugen.h:138</a></div></div>
@@ -480,7 +471,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 17 2014 15:06:25 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 17 2014 17:18:14 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
