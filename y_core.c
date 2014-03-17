@@ -48,7 +48,7 @@ int y_scid;                                        // pointer to scenario or ses
 \def RAND_MAX
 \brief RAND_MAX constant for use with rand() - 15 bits integer.
 
-Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from <stdlib.h> is missing. 
+Loadrunner does not give you full C headers, so the 'RAND_MAX' \#define from <stdlib.h> is missing. 
 We define it here mostly for documentation, as we do not have access to the header files themselves and therefore cannot change this. 
 \author Floris Kraak
 */
@@ -91,6 +91,39 @@ void y_setup()
     lr_whoami(&y_virtual_user_id, &y_virtual_user_group, &y_scid);
 }
 
+/*!
+\brief Test if this script is running in vugen (debug mode)
+\return 1 if running in vugen, zero otherwise.
+
+Recommended practice:
+Use this to create script debugging code that will hit all of the functional code inside the script when run in vugen, 
+but the full (semi-randomized) realistic scenario when it runs as part of a loadtest.
+
+\note This relies on the y_virtual_user_id variable (setup by y_setup() via a call to lr_whoami() as an indication of where the script is running. 
+Inside vugen that variable should be -1; Otherwise, it contains a non-negative number.
+This can be manipulated to your advantage, but may break if HP ever changes that convention.
+
+\b Example:
+\code
+debug_clickflow()
+{
+  do_stuff();
+}
+
+loadtest_clickflow()
+{
+   do_more_complicated_stuff();
+}
+
+Action()
+{
+   if( y_is_vugen_run() )
+      debug_clickflow();
+   else
+      loadtest_clickflow();
+}
+\endcode
+*/
 int y_is_vugen_run()
 {
     y_setup();
@@ -105,13 +138,13 @@ int y_is_vugen_run()
 /*!
 \brief Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint).
 Seeds the random number generator - but only the first time this function is called.
+\return Random number (integer) between 0 and Y_RAND_MAX: 31-bit maxint - slightly over 1 billion.
 
 Example:
 \code
 int random_number;
 random_number=y_rand();
 \endcode
-\return Random number (integer) between 0 and 31-bit maxint - slightly over 1 billion.
 \author Floris Kraak
 */
 long y_rand()
