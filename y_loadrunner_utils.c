@@ -31,7 +31,6 @@ If we don't have somewhere else to put some piece of code, this is where it will
 #define _LOADRUNNER_UTILS_C
 //! \endcond
 
-#include "vugen.h"
 #include "y_core.c"
 
 //! \cond function_removal
