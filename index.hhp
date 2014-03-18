@@ -21,7 +21,6 @@ y__lib_8c_source.html
 y__loadrunner__utils_8c_source.html
 y__logging_8c_source.html
 y__param__array_8c_source.html
-y__profile_8c_source.html
 y__string_8c_source.html
 y__transaction_8c_source.html
 y__vts_8c_source.html
@@ -34,7 +33,6 @@ y__lib_8c.html
 y__loadrunner__utils_8c.html
 y__logging_8c.html
 y__param__array_8c.html
-y__profile_8c.html
 y__string_8c.html
 y__transaction_8c.html
 y__vts_8c.html
@@ -44,7 +42,6 @@ structlconv.html
 structtm.html
 structy__struct__browser.html
 structy__struct__flow.html
-structy__struct__profile.html
 index.html
 pages.html
 annotated.html

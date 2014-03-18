@@ -114,11 +114,14 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac32abec766134398dc7084de96068f9a"><td class="memItemLeft" align="right" valign="top">include_protection int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#ac32abec766134398dc7084de96068f9a">y_virtual_user_id</a> = 0</td></tr>
-<tr class="separator:ac32abec766134398dc7084de96068f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a312065213820734af47b86c233a26c0d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a312065213820734af47b86c233a26c0d">y_virtual_user_id</a> = 0</td></tr>
+<tr class="memdesc:a312065213820734af47b86c233a26c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The virtual user id, as reported by lr_whoami().  <a href="#a312065213820734af47b86c233a26c0d">More...</a><br/></td></tr>
+<tr class="separator:a312065213820734af47b86c233a26c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36fcd2d9a92671f11bfebf8b7bfa34ae"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a> = NULL</td></tr>
+<tr class="memdesc:a36fcd2d9a92671f11bfebf8b7bfa34ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">The virtual user group, as reported by lr_whoami().  <a href="#a36fcd2d9a92671f11bfebf8b7bfa34ae">More...</a><br/></td></tr>
 <tr class="separator:a36fcd2d9a92671f11bfebf8b7bfa34ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ebd23898db36692c02dd58d9649f4a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a1ebd23898db36692c02dd58d9649f4a1">y_scid</a></td></tr>
+<tr class="memdesc:a1ebd23898db36692c02dd58d9649f4a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The virtual user scid, as reported by lr_whoami().  <a href="#a1ebd23898db36692c02dd58d9649f4a1">More...</a><br/></td></tr>
 <tr class="separator:a1ebd23898db36692c02dd58d9649f4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -141,7 +144,7 @@ Variables</h2></td></tr>
 <p>Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from &lt;stdlib.h&gt; is missing. We define it here mostly for documentation, as we do not have access to the header files themselves and therefore cannot change this. </p>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00050">50</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00052">52</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -159,7 +162,7 @@ Variables</h2></td></tr>
 <p><a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> provides for a far bigger ceiling to the random number generator: 31 bits, instead of 15. </p>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00059">59</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00061">61</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -200,7 +203,7 @@ Variables</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>. </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00241">241</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00243">243</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -233,7 +236,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>); <span class="comment">// will save &quot; b ro ken  &quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00554">554</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00556">556</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -278,7 +281,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>); <span class="comment">// will save &quot;!b!ro!ken!!&quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00523">523</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00525">525</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -324,7 +327,7 @@ Variables</h2></td></tr>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, tmp); <span class="comment">// Prints &quot;Result: !b!ro!ken!!&quot;.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00471">471</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00473">473</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -360,7 +363,7 @@ Variables</h2></td></tr>
 </div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8" title="Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. ">y_is_empty_parameter()</a>, <a class="el" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00322">322</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00324">324</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -390,7 +393,7 @@ Variables</h2></td></tr>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, <a class="el" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00273">273</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00275">275</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -427,7 +430,7 @@ Variables</h2></td></tr>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, lr_eval_string_ext() </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00438">438</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00440">440</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -467,7 +470,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 </div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, <a class="el" href="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8" title="Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. ">y_is_empty_parameter()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00359">359</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00361">361</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -503,7 +506,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00395">395</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00397">397</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -532,7 +535,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2" title="Obtain the string required to fetch the contents of a parameter through lr_eval_string(). ">y_get_parameter_eval_string()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00291">291</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00293">293</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -573,7 +576,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7" title="Ylib setup - determines and stores the identity of the virtual user. ">y_setup()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00124">124</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00126">126</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -610,7 +613,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
 </div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f" title="Allocates a character array and initializes all elements to zero As y_mem_alloc(), but using the &#39;calloc&#39; function, rather than &#39;malloc(). Adds some simple checks to catch common errors. ">y_array_alloc()</a>, <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00208">208</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00210">210</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -634,7 +637,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <div class="line">random_number=<a class="code" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab">y_rand</a>();</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00142">142</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00144">144</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -658,7 +661,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00074">74</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00076">76</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -673,7 +676,10 @@ If the content of the parameter matches the name of the parameter surrounded by 
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00039">39</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>The virtual user scid, as reported by lr_whoami(). </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7" title="Ylib setup - determines and stores the identity of the virtual user. ">y_setup()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00041">41</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -687,19 +693,25 @@ If the content of the parameter matches the name of the parameter surrounded by 
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00038">38</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>The virtual user group, as reported by lr_whoami(). </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7" title="Ylib setup - determines and stores the identity of the virtual user. ">y_setup()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00039">39</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac32abec766134398dc7084de96068f9a"></a>
+<a class="anchor" id="a312065213820734af47b86c233a26c0d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">include_protection int y_virtual_user_id = 0</td>
+          <td class="memname">int y_virtual_user_id = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The virtual user id, as reported by lr_whoami(). </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7" title="Ylib setup - determines and stores the identity of the virtual user. ">y_setup()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00037">37</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
@@ -708,7 +720,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 17 2014 17:18:14 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 18 2014 15:20:50 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
