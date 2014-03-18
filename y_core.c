@@ -29,14 +29,16 @@ This file contains two types of functions:
 #ifndef _Y_CORE_C_
 //! \cond include_protection
 #define _Y_CORE_C_
-//! \endcond include_protection
+//! \endcond
 
 #include "vugen.h"
 
-// Reserved space to hold lr_whoami() output.
-int y_virtual_user_id = 0;                         // virtual user id
-char* y_virtual_user_group = NULL;                 // virtual user group
-int y_scid;                                        // pointer to scenario or session step identifier. See "lr_whoami()";
+//! The virtual user id, as reported by lr_whoami(). \sa y_setup()
+int y_virtual_user_id = 0;
+//! The virtual user group, as reported by lr_whoami(). Automatically set up for you. \sa y_setup()
+char* y_virtual_user_group = NULL;
+//! The virtual user scid, as reported by lr_whoami(). \sa y_setup()
+int y_scid;
 
 
 /*!
