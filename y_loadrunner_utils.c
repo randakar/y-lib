@@ -569,6 +569,7 @@ projectname_some_request_transaction()
    y_end_transaction("", LR_AUTO);
 }
 \endcode
+\author Floris Kraak
 */
 int y_read_file_into_parameter(char* filename, char* param)
 {
@@ -602,6 +603,18 @@ int y_read_file_into_parameter(char* filename, char* param)
     return pos;
 }
 
+/*! /brief Create a user data point for a parameter.
+\param [in] param The name of a parameter containing an integer or floating point number.
+
+The name of the parameter will be the name of the datapoint that was created.
+
+\b Example
+\code
+lr_save_int(1, "one");
+y_user_data_point("one"); // Creates a datapoint named "one", containing a value of 1.
+\sa lr_user_data_point()
+\author Floris Kraak
+*/
 void y_user_data_point(char* param)
 {
     lr_user_data_point(param, atof(y_get_parameter(param)) );
