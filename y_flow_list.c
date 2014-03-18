@@ -74,7 +74,7 @@ loadtest_flow()
 #define _Y_FLOW_C_
 //! \endcond
 
-#include "y_loadrunner_utils.c"
+#include "y_core.c"
 
 /*! \brief Type definition of a function pointer to the flow to execute.
 
