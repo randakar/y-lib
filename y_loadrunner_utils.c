@@ -356,6 +356,7 @@ Putting it on the deprecation list for that reason.
 y_datetime();
 lr_message("Current date/time: %s", lr_eval_string("{DATE_TIME_STRING}"));
 \endcode
+\sa y_get_current_time()
 \author Raymond de Jongh
 */
 void y_datetime()
@@ -612,6 +613,7 @@ The name of the parameter will be the name of the datapoint that was created.
 \code
 lr_save_int(1, "one");
 y_user_data_point("one"); // Creates a datapoint named "one", containing a value of 1.
+\endcode
 \sa lr_user_data_point()
 \author Floris Kraak
 */
@@ -677,37 +679,44 @@ independent of where it was called *from*. Which would be rather counterintuitiv
 }
 
 
+/*! \brief Ramp up the load by using varying amounts of think time instead of virtual users.
 
-// For simulating situations with limited amounts of connections on the client side. 
-//
-// In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect.
-// This implements a "think time" function that will use response time calculations and a TPS target to get simulate such a ramp up.
-// 
-// Base formula:
-// 
-//     TT = threads/TPS(target) - response time, 
-// 
-// while increasing TPS linearly until rampup_period has passed, until either think time reaches zero or TPS_max is reached.
-// Note that "response time" is actually "time passed since the previous call to this function". This includes wasted time, for example.
-// 
-// For best effect, call this once in vuser_init and once for each transaction, preferably by overloading lr_think_time()
-// with your own version that calls this (or the simplified wrapper, below) every time, like so:
-// 
-// void my_little_think_time()
-// { 
-//     y_think_time_for_rampup(1800, 10);
-// }
-//
-// 
-// Parameters ( = recommended default ):
-//   const int rampup_period = 1800;        -  How long the rampup should take, in seconds.
-//   double TPS_initial = 0.1;              -  Start rampup with this many transactions / sec for this transaction, across all virtual users. 
-//                                             Do not set this too low or thinktime values may get really large.
-//   double TPS_max = 10;                   -  End rampup with this many transactions / sec in total, with 'virtual_users' users. This cannot be higher than 1/average response time.
-//                                             Note that the actual TPS achieved is highly dependant on what mix of thinktimes and transactions are used.
-//                                             Notably, this assumes you only have one transaction after each call to this function, and that each call uses the same parameters.
-//   const int virtual_users = 1;           -  How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS.
-//
+This can be used for simulating situations with limited amounts of connections on the client side. 
+In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect.
+This implements a "think time" function that will use responsetime calculations and a TPS target to simulate such a ramp up.
+ 
+Base formula:
+    TT = threads/TPS(target) - response time
+
+This will be increasing TPS linearly until rampup_period has passed, unless either think time reaches zero or TPS_max is reached.
+Note that "response time" is actually "time passed since the previous call to this function". This includes wasted time.
+
+For best effect, call this once in vuser_init and once for each transaction.
+The recommended practice is to overload lr_think_time() with your own version that calls this (or y_think_time_for_rampup()) every time, like so:
+
+\b Example:
+\code
+// Call this instead of lr_think_time(), before each transaction.
+void my_think_time()
+{ 
+    y_think_time_for_rampup(1800, 10); // delays for a variable amount of time depending on target load.
+}
+\endcode
+
+\warning The actual load achieved is highly dependant on what pacing settings, thinktimes, and calls are used. 
+This assumes you only have one transaction after each call to this function, and that each call uses the same parameters.
+
+\note The first 3% of the rampup period uses think times calculated as if 3% of the rampup has passed. This is prevents extremely long think times from occurring.
+
+\param [in] rampup_period How long the rampup should take, in seconds. Default 1800 seconds.
+\param [in] TPS_initial Start rampup with this many transactions / sec for this transaction, across all virtual users. Default 0,1 TPS.
+\param [in] TPS_max End rampup with this many transactions / sec in total, with 'virtual_users' users. Default 10. This cannot go higher than 1/average response time - when think time reaches zero.
+\param [in] virtual_users How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS. Default 1.
+
+\warning Do not set TPS_initial lower than 0,1 or the calculated think times may get really large.
+
+\author Floris Kraak
+*/
 double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, double TPS_max, const int virtual_users)
 {
     static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
@@ -724,7 +733,6 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
         previous_time = current_time;
     }
 
-
     // Calculate how much time has passed since test start and the previous call.
     time_passed = current_time - test_start_time;
     response_time = current_time - previous_time;
@@ -733,10 +741,8 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
     lr_log_message("TT calculation: starttime %f, current time %f, previous time %f, virtual_users %d, rampup_period %d",
                                  test_start_time, current_time,    previous_time,    virtual_users,    rampup_period);
 
-
     {
-        double TT;
-        double TPS_target;
+        double TT, TPS_target;
         double factor = time_passed / rampup_period; // multiplication factor for the target load, based on rampup.
 
         if( factor > 1 ) // after rampup load should be stable.
