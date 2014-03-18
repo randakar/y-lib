@@ -713,11 +713,10 @@ This assumes you only have one transaction after each call to this function, and
 
 \param [in] rampup_period How long the rampup should take, in seconds. Default 1800 seconds.
 \param [in] TPS_initial Start rampup with this many transactions / sec for this transaction, across all virtual users. Default 0,1 TPS.
-\param [in] TPS_max End rampup with this many transactions / sec in total, with 'virtual_users' users. Default 10. This cannot go higher than 1/average response time - when think time reaches zero.
+\param [in] TPS_max End rampup with this many transactions / sec in total per virtual user. Default 10. This cannot go higher than 1/average response time - when think time reaches zero.
 \param [in] virtual_users How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS. Default 1.
 
 \warning Do not set TPS_initial lower than 0,1 or the calculated think times may get really large.
-
 
 \author Floris Kraak
 */
@@ -788,14 +787,16 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
     }
 }
 
+/*! \brief Ramp up the load by using varying amounts of think time instead of virtual users.
+For simulating situations with limited amounts of connections on the client side.
 
-// For simulating situations with limited amounts of connections on the client side. 
-// As y_think_time_for_rampup_ext(), assuming 1 virtual user and an initial target load of 0.1 TPS.
-// 
-// Parameters:
-//   const int rampup_period = 1800;        // How long the rampup should take, in seconds.
-//   double TPS_max = 10;                   // End rampup with this many transactions / sec in total, across all virtual users. This cannot be higher than 1/average response time
-//
+As y_think_time_for_rampup_ext(), assuming 1 virtual user and an initial target load of 0.1 TPS (the defaults.
+\sa y_think_time_for_rampup_ext()
+
+\param [in] rampup_period How long the rampup should take, in seconds. Default 1800 seconds.
+\param [in] TPS_max End rampup with this many transactions / sec in total per virtual user. Default 10. This cannot go higher than 1/average response time - when think time reaches zero.
+\author Floris Kraak
+*/
 double y_think_time_for_rampup(const int rampup_period, double TPS_max)
 {
     // These used to be parameters. I've kept them for documentation purposes, but I feel 
