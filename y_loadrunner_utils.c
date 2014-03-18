@@ -666,6 +666,7 @@ Hence: delay_once
  
 This is a macro because a function call would make it impossible to use this more than once in a script - it would execute the delay the first time this function is called,
 independent of where it was called *from*. Which would be rather counterintuitive.
+\author Floris Kraak
 */
 #define y_delay_once( delay_in_seconds )       \
 {                                              \
@@ -694,6 +695,8 @@ Note that "response time" is actually "time passed since the previous call to th
 For best effect, call this once in vuser_init and once for each transaction.
 The recommended practice is to overload lr_think_time() with your own version that calls this (or y_think_time_for_rampup()) every time, like so:
 
+\note This will create a user datapoint called y_thinktime that can be used for monitoring the calculations during the test.
+
 \b Example:
 \code
 // Call this instead of lr_think_time(), before each transaction.
@@ -714,6 +717,7 @@ This assumes you only have one transaction after each call to this function, and
 \param [in] virtual_users How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS. Default 1.
 
 \warning Do not set TPS_initial lower than 0,1 or the calculated think times may get really large.
+
 
 \author Floris Kraak
 */
@@ -758,7 +762,7 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
         lr_log_message("TT: %f, time_passed: %f, factor %f, response_time %f, TPS_init %f, TPS_max %f, TPS_target %f", 
                         TT,     time_passed,     factor,    response_time,    TPS_initial, TPS_max,    TPS_target);
 
-        lr_user_data_point("ThinkTime", TT);
+        lr_user_data_point("y_thinktime", TT);
         if( TT > 0 )
             lr_think_time(TT);
 
