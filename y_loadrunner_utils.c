@@ -534,7 +534,39 @@ double y_get_free_disk_space_in_mebibytes(char* folder_name)
     return free_mebibytes;
 }
 
+/*! /brief Read the contents of a file into a single parameter.
+\param [in] filename The name of the file to read (relative to script root, or full path)
+\param [in] param The name of the parameter to store the file contents in.
 
+\note The size of the file is stored in a parameter named "y_size_{param}", where {param} is the name of the parameter you passed in.
+
+This can be used in various situations; For example, situations where you have a template file that you wish to use for various requests.
+For instance, when all communications are based on a simple XML submit with slightly different (parameterised) contents.
+
+\b Example:
+\code
+vuser_init()
+{
+    // File contains: <xml><customer_element>{customer_id}</customer_element></xml>
+    y_read_file_into_parameter("template.xml", "template_content");
+}
+
+projectname_some_request_transaction()
+{
+   // double evaluation evaluates the customer id, giving you the request body.
+   lr_save_string(lr_eval_string(lr_eval_string("{template_content}")), "request_body");
+
+   y_start_transaction("some_request");
+   web_custom_request("some_request", 
+		"URL=http://{Host}/some/request/v1/", 
+		"Method=POST", "Resource=0", 
+		"Body={request_body}",
+		"EncType=text/xml; charset=utf-8",
+		LAST);   
+   y_end_transaction("", LR_AUTO);
+}
+\endcode
+*/
 void y_read_file_into_parameter(char* filename, char* param)
 {
     long pos;
