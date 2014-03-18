@@ -141,9 +141,10 @@ int y_rand_between(int lowerbound, int upperbound)
 /*! \brief Fetch attribute from vUser's command line and store it in a parameter.
 This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter.
 
-@param[in] attrib Argument Name of the attribute.
-@param[out] param LR-parameter name in which the Argument Value is stored.
-\return A LR parameter with the same name as the Argument Name.
+\param[in] attrib Attribute name.
+\param[out] param LR parameter name in which the argument value is stored. 
+\return 1 if the attribute exists, -1 if it doesn't, in which case no value is stored in the parameter.
+
 \b Example:
 \code
 y_save_attribute_to_parameter("server", "nice_server");
@@ -152,12 +153,15 @@ web_add_auto_filter("Action=Include", "HostSuffix={nice_server}", LAST );
 \sa y_save_attribute()
 \author Floris Kraak
 */
-void y_save_attribute_to_parameter( char* attrib, char* param )
+int y_save_attribute_to_parameter( char* attrib, char* param )
 {
-   char *tmp;
-   if( (tmp = lr_get_attrib_string(attrib)) != NULL )
+   char *tmp = lr_get_attrib_string(attrib);
+   if( tmp  == NULL )
+      return -1;
+   else
    {
       lr_save_string(tmp, param);
+      return 1;
    }
 }
 
@@ -169,8 +173,10 @@ void y_save_attribute_to_parameter( char* attrib, char* param )
 This will fetch an attribute from the vUser's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name.
 This function is a shortcut to y_save_attribute_to_parameter()
 
-@param[in] param Argument Name of the attribute.
-\return A LR parameter with the same name as the Argument Name.
+\param[in] param argument name of both the attribute and the parameter the value should be stored in.
+\return 1 if the attribute exists, -1 if it doesn't, in which case no value is stored in the parameter.
+
+\b Example:
 \code
 y_save_attribute("server");
 web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
@@ -178,9 +184,9 @@ web_add_auto_filter("Action=Include", "HostSuffix={server}", LAST );
 \sa y_save_attribute_to_parameter()
 \author Floris Kraak
 */
-void y_save_attribute( char* param )
+int y_save_attribute( char* param )
 {
-   y_save_attribute_to_parameter( param, param );
+   return y_save_attribute_to_parameter( param, param );
 }
 
 
