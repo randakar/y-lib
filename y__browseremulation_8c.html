@@ -52,20 +52,24 @@
 <div class="title">y_browseremulation.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="y__string_8c_source.html">y_string.c</a>&quot;</code><br/>
+
+<p>Code for supporting (more) realistic browser emulation.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="y__core_8c_source.html">y_core.c</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="y__string_8c_source.html">y_string.c</a>&quot;</code><br/>
 </div>
 <p><a href="y__browseremulation_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html">y_browser</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal browser structure, describing a browser as an entity.  <a href="structy__struct__browser.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ae0a3916ab2de1619f7739d414b447932"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__browseremulation_8c.html#ae0a3916ab2de1619f7739d414b447932">_Y_BROWSER_EMULATION_C</a></td></tr>
-<tr class="separator:ae0a3916ab2de1619f7739d414b447932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ffc26d6962f700ab0215ff485116d39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__browseremulation_8c.html#a2ffc26d6962f700ab0215ff485116d39">MAX_BROWSER_LIST_LENGTH</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="memdesc:a2ffc26d6962f700ab0215ff485116d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limit the browser list to 1000 browsers, as a failsafe in case of wrong parameter settings (which may cause endless loops otherwise)  <a href="#a2ffc26d6962f700ab0215ff485116d39">More...</a><br/></td></tr>
 <tr class="separator:a2ffc26d6962f700ab0215ff485116d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -90,25 +94,45 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a9eb177cdb387264c27bfd8534c5b8b2a"><td class="memItemLeft" align="right" valign="top">y_browser *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__browseremulation_8c.html#a9eb177cdb387264c27bfd8534c5b8b2a">y_browser_list_head</a> = NULL</td></tr>
+<tr class="memdesc:a9eb177cdb387264c27bfd8534c5b8b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The first element in the browser list.  <a href="#a9eb177cdb387264c27bfd8534c5b8b2a">More...</a><br/></td></tr>
 <tr class="separator:a9eb177cdb387264c27bfd8534c5b8b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a958cd8cf55393f27fa5b69f240308fc3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__browseremulation_8c.html#a958cd8cf55393f27fa5b69f240308fc3">y_browser_list_chance_total</a> = 0</td></tr>
+<tr class="memdesc:a958cd8cf55393f27fa5b69f240308fc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The total of all the browser weights added together.  <a href="#a958cd8cf55393f27fa5b69f240308fc3">More...</a><br/></td></tr>
 <tr class="separator:a958cd8cf55393f27fa5b69f240308fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae0a3916ab2de1619f7739d414b447932"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _Y_BROWSER_EMULATION_C</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Code for supporting (more) realistic browser emulation. </p>
+<p>Basic concept: The tester defines a list of browsers inside a parameter file, that contains: 1) browser name 2) browser chance - A count of how many times said browser was seen in a production access log during peak hours should work. Percentages aren't required or even very helpfull. 3) max connections - How many connections said browser uses (see: www.browserscope.org for what this value should be for your browser) 4) max connections per host - Same as above, but this setting limits the number of connections to a single hostname. 5) User agent string - A user agent string used by said browser.</p>
+<p>The last entry of this list of parameters needs to use "END" as the browser name.</p>
+<p>This list is then read in using lr_advance_param() during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose browsers to emulate based on their likelyhood that said browser is seen in production.</p>
+<p>Usage:</p>
+<p>1) Set up the appropriate parameters 2) Add this file to your script, plus any supporting ylib files. 3) Add an include statement: '#include "<a class="el" href="y__browseremulation_8c.html" title="Code for supporting (more) realistic browser emulation. ">y_browseremulation.c</a>' to the top of vuser_init()</p>
+<p>4) Call y_setup_browser_emulation in vuser_init()</p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">vuser_init()</div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="y__logging_8c.html#a0fdf23d9bb8acc2375d3680976336e3a">y_log_turn_off</a>();</div>
+<div class="line">    <a class="code" href="y__browseremulation_8c.html#a1f593ed8dd088c1c57f459501ef6b411">y_setup_browser_emulation</a>();</div>
+<div class="line">    <a class="code" href="y__logging_8c.html#a9704bca5562196d581411d31fcc690f0">y_log_restore</a>();</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>5) Call <a class="el" href="y__browseremulation_8c.html#a36becef864ca44ac63421b9a40060d18">y_choose_browser()</a> and <a class="el" href="y__browseremulation_8c.html#a47f9738dded3632970e0dd1564af02ae">y_emulate_browser()</a> at the start of each iteration.</p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">Action()</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// This will set up some connection options for emulating different browser versions in a realistic fashion</span></div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">// Note: This will blow up if the setup code hasn&#39;t been called beforehand.</span></div>
+<div class="line">        y_browser* browser = <a class="code" href="y__browseremulation_8c.html#a36becef864ca44ac63421b9a40060d18">y_choose_browser</a>();</div>
+<div class="line">        <a class="code" href="y__browseremulation_8c.html#a47f9738dded3632970e0dd1564af02ae">y_emulate_browser</a>(browser);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// .. more code ..</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>6) Done. </p>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00020">20</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
-
-</div>
-</div>
+<p>Definition in file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a2ffc26d6962f700ab0215ff485116d39"></a>
 <div class="memitem">
 <div class="memproto">
@@ -119,7 +143,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00097">97</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Limit the browser list to 1000 browsers, as a failsafe in case of wrong parameter settings (which may cause endless loops otherwise) </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00108">108</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -137,7 +163,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00413">413</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00403">403</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -155,7 +181,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00356">356</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00347">347</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -173,7 +199,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00419">419</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00409">409</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -191,7 +217,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00104">104</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00117">117</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -209,7 +235,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00121">121</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00134">134</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -226,7 +252,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00234">234</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00246">246</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -244,7 +270,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00240">240</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00252">252</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -290,7 +316,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00138">138</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00151">151</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -305,7 +331,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00099">99</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The total of all the browser weights added together. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00114">114</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -319,14 +347,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00098">98</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The first element in the browser list. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00111">111</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 18 2014 15:20:50 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 18 2014 18:04:56 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

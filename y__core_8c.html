@@ -99,9 +99,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac0c6a383cf2934da4acc1451a1cdea21"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#ac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a> (const char *src_param)</td></tr>
 <tr class="memdesc:ac0c6a383cf2934da4acc1451a1cdea21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (malloc version)  <a href="#ac0c6a383cf2934da4acc1451a1cdea21">More...</a><br/></td></tr>
 <tr class="separator:ac0c6a383cf2934da4acc1451a1cdea21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9829687ed7a68e9768d8fbf8bed17af1"><td class="memItemLeft" align="right" valign="top">function_removal char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1">y_get_parameter_ext</a> (const char *source_param)</td></tr>
-<tr class="memdesc:a9829687ed7a68e9768d8fbf8bed17af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)  <a href="#a9829687ed7a68e9768d8fbf8bed17af1">More...</a><br/></td></tr>
-<tr class="separator:a9829687ed7a68e9768d8fbf8bed17af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a> (const char *source_param)</td></tr>
+<tr class="memdesc:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)  <a href="#aa80c4db4c75cdc0c03aad6f69b3dff3c">More...</a><br/></td></tr>
+<tr class="separator:aa80c4db4c75cdc0c03aad6f69b3dff3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc166c412bf848068685f7c391658bd"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a9fc166c412bf848068685f7c391658bd">y_get_cleansed_parameter</a> (const char *param_name, char replacement)</td></tr>
 <tr class="memdesc:a9fc166c412bf848068685f7c391658bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.  <a href="#a9fc166c412bf848068685f7c391658bd">More...</a><br/></td></tr>
 <tr class="separator:a9fc166c412bf848068685f7c391658bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -360,7 +360,7 @@ Variables</h2></td></tr>
 <div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
 <div class="line">test=<a class="code" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
-</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8" title="Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. ">y_is_empty_parameter()</a>, <a class="el" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
+</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8" title="Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. ">y_is_empty_parameter()</a>, <a class="el" href="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00324">324</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
@@ -390,19 +390,19 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a char* allocated with <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The return argument will need to be freed via a call to <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, <a class="el" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, <a class="el" href="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00275">275</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9829687ed7a68e9768d8fbf8bed17af1"></a>
+<a class="anchor" id="aa80c4db4c75cdc0c03aad6f69b3dff3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">function_removal char* y_get_parameter_ext </td>
+          <td class="memname">char* y_get_parameter_ext </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>source_param</em></td><td>)</td>
@@ -424,7 +424,7 @@ Variables</h2></td></tr>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
 <div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
-<div class="line">test=<a class="code" href="y__core_8c.html#a9829687ed7a68e9768d8fbf8bed17af1">y_get_parameter_ext</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
+<div class="line">test=<a class="code" href="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a>(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
 <div class="line">lr_eval_string_ext_free(test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
@@ -720,7 +720,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 18 2014 15:20:50 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 18 2014 18:04:56 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

@@ -50,25 +50,36 @@
 <div class="title">y_browser Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Internal browser structure, describing a browser as an entity.  
+ <a href="structy__struct__browser.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:ae201b5a978edef82f5ad786164061d85"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#ae201b5a978edef82f5ad786164061d85">name</a></td></tr>
+<tr class="memdesc:ae201b5a978edef82f5ad786164061d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the browser, as you wish to refer to it.  <a href="#ae201b5a978edef82f5ad786164061d85">More...</a><br/></td></tr>
 <tr class="separator:ae201b5a978edef82f5ad786164061d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac565989611ceb151ae85b73442e88b9b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#ac565989611ceb151ae85b73442e88b9b">chance</a></td></tr>
+<tr class="memdesc:ac565989611ceb151ae85b73442e88b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The odds that said browser will be chosen. This is actually a weight, meaning you could use anything you want, including percentages.  <a href="#ac565989611ceb151ae85b73442e88b9b">More...</a><br/></td></tr>
 <tr class="separator:ac565989611ceb151ae85b73442e88b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5777ee5c08cce49ba71b7c83bf97f0a6"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#a5777ee5c08cce49ba71b7c83bf97f0a6">next</a></td></tr>
+<tr class="memdesc:a5777ee5c08cce49ba71b7c83bf97f0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the next element in the single-linked list of browsers.  <a href="#a5777ee5c08cce49ba71b7c83bf97f0a6">More...</a><br/></td></tr>
 <tr class="separator:a5777ee5c08cce49ba71b7c83bf97f0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61a471c389efea04fff78c2dd5fab121"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#a61a471c389efea04fff78c2dd5fab121">max_connections_per_host</a></td></tr>
+<tr class="memdesc:a61a471c389efea04fff78c2dd5fab121"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of connections per host to emulate for this browser.  <a href="#a61a471c389efea04fff78c2dd5fab121">More...</a><br/></td></tr>
 <tr class="separator:a61a471c389efea04fff78c2dd5fab121"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe78e618308e3a54e9e7c3ee3da06af6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#abe78e618308e3a54e9e7c3ee3da06af6">max_connections</a></td></tr>
+<tr class="memdesc:abe78e618308e3a54e9e7c3ee3da06af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of connections to emulate for this browser.  <a href="#abe78e618308e3a54e9e7c3ee3da06af6">More...</a><br/></td></tr>
 <tr class="separator:abe78e618308e3a54e9e7c3ee3da06af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16bc380cdebe6e933459af85b527c3a1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structy__struct__browser.html#a16bc380cdebe6e933459af85b527c3a1">user_agent_string</a></td></tr>
+<tr class="memdesc:a16bc380cdebe6e933459af85b527c3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The browser's user agent string.  <a href="#a16bc380cdebe6e933459af85b527c3a1">More...</a><br/></td></tr>
 <tr class="separator:a16bc380cdebe6e933459af85b527c3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00081">81</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<div class="textblock"><p>Internal browser structure, describing a browser as an entity. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__browseremulation_8c.html" title="Code for supporting (more) realistic browser emulation. ">y_browseremulation.c</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00084">84</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="ac565989611ceb151ae85b73442e88b9b"></a>
 <div class="memitem">
@@ -80,7 +91,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00084">84</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The odds that said browser will be chosen. This is actually a weight, meaning you could use anything you want, including percentages. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00089">89</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -94,7 +107,10 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00088">88</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The maximum number of connections to emulate for this browser. </p>
+<dl class="section see"><dt>See Also</dt><dd>web_set_sockets_option() </dd></dl>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00096">96</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -108,7 +124,10 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00087">87</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The maximum number of connections per host to emulate for this browser. </p>
+<dl class="section see"><dt>See Also</dt><dd>web_set_sockets_option() </dd></dl>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00094">94</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -122,7 +141,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00083">83</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The name of the browser, as you wish to refer to it. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00087">87</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -136,7 +157,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00085">85</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>Pointer to the next element in the single-linked list of browsers. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00091">91</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -150,7 +173,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00089">89</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
+<p>The browser's user agent string. </p>
+
+<p>Definition at line <a class="el" href="y__browseremulation_8c_source.html#l00098">98</a> of file <a class="el" href="y__browseremulation_8c_source.html">y_browseremulation.c</a>.</p>
 
 </div>
 </div>
@@ -160,7 +185,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 18 2014 15:20:50 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 18 2014 18:04:56 for Y-lib by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
