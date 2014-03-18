@@ -36,7 +36,7 @@ If we don't have somewhere else to put some piece of code, this is where it will
 //! \cond function_removal
 #define _vUserID 0_vUserID_no_longer_exists_please_use_y_virtual_user_id_or_function_y_is_vugen_run
 #define _vUserGroup 0_vUserGroup_no_longer_exists_please_use_y_virtual_user_group
-//! \endcond function_removal
+//! \endcond
 
 
 /*! \brief Create a hash of string input. 

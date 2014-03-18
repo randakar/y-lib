@@ -411,7 +411,7 @@ char* y_get_parameter_with_malloc_or_null(const char *src_param)
 
 //! \cond function_removal
 #define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null
-//! \endcond function_removal
+//! \endcond
 
 /*!
 \brief Get the content of a parameter and return it as a char * (lr_eval_string_ext() version)

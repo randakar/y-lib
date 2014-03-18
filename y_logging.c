@@ -73,7 +73,7 @@ char* y_get_datetimestamp()
 
 //! \cond function_removal
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
-//! \endcond function_removal
+//! \endcond
 
 
 // --------------------------------------------------------------------------------------------------
