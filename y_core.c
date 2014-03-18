@@ -35,7 +35,7 @@ This file contains two types of functions:
 
 //! The virtual user id, as reported by lr_whoami(). \sa y_setup()
 int y_virtual_user_id = 0;
-//! The virtual user group, as reported by lr_whoami(). Automatically set up for you. \sa y_setup()
+//! The virtual user group, as reported by lr_whoami(). \sa y_setup()
 char* y_virtual_user_group = NULL;
 //! The virtual user scid, as reported by lr_whoami(). \sa y_setup()
 int y_scid;
