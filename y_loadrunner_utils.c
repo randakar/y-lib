@@ -537,11 +537,14 @@ double y_get_free_disk_space_in_mebibytes(char* folder_name)
 /*! /brief Read the contents of a file into a single parameter.
 \param [in] filename The name of the file to read (relative to script root, or full path)
 \param [in] param The name of the parameter to store the file contents in.
+\return The number of bytes read from the file, or -1 if the file could not be read (but in that case it will also call lr_abort().)
 
 \note The size of the file is stored in a parameter named "y_size_{param}", where {param} is the name of the parameter you passed in.
 
 This can be used in various situations; For example, situations where you have a template file that you wish to use for various requests.
 For instance, when all communications are based on a simple XML submit with slightly different (parameterised) contents.
+
+\note If the file cannot be opened this will call lr_abort().
 
 \b Example:
 \code
@@ -567,7 +570,7 @@ projectname_some_request_transaction()
 }
 \endcode
 */
-void y_read_file_into_parameter(char* filename, char* param)
+int y_read_file_into_parameter(char* filename, char* param)
 {
     long pos;
     char *bytes;
@@ -577,7 +580,7 @@ void y_read_file_into_parameter(char* filename, char* param)
     {
         lr_error_message("Unable to open file %s", filename);
         lr_abort();
-        return;
+        return -1;
     }
 
     fseek(f, 0, SEEK_END);
@@ -596,6 +599,7 @@ void y_read_file_into_parameter(char* filename, char* param)
 
     lr_save_var(bytes, pos, 0, param);
     free(bytes); // free allocated memory
+    return pos;
 }
 
 void y_user_data_point(char* param)
