@@ -28,8 +28,7 @@
 #include "y_logging.c"
 #include "y_transaction.c"
 #include "y_param_array.c"
-// #include "y_profile.c"  // Disabled. If your script breaks, please convert to y_flow_list.c.
-#include "y_flow_list.c" // y_profile.c got renamed, and most variables and function names in there as well. Migrating to it will take a bit.
+#include "y_flow_list.c" // y_profile.c got renamed, and most variables and function names in there as well.
 #include "y_browseremulation.c"
 
 #endif // _YLIB_C
