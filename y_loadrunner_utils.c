@@ -620,7 +620,10 @@ void y_user_data_point(char* param)
     lr_user_data_point(param, atof(y_get_parameter(param)) );
 }
 
-
+/*! \brief Get the current time in seconds since 1970, as a double.
+\returns The current time in seconds since 1970-01-01 00:00
+\author Floris Kraak
+*/
 double y_get_current_time()
 {
     struct _timeb timebuffer;
@@ -629,10 +632,11 @@ double y_get_current_time()
 }
 
 
-// 
-// Delay until a certain time.
-// Returns the amount of time waited, in seconds.
-// 
+/*! \brief Delay until a certain time.
+\returns the amount of time waited, in seconds.
+
+\author Floris Kraak
+*/ 
 double y_delay_until(double timestamp)
 {
     double current_time = y_get_current_time();
@@ -647,17 +651,20 @@ double y_delay_until(double timestamp)
         return 0;
 }
 
+/*! \def y_delay_once
+\brief Delay for delay_in_seconds seconds, once.
+This macro will put the code to sleep for the specified amount of seconds, but only the first time the current position in the code is reached.
+If you use this in more than one place each of the calls will sleep exactly once.
 
-//
-// Delay for delay_in_seconds seconds, but only the first time the current position in the code is reached.
-// 
-// The particular usecase this was made for is a case where users need to register themselves prior to the actual testrun. 
-// We want to seperate this registration period from the actual rampup, so when each user finishes registering
-// we want a delay. But we only want it once, and we will only know that we're done registering when we hit the regular load path
-// for the first time. Hence: delay_once
-// 
-// This is a macro because a function call would make it impossible to use it more than once in a script.
-// 
+The particular usecase this was made for is a case where users need to register themselves prior to the actual test run.
+We want to seperate this registration period from the actual rampup, so when each user finishes registering we want a delay. 
+But, we only want it once, and we will only know that we're done registering when we hit the regular load path for the first time. 
+
+Hence: delay_once
+ 
+This is a macro because a function call would make it impossible to use this more than once in a script - it would execute the delay the first time this function is called,
+independent of where it was called *from*. Which would be rather counterintuitive.
+*/
 #define y_delay_once( delay_in_seconds )       \
 {                                              \
     static int delay_done = 0;                 \
