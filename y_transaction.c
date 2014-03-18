@@ -145,7 +145,7 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 // Complain loudly at compile time if somebody tries to use the old versions of these calls
 #define y_set_action_prefix 0_y_set_action_prefix_no_longer_exists_please_use_y_set_transaction_prefix
 #define y_get_action_prefix 0_y_get_action_prefix_no_longer_exists_please_use_y_get_transaction_prefix
-//! \endcond function_removal
+//! \endcond
 
 
 void y_set_transaction_prefix(char *transaction_prefix)
@@ -457,7 +457,7 @@ void y_end_action_block()
 //! \cond function_removal
 // Complain loudly at compile time if somebody tries to use the old versions of this call
 #define y_calculate_actual_action_prefix 0_y_calculate_actual_action_prefix_no_longer_exists_please_use_y_calculate_actual_transaction_prefix
-//! \endcond function_removal
+//! \endcond
 
 char *y_calculate_actual_transaction_prefix(const char *transaction_prefix)
 {
