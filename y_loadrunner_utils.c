@@ -27,7 +27,9 @@ This file contains loadrunner specific helper functions.
 If we don't have somewhere else to put some piece of code, this is where it will probably end up.
 */
 #ifndef _LOADRUNNER_UTILS_C
+//! \cond include_protection
 #define _LOADRUNNER_UTILS_C
+//! \endcond
 
 #include "vugen.h"
 #include "y_core.c"
