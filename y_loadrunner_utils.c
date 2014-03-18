@@ -541,7 +541,7 @@ double y_get_free_disk_space_in_mebibytes(char* folder_name)
     return free_mebibytes;
 }
 
-/*! /brief Read the contents of a file into a single parameter.
+/*! \brief Read the contents of a file into a single parameter.
 \param [in] filename The name of the file to read (relative to script root, or full path)
 \param [in] param The name of the parameter to store the file contents in.
 \return The number of bytes read from the file, or -1 if the file could not be read (but in that case it will also call lr_abort().)
@@ -610,7 +610,7 @@ int y_read_file_into_parameter(char* filename, char* param)
     return pos;
 }
 
-/*! /brief Create a user data point for a parameter.
+/*! \brief Create a user data point for a parameter.
 \param [in] param The name of a parameter containing an integer or floating point number.
 
 The name of the parameter will be the name of the datapoint that was created.
