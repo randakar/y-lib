@@ -16,16 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#ifndef _Y_BROWSER_EMULATION_C
-#define _Y_BROWSER_EMULATION_C
 
-#include "y_string.c"
-
-/*-------------------------------------------------------------
-Initial code for supporting (more) realistic browser emulation.
-
-THIS CODE IS STILL EXPERIMENTAL
-Feel free to use it, but I reserve the right to break things. Especially the data format, as that one is liable to change some time soon.
+/*! \file y_browseremulation.c
+\brief Code for supporting (more) realistic browser emulation.
 
 Basic concept: The tester defines a list of browsers inside a parameter file, that contains:
 1) browser name
@@ -36,69 +29,89 @@ Basic concept: The tester defines a list of browsers inside a parameter file, th
 
 The last entry of this list of parameters needs to use "END" as the browser name.
 
-This list is then read in using lr_advance_param() during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose browsers to emulate based on their likelyhood
-that said browser is seen in production.
+This list is then read in using lr_advance_param() during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose browsers to emulate based on their likelyhood that said browser is seen in production.
 
 Usage:
 
 1) Set up the appropriate parameters
 2) Add this file to your script, plus any supporting ylib files.
-3) Add an include statement: '#include "y_browseremulation.c' to the top of vuser_init()
+3) Add an include statement: '\#include "y_browseremulation.c' to the top of vuser_init()
 
 4) Call y_setup_browser_emulation in vuser_init()
 
-    Example:
-
-    vuser_init()
-    {
-        y_log_turn_off();
-        y_setup_browser_emulation();
-        y_log_restore();
-    }
+\b Example:
+\code
+vuser_init()
+{
+    y_log_turn_off();
+    y_setup_browser_emulation();
+    y_log_restore();
+}
+\endcode
 
 5) Call y_choose_browser() and y_emulate_browser() at the start of each iteration.
 
-    Example:
-
-    Action()
+\b Example:
+\code
+Action()
+{
+    // This will set up some connection options for emulating different browser versions in a realistic fashion
     {
-        // This will set up some connection options for emulating different browser versions in a realistic fashion
-        {
-            // Note: This will blow up if the setup code hasn't been called beforehand.
-            y_browser* browser = y_choose_browser();
-            y_emulate_browser(browser);
-        }
-    
-    // .. more code ..
-    
+        // Note: This will blow up if the setup code hasn't been called beforehand.
+        y_browser* browser = y_choose_browser();
+        y_emulate_browser(browser);
     }
 
+    // .. more code ..
+}
+\endcode
+
 6) Done.
-    
--------------------------------------------------------------*/
+\author Floris Kraak
+*/
+#ifndef _Y_BROWSER_EMULATION_C_
+//! \cond include_protection
+#define _Y_BROWSER_EMULATION_C_
+//! \endcond
+
+#include "y_core.c"
+#include "y_string.c"
 
 
+/*! \brief Internal browser structure, describing a browser as an entity.
+\see y_browseremulation.c
+*/
 struct y_struct_browser
 {
+    //! \brief The name of the browser, as you wish to refer to it.
     char* name;
-    int chance; // Maybe better to call this "weight", as this really isn't a percentage.
-    void* next; // Pointer to the next element in a single-linked list of browsers
+    //! \brief The odds that said browser will be chosen. This is actually a weight, meaning you could use anything you want, including percentages.
+    int chance; 
+    //! \brief Pointer to the next element in the single-linked list of browsers
+    void* next; 
 
+    //! \brief The maximum number of connections per host to emulate for this browser. \see web_set_sockets_option()
     int max_connections_per_host;
+    //! \brief The maximum number of connections to emulate for this browser. \see web_set_sockets_option()
     int max_connections;
+    //! \brief The browser's user agent string.
     char* user_agent_string;
 };
 
-// For clarity purposes we hide the exact type of a browser here.
+/*! \brief Internal browser structure, describing a browser as an entity.
+\see y_browseremulation.c
+*/
 typedef struct y_struct_browser y_browser;
 
 
-// Set up a list of these things.
-#define MAX_BROWSER_LIST_LENGTH 1000 // To prevent loops caused by faulty data files or parameter settings ..
-y_browser* y_browser_list_head = NULL;
-int y_browser_list_chance_total = 0; // Cache rather than calculate on the fly.. 
-                                     // Theoretically this should be per-list, however, rather than global.
+//! \brief Limit the browser list to 1000 browsers, as a failsafe in case of wrong parameter settings (which may cause endless loops otherwise)
+#define MAX_BROWSER_LIST_LENGTH 1000
 
+//! \brief The first element in the browser list.
+y_browser* y_browser_list_head = NULL;
+
+//! \brief The total of all the browser weights added together.
+int y_browser_list_chance_total = 0; 
 
 
 void y_log_browser(const y_browser* browser)
@@ -143,7 +156,6 @@ int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
 {
     int i;
     y_browser* previous_browser = NULL;
-
 
     for(i=0; i < MAX_BROWSER_LIST_LENGTH; i++ )
     {
@@ -325,34 +337,13 @@ int y_setup_browser_emulation_from_file(char* filename)
     } // end while loop
 
     return 0;
-    //lr_log_message("Done."); // debugging
 }
-
-
-// Given a list of a specified length, calculate what number all weights added together add up to.
-// Do not call directly unless you have checked the list for sanity beforehand.
-/*
-int y_calculate_total_browser_chances(y_browser* browser_list_head)
-{
-    int total = 0;
-    y_browser* browser; 
-
-    for( browser = browser_list_head; browser->next != NULL; browser = browser->next)
-    {
-        //y_log_browser(browser);
-        total += browser->chance;
-    }
-    lr_log_message("y_browser_emulation: Combined total of chances is: %d", total);
-    return total;
-}
-*/
 
 
 //
 // Choose a browser profile from the browser list
 // Returns a pointer to a randomly chosen struct browser or NULL in case of errors.
 //
-// Do not call directly unless you have checked the list for sanity beforehand.
 y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
 {
     int i, lowerbound, cursor = 0;
@@ -369,7 +360,7 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     // The upper bound of the rand() function is determined by the RAND_MAX constant.
     // RAND_MAX is hardcoded in loadrunner to a value of exactly 32767.
     // In fact, it doesn't even get #defined by loadrunner as as the C standard mandates.
-    // (y_loadrunner_utils.c does that instead, now  ..)
+    // (y_core.c does that instead, now  ..)
     // 
     // y_rand() depends on rand() for it's output, so that cannot go above 32767.
     // Update: y_rand() uses Y_RAND_MAX now - slightly over 1 billion.
@@ -377,10 +368,9 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     // 
     // So we'll need to get a bit creative, and multiply the result of y_rand() with
     // the maximum (the total of the browser chances) divided by Y_RAND_MAX to scale things up again.
+    // (At the cost of precision ..)
     // 
-    // Ugly? Yes. Necessary? Very ..
-    // 
-    // Update: y_rand() now returns a 31 bit number, giving it an upper bound of 2147483647.
+    // Update: y_rand() now returns a 31 bit number, giving it an upper bound of 2147483647 (Y_RAND_MAX).
     // That should reduce the need for this code by a bit ..
     // 
 
@@ -451,4 +441,4 @@ void y_emulate_browser(const y_browser* browser)
 
 
 // --------------------------------------------------------------------------------------------------
-#endif // _Y_BROWSER_EMULATION_C
+#endif // _Y_BROWSER_EMULATION_C_
