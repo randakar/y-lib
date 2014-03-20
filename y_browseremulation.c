@@ -20,53 +20,49 @@
 /*! \file y_browseremulation.c
 \brief Code for supporting (more) realistic browser emulation.
 
-Basic concept: The tester defines a list of browsers inside a parameter file, that contains:
-1) browser name
-2) browser chance - A count of how many times said browser was seen in a production access log during peak hours should work. Percentages aren't required or even very helpfull.
-3) max connections - How many connections said browser uses (see: www.browserscope.org for what this value should be for your browser)
-4) max connections per host - Same as above, but this setting limits the number of connections to a single hostname.
-5) User agent string - A user agent string used by said browser.
+Basic concept: The tester defines a list of browsers that contains:
+1. browser name
+2. browser chance - A weight determining the odds that said browser will be chosen. Can be a percentage, or a count from a production access log.
+3. max connections - How many connections said browser uses (See: www.browserscope.org for what this value should be for your browser)
+4. max connections per host - Same as above, but this setting limits the number of connections to a single hostname.
+5. User agent string - A user agent string used by said browser.
 
-The last entry of this list of parameters needs to use "END" as the browser name.
+This list is read in during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose a browser from the list.
 
-This list is then read in using lr_advance_param() during vuser_init() to construct a list of browsers, which can then be used during the loadtest to dynamically choose browsers to emulate based on their likelyhood that said browser is seen in production.
+\b Usage:
+1. Set up the appropriate parameters
+2. Add this file to your script, plus any supporting ylib files.
+3. Add an include statement: '\#include "y_browseremulation.c' to the top of vuser_init()
+4. Call y_setup_browser_emulation() (or one of the alternative variants) in vuser_init()
 
-Usage:
-
-1) Set up the appropriate parameters
-2) Add this file to your script, plus any supporting ylib files.
-3) Add an include statement: '\#include "y_browseremulation.c' to the top of vuser_init()
-
-4) Call y_setup_browser_emulation in vuser_init()
-
-\b Example:
-\code
-vuser_init()
-{
-    y_log_turn_off();
-    y_setup_browser_emulation();
-    y_log_restore();
-}
-\endcode
-
-5) Call y_choose_browser() and y_emulate_browser() at the start of each iteration.
-
-\b Example:
-\code
-Action()
-{
-    // This will set up some connection options for emulating different browser versions in a realistic fashion
+    \b Example: 
+    \code
+    vuser_init()
     {
-        // Note: This will blow up if the setup code hasn't been called beforehand.
-        y_browser* browser = y_choose_browser();
-        y_emulate_browser(browser);
+        y_log_turn_off(); // Suppress the logging - the setup code can create a fair amount of (harmless) log messages.
+        y_setup_browser_emulation();
+        y_log_restore();  // Resume logging.
     }
+    \endcode
 
-    // .. more code ..
-}
-\endcode
 
-6) Done.
+5. Call y_choose_browser() and y_emulate_browser() at the start of each iteration.
+
+    \b Example:
+    \code
+    Action()
+    {
+        // This will set up some connection options for emulating different browser versions in a realistic fashion
+        {
+            // Note: This will blow up if the setup code hasn't been called beforehand.
+            y_browser* browser = y_choose_browser();
+            y_emulate_browser(browser);
+        }
+
+        // .. more code ..
+    }
+    \endcode
+
 \author Floris Kraak
 */
 #ifndef _Y_BROWSER_EMULATION_C_
@@ -115,7 +111,7 @@ int y_browser_list_chance_total = 0;
 
 /*! \brief Log the content of a browser object.
 
-This will log what a browser object contains, exactly.
+Given a pointer to a browser struct, log what said browser struct contains.
 This is useful for debugging.
 
 \note Passing in NULL will result in a call to lr_abort().
@@ -148,10 +144,12 @@ This will create the following set of parameters from the browser object:
 - browser_max_connections
 - browser_user_agent_string
 
-\param [in] browser The browser to convert into parameters.
+\param [in] browser A pointer to the browser to create parameters for.
 
 \note y_emulate_browser will use this, so these parameters will contain details about what browser the script is currently emulating after that call.
+
 \note Passing in NULL will result in a call to lr_abort().
+\author Floris Kraak
 */
 void y_save_browser_to_parameters(const y_browser* browser)
 {
@@ -171,8 +169,40 @@ void y_save_browser_to_parameters(const y_browser* browser)
 
 /*! \brief Initialize the browser list based on a set of prepared parameters.
 
-\note You may wish to temporarily disable logging here using y_log_turn_off() and y_log_restore().
+This will initialize the single-linked list of browsers, using the given set of parameters.
+The 'browser_name' parameter named here is expected to be set to "Select Next Row: Sequential", and "Update value on: Each iteration".
+The -last- browser name in the list has to contain the value "END" to mark the end of the list.
+All other parameters should be set to "Select Next Row: Same line as {browser_name_param}".
 
+Call this during vuser_init().
+
+\param [in] browser_name_param Browser name. Set this parameter to "Select Next Row: Sequential", and "Update value on: Each iteration". The last browser name should be "END".
+
+\param [in] browser_chance_param Browser weight. Can be any number as long as the total of chances does not exceed Y_RAND_MAX. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
+
+\param [in] browser_max_connections_per_host_param Maximum number of connections this browser allows per host. See www.browserscope.org for possible values. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
+
+\param [in] browser_max_connections_param Maximum number of connections this browser allows. See www.browserscope.org for possible values. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
+
+\param [in] browser_user_agent_string_param The user agent string this browser reports to the server. See your production HTTP access logs for examples. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
+
+\b Example: 
+\code
+vuser_init()
+{
+    y_log_turn_off(); // Suppress the logging - the setup code can create a fair amount of (harmless) log messages.
+    y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
+    y_log_restore();  // Resume logging.
+}
+\endcode
+
+\see y_setup_browser_emulation_from_file()
+\see y_browser_list_head
+\see y_browser_list_chance_total
+\see y_browseremulation.c
+
+\note You may wish to temporarily disable logging here using y_log_turn_off() and y_log_restore().
+\author Floris Kraak
 */
 int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
                                               const char* browser_chance_param,
@@ -268,13 +298,70 @@ int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
     }
 }
 
+/*! \brief Initialize the browser list, using the default values for the parameter names:
+- browser_name_param = browser_name
+- browser_chance_param = browser_chance
+- browser_max_connections_per_host_param = browser_max_connections_per_host
+- browser_max_connections_param = browser_max_connections
+- browser_user_agent_string_param = browser_user_agent_string
 
+\b Example: 
+\code
+vuser_init()
+{
+    y_log_turn_off(); // Suppress the logging - the setup code can create a fair amount of (harmless) log messages.
+    y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
+    y_log_restore();  // Resume logging.
+}
+\endcode
+
+\note We may remove this in favor of a call to y_setup_browser_emulation_from_file() at some point.
+
+\see y_setup_browser_emulation_from_parameters(), y_setup_browser_emulation_from_file(), y_browseremulation.c
+\author Floris Kraak
+*/
 void y_setup_browser_emulation()
 {
     y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
 }
 
+/*! \brief Initialize the browser list based on a tab-seperated CSV file.
 
+This will initialize the single-linked list of browsers, using a text file containing on each line one browser with the following fields, seperated by tabs:
+1. browser name
+2. chance (weight)
+3. max_connections
+4. max_connections_per_host
+5. user_agent
+
+The order of the fields is important; They should be listed on each line in the above order.
+
+\note The file should not contain headers of any kind, nor the string "END" as y_setup_browser_emulation_from_parameters() requires.
+
+\b Example: 
+\code
+vuser_init()
+{
+    y_log_turn_off(); // Suppress the logging - the setup code can create a fair amount of (harmless) log messages.
+    y_setup_browser_emulation_from_file("browser.dat");
+    y_log_restore();  // Resume logging.
+}
+\endcode
+
+\note Empty lines and comments (text starting with "#") will be ignored.
+
+Call this during vuser_init().
+
+\param [in] filename The name of the file to read.
+
+\see y_setup_browser_emulation_from_parameters()
+\see y_browser_list_head
+\see y_browser_list_chance_total
+\see y_browseremulation.c
+
+\note You may wish to temporarily disable logging for this call using y_log_turn_off() and y_log_restore().
+\author Floris Kraak
+*/
 int y_setup_browser_emulation_from_file(char* filename)
 {
     y_browser* previous_browser = NULL;
@@ -366,11 +453,28 @@ int y_setup_browser_emulation_from_file(char* filename)
 }
 
 
-//
-// Choose a browser profile from the browser list
-// Returns a pointer to a randomly chosen struct browser or NULL in case of errors.
-//
-y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
+/*! \brief Choose a browser profile from a browser list at random using the defined weights in that list.
+
+\param [in] browser_list_head The first entry of a previously constructed single-linked browser list.
+\returns a pointer to a randomly chosen struct browser, or NULL in case of errors.
+
+\b Example:
+
+\code
+// This will set up some connection options for emulating different browser versions in a realistic fashion
+{
+    // Note: This will blow up if the setup code hasn't been called beforehand.
+    y_browser* browser = y_choose_browser_from_list(y_browser_list_head, y_browser_list_chance_total);
+    y_emulate_browser(browser);
+}
+\endcode
+
+\note In most cases a call to the y_choose_browser() wrapper should suffice, instead.
+
+\see y_choose_browser(), y_setup_browser_emulation_from_file(), y_setup_browser_emulation_from_parameters(), y_browseremulation.c, y_browser_list_head
+\author Floris Kraak
+*/
+y_browser* y_choose_browser_from_list(y_browser* browser_list_head)
 {
     int i, lowerbound, cursor = 0;
     int max = y_browser_list_chance_total;
@@ -425,13 +529,50 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head )
     return browser;
 }
 
+/*! \brief Choose a browser profile from the browser list at random using the defined weights.
 
+This wrapper around y_choose_browser_from_list() uses the list pointed to by y_browser_list_head to choose from.
+
+\returns a pointer to a randomly chosen struct browser, or NULL in case of errors.
+
+\b Example:
+
+\code
+// This will set up some connection options for emulating different browser versions in a realistic fashion
+{
+    // Note: This will blow up if the setup code hasn't been called beforehand.
+    y_browser* browser = y_choose_browser();
+    y_emulate_browser(browser);
+}
+\endcode
+
+\see y_choose_browser_from_list(), y_setup_browser_emulation_from_file(), y_setup_browser_emulation_from_parameters(), y_browseremulation.c, y_browser_list_head
+\author Floris Kraak
+*/
 y_browser* y_choose_browser()
 {
     return y_choose_browser_from_list(y_browser_list_head);
 }
 
+/*! \brief Emulate a specific browser.
 
+This will set up the MAX_TOTAL_CONNECTIONS, MAX_CONNECTIONS_PER_HOST socket options and user_agent_string settings for the browser listed.
+
+\b Example:
+\code
+// This will set up some connection options for emulating different browser versions in a realistic fashion
+{
+    // Note: This will blow up if the setup code hasn't been called beforehand.
+    y_browser* browser = y_choose_browser();
+    y_emulate_browser(browser);
+}
+\endcode
+
+\see y_choose_browser, y_choose_browser_from_list, y_browser_emulation.c, web_set_sockets_option(), web_add_auto_header()
+
+\param [in] browser Pointer to a browser struct for the browser to be emulated.
+\author Floris Kraak
+*/
 void y_emulate_browser(const y_browser* browser)
 {
     char str_max_connections[12];
