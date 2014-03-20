@@ -157,6 +157,7 @@ void y_save_browser_to_parameters(const y_browser* browser)
     {
         lr_error_message("y_browser_emulation.c: Attempt to store the content of NULL browser into parameters. Aborting.");
         lr_abort();
+        return;
     }
 
     lr_save_string(browser->name, "browser_name");
@@ -185,6 +186,8 @@ Call this during vuser_init().
 \param [in] browser_max_connections_param Maximum number of connections this browser allows. See www.browserscope.org for possible values. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
 
 \param [in] browser_user_agent_string_param The user agent string this browser reports to the server. See your production HTTP access logs for examples. Set this parameter to "Select Next Row: Same line as {browser_name_param}".
+
+\returns 0 if successful, -1 if errors occurred during setup.
 
 \b Example: 
 \code
@@ -295,7 +298,9 @@ int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
     {
         lr_log_message("Too many browsers to fit in browser list struct, max list size = %d", MAX_BROWSER_LIST_LENGTH);
         lr_abort();
+        return -1;
     }
+    return 0; // No error.
 }
 
 /*! \brief Initialize the browser list, using the default values for the parameter names:
@@ -320,9 +325,9 @@ vuser_init()
 \see y_setup_browser_emulation_from_parameters(), y_setup_browser_emulation_from_file(), y_browseremulation.c
 \author Floris Kraak
 */
-void y_setup_browser_emulation()
+int y_setup_browser_emulation()
 {
-    y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
+    return y_setup_browser_emulation_from_parameters("browser_name", "browser_chance", "browser_max_connections_per_host", "browser_max_connections", "browser_user_agent_string");
 }
 
 /*! \brief Initialize the browser list based on a tab-seperated CSV file.
@@ -353,6 +358,7 @@ vuser_init()
 Call this during vuser_init().
 
 \param [in] filename The name of the file to read.
+\returns 0 if setup was successful, -1 in case of an error.
 
 \see y_setup_browser_emulation_from_parameters()
 \see y_browser_list_head
@@ -570,9 +576,10 @@ This will set up the MAX_TOTAL_CONNECTIONS, MAX_CONNECTIONS_PER_HOST socket opti
 \see y_choose_browser, y_choose_browser_from_list, y_browser_emulation.c, web_set_sockets_option(), web_add_auto_header()
 
 \param [in] browser Pointer to a browser struct for the browser to be emulated.
+\returns 0 if no errors occurred, -1 in case of an error.
 \author Floris Kraak
 */
-void y_emulate_browser(const y_browser* browser)
+int y_emulate_browser(const y_browser* browser)
 {
     char str_max_connections[12];
     char str_max_connections_per_host[12];
@@ -581,10 +588,9 @@ void y_emulate_browser(const y_browser* browser)
     if( browser == NULL )
     {
         lr_error_message("y_browser_emulation.c: Attempt to emulate the NULL browser: Ignored.");
-        return;
+        return -1;
     }
 
-    // Debugging purposes .
     lr_log_message("Emulating browser:");
     y_log_browser(browser);
 
@@ -603,6 +609,7 @@ void y_emulate_browser(const y_browser* browser)
     web_set_sockets_option("MAX_CONNECTIONS_PER_HOST", str_max_connections_per_host);
     web_set_sockets_option("MAX_TOTAL_CONNECTIONS",    str_max_connections);
     web_add_auto_header("User-Agent", browser->user_agent_string);
+    return 0;
 }
 
 
