@@ -462,6 +462,7 @@ int y_setup_browser_emulation_from_file(char* filename)
 /*! \brief Choose a browser profile from a browser list at random using the defined weights in that list.
 
 \param [in] browser_list_head The first entry of a previously constructed single-linked browser list.
+\param [in] browser_list_chance_total The total of the browser weights in the list.
 \returns a pointer to a randomly chosen struct browser, or NULL in case of errors.
 
 \b Example:
