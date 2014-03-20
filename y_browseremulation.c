@@ -113,7 +113,16 @@ y_browser* y_browser_list_head = NULL;
 //! \brief The total of all the browser weights added together.
 int y_browser_list_chance_total = 0; 
 
+/*! \brief Log the content of a browser object.
 
+This will log what a browser object contains, exactly.
+This is useful for debugging.
+
+\note Passing in NULL will result in a call to lr_abort().
+
+\param [in] browser A pointer to the browser struct to log.
+\author Floris Kraak
+*/
 void y_log_browser(const y_browser* browser)
 {
     if(browser == NULL)
@@ -130,7 +139,20 @@ void y_log_browser(const y_browser* browser)
                    browser->user_agent_string);
 }
 
+/*! \brief Save the contents of a browser struct as a series of "browser_*" loadrunner parameters.
 
+This will create the following set of parameters from the browser object:
+- browser_name
+- browser_chance
+- browser_max_connections_per_host
+- browser_max_connections
+- browser_user_agent_string
+
+\param [in] browser The browser to convert into parameters.
+
+\note y_emulate_browser will use this, so these parameters will contain details about what browser the script is currently emulating after that call.
+\note Passing in NULL will result in a call to lr_abort().
+*/
 void y_save_browser_to_parameters(const y_browser* browser)
 {
     if(browser == NULL)
@@ -147,7 +169,11 @@ void y_save_browser_to_parameters(const y_browser* browser)
 }
 
 
+/*! \brief Initialize the browser list based on a set of prepared parameters.
 
+\note You may wish to temporarily disable logging here using y_log_turn_off() and y_log_restore().
+
+*/
 int y_setup_browser_emulation_from_parameters(const char* browser_name_param,
                                               const char* browser_chance_param,
                                               const char* browser_max_connections_per_host_param,
