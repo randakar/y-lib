@@ -474,14 +474,13 @@ int y_setup_browser_emulation_from_file(char* filename)
 \see y_choose_browser(), y_setup_browser_emulation_from_file(), y_setup_browser_emulation_from_parameters(), y_browseremulation.c, y_browser_list_head
 \author Floris Kraak
 */
-y_browser* y_choose_browser_from_list(y_browser* browser_list_head)
+y_browser* y_choose_browser_from_list(y_browser* browser_list_head, int browser_list_chance_total)
 {
     int i, lowerbound, cursor = 0;
-    int max = y_browser_list_chance_total;
     y_browser* browser = NULL;
     long roll;
 
-    if( max < 1 )
+    if( browser_list_chance_total < 1 )
     {
         lr_error_message("y_browseremulation.c: Browser list not initialised before call to y_choose_browser_from_list(). Cannot choose, ignoring.");
         return NULL;
@@ -504,11 +503,11 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head)
     // That should reduce the need for this code by a bit ..
     // 
 
-    roll = y_rand() % max;
-    //lr_log_message("max = %d, RAND_MAX = %d, roll %d", max, RAND_MAX, roll);
-    if( Y_RAND_MAX < max)
+    roll = y_rand() % browser_list_chance_total;
+    //lr_log_message("browser_list_chance_total = %d, RAND_MAX = %d, roll %d", browser_list_chance_total, RAND_MAX, roll);
+    if( Y_RAND_MAX < browser_list_chance_total)
     {
-        roll = roll * ((max / RAND_MAX));
+        roll = roll * ((browser_list_chance_total / RAND_MAX));
     }
     //lr_log_message("Roll: %d", roll);
 
@@ -525,7 +524,7 @@ y_browser* y_choose_browser_from_list(y_browser* browser_list_head)
         }
     }
     // This code should be unreachable.
-    lr_error_message("y_browseremulation.c: Roll result out of bounds: roll: %d, cursor: %d, max %d", roll, cursor, max);
+    lr_error_message("y_browseremulation.c: Roll result out of bounds: roll: %d, cursor: %d, browser_list_chance_total %d", roll, cursor, browser_list_chance_total);
     return browser;
 }
 
@@ -551,7 +550,7 @@ This wrapper around y_choose_browser_from_list() uses the list pointed to by y_b
 */
 y_browser* y_choose_browser()
 {
-    return y_choose_browser_from_list(y_browser_list_head);
+    return y_choose_browser_from_list(y_browser_list_head, y_browser_list_chance_total);
 }
 
 /*! \brief Emulate a specific browser.
