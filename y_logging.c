@@ -35,14 +35,8 @@ but they aren't exactly log manipulation functions in the low-level sense.
 // Todo: Figure out whether we want to keep this one.
 // const unsigned int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR | LR_MSG_CLASS_AUTO_LOG;
 
-/*! Configuration switch determining whether 'extra logging' has been enabled.
- * 
- * \deprecated This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done.
- * Note that y_transaction.c hasn't used the extra logging stuff in some time ..
- *
- * \cond internal_global
- */
-int _y_extra_logging = 0;                             // client specific logging code on/off switch; 0 = off, 1 = on
+//! \cond internal_global
+int _y_extra_logging = 0;  // client specific logging code on/off switch; 0 = off, 1 = on
 //! \endcond
 
 // Previous loglevel, saved with and restored by log toggle functions.
@@ -61,7 +55,7 @@ unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG;
  *
  * \see y_get_datetimestamp(), y_get_current_time()
  *
- * \deprecated - lr_save_datetime() really should be used for this kind of thing.
+ * \deprecated lr_save_datetime() really should be used for this kind of thing.
  */
 char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
@@ -86,7 +80,7 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
  *
  * \return The string represation of the current time, formatted as YYYY-MM-DD HH:MM:SS.mmm.
  *
- * \deprecated - Isn't this what we have lr_save_datetime() for nowadays?
+ * \deprecated Use lr_save_datetime() or direct ftime() calls instead.
  *
  * \see y_make_datetimestamp(), y_get_current_time()
  */
@@ -108,7 +102,9 @@ char* y_get_datetimestamp()
  * This is one of the remnants of a bit of old code that would log every transaction stop/start with a timestamp, so that post-test-analysis of responstimes could be done with custom tools.
  * Unless you are running a very old y-lib based script there is no reason why you should use this, as y_set_start_transaction_impl() and y_set_end_transaction_impl() should give you the tools you need to do something like that without polluting y-lib with it ;-)
  *
- * \deprecated
+ * \deprecated This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done.
+ * Note that y_transaction.c hasn't used the extra logging stuff in some time ..
+ *
  * \see y_log_to_report()
  */
 void y_setup_logging()
@@ -119,14 +115,16 @@ void y_setup_logging()
     _y_extra_logging = 1;
 }
 
-/*! If extra logging was enabled enabled, force a line to be logged to the logfile even if logging is off.
-Enable extra logging by calling y_setup_logging()
-
-\param [in] message The message to be logged.
-
-\deprecated
-\see y_setup_logging()
-*/
+/*! \brief If extra logging was enabled force a line to be logged to the logfile - even if regular logging was turned off.
+ * Enable extra logging by calling y_setup_logging()
+ * 
+ * \param [in] message The message to be logged.
+ * 
+ * \deprecated Logging with a timestamp sounds useful, but I don't think it should be called "y_log_to_report()", and it is rather customer specific, too.
+ * Also, forced logging really should be it's own thing.
+ * 
+ * \see y_setup_logging(), y_log_force_message()
+ */
 void y_log_to_report(char *message)
 {
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
@@ -147,11 +145,11 @@ void y_log_to_report(char *message)
 }
 
 /*! \brief Log an error message, with a timestamp, if extra logging is enabled.
-\param [in] message The error message to be logged.
-
-\deprecated
-\see y_log_to_report()
-*/
+ * \param [in] message The error message to be logged.
+ * 
+ * \deprecated Forcing your error messages to get logged may not be the best idea there is. And I don't know of anyone using this, either.
+ * \see y_log_to_report()
+ */
 void y_log_error(char *message)
 {
     char *msg = lr_eval_string(message);
@@ -161,11 +159,11 @@ void y_log_error(char *message)
 }
 
 /*! \brief Log a warning, with a timestamp, if extra logging is enabled.
-\param [in] message The error message to be logged.
-
-\deprecated
-\see y_log_to_report()
-*/
+ * \param [in] message The error message to be logged.
+ *
+ * \deprecated Unused, and forcibly logging things even if logging is turned off is rather impolite to begin with ;-)
+ * \see y_log_to_report()
+ */
 void y_log_warning(char *message)
 {
     char *msg;
@@ -175,6 +173,12 @@ void y_log_warning(char *message)
     y_log_to_report(msg);
 }
 
+/*! \brief Save the loglevel for later restoration through y_log_restore().
+ *
+ * This is called by the various y_log_* functions to make sure the loglevel can be put back the way it was.
+ *
+ *\author Floris Kraak
+ */
 void y_log_save()
 {
     // Save the previous loglevel.
@@ -182,6 +186,12 @@ void y_log_save()
     //lr_error_message("Saved loglevel %d", _y_log_level);
 }
 
+/*! \brief Force all logging off unconditionally, without saving the old state.
+ *
+ * This is used by various y_log_* functions to get the loglevel to a known state.
+ * 
+ * \author Floris Kraak
+ */
 void y_log_turn_off_without_saving()
 {
     // Good grief, this debug message interface is terrible.
@@ -195,42 +205,72 @@ void y_log_turn_off_without_saving()
 }
 
 
-// Save the current loglevel and turn off logging.
+/*! \brief Save the current loglevel and turn off logging.
+ * \note Calling y_log_restore() will restore the loglevel to the state it was in before this call. 
+ *
+ *  \author Floris Kraak
+ */
 void y_log_turn_off()
 {
     y_log_save();
     y_log_turn_off_without_saving();
 }
 
+/*! \brief Turn all logging off and make sure it stays that way.
+ *
+ * This will overwrite the state saved by y_log_save() with "No logging at all, please.", so that y_log_restore() can't turn things back on.
+ *
+ * \note Direct calls to lr_set_debug_message() will still be able to turn things back on. 
+ * \warning Mixing calls to y_log_* functions with calls to lr_debug_message() is not wise and may yield unpredictable results.
+ *
+ * \author Floris Kraak
+ */
 void y_log_turn_off_permanently()
 {
     y_log_turn_off_without_saving();
     y_log_save(); // make sure it is never accidentally enabled again through y_log_restore()
 }
 
+/*! \brief Set the log level to "brief" messages only.
+ * 
+ * \note Calling y_log_restore() will restore the loglevel to the state it was in before this call. 
+ *
+ * Useful when you want to, say, not see that big PDF you are downloading somewhere in your logs but *do* want to see the rest of the logging.
+ * \author Floris Kraak
+ */
 void y_log_set_brief()
 {
     //lr_log_message("Log level set to BRIEF.\n");
-
     y_log_turn_off();
     lr_set_debug_message(LR_MSG_CLASS_BRIEF_LOG, LR_SWITCH_ON);
-
     //lr_log_message("Log level set to brief, from %d to %d", _y_log_level, lr_get_debug_message() );
 }
 
+/*! \brief Set the log level to show all messages, including extended result data, parameters, and tracing information.
+ * \note Calling y_log_restore() will restore the loglevel to the state it was in before this call. 
+ *
+ * Useful when you want to debug a particular step in the script.
+ *
+ * \author Floris Kraak
+ */
 void y_log_set_extended()
 {
     //lr_log_message("Log level set to EXTENDED.\n");
-
     y_log_turn_off();
     lr_set_debug_message(
         LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
         LR_SWITCH_ON);
-
     //lr_log_message("Log level extended from %d to %d", _y_log_level, lr_get_debug_message() );
 }
 
-// Restore the log level to the old state.
+
+/*! \brief Restore the loglevel to previous state.
+ * To be exact, it will restore it to the state it was in before the last call to y_log_set_{off|on|brief|extended}() or y_log_save().
+ *
+ * \note Multiple calls to y_log_set_* functions in a row will overwrite the previous saved state, making the first state potentially unrecoverable.
+ *
+ * \author Floris Kraak
+ */
 void y_log_restore()
 {
     //lr_log_message("Restoring log level to %d, current level %d.", _y_log_level, lr_get_debug_message());
@@ -248,6 +288,17 @@ void y_log_restore()
     // Of course if the previous state was "OFF" the user will never see this either ;-)
 }
 
+/*! \brief Turn logging on.
+ *
+ * What this function does depends on the saved loglevel.
+ * - If the saved loglevel was "no logging", y_log_set_extended() is called, turning all logging on.
+ * - Otherwise, y_log_restore() is called to undo the previous loglevel change.
+ *
+ * \note If the previous loglevel was "brief" while the current level is "extended", this may result in *less* logging.
+ * \todo Either fix that, or remove this function.
+ *
+ * \author Floris Kraak
+ */
 void y_log_turn_on()
 {
     if(_y_log_level == LR_MSG_CLASS_DISABLE_LOG)
@@ -260,14 +311,20 @@ void y_log_turn_on()
     }
 }
 
-// Log a message forcefully, bypassing all log settings.
-// Typically used for generating datafiles within scripts with the loglevel set to OFF.
-// 
-// Testcase:
-//  lr_log_message("Before");
-//  y_log_force_message("Forced message");
-//  lr_log_message("After");
-// 
+/*! \brief Log a message forcefully, bypassing the current log settings.
+ * Typically used for generating datafiles within scripts with the loglevel set to OFF, or things of that sort.
+ *
+ * \b Example:
+ * \code
+ * lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
+ * lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
+ *
+ * lr_log_message("Before");
+ * y_log_force_message("Forced message");
+ * lr_log_message("After");
+ * \endcode
+ * \author Floris Kraak
+ */ 
 void y_log_force_message(char *message)
 {
     y_log_set_extended();
