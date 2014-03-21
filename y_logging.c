@@ -17,29 +17,51 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#ifndef _LOGGING_C
-#define _LOGGING_C
 
-#include "vugen.h"
+/*! \file y_logging.c
+\brief Logging-related y-lib functions
+
+Note that some of these are a bit marginal - the disk space guards for instance are logging related in the sense that they will turn all logging off when too much disk space has been used,
+but they aren't exactly log manipulation functions in the low-level sense.
+*/
+#ifndef _Y_LOGGING_C_
+//! \cond include_protection
+#define _Y_LOGGING_C_
+//! \endcond
+
+#include "y_core.c"
 #include "y_loadrunner_utils.c"
 
-// Constants
+// Todo: Figure out whether we want to keep this one.
 // const unsigned int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR | LR_MSG_CLASS_AUTO_LOG;
 
-
-// Global variables
+/*! Configuration switch determining whether 'extra logging' has been enabled.
+ * 
+ * \deprecated This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done.
+ * Note that y_transaction.c hasn't used the extra logging stuff in some time ..
+ *
+ * \cond internal_global
+ */
 int _y_extra_logging = 0;                             // client specific logging code on/off switch; 0 = off, 1 = on
-unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; // previous loglevel for use with log toggle functions.
+//! \endcond
 
+// Previous loglevel, saved with and restored by log toggle functions.
+// Not documented because people really should not be using this directly.
+//
+//! \cond internal_global
+unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; 
+//! \endcond
 
-// --------------------------------------------------------------------------------------------------
-//// Time/date/stamp functions
-
-
-/*
- * Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
- * @param time - the unix time stamp
- * @param millitm - the milliseconds belonging to the time stamp
+/*! \brief Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+ * 
+ * \param [in] time - the unix time stamp, as reported by ftime()
+ * \param millitm - the milliseconds belonging to the time stamp
+ *
+ * \return The string represation of the timestamp, formatted as YYYY-MM-DD HH:MM:SS.mmm.
+ *
+ * \see y_get_datetimestamp(), y_get_current_time()
+ *
+ * \deprecated - lr_save_datetime() really should be used for this kind of thing.
  */
 char* y_make_datetimestamp(time_t time, unsigned short millitm)
 {
@@ -60,8 +82,13 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
     return YMDHMSm;
 }
 
-/*
- * Returns the current date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
+/*! \brief Returns the current time converted represented as YYYY-MM-DD HH:MM:SS.mmm.
+ *
+ * \return The string represation of the current time, formatted as YYYY-MM-DD HH:MM:SS.mmm.
+ *
+ * \deprecated - Isn't this what we have lr_save_datetime() for nowadays?
+ *
+ * \see y_make_datetimestamp(), y_get_current_time()
  */
 char* y_get_datetimestamp()
 {
@@ -76,9 +103,14 @@ char* y_get_datetimestamp()
 //! \endcond
 
 
-// --------------------------------------------------------------------------------------------------
-
-
+/*! \brief Turn on 'extra logging', when available.
+ *
+ * This is one of the remnants of a bit of old code that would log every transaction stop/start with a timestamp, so that post-test-analysis of responstimes could be done with custom tools.
+ * Unless you are running a very old y-lib based script there is no reason why you should use this, as y_set_start_transaction_impl() and y_set_end_transaction_impl() should give you the tools you need to do something like that without polluting y-lib with it ;-)
+ *
+ * \deprecated
+ * \see y_log_to_report()
+ */
 void y_setup_logging()
 {
     y_setup();
@@ -87,9 +119,14 @@ void y_setup_logging()
     _y_extra_logging = 1;
 }
 
-// Force a line to be logged to the logfile even if logging is off.
-// Only done if extra logging was enabled through a call to y_setup_logging();
-// 
+/*! If extra logging was enabled enabled, force a line to be logged to the logfile even if logging is off.
+Enable extra logging by calling y_setup_logging()
+
+\param [in] message The message to be logged.
+
+\deprecated
+\see y_setup_logging()
+*/
 void y_log_to_report(char *message)
 {
     char *logLine = "%s: VUserId: %d, Host: %s, %s";
@@ -103,15 +140,18 @@ void y_log_to_report(char *message)
         lr_set_debug_message(
             LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
             LR_SWITCH_ON);
-
-
         lr_log_message(logLine, y_get_datetimestamp(), y_virtual_user_id, lr_get_host_name(), lr_eval_string(message));
-
         lr_set_debug_message(log_level, LR_SWITCH_ON);
         //lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
     }
 }
 
+/*! \brief Log an error message, with a timestamp, if extra logging is enabled.
+\param [in] message The error message to be logged.
+
+\deprecated
+\see y_log_to_report()
+*/
 void y_log_error(char *message)
 {
     char *msg = lr_eval_string(message);
@@ -120,6 +160,12 @@ void y_log_error(char *message)
     lr_fail_trans_with_error(msg);
 }
 
+/*! \brief Log a warning, with a timestamp, if extra logging is enabled.
+\param [in] message The error message to be logged.
+
+\deprecated
+\see y_log_to_report()
+*/
 void y_log_warning(char *message)
 {
     char *msg;
@@ -371,4 +417,4 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
 
 // --------------------------------------------------------------------------------------------------
 
-#endif // _LOGGING_C
+#endif // _Y_LOGGING_C_
