@@ -49,7 +49,7 @@
 <div class="contents">
 <a href="y__lib_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Ylib Loadrunner function library.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (C) 2005-2013 Floris Kraak &lt;randakar@gmail.com&gt; | &lt;fkraak@ymor.nl&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (C) 2005-2014 Floris Kraak &lt;randakar@gmail.com&gt; | &lt;fkraak@ymor.nl&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Copyright (C) 2009 Raymond de Jongh &lt;ferretproof@gmail.com&gt; | &lt;rdjongh@ymor.nl&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Copyright (C) 2012-2013 André Luyer</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
@@ -67,20 +67,21 @@
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * along with this program; if not, write to the Free Software</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef _YLIB_C</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="y__lib_8c.html#ab00ca322d8dd6230ee093d49b09982c6">   22</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _YLIB_C</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="vugen_8h.html">vugen.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__core_8c.html">y_core.c</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__string_8c.html">y_string.c</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__logging_8c.html">y_logging.c</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__transaction_8c.html">y_transaction.c</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__param__array_8c.html">y_param_array.c</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__flow__list_8c.html">y_flow_list.c</a>&quot;</span> <span class="comment">// y_profile.c got renamed, and most variables and function names in there as well.</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__browseremulation_8c.html">y_browseremulation.c</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif // _YLIB_C</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifndef _YLIB_C_</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _YLIB_C_</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="vugen_8h.html">vugen.h</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__core_8c.html">y_core.c</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__string_8c.html">y_string.c</a>&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__logging_8c.html">y_logging.c</a>&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__transaction_8c.html">y_transaction.c</a>&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__param__array_8c.html">y_param_array.c</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__flow__list_8c.html">y_flow_list.c</a>&quot;</span> <span class="comment">// y_profile.c got renamed, and most variables and function names in there as well.</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__browseremulation_8c.html">y_browseremulation.c</a>&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif // _YLIB_C_</span></div>
 <div class="ttc" id="y__string_8c_html"><div class="ttname"><a href="y__string_8c.html">y_string.c</a></div><div class="ttdoc">Y-lib string function library. </div></div>
 <div class="ttc" id="vugen_8h_html"><div class="ttname"><a href="vugen_8h.html">vugen.h</a></div><div class="ttdoc">Standard C function headers. </div></div>
 <div class="ttc" id="y__core_8c_html"><div class="ttname"><a href="y__core_8c.html">y_core.c</a></div><div class="ttdoc">Contains core ylib support functions needed for the functioning of the library. </div></div>
