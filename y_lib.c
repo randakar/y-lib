@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2013 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
  * Copyright (C) 2012-2013 André Luyer
  *
@@ -18,8 +18,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-#ifndef _YLIB_C
-#define _YLIB_C
+
+/*! \file y_lib.c
+ *  \brief Main y_lib include file.
+ *
+ * Including this file will cause all common parts of y-lib to be included into your script.
+ * \note If compile time is a concern, you can elect to just include the parts you wish to use instead, as well.
+ * \author Floris Kraak
+ */
+#ifndef _YLIB_C_
+//! \cond include_protection
+#define _YLIB_C_
+//! \endcond
 
 #include "vugen.h"
 #include "y_core.c"
@@ -31,4 +41,4 @@
 #include "y_flow_list.c" // y_profile.c got renamed, and most variables and function names in there as well.
 #include "y_browseremulation.c"
 
-#endif // _YLIB_C
+#endif // _YLIB_C_
