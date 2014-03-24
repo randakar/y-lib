@@ -312,19 +312,19 @@ void y_log_turn_on()
 }
 
 /*! \brief Log a message forcefully, bypassing the current log settings.
- * Typically used for generating datafiles within scripts with the loglevel set to OFF, or things of that sort.
- *
- * \b Example:
- * \code
- * lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
- * lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
- *
- * lr_log_message("Before");
- * y_log_force_message("Forced message");
- * lr_log_message("After");
- * \endcode
- * \author Floris Kraak
- */ 
+
+Typically used for generating datafiles within scripts with the loglevel set to OFF, or things of that sort.
+
+\b Example:
+\code
+   lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG, LR_SWITCH_ON);
+   lr_set_debug_message(LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
+   lr_log_message("Before");              // Nothing gets logged here.
+   y_log_force_message("Forced message"); // "Forced message" appears in the logs.
+   lr_log_message("After");               // No output again.
+\endcode
+\author Floris Kraak
+*/ 
 void y_log_force_message(char *message)
 {
     y_log_set_extended();
@@ -332,19 +332,25 @@ void y_log_force_message(char *message)
     y_log_restore();
 }
 
-// --------------------------------------------------------------------------------------------------
-// y_write_to_log()
-//     writes "content" (a string) to a (log)file.
-//     The content will start with current date, time, Vuser-group, VuserId-number and Scenario-ID
-//        separated by commas. This function relies on y_write_to_file();
-//
-// @author: Raymond de Jongh
-// Example:
-//     y_write_to_log("c:\\logfile.txt", "Everything went great");
-//     This will result that the file (c:\logfile.txt) has this content:
-//        20091126,215212,SomeGroup,3,4,Everything went great
-//     Ofcourse, the ID's and groupname will be different as this is just an example.
-// --------------------------------------------------------------------------------------------------
+/*! \brief Write a string prepended with date and time to the specified (log)file.
+
+The logged line will have the following format:
+YYYYMM,DDHHmmss,{y_virtual_user_group},{y_virtual_user_id},{y_scid},{content}
+
+\param [in] filename The file name of the target file.
+\param [in] content The logmessage to be written.
+\return Negative number in case of an error, zero otherwise.
+
+\b Example:
+\code
+   y_write_to_log("c:\\logfile.txt", "Everything went great");
+\endcode
+
+\b Example \b output:
+20091126,215212,SomeGroup,3,4,Everything went great
+
+\author Raymond de Jongh
+*/
 int y_write_to_log(char *filename, char *content)
 {
     size_t string_length;
@@ -375,9 +381,23 @@ int y_write_to_log(char *filename, char *content)
     return result;
 }
 
-//
-// Detects low disk space situations and turns all logging off if not enough space is left.
-//
+/*! \brief Detect low disk space situations on the generator and turn all logging off if not enough space is left.
+
+When called, this function will check the amount of space left on the generator's "output" device / directory. 
+If the percentage of free space is lower than the treshold percentage, it will generate an error transaction "---DISK SPACE LOW IN LOG FOLDER FOR {y_hostname_generator}---" and turn all further logging off until the end of the test, using y_log_turn_off_permanently().
+
+\note Scripts that call lr_debug_message() or the various y_lib() toggle functions to turn the loglevel back up may ignore this restriction.
+
+Loadrunner does not protect the generators' disks from overflowing, even if the test is writing out a lot of information to the logs really quickly.
+If a disk fills up on the generator or the disk the controller uses for results collation overflows there is no graceful recovery. Collation will fail and test results may be hard or impossible to recover.
+This kind of situation can occur when temporary service disruptions happen (triggering a flood of 'log on error' messages), but also if runtime settings are incorrect and the test was configured to log *everything*.
+
+In order to prevent this from happening scripts should regularly call to both y_disk_space_guard() and y_disk_space_usage_guard() with some reasonable limits.
+
+\param [in] max_free_percentage The amount of free diskspace as a percentage of total space that will cause the logging to turn off.
+
+\author Floris Kraak
+*/
 void y_disk_space_guard(double max_free_percentage)
 {
     char* hostname;
@@ -411,11 +431,28 @@ void y_disk_space_guard(double max_free_percentage)
     }
 }
 
-//
-// Detects excessive disk usage on the output disk by the test
-// by storing the maximum detected free space and comparing that to the current
-// once max disk usage is exceeded all logging is turned off and an error reported.
-// 
+
+/*! \brief Detect excessive disk usage by the test and turn all further logging off if more than a specific limit number of mebibytes has been used.
+
+When called, this function will check the amount of space used on the generator's "output" device / directory since the first call to this function.
+If the amount of used space exceeds the treshold it will generate an error transaction "---DISK SPACE LOW IN LOG FOLDER FOR {y_hostname_generator}---" and turn all further logging off until the end of the test, using y_log_turn_off_permanently().
+
+\note Scripts that call lr_debug_message() or the various y_lib() toggle functions to turn the loglevel back up may ignore this restriction.
+
+Loadrunner does not protect the generators' disks from overflowing, even if the test is writing out a lot of information to the logs really quickly.
+If a disk fills up on the generator or the disk the controller uses for results collation overflows there is no graceful recovery. Collation will fail and test results may be hard or impossible to recover.
+This kind of situation can occur when temporary service disruptions happen (triggering a flood of 'log on error' messages), but also if runtime settings are incorrect and the test was configured to log *everything*.
+
+\note Because of the way this measurement is done, it may also trigger if some other process on the same machine starts writing large amounts of data to the same device.
+
+In order to prevent this from happening scripts should regularly call to both y_disk_space_guard() and y_disk_space_usage_guard() with some reasonable limits.
+
+\note The contents of the generator's output folder will be transferred to the controller during collation. If the sum of the output directories for the generators exceed the size of that filesystem collation will fail, even if there is enough space on the generators. Therefore, set this low enough to make sure that if all generators output folders get filled to the limit the controller will still have enough space for it's collation process.
+
+\param [in] limit_mebibytes_used The amount of mebibytes the test is allowed to used on the generator's target directory. 
+
+\author Floris Kraak
+*/
 void y_disk_space_usage_guard(double limit_mebibytes_used)
 {
     char* hostname;
@@ -432,7 +469,6 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
         y_log_turn_off_permanently();
         return;
     }
-
 
     free_mebibytes = y_get_free_disk_space_in_mebibytes(log_folder);
     lr_log_message("y_disk_space_usage_guard: current free: %f MB, max free: %f MB, limit: %f MB used in folder: %s",
@@ -470,8 +506,5 @@ void y_disk_space_usage_guard(double limit_mebibytes_used)
         y_log_turn_off_permanently();
     }
 }
-
-
-// --------------------------------------------------------------------------------------------------
 
 #endif // _Y_LOGGING_C_

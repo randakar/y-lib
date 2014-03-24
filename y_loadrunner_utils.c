@@ -307,10 +307,10 @@ Use this macro to start a new breadcrumb or to reset an existing one.
 //! Write a string to a file.
 /*! Write a string to a file. Creates the file if it doesn't exist. Appends to an existing file.
 
-@param[in] filename Name of the file in which the content is saved.
-@param[in] content String which is saved into the file
-\return 0: everthing went fine\n
-<0: failed
+\param[in] filename Name of the file in which the content is saved.
+\param[in] content String which is saved into the file
+\return Negative number in case of an error, zero otherwise.
+
 \code
 int result;
 result=y_write_to_file("c:\\temp.txt", "This is a test");
