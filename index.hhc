@@ -4,6 +4,7 @@
 <param name="FrameName" value="right">
 </OBJECT>
 <UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Todo List"><param name="Local" value="todo.html"><param name="ImageNumber" value="11"></OBJECT>
 <LI><OBJECT type="text/sitemap"><param name="Name" value="Deprecated List"><param name="Local" value="deprecated.html"><param name="ImageNumber" value="11"></OBJECT>
 <LI><OBJECT type="text/sitemap"><param name="Name" value="Data Structures"><param name="ImageNumber" value="1"></OBJECT>
   <UL>
@@ -332,7 +333,6 @@
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_logging.c"><param name="Local" value="y__logging_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="_LOGGING_C"><param name="Local" value="y__logging_8c.html#a03f9875d1bbb1e1cf7762b0a0e633af9"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_disk_space_guard"><param name="Local" value="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_disk_space_usage_guard"><param name="Local" value="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_datetimestamp"><param name="Local" value="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886"><param name="ImageNumber" value="11"></OBJECT>
@@ -351,8 +351,6 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_make_datetimestamp"><param name="Local" value="y__logging_8c.html#af5f7233cc156519f399367ba558adba8"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_setup_logging"><param name="Local" value="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_write_to_log"><param name="Local" value="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="_y_extra_logging"><param name="Local" value="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="_y_log_level"><param name="Local" value="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_param_array.c"><param name="Local" value="y__param__array_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>

@@ -8,7 +8,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#af7475971eb93ce0184379e71fe7626e9"><param name="Name" value="_IOFBF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#aca9e52813bd224e4519e0b1289abbce9"><param name="Name" value="_IOLBF"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#a8661edb6b53e3104bef089bef02d0508"><param name="Name" value="_IONBF"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a03f9875d1bbb1e1cf7762b0a0e633af9"><param name="Name" value="_LOGGING_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#a9b38e25d0662fd8d75068df8b8906e01"><param name="Name" value="_PARAM_ARRAY_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__timeb.html"><param name="Name" value="_timeb"></OBJECT>
   <UL>
@@ -21,8 +20,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1bce67020ed820b0e6fc8b13cfba36af"><param name="Name" value="_TRANSACTION_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548"><param name="Name" value="_VTS_FUNC_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0"><param name="Name" value="_y_add_group_to_trans"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f"><param name="Name" value="_y_extra_logging"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999"><param name="Name" value="_y_log_level"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#af889acf62df6f4c07940d9c9e658d31f"><param name="Name" value="_y_random_array_index"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ae19a2245288efe07813d327f8d96ea35"><param name="Name" value="_y_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a92475ecaccb91644c60cc5d1e4244c9e"><param name="Name" value="_y_trans_end_impl"></OBJECT>
@@ -232,6 +229,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structtm.html#a33adf78fd6476b2120ce3b9c4a852053"><param name="Name" value="tm_year"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#ad888d1014ab55f0d19bd2ceb0fb4faa9"><param name="Name" value="tmpfile"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#a6152bfd9e570310dc1a0b23cbe04c975"><param name="Name" value="tmpnam"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="todo.html"><param name="Name" value="Todo List"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#a637983fdb689bb08991bb3984826d0b8"><param name="Name" value="tolower"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#afb31888b7421a495b93aa91bdecd51c9"><param name="Name" value="toupper"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#a7089a565743ec7206aa9de50705b2041"><param name="Name" value="tzset"></OBJECT>
@@ -543,9 +541,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae"><param name="Name" value="y_log_warning"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html"><param name="Name" value="y_logging.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a03f9875d1bbb1e1cf7762b0a0e633af9"><param name="Name" value="_LOGGING_C"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a4bf5151c03baf1f6667d611121c0b04f"><param name="Name" value="_y_extra_logging"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a87f1bf12dadd78cdaf0defa128fae999"><param name="Name" value="_y_log_level"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329"><param name="Name" value="y_disk_space_guard"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803"><param name="Name" value="y_disk_space_usage_guard"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886"><param name="Name" value="y_get_datetimestamp"></OBJECT>

@@ -44,8 +44,20 @@
 <div class="textblock"><dl class="reflist">
 <dt><a class="anchor" id="_deprecated000002"></a>Global <a class="el" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a>  ()</dt>
 <dd></dd>
+<dt><a class="anchor" id="_deprecated000004"></a>Global <a class="el" href="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886">y_get_datetimestamp</a>  ()</dt>
+<dd>Use lr_save_datetime() or direct <a class="el" href="vugen_8h.html#a02b53b2075c6fd6d1d695bf8176991a0">ftime()</a> calls instead. </dd>
+<dt><a class="anchor" id="_deprecated000007"></a>Global <a class="el" href="y__logging_8c.html#a9699f5d59ff8a52ff94352d41b033ea5">y_log_error</a>  (char *message)</dt>
+<dd>Forcing your error messages to get logged may not be the best idea there is. And I don't know of anyone using this, either.  </dd>
+<dt><a class="anchor" id="_deprecated000006"></a>Global <a class="el" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7">y_log_to_report</a>  (char *message)</dt>
+<dd>Logging with a timestamp sounds useful, but I don't think it should be called "y_log_to_report()", and it is rather customer specific, too. Also, forced logging really should be it's own thing. </dd>
+<dt><a class="anchor" id="_deprecated000008"></a>Global <a class="el" href="y__logging_8c.html#ace528d55b1ad1149709aaaadb00730ae">y_log_warning</a>  (char *message)</dt>
+<dd>Unused, and forcibly logging things even if logging is turned off is rather impolite to begin with ;-)  </dd>
+<dt><a class="anchor" id="_deprecated000003"></a>Global <a class="el" href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8">y_make_datetimestamp</a>  (time_t time, unsigned short millitm)</dt>
+<dd>lr_save_datetime() really should be used for this kind of thing.  </dd>
 <dt><a class="anchor" id="_deprecated000001"></a>Global <a class="el" href="y__loadrunner__utils_8c.html#ae983b9ef76c2dac577cd9bb17920b6ea">y_rand_in_sliding_window</a>  (int lowerbound, int upperbound, int rand_max)</dt>
 <dd></dd>
+<dt><a class="anchor" id="_deprecated000005"></a>Global <a class="el" href="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff">y_setup_logging</a>  ()</dt>
+<dd>This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done. Note that <a class="el" href="y__transaction_8c.html">y_transaction.c</a> hasn't used the extra logging stuff in some time ..</dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->

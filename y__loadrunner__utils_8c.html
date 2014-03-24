@@ -410,7 +410,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p>
 
 <p>Load the kernel32.dll file if not already loaded. Internal function that we need so so that we can use kernel32.dll to query windows for disk space usage. </p>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329">y_disk_space_guard()</a>, <a class="el" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803">y_disk_space_usage_guard()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329" title="Detect low disk space situations on the generator and turn all logging off if not enough space is lef...">y_disk_space_guard()</a>, <a class="el" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803" title="Detect excessive disk usage by the test and turn all further logging off if more than a specific limi...">y_disk_space_usage_guard()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00459">459</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
@@ -890,14 +890,13 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0: everthing went fine<br/>
-&lt;0: failed <div class="fragment"><div class="line"><span class="keywordtype">int</span> result;</div>
+<dl class="section return"><dt>Returns</dt><dd>Negative number in case of an error, zero otherwise.</dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> result;</div>
 <div class="line">result=<a class="code" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a>(<span class="stringliteral">&quot;c:\\temp.txt&quot;</span>, <span class="stringliteral">&quot;This is a test&quot;</span>);</div>
 <div class="line"><span class="keywordflow">if</span> (result != 0)</div>
 <div class="line">{   <span class="comment">// o dear, something went wrong!</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one...">y_breadcrumb_reset()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00324">324</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
