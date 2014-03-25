@@ -51,6 +51,9 @@
 <div class="title">y_param_array.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file contains loadrunner parameter array helper functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="vugen_8h_source.html">vugen.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="y__string_8c_source.html">y_string.c</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>&quot;</code><br/>
@@ -59,24 +62,27 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a9b38e25d0662fd8d75068df8b8906e01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a9b38e25d0662fd8d75068df8b8906e01">_PARAM_ARRAY_C</a></td></tr>
-<tr class="separator:a9b38e25d0662fd8d75068df8b8906e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3273ec056914500799f1835491742f83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a3273ec056914500799f1835491742f83">y_array_count</a>(param_array_name)&#160;&#160;&#160;lr_paramarr_len(param_array_name)</td></tr>
+<tr class="memdesc:a3273ec056914500799f1835491742f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the number of elements in the target parameter array.  <a href="#a3273ec056914500799f1835491742f83">More...</a><br/></td></tr>
 <tr class="separator:a3273ec056914500799f1835491742f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00e1c940dabd1164ff9fd1e8fa016b11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11">y_array_get</a>(pArray, pIndex)&#160;&#160;&#160;lr_paramarr_idx(pArray, pIndex)</td></tr>
+<tr class="memdesc:a00e1c940dabd1164ff9fd1e8fa016b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the content of a specific element from a parameter list based on index.  <a href="#a00e1c940dabd1164ff9fd1e8fa016b11">More...</a><br/></td></tr>
 <tr class="separator:a00e1c940dabd1164ff9fd1e8fa016b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9bf71644bbd38457ea8d72c4da84059f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a9bf71644bbd38457ea8d72c4da84059f">y_array_get_no_zeroes</a> (const char *pArray, const int pIndex)</td></tr>
+<tr class="memdesc:a9bf71644bbd38457ea8d72c4da84059f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the content the nth member of target parameter array, but without embedded zeroes.  <a href="#a9bf71644bbd38457ea8d72c4da84059f">More...</a><br/></td></tr>
 <tr class="separator:a9bf71644bbd38457ea8d72c4da84059f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f7e923529843ba8c5a670ae7eba9769"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a8f7e923529843ba8c5a670ae7eba9769">y_array_save</a> (const char *value, const char *pArray, const int pIndex)</td></tr>
+<tr class="memdesc:a8f7e923529843ba8c5a670ae7eba9769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save a string value into an array at a specified position.  <a href="#a8f7e923529843ba8c5a670ae7eba9769">More...</a><br/></td></tr>
 <tr class="separator:a8f7e923529843ba8c5a670ae7eba9769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cce17b4aab4a9853aa8df5191638f1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a6cce17b4aab4a9853aa8df5191638f1e">y_array_save_count</a> (const int count, const char *pArray)</td></tr>
 <tr class="separator:a6cce17b4aab4a9853aa8df5191638f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94e6f70552db61a20040708ead773e83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a94e6f70552db61a20040708ead773e83">y_array_add</a> (const char *pArray, const char *value)</td></tr>
 <tr class="separator:a94e6f70552db61a20040708ead773e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7d7e94a112d6cf9263feab52b861698"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#ad7d7e94a112d6cf9263feab52b861698">y_array_concat</a> (const char *pArrayFirst, const char *pArraySecond, const char *resultArray)</td></tr>
+<tr class="memdesc:ad7d7e94a112d6cf9263feab52b861698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenate two arrays together and save the result into a third array.  <a href="#ad7d7e94a112d6cf9263feab52b861698">More...</a><br/></td></tr>
 <tr class="separator:ad7d7e94a112d6cf9263feab52b861698"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f0428591c0dca8875b1badf79f6ad6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a25f0428591c0dca8875b1badf79f6ad6">y_array_get_random</a> (const char *pArray)</td></tr>
 <tr class="separator:a25f0428591c0dca8875b1badf79f6ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,21 +110,14 @@ Variables</h2></td></tr>
 <tr class="memitem:af889acf62df6f4c07940d9c9e658d31f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#af889acf62df6f4c07940d9c9e658d31f">_y_random_array_index</a> = 0</td></tr>
 <tr class="separator:af889acf62df6f4c07940d9c9e658d31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a9b38e25d0662fd8d75068df8b8906e01"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _PARAM_ARRAY_C</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This file contains loadrunner parameter array helper functions. </p>
+<p>This file provides functions that make using and manipulating loadrunner parameter arrays easier. A parameter array is a set of loadrunner parameters that is usually created by web_reg_save_param() with the "Ord=All" argument. These parameters all use the same name, postfixed with a number to indicate the index into the array.</p>
+<dl class="section note"><dt>Note</dt><dd>Some historical functions now have loadrunner equivalents, starting with LoadRunner version 9. Those functions have been replaced with macros that will call the correct modern equivalent instead. If Y_COMPAT_LR_8 is enabled the old behaviour is restored. If you still use loadrunner versions earlier than 9 you may need to add the line below to your script: #define Y_COMPAT_LR_8</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random(), lr_paramarr_idx() </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00022">22</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
-
-</div>
-</div>
+<p>Definition in file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a3273ec056914500799f1835491742f83"></a>
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +132,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00085">85</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Determine the number of elements in the target parameter array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_array_name</td><td>The name of the parameter array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of elements in the array.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Superseded by the LR 9 function lr_paramarr_len(). If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">    web_reg_save_param(<span class="stringliteral">&quot;TAG&quot;</span>, <span class="stringliteral">&quot;LB=&lt;a&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);</div>
+<div class="line">    web_url(<span class="stringliteral">&quot;URL=www.google.nl&quot;</span>, LAST);</div>
+<div class="line">    lr_log_message(<span class="stringliteral">&quot;RESULT: %d&quot;</span>, <a class="code" href="y__param__array_8c.html#a3273ec056914500799f1835491742f83">y_array_count</a>(<span class="stringliteral">&quot;TAG&quot;</span>)); <span class="comment">// Logs the text &quot;RESULT: &quot; followed by how many hyperlinks are found on the www.google.nl index page.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd>lr_paramarr_len() </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00080">80</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -161,7 +178,29 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00143">143</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Fetch the content of a specific element from a parameter list based on index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The name of the parameter array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pIndex</td><td>The index of the chosen element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A char* pointer pointing to the content of the chosen element, if it exist. Will call lr_abort() if it doesn't.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Superseded by the LR 9 function lr_paramarr_idx(). If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.</dd>
+<dd>
+If the data inside the parameter contains embedded null (\x00) characters you may have an issue processing the return value. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a9bf71644bbd38457ea8d72c4da84059f" title="Get the content the nth member of target parameter array, but without embedded zeroes. ">y_array_get_no_zeroes()</a></dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">    web_reg_save_param(<span class="stringliteral">&quot;TAG&quot;</span>, <span class="stringliteral">&quot;LB=&lt;a&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);</div>
+<div class="line">    web_url(<span class="stringliteral">&quot;URL=www.google.nl&quot;</span>, LAST);</div>
+<div class="line">    lr_log_message(<span class="stringliteral">&quot;Fourth tag on www.google.nl: %s&quot;</span>, <a class="code" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11">y_array_get</a>(<span class="stringliteral">&quot;TAG&quot;</span>, 4));</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd>lr_paramarr_idx() </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00134">134</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -189,8 +228,23 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<pre class="fragment">Add a new element to the end of the target parameter array.
+</pre><dl class="section note"><dt>Note</dt><dd>This will call <a class="el" href="y__param__array_8c.html#a6cce17b4aab4a9853aa8df5191638f1e">y_array_save_count()</a> each time it is called. For bulk inserts this should not be used - the performance will suck.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The target array to resize. If this array does not exist, a new one will be created. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>the value to add.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">web_reg_save_param(<span class="stringliteral">&quot;TAG&quot;</span>, <span class="stringliteral">&quot;LB=&lt;a&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);</div>
+<div class="line">web_url(<span class="stringliteral">&quot;URL=www.google.nl&quot;</span>, LAST);</div>
+<div class="line"><a class="code" href="y__param__array_8c.html#a94e6f70552db61a20040708ead773e83">y_array_add</a>(<span class="stringliteral">&quot;TAG&quot;</span>, <span class="stringliteral">&quot;newValue&quot;</span>);        <span class="comment">// the added value (=last one) in {TAG} is now &quot;newValue&quot;.</span></div>
+</div><!-- fragment --><dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a8f7e923529843ba8c5a670ae7eba9769" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00277">277</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00274">274</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -224,7 +278,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00300">300</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Concatenate two arrays together and save the result into a third array. </p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">web_reg_save_param(<span class="stringliteral">&quot;TAG1&quot;</span>, <span class="stringliteral">&quot;LB=&lt;a h&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);  </div>
+<div class="line">web_reg_save_param(<span class="stringliteral">&quot;TAG2&quot;</span>, <span class="stringliteral">&quot;LB=&lt;A id&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);</div>
+<div class="line">web_url(<span class="stringliteral">&quot;URL=www.google.nl&quot;</span>, LAST);</div>
+<div class="line">                                         <span class="comment">// Loadrunner saves parameters:</span></div>
+<div class="line">                                         <span class="comment">// TAG1 - &quot;TAG1_1&quot; to &quot;TAG1_12&quot;, &quot;TAG1_count&quot; = 12</span></div>
+<div class="line">                                         <span class="comment">// TAG2 - &quot;TAG2_1&quot; to &quot;TAG2_14&quot;, &quot;TAG2_count&quot; = 14</span></div>
+<div class="line"><a class="code" href="y__param__array_8c.html#ad7d7e94a112d6cf9263feab52b861698">y_array_concat</a>(<span class="stringliteral">&quot;TAG1&quot;</span>, <span class="stringliteral">&quot;TAG2&quot;</span>, <span class="stringliteral">&quot;TAG&quot;</span>);   <span class="comment">// saves &quot;TAG_1&quot; to &quot;TAG_26&quot;, &quot;TAG_count&quot; = 26</span></div>
+</div><!-- fragment --><dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a8f7e923529843ba8c5a670ae7eba9769" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00297">297</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -242,7 +308,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00434">434</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00431">431</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -276,7 +342,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00554">554</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00551">551</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -304,7 +370,36 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00183">183</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Get the content the nth member of target parameter array, but without embedded zeroes. </p>
+<p>As <a class="el" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, but it filters embedded zeroes from the input, replacing them with a single space: ' '. It's not ideal, but better than having your script break on this particular type of broken web page.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Since this returns a pointer to a memory location allocated with <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>, the resulting value will need to be freed with <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> at some point.</dd></dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   <span class="keywordtype">char</span> *result;</div>
+<div class="line">   lr_save_string(<span class="stringliteral">&quot;bar&quot;</span>, <span class="stringliteral">&quot;foo_1&quot;</span>);</div>
+<div class="line">   lr_save_string(<span class="stringliteral">&quot;baz&quot;</span>, <span class="stringliteral">&quot;foo_2&quot;</span>);</div>
+<div class="line">   lr_save_int(2, <span class="stringliteral">&quot;foo_count&quot;</span>);</div>
+<div class="line"></div>
+<div class="line">   result = <a class="code" href="y__param__array_8c.html#a9bf71644bbd38457ea8d72c4da84059f">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;foo&quot;</span>, 1);</div>
+<div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, result); <span class="comment">// Prints &quot;Result: bar&quot; </span></div>
+<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
+<div class="line">   result = <a class="code" href="y__param__array_8c.html#a9bf71644bbd38457ea8d72c4da84059f">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;foo&quot;</span>, 2);</div>
+<div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, result); <span class="comment">// Prints &quot;Result: baz&quot;</span></div>
+<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
+<div class="line">}</div>
+<div class="line">{</div>
+<div class="line">   <span class="keywordtype">char</span> buffer[11] = { <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;r&#39;</span>,<span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;k&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;n&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;\0&#39;</span> };</div>
+<div class="line">   <span class="keywordtype">char</span> *tmp;</div>
+<div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken_1&quot;</span>);</div>
+<div class="line">   <a class="code" href="y__param__array_8c.html#a6cce17b4aab4a9853aa8df5191638f1e">y_array_save_count</a>(1, <span class="stringliteral">&quot;broken&quot;</span>);</div>
+<div class="line">   tmp = <a class="code" href="y__param__array_8c.html#a9bf71644bbd38457ea8d72c4da84059f">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;broken&quot;</span>, 1);</div>
+<div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: &#39;%s&#39;&quot;</span>, tmp); <span class="comment">// prints &quot;Result: &#39; b ro ken  &#39;&quot;</span></div>
+<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, lr_paramarr_idx(), <a class="el" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06" title="Calculate how much space storing the decimal representation of a number into a string requires...">y_int_strlen()</a>, lr_eval_string_ext() </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00173">173</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -322,7 +417,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00343">343</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00340">340</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -340,7 +435,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00371">371</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00368">368</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -374,7 +469,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00515">515</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00512">512</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -414,7 +509,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00599">599</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00596">596</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -432,7 +527,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00402">402</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00399">399</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -466,7 +561,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00215">215</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Save a string value into an array at a specified position. </p>
+<p>This does not update the size of the array.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to store </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The name of the array to store the value in </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pIndex</td><td>The index of the element to be updated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">web_reg_save_param(<span class="stringliteral">&quot;TAG&quot;</span>, <span class="stringliteral">&quot;LB=&lt;a&quot;</span>, <span class="stringliteral">&quot;RB=&gt;&quot;</span>, <span class="stringliteral">&quot;ORD=ALL&quot;</span>, LAST);</div>
+<div class="line">web_url(<span class="stringliteral">&quot;URL=www.google.nl&quot;</span>, LAST);</div>
+<div class="line"><a class="code" href="y__param__array_8c.html#a8f7e923529843ba8c5a670ae7eba9769">y_array_save</a>(<span class="stringliteral">&quot;newvalue&quot;</span>, <span class="stringliteral">&quot;TAG&quot;</span>, 2);                    <span class="comment">// save the sting &quot;newvalue&quot; into {TAG_2}</span></div>
+<div class="line">lr_log_message(<span class="stringliteral">&quot;Value: %s&quot;</span>, <a class="code" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11">y_array_get</a>(<span class="stringliteral">&quot;TAG&quot;</span>, 2));    <span class="comment">// print the value of {TAG_2}. (will be &quot;newvalue&quot; in this example)</span></div>
+</div><!-- fragment --><dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a00e1c940dabd1164ff9fd1e8fa016b11" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, <a class="el" href="y__param__array_8c.html#a3273ec056914500799f1835491742f83" title="Determine the number of elements in the target parameter array. ">y_array_count()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00209">209</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -493,8 +606,20 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<pre class="fragment">Change the size of the target parameter array.
+</pre><p>Updates the _count field of the chosen parameter array, changing the reported size of the array. </p>
+<dl class="section note"><dt>Note</dt><dd>This does not verify if the array in question actually contains that number of elements.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>The new size of the array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The target array to resize.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#a8f7e923529843ba8c5a670ae7eba9769" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00243">243</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00238">238</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -534,7 +659,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00474">474</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00471">471</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -562,7 +687,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00710">710</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00707">707</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -602,7 +727,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00653">653</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00650">650</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -617,7 +742,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00028">28</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00045">45</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>

@@ -236,7 +236,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>); <span class="comment">// will save &quot; b ro ken  &quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00556">556</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00561">561</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -266,6 +266,7 @@ Variables</h2></td></tr>
 
 <p>Clean a parameter by replacing any embedded NULL (null) characters with a replacement character. </p>
 <p>This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s). Any such characters are replaced with replacement_char and the result is stored in the original parameter. When no null-character is found, the result is unaltered.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Since the return value is allocated with <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>, it will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> at some point.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
@@ -281,7 +282,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>); <span class="comment">// will save &quot;!b!ro!ken!!&quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00525">525</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00530">530</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -310,6 +311,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Since the return value is allocated with <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>, it will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> at some point.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
@@ -325,9 +327,10 @@ Variables</h2></td></tr>
 <div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken&quot;</span>);</div>
 <div class="line">   tmp = <a class="code" href="y__core_8c.html#a9fc166c412bf848068685f7c391658bd">y_get_cleansed_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>);</div>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, tmp); <span class="comment">// Prints &quot;Result: !b!ro!ken!!&quot;.</span></div>
+<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00473">473</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00476">476</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
