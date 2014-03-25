@@ -455,6 +455,8 @@ char* y_get_parameter_ext(const char *source_param)
 In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
 This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
 
+\warning Since the return value is allocated with malloc(), it will need to be freed using free() at some point.
+
 \param [in] param_name The parameter to cleanse of nulls.
 \param [in] replacement A character that replaces any embedded nulls found.
 \returns The resulting parameter content.
@@ -467,6 +469,7 @@ This will fetch a parameter but "cleanse" it from such contamination, leaving th
    lr_save_var(buffer, 11, 0, "broken");
    tmp = y_get_cleansed_parameter("broken", '!');
    lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
+   free(tmp);
 }
 \endcode
 */
@@ -508,6 +511,8 @@ char* y_get_cleansed_parameter(const char* param_name, char replacement)
 This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s).
 Any such characters are replaced with replacement_char and the result is stored in the original parameter.
 When no null-character is found, the result is unaltered.
+
+\warning Since the return value is allocated with malloc(), it will need to be freed using free() at some point.
 
 \param [in] param_name The parameter to cleanse of nulls.
 \param [in] replacement A character that replaces any embedded nulls found.
