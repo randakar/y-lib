@@ -17,9 +17,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+/*! 
+\file y_param_array.c
+\brief This file contains loadrunner parameter array helper functions.
 
-#ifndef _PARAM_ARRAY_C
-#define _PARAM_ARRAY_C
+This file provides functions that make using and manipulating loadrunner parameter arrays easier.
+A parameter array is a set of loadrunner parameters that is usually created by web_reg_save_param() with the "Ord=All" argument.
+These parameters all use the same name, postfixed with a number to indicate the index into the array.
+
+\note Some historical functions now have loadrunner equivalents, starting with LoadRunner version 9. 
+Those functions have been replaced with macros that will call the correct modern equivalent instead. 
+If Y_COMPAT_LR_8 is enabled the old behaviour is restored.
+If you still use loadrunner versions earlier than 9 you may need to add the line below to your script:
+\#define Y_COMPAT_LR_8
+
+\sa lr_paramarr_random(), lr_paramarr_idx()
+*/
+#ifndef _Y_PARAM_ARRAY_C
+//! \cond include_protection
+#define _Y_PARAM_ARRAY_C
+//! \endcond
 
 #include "vugen.h"
 #include "y_string.c"
@@ -27,51 +44,29 @@
 
 int _y_random_array_index = 0;
 
-//
-// This file contains loadrunner param array helper functions.
-// "param arrays" are lists of parameters as saved by web_reg_save_param() with the
-// "ord=all" argument. 
-//
 
-//
-// Some historical functions now have loadrunner equivalents, starting with LoadRunner version 9. 
-// Those functions have been replaced with macros that will call the correct LR 9 equivalent 
-// instead. If Y_COMPAT_LR_8 is enabled the old behaviour is restored.
-//
-// If you still use loadrunner versions earlier than 9 or are using Performance Center (version?)
-// you may need to uncomment the line below.
-//
-// #define Y_COMPAT_LR_8
+/*! \def y_array_count
+\brief Determine the number of elements in the target parameter array.
+\param [in] param_array_name The name of the parameter array.
+\return The number of elements in the array.
 
+\note Superseded by the LR 9 function lr_paramarr_len(). 
+If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.
 
-//////////////////////////// Param array functions. ////////////////////////////
-// --------------------------------------------------------------------------------------------------
-
-
-
-// --------------------------------------------------------------------------------------------------
-// Retrieve the number of saved elements for the parameter defined in *pArrayName
-// 
-// Superseded by the LR 9 function lr_paramarr_len(), if Y_COMPAT_LR_8 is turned off this function 
-// is replaced with a simple macro calling the loadrunner equivalent.
-// Note: Performance Center may need Y_COMPAT_LR_8
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:     
-//        int result;
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", 
-//        ...
-//        LAST);
-//        result = y_array_count("TAG");
-//        lr_message("RESULT: %d", result);
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+{
+    web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+	web_url("URL=www.google.nl", LAST);
+    lr_log_message("RESULT: %d", y_array_count("TAG")); // Logs the text "RESULT: " followed by how many hyperlinks are found on the www.google.nl index page.
+}
+\endcode
+\see lr_paramarr_len()
+\author Floris Kraak
+*/
 #ifdef Y_COMPAT_LR_8
 int y_array_count( const char *param_array_name )
 {
-    // -- Loadrunner 9 and upwards
-    // return lr_paramarr_len(pArrayName);
-
-    // -- Loadrunner 8 and below
     int result;
     size_t size = strlen(pArrayName) +9; // 9 = strlen("{}_count") +1 -- the +1 is '\0'
     char *tmp = y_mem_alloc(size);
@@ -86,37 +81,32 @@ int y_array_count( const char *param_array_name )
 #endif // Y_COMPAT_LR_8
 
 
-// --------------------------------------------------------------------------------------------------
+/*! \def y_array_get
+\brief Fetch the content of a specific element from a parameter list based on index.
+\param [in] pArray The name of the parameter array.
+\param [in] pIndex The index of the chosen element.
+\return A char* pointer pointing to the content of the chosen element, if it exist. Will call lr_abort() if it doesn't.
 
+\note Superseded by the LR 9 function lr_paramarr_idx(). 
+If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.
 
+\note If the data inside the parameter contains embedded null (\\x00) characters you may have an issue processing the return value. 
+\see y_array_get_no_zeroes()
 
-
-
-// --------------------------------------------------------------------------------------------------
-// Get a specific element from a parameter list.
-//
-// Note: If the data inside the parameter contains embedded null (\x00) characters you may have an 
-// issue processing the return value. See also y_array_get_no_zeroes().
-//
-// Superseded by the LR 9 function lr_paramarr_idx(), if Y_COMPAT_LR_8 is turned off this function
-// is replaced with a simple macro calling the loadrunner equivalent.
-// Note: Performance Center may need Y_COMPAT_LR_8
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:     
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", 
-//         ...
-//        lr_message("LR9x: 4e in de array: %s", lr_paramarr_idx("TAG", 4));    // LR9 variant
-//        lr_message("LRxx: 4e in de array: %s", y_array_get("TAG", 4));        // y_array_get variant.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+{
+    web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+    web_url("URL=www.google.nl", LAST);
+    lr_log_message("Fourth tag on www.google.nl: %s", y_array_get("TAG", 4));
+}
+\endcode
+\see lr_paramarr_idx()
+\author Floris Kraak
+*/
 #ifdef Y_COMPAT_LR_8
 char *y_array_get( const char *pArray, const int pIndex )
 {
-    //-- Loadrunner 9 and upwards
-    // return lr_paramarr_idx(pArray, pIndex);
-
-    //-- Loadrunner 8 and below, or when using performance center,
-    //   or when you want some sane boundary checks:
     int size = y_array_count( pArray );
     char *tmp;
     char *result;
@@ -126,10 +116,11 @@ char *y_array_get( const char *pArray, const int pIndex )
     {
         lr_error_message("Index out of bounds");
         lr_abort();
+		return NULL;
     }
 
+    // Calculate space requirements
     {
-        // Calculate space requirements
         size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + size of index + {}_\0
         tmp = y_mem_alloc(bufsize); 
         snprintf( tmp , bufsize, "{%s_%d}" , pArray , pIndex );
@@ -143,46 +134,44 @@ char *y_array_get( const char *pArray, const int pIndex )
 #define y_array_get( pArray, pIndex ) lr_paramarr_idx(pArray, pIndex)
 #endif // Y_COMPAT_LR_8
 
-// --------------------------------------------------------------------------------------------------
+/*! \brief Get the content the nth member of target parameter array, but without embedded zeroes.
 
+As y_array_get(), but it filters embedded zeroes from the input, replacing them with a single space: ' '.
+It's not ideal, but better than having your script break on this particular type of broken web page.
 
+\warning Since this returns a pointer to a memory location allocated with malloc(), the resulting value will need to be freed with free() at some point.
 
+\b Example:
+\code
+{
+   char *result;
+   lr_save_string("bar", "foo_1");
+   lr_save_string("baz", "foo_2");
+   lr_save_int(2, "foo_count");
 
+   result = y_array_get_no_zeroes("foo", 1);
+   lr_log_message("Result: %s", result); // Prints "Result: bar" 
+   free(result);
+   result = y_array_get_no_zeroes("foo", 2);
+   lr_log_message("Result: %s", result); // Prints "Result: baz"
+   free(result);
+}
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   char *tmp;
+   lr_save_var(buffer, 11, 0, "broken_1");
+   y_array_save_count(1, "broken");
+   tmp = y_array_get_no_zeroes("broken", 1);
+   lr_log_message("Result: '%s'", tmp); // prints "Result: ' b ro ken  '"
+   free(tmp);
+}
+\endcode
 
-// --------------------------------------------------------------------------------------------------
-// As y_array_get(), but it filters embedded zeroes from the input, replacing them with 
-// a simple space: ' '.
-// It's not ideal, but better than having your script break on this type of idiocy.
-//
-//
-// Note: The output of this needs to be freed using lr_eval_string_ext_free();
-// See also the loadrunner documentation regarding lr_eval_string_ext();
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:
-// 
-//    {
-//       char* result;
-//       lr_save_string("bar", "foo_1");
-//       lr_save_string("baz", "foo_2");
-//       lr_save_int(2, "foo_count");
-//
-//       result = y_array_get_no_zeroes("foo", 1);
-//       lr_log_message("Result: %s", result); // Prints "Result: bar" 
-//       result = y_array_get_no_zeroes("foo", 2);
-//       lr_log_message("Result: %s", result); // Prints "Result: baz"
-//    }
-//    {
-//       char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-//       char *tmp;
-//       lr_save_var(buffer, 11, 0, "broken_1");
-//       y_array_save_count(1, "broken");
-//       tmp = y_array_get_no_zeroes("broken", 1);
-//       lr_log_message("Result: '%s'", tmp); // prints "Result: ' b ro ken  '"
-//    }
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\see y_array_get(), lr_paramarr_idx(), y_int_strlen(), lr_eval_string_ext()
+\author Floris Kraak
+*/
 char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 {
-    //lr_log_message("y_array_get_no_zeroes(%s,%d)", pArray, pIndex );
     if ( (pIndex > y_array_count(pArray)) || (pIndex < 1) )
     {
         lr_error_message("Parameter array %s does not exist or index %d out of bounds.", pArray, pIndex);
@@ -197,21 +186,26 @@ char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
         return y_get_cleansed_parameter(tmp, ' '); // <-- Might want to make that configurable..
     }
 }
-// --------------------------------------------------------------------------------------------------
 
+/*! \brief Save a string value into an array at a specified position
 
+This does not update the size of the array.
 
+\param [in] value The value to store
+\param [in] pArray The name of the array to store the value in
+\param [in] pIndex The index of the element to be updated.
 
-// --------------------------------------------------------------------------------------------------
-// Save a string value in array pArray at index pIndex.
-// This does not update the count value (size) of the array.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:     
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", ............
-//        y_array_save("newvalue", "TAG", 2);                // save the sting "newvalue" into {TAG_2}
-//        lr_message("Value: %s", y_array_get("TAG", 2));    // print the value of {TAG_2}. (will be "newvalue" in this example)
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+web_url("URL=www.google.nl", LAST);
+y_array_save("newvalue", "TAG", 2);                    // save the sting "newvalue" into {TAG_2}
+lr_log_message("Value: %s", y_array_get("TAG", 2));    // print the value of {TAG_2}. (will be "newvalue" in this example)
+\endcode
+
+\see y_array_get(), y_array_count()
+\author Floris Kraak
+*/
 void y_array_save(const char* value, const char* pArray, const int pIndex)
 {
     if(pArray == NULL)
@@ -229,17 +223,18 @@ void y_array_save(const char* value, const char* pArray, const int pIndex)
         free(result);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
+/*! Change the size of the target parameter array.
 
+Updates the _count field of the chosen parameter array, changing the reported size of the array.
+\note This does not verify if the array in question actually contains that number of elements.
 
+\param [in] count The new size of the array.
+\param [in] pArray The target array to resize.
 
-
-// --------------------------------------------------------------------------------------------------
-// Update the array count (size).
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:   
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\see y_array_save()
+\author Floris Kraak
+*/
 void y_array_save_count(const int count, const char *pArray)
 {
     if( pArray == NULL )
@@ -258,45 +253,47 @@ void y_array_save_count(const int count, const char *pArray)
         free(result);
     }
 }
-// --------------------------------------------------------------------------------------------------
 
+/*! Add a new element to the end of the target parameter array.
 
+\note This will call y_array_save_count() each time it is called. For bulk inserts this should not be used - the performance will suck.
 
+\param [in] pArray The target array to resize. If this array does not exist, a new one will be created.
+\param [in] value the value to add.
 
+\b Example:
+\code
+web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+web_url("URL=www.google.nl", LAST);
+y_array_add("TAG", "newValue");        // the added value (=last one) in {TAG} is now "newValue".
+\endcode
 
-// --------------------------------------------------------------------------------------------------
-// Add an element to an array at the end of the list.
-// Note: Do not use this in a loop as it will update the count every time it's called.
-// For one-offs this is fine though.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", 
-//         y_array_add("TAG", "newValue");        // the added value (=last one) in {TAG} is now "newValue".
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\see y_array_save()
+\author Floris Kraak
+*/
 void y_array_add( const char* pArray, const char* value )
 {
     int size = y_array_count(pArray) +1;
-    // hmm - should we check if the array does not exist?
-    // Maybe not - there are cases where we care, and there are cases where we don't.
     y_array_save(value, pArray, size);
     y_array_save_count(size, pArray);
 }
-// --------------------------------------------------------------------------------------------------
 
-// --------------------------------------------------------------------------------------------------
-// Concatenate two arrays together, saves the result into a third array.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        web_reg_save_param("TAG1", "LB=<a h", "RB=>", "ORD=ALL", LAST);  
-//        web_reg_save_param("TAG2", "LB=<A id", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", ... );
-//        // Loadrunner saves parameters:
-//        // TAG1 - "TAG1_1" to "TAG1_12", "TAG1_count" = 12
-//        // TAG2 - "TAG2_1" to "TAG2_14", "TAG2_count" = 14
-//
-//        y_array_concat("TAG1", "TAG2", "TAG");   // saves "TAG_1" to "TAG_26", "TAG_count" = 26
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*! \brief Concatenate two arrays together and save the result into a third array.
+
+\b Example:
+\code 
+web_reg_save_param("TAG1", "LB=<a h", "RB=>", "ORD=ALL", LAST);  
+web_reg_save_param("TAG2", "LB=<A id", "RB=>", "ORD=ALL", LAST);
+web_url("URL=www.google.nl", LAST);
+                                         // Loadrunner saves parameters:
+                                         // TAG1 - "TAG1_1" to "TAG1_12", "TAG1_count" = 12
+                                         // TAG2 - "TAG2_1" to "TAG2_14", "TAG2_count" = 14
+y_array_concat("TAG1", "TAG2", "TAG");   // saves "TAG_1" to "TAG_26", "TAG_count" = 26
+\endcode
+
+\see y_array_save()
+\author Floris Kraak
+*/
 void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const char *resultArray)
 {
     int size_first = y_array_count(pArrayFirst);
@@ -560,7 +557,7 @@ void y_array_filter( const char *pArrayName, const char *search, const char *res
     //lr_log_message("y_array_filter(%s, %s, %s)", pArrayName, search, resultArrayName);
     for( i=1; i <= size; i++)
     {
-        item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain \x00 in the input. Ugh.
+        item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain a null byte - \x00 in the input. Ugh.
         if( strstr(item, search) == NULL )
         {
             y_array_save(item, resultArrayName, j++);
@@ -775,4 +772,4 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 }
 
 // --------------------------------------------------------------------------------------------------
-#endif // _PARAM_ARRAY_C
+#endif // _Y_PARAM_ARRAY_C
