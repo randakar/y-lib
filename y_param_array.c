@@ -134,10 +134,15 @@ char *y_array_get( const char *pArray, const int pIndex )
 #define y_array_get( pArray, pIndex ) lr_paramarr_idx(pArray, pIndex)
 #endif // Y_COMPAT_LR_8
 
+
 /*! \brief Get the content the nth member of target parameter array, but without embedded zeroes.
 
 As y_array_get(), but it filters embedded zeroes from the input, replacing them with a single space: ' '.
 It's not ideal, but better than having your script break on this particular type of broken web page.
+
+\param [in] pArray The name of the parameter array to get an element from.
+\param [in] pIndex The index number of the element to fetch.
+\returns The parameter value at index pIndex in the target parameter array.
 
 \warning Since this returns a pointer to a memory location allocated with malloc(), the resulting value will need to be freed with free() at some point.
 
@@ -176,6 +181,7 @@ char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
     {
         lr_error_message("Parameter array %s does not exist or index %d out of bounds.", pArray, pIndex);
         lr_abort();
+        return NULL;
     }
     else
     {
