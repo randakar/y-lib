@@ -88,8 +88,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a25f0428591c0dca8875b1badf79f6ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random element from a parameter list.  <a href="#a25f0428591c0dca8875b1badf79f6ad6">More...</a><br/></td></tr>
 <tr class="separator:a25f0428591c0dca8875b1badf79f6ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3b8032b6b7e767019411a1dbb1ebcfb"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#af3b8032b6b7e767019411a1dbb1ebcfb">y_array_get_random_no_zeroes</a> (const char *pArray)</td></tr>
+<tr class="memdesc:af3b8032b6b7e767019411a1dbb1ebcfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random element from a parameter list without embedded zeroes.  <a href="#af3b8032b6b7e767019411a1dbb1ebcfb">More...</a><br/></td></tr>
 <tr class="separator:af3b8032b6b7e767019411a1dbb1ebcfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5df2b7be76beae12d6810e49f0f4bb8b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a5df2b7be76beae12d6810e49f0f4bb8b">y_array_pick_random</a> (const char *pArray)</td></tr>
+<tr class="memdesc:a5df2b7be76beae12d6810e49f0f4bb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose an element at random from a saved parameter list and store it in a parameter with the same name.  <a href="#a5df2b7be76beae12d6810e49f0f4bb8b">More...</a><br/></td></tr>
 <tr class="separator:a5df2b7be76beae12d6810e49f0f4bb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a215d867e84d7e899e26b9db9d6b62237"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a215d867e84d7e899e26b9db9d6b62237">y_array_dump</a> (const char *pArrayName)</td></tr>
 <tr class="separator:a215d867e84d7e899e26b9db9d6b62237"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -309,7 +311,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00428">428</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00430">430</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -343,7 +345,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00548">548</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00550">550</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -435,10 +437,11 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The value of the randomly chosen parameter.</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random() </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000009">Deprecated:</a></b></dt><dd>This doesn't really do anything that lr_paramarr_random() doesn't already do.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random(), <a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00347">347</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00349">349</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -456,7 +459,19 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00365">365</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Get a random element from a parameter list without embedded zeroes. </p>
+<p>Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes. Stores the rolled index number internally.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The name of the parameter array to fetch a random value from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the randomly chosen parameter, minus any embedded \x00 characters.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random(), <a class="el" href="y__param__array_8c.html#a25f0428591c0dca8875b1badf79f6ad6" title="Get a random element from a parameter list. ">y_array_get_random()</a>, <a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00374">374</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -490,7 +505,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00509">509</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00511">511</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -530,7 +545,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00593">593</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00595">595</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -548,7 +563,19 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00396">396</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Choose an element at random from a saved parameter list and store it in a parameter with the same name. </p>
+<p>Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes, and saves it as a parameter with the same name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The name of the parameter array to fetch a random value from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The index number of the randomly chosen parameter.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random(), <a class="el" href="y__param__array_8c.html#af3b8032b6b7e767019411a1dbb1ebcfb" title="Get a random element from a parameter list without embedded zeroes. ">y_array_get_random_no_zeroes()</a>, <a class="el" href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab" title="Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...">y_rand()</a> </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00398">398</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -680,7 +707,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00468">468</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00470">470</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -708,7 +735,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00704">704</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00706">706</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -748,7 +775,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00647">647</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00649">649</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
