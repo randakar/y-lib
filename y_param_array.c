@@ -457,7 +457,7 @@ For example, HTML dropdown boxes look like this:
 </select>
 \endcode
 
-These cannot be correlated using just <option> and </option> as the left and right boundaries if there is more than one dropdown box on a page.
+These cannot be correlated using just `<option>` and `</option>` as the left and right boundaries if there is more than one dropdown box on a page.
 Using this function you can save the HTML for the entire dropdown box in a parameter instead, then have the options saved as a parameter list afterwards.
 
 \warning Using this for large lists can be really slow. This is running lr_save_string() in a loop, and lr_save_string() will slow down if you use it a few thousand times.
@@ -465,8 +465,8 @@ Using this function you can save the HTML for the entire dropdown box in a param
 \todo Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML dropdown boxes, as that is the most common case.
 
 \param [in] sourceParam The name of a single parameter containing a list of elements. See dropdown example, above.
-\param [in] LB The left boundary of the values you wish to save into a list. Example: <option>
-\param [in] RB The right boundary of the values you wish to save into a list. Example: </option>
+\param [in] LB The left boundary of the values you wish to save into a list. Example: `<option>`
+\param [in] RB The right boundary of the values you wish to save into a list. Example: `</option>`
 \param [in] destArrayParam The name of the parameter array to save the values into.
 
 \b Example:
