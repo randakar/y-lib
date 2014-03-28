@@ -333,25 +333,20 @@ void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const cha
 }
 
 
+/*! \brief Get a random element from a parameter list
 
-// --------------------------------------------------------------------------------------------------
-// Get a random element from a parameter list
-// Superseded by the LR 9 function lr_paramarr_random() but kept for compatibility reasons.
-//
-// Also deprecated. See y_array_get_random_no_zeroes() as for why.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//         see Help of lr_paramarr_random()
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Fetch the contents of a random element in a parameter array.
+As lr_paramarr_random(), but stores the rolled index number internally.
+
+\param [in] pArray The name of the parameter array to fetch a random value from.
+\return The value of the randomly chosen parameter.
+
+\sa lr_paramarr_random()
+\author Floris Kraak
+*/
 char *y_array_get_random( const char *pArray )
 {
-    //return lr_paramarr_random(pArray);
-
-    // -- Loadrunner 8 and below
     int count = y_array_count( pArray );
-
-    //lr_log_message("y_array_get_random(%s)", pArray);
-
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
@@ -361,10 +356,6 @@ char *y_array_get_random( const char *pArray )
     _y_random_array_index= (y_rand() % count) +1;
     return y_array_get(pArray, _y_random_array_index);
 }
-// --------------------------------------------------------------------------------------------------
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
