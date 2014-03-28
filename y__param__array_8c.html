@@ -85,6 +85,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ad7d7e94a112d6cf9263feab52b861698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenate two arrays together and save the result into a third array.  <a href="#ad7d7e94a112d6cf9263feab52b861698">More...</a><br/></td></tr>
 <tr class="separator:ad7d7e94a112d6cf9263feab52b861698"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25f0428591c0dca8875b1badf79f6ad6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#a25f0428591c0dca8875b1badf79f6ad6">y_array_get_random</a> (const char *pArray)</td></tr>
+<tr class="memdesc:a25f0428591c0dca8875b1badf79f6ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random element from a parameter list.  <a href="#a25f0428591c0dca8875b1badf79f6ad6">More...</a><br/></td></tr>
 <tr class="separator:a25f0428591c0dca8875b1badf79f6ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3b8032b6b7e767019411a1dbb1ebcfb"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__param__array_8c.html#af3b8032b6b7e767019411a1dbb1ebcfb">y_array_get_random_no_zeroes</a> (const char *pArray)</td></tr>
 <tr class="separator:af3b8032b6b7e767019411a1dbb1ebcfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,7 +309,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00437">437</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00428">428</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -342,7 +343,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00557">557</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00548">548</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -425,7 +426,19 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00346">346</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Get a random element from a parameter list. </p>
+<p>Fetch the contents of a random element in a parameter array. As lr_paramarr_random(), but stores the rolled index number internally.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pArray</td><td>The name of the parameter array to fetch a random value from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the randomly chosen parameter.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>lr_paramarr_random() </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00347">347</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -443,7 +456,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00374">374</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00365">365</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -477,7 +490,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00518">518</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00509">509</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -517,7 +530,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00602">602</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00593">593</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -535,7 +548,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00405">405</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00396">396</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -667,7 +680,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00477">477</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00468">468</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -695,7 +708,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00713">713</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00704">704</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -735,7 +748,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00656">656</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00647">647</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
