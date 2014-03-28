@@ -442,30 +442,43 @@ void y_array_dump( const char *pArrayName )
 }
 
 
+/*! \brief Create a parameter list from a single parameter value.
 
+As if using web_reg_save_param() with "Ord=All" as an option, but for already saved parameters instead of web requests.
+This is especially useful when there is a need to save lists of parameters from sections of the application output instead of the entire thing.
 
-// --------------------------------------------------------------------------------------------------
-// Save the contents of a const char * variable to a parameter array.
-// As if using web_reg_save_param() with "Ord=All" as an option, but for strings
-// This is especially useful when there is a need to save lists of parameters from sections of the 
-// application output (rather than the entire thing).    Think: Drop-down boxes.
-// 
-// Arguments: 
-//  1.search: The string to be searched from.  2.pArrayName: Name of resulting parameter array.
-//  3.LB    : Left Boundary (match)            4.RB:         Right Boundary (match)
-//          
-// Note     : This does not understand the entire web_reg_save_param() syntax,
-//            notably left/right boundaries are simple strings rather than strings-with-text-flags.
-// Note2    : Existing values in the destination parameter (pArrayname) will be destroyed.
-// Todo     : Find out how to make this fast enough to deal with extremely large amounts of 'hits'.
-// Todo2    : Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML
-//            dropdown boxes.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//      lr_save_string("<option value=\"water\"><option value=\"fire\"><option value=\"burn\">", "SOURCE");
-//      y_array_save_param_list("SOURCE", "value=\"", "\">", "VALUES");
-//      y_array_dump("VALUES");    // {VALUES_1} contains "water" (no quotes)    {VALUES_2} contains "fire" (no quotes)    etc...
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+For example, HTML dropdown boxes look like this:
+\code
+<select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+\endcode
+
+These cannot be correlated using just <option> and </option> as the left and right boundaries if there is more than one dropdown box on a page.
+Using this function you can save the HTML for the entire dropdown box in a parameter instead, then have the options saved as a parameter list afterwards.
+
+\warning Using this for large lists can be really slow. This is running lr_save_string() in a loop, and lr_save_string() will slow down if you use it a few thousand times.
+
+\todo Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML dropdown boxes, as that is the most common case.
+
+\param [in] sourceParam The name of a single parameter containing a list of elements. See dropdown example, above.
+\param [in] LB The left boundary of the values you wish to save into a list. Example: <option>
+\param [in] RB The right boundary of the values you wish to save into a list. Example: </option>
+\param [in] destArrayParam The name of the parameter array to save the values into.
+
+\b Example:
+
+\code
+lr_save_string("<option value=\"water\"><option value=\"fire\"><option value=\"burn\">", "SOURCE");
+y_array_save_param_list("SOURCE", "value=\"", "\">", "VALUES");
+y_array_dump("VALUES");    // {VALUES_1} contains "water" (no quotes)    {VALUES_2} contains "fire" (no quotes)    etc...
+\endcode
+
+\author Floris Kraak
+*/
 void y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *destArrayParam)
 {
     int i = 0;
@@ -489,10 +502,6 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
     free(buffer);
     y_array_save_count(i, destArrayParam);
 }
-// --------------------------------------------------------------------------------------------------
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
