@@ -374,10 +374,6 @@ Stores the rolled index number internally.
 char *y_array_get_random_no_zeroes( const char *pArray )
 {
     int count = y_array_count( pArray );
-    int index;
-
-    //lr_log_message("y_array_get_random(%s)", pArray);
-
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
