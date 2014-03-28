@@ -455,7 +455,7 @@ char* y_get_parameter_ext(const char *source_param)
 In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
 This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
 
-\warning Since the return value is allocated with malloc(), it will need to be freed using free() at some point.
+\warning The return value of this function needs to be freed using lr_eval_string_ext_free().
 
 \param [in] param_name The parameter to cleanse of nulls.
 \param [in] replacement A character that replaces any embedded nulls found.
@@ -563,8 +563,4 @@ void y_cleanse_parameter(const char* param_name)
     y_cleanse_parameter_ext(param_name, ' ');
 }
 
-
-
-// --------------------------------------------------------------------------------------------------
 #endif // _Y_CORE_C_
-
