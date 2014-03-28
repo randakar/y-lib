@@ -341,7 +341,9 @@ As lr_paramarr_random(), but stores the rolled index number internally.
 \param [in] pArray The name of the parameter array to fetch a random value from.
 \return The value of the randomly chosen parameter.
 
-\sa lr_paramarr_random()
+\deprecated This doesn't really do anything that lr_paramarr_random() doesn't already do.
+
+\sa lr_paramarr_random(), y_rand()
 \author Floris Kraak
 */
 char *y_array_get_random( const char *pArray )
@@ -358,17 +360,21 @@ char *y_array_get_random( const char *pArray )
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*! \brief Get a random element from a parameter list without embedded zeroes.
+
+Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes.
+Stores the rolled index number internally.
+
+\param [in] pArray The name of the parameter array to fetch a random value from.
+\return The value of the randomly chosen parameter, minus any embedded \\x00 characters.
+
+\sa lr_paramarr_random(), y_array_get_random(), y_rand()
+\author Floris Kraak
+*/
 char *y_array_get_random_no_zeroes( const char *pArray )
 {
-    //return lr_paramarr_random(pArray); 
-    // I don't think the LR function is actually an good substitute in this case..
-
-    int index;
     int count = y_array_count( pArray );
+    int index;
 
     //lr_log_message("y_array_get_random(%s)", pArray);
 
@@ -381,10 +387,6 @@ char *y_array_get_random_no_zeroes( const char *pArray )
     _y_random_array_index = (y_rand() % count) +1;
     return y_array_get_no_zeroes(pArray, _y_random_array_index);
 }
-// --------------------------------------------------------------------------------------------------
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
