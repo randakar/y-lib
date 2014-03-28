@@ -140,11 +140,13 @@ char *y_array_get( const char *pArray, const int pIndex )
 As y_array_get(), but it filters embedded zeroes from the input, replacing them with a single space: ' '.
 It's not ideal, but better than having your script break on this particular type of broken web page.
 
+\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
+
 \param [in] pArray The name of the parameter array to get an element from.
 \param [in] pIndex The index number of the element to fetch.
 \returns The parameter value at index pIndex in the target parameter array.
 
-\warning Since this returns a pointer to a memory location allocated with malloc(), the resulting value will need to be freed with free() at some point.
+\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
 
 \b Example:
 \code
@@ -365,6 +367,8 @@ char *y_array_get_random( const char *pArray )
 Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes.
 Stores the rolled index number internally.
 
+\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
+
 \param [in] pArray The name of the parameter array to fetch a random value from.
 \return The value of the randomly chosen parameter, minus any embedded \\x00 characters.
 
@@ -411,22 +415,19 @@ int y_array_pick_random( const char *pArray )
         return 0;
     }
 }
-// --------------------------------------------------------------------------------------------------
 
+/*! \brief Dump the contents of a list of saved parameters to standard output (the run log)
 
+\param [in] pArrayName The name of the array to log.
 
-
-
-// --------------------------------------------------------------------------------------------------
-// Dump the contents of a list of saved parameters to std out (the run log)
-// Please note that the logging can get kinda messy when you also have extended debug (substitute parameter) on.
-// Consider switching the logging temporary off. 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", 
-//         y_array_dump("TAG");
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\b Example:
+\code
+web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+web_url("URL=www.google.nl", LAST);
+y_array_dump("TAG"); // Prints the content of the parameter array named "TAG" to the output log.
+\endcode
+\author Raymond de Jongh
+*/
 void y_array_dump( const char *pArrayName )
 {
     int i;
@@ -439,8 +440,6 @@ void y_array_dump( const char *pArrayName )
         lr_eval_string_ext_free(&msg);
     }
 }
-// --------------------------------------------------------------------------------------------------
-
 
 
 
