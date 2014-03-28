@@ -451,10 +451,13 @@ int y_workdays_from_today(int workdays)
 
 /*!
 \brief Load the kernel32.dll file if not already loaded.
-Internal function that we need so so that we can use kernel32.dll to query windows for disk space usage.
 
+Internal function, loads kernel32.dll if not already loaded to query windows for disk space usage.
+Calls lr_abort() if loading the dll fails.
+
+\return Negative return value if loading the dll fails, but with that call to lr_abort() it may not even get there.
 \author Floris Kraak
-\sa y_disk_space_guard(), y_disk_space_usage_guard()
+\sa y_disk_space_guard(), y_disk_space_usage_guard(), lr_abort()
 */
 int y_load_kernel_dll()
 {
@@ -464,7 +467,7 @@ int y_load_kernel_dll()
     if( kernel_dll_loaded > 0)
     {
         // Nothing to do.
-        return;
+        return 0;
     }
 
     // Try to load the dll.
@@ -472,6 +475,7 @@ int y_load_kernel_dll()
     {
         lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report disk space usage.", load_dll_result);
         lr_abort();
+        return -1;
     }
     else
     {
