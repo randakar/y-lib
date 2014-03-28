@@ -385,12 +385,16 @@ char *y_array_get_random_no_zeroes( const char *pArray )
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// Choose an element at random from a saved parameter list and store it in
-// a parameter with the same name.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*! \brief Choose an element at random from a saved parameter list and store it in a parameter with the same name.
+
+Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes, and saves it as a parameter with the same name.
+
+\param [in] pArray The name of the parameter array to fetch a random value from.
+\return The index number of the randomly chosen parameter.
+
+\sa lr_paramarr_random(), y_array_get_random_no_zeroes(), y_rand()
+\author Floris Kraak
+*/
 int y_array_pick_random( const char *pArray )
 {
     if(y_array_count(pArray))
