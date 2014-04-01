@@ -590,6 +590,12 @@ Since the entries in these lists are closely correlated picking one involves cor
 
 With this function you can just glue the two lists together based on their index and continue processing from there.
 
+\param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations.
+\param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations.
+\param [in] seperator A fixed string to be used as a seperator between the two values.
+\param [in] resultArray The name of the array to hold the resulting values. Can be the same as either the left or the righthand parameter array.
+
+
 \b Example:
 \code
 lr_save_string("<apple><balloon><crayon><drum>", "THING");
@@ -600,14 +606,15 @@ y_array_merge("THING2", "CAT2", "=>", "RESULT");         //    {RESULT_2} now co
 y_array_dump("RESULT");
 \endcode
 
-\see y_array_grep(), y_array_concat(), y_array_pick_random()
+\see y_array_split(), y_array_concat(), y_array_pick_random()
 \author Floris Kraak
 */
-int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, const char *separator, const char *resultArray)
+int y_array_merge(const char *pArrayNameLeft, const char *pArrayNameRight, const char *separator, const char *resultArray)
 {
     int i = 1;
     char *param;
     int length = y_array_count(pArrayNameLeft);
+    int seperator_size = strlen(separator);
 
     if( length != y_array_count(pArrayNameRight) )
     {
@@ -618,13 +625,11 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
         return 0;
     }
 
-    //lr_save_string(separator, "_sep");
-
     for( i=1; i <= length; i++)
     {
         char *left = y_array_get_no_zeroes(pArrayNameLeft, i);
         char *right = y_array_get_no_zeroes(pArrayNameRight, i);
-        size_t size = strlen(left)+strlen(separator)+strlen(right)+1;
+        size_t size = strlen(left)+seperator_size+strlen(right)+1;
         char *result = y_mem_alloc(size);
 
         snprintf(result, size, "%s%s%s", left, separator, right);
@@ -632,31 +637,28 @@ int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, cons
         lr_eval_string_ext_free(&right);
         y_array_save(result, resultArray, i);
         free(result);
-
-        //lr_save_string( left, "_left");
-        //lr_save_string( right, "_right");
-        //y_array_save( resultArray, i, lr_eval_string("{_left}{_sep}{_right}"));
     }
-
-    //lr_save_int(i-1, lr_eval_string("{_resultArray}_count") );
     y_array_save_count(i-1, resultArray);
     return 1;
 }
-// --------------------------------------------------------------------------------------------------
 
 
 
 
+/*! Split an input array vertically into two new arrays, based on a search parameter.
 
-// --------------------------------------------------------------------------------------------------
-// Split an input array vertically into two new arrays, based on a search parameter.
-// This is the reverse of y_array_merge(). It will examine each parameter in turn and save
-// each value into two separate parameter lists.
-//
-// See also y_split(), as that is the single parameter version of this.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+This is the reverse of y_array_merge(). It will examine each parameter in turn and save each value into two separate parameter lists.
+
+\param [in] pInputArray The name of the array holding the values to be split.
+\param [in] seperator A fixed string to be used as a seperator between the two values.
+\param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array.
+\param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.
+
+\note Using the same array for the left and right hand side result arrays will result in one side overwriting the values from the other side.
+
+\see y_array_merge(), y_array_concat(), y_array_pick_random(), y_split_str()
+\author Floris Kraak
+*/
 void y_array_split(const char *pInputArray, const char *separator, const char *pArrayNameLeft, const char *pArrayNameRight)
 {
     int i = 1;
@@ -674,7 +676,6 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
         left[0] = '\0';
         right[0] = '\0';
 
-        // This is where the magic happens - see string.h
         y_split_str(item, separator, left, right);
         lr_eval_string_ext_free(&item);
 
@@ -687,10 +688,6 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
     y_array_save_count(i-1,pArrayNameLeft);
     y_array_save_count(i-1,pArrayNameRight);
 }
-// --------------------------------------------------------------------------------------------------
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
