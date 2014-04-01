@@ -503,22 +503,23 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
     y_array_save_count(i, destArrayParam);
 }
 
-/*! \brief Search a parameter array fir a specific string and and build a new result array containing only parameters containing the string.
+/*! \brief Search a parameter array for a specific text and build a new array containing only parameters containing that text.
 
 Let's just call it 'grep'. :)
 
 \param [in] pArrayName The name of the array to be searched.
 \param [in] search The string to search for.
-\param [in] resultArrayName The name of the array to hold the values. Can be the same as the original parameter array.
+\param [in] resultArrayName The name of the array to hold the resulting values. Can be the same as the original parameter array.
 
 \b Example:
 \code
-lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
+lr_save_string("<apple><balloon><crayon><drum>", "SOURCE");
 y_array_save_param_list("SOURCE", "<", ">", "VALUES");
 y_array_grep("VALUES", "r", "VALUES2");   // get all elements containing "r" (crayon and drum)
 y_array_dump("VALUES2");
 \endcode
 
+\see y_array_filter(), y_array_concat(), y_array_pick_random()
 \author Floris Kraak
 */
 void y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
@@ -539,27 +540,32 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
     y_array_save_count(j-1, resultArrayName);
 }
 
+/*! \brief Search a parameter array for a specific string and and build a new result array containing only parameters NOT containing the string.
 
+As y_array_grep(), but reversed.
 
-// --------------------------------------------------------------------------------------------------
-// Search array 'pArrayName' for string 'search' and build a new result array
-// containing only parameters that do NOT contain the string.
-//
-// Reverse grep, in other words.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
-//        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
-//        y_array_filter("VALUES", "r", "VALUES2");   // get all elements NOT containing "r" (apple, baloon)
-//        y_array_dump("VALUES2");
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\param [in] pArrayName The name of the array to be searched.
+\param [in] search The string to search for.
+\param [in] resultArrayName The name of the array to hold the resulting values. Can be the same as the original parameter array.
+
+\b Example:
+\code
+lr_save_string("<apple><balloon><crayon><drum>", "SOURCE");
+y_array_save_param_list("SOURCE", "<", ">", "VALUES");
+y_array_filter("VALUES", "r", "VALUES2");   // get all elements NOT containing "r" (apple, balloon)
+y_array_dump("VALUES2");
+\endcode
+
+\see y_array_grep(), y_array_concat(), y_array_pick_random()
+
+\author Floris Kraak
+*/
 void y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
     char *item;
     int size = y_array_count(pArrayName);
 
-    //lr_log_message("y_array_filter(%s, %s, %s)", pArrayName, search, resultArrayName);
     for( i=1; i <= size; i++)
     {
         item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain a null byte - \x00 in the input. Ugh.
@@ -569,13 +575,8 @@ void y_array_filter( const char *pArrayName, const char *search, const char *res
         }
         lr_eval_string_ext_free(&item);
     }
-
     y_array_save_count(j-1, resultArrayName);
 }
-// --------------------------------------------------------------------------------------------------
-
-
-
 
 
 // --------------------------------------------------------------------------------------------------
