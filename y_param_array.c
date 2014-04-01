@@ -649,12 +649,12 @@ int y_array_merge(const char *pArrayNameLeft, const char *pArrayNameRight, const
 
 This is the reverse of y_array_merge(). It will examine each parameter in turn and save each value into two separate parameter lists.
 
+\note Using the same array for the left and right hand side result arrays will result in one side overwriting the values from the other side.
+
 \param [in] pInputArray The name of the array holding the values to be split.
 \param [in] separator A fixed string to be used as a seperator between the two values.
 \param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array.
 \param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.
-
-\note Using the same array for the left and right hand side result arrays will result in one side overwriting the values from the other side.
 
 \see y_array_merge(), y_array_concat(), y_array_pick_random(), y_split_str()
 \author Floris Kraak
@@ -690,32 +690,32 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// Shuffle the array of parameters and stores the result in a new array of parameters.
-// The original array of parameters is untouched.
-// 
-// * Please note: the source parameter must not be the same as the destination parameter. * 
-// 
-// Arguments:
-//         1. source parameter array        2. destination parameter array
-// @author: Raymond de Jongh
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//    example usage:     
-//        web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
-//        web_url("www.google.nl", 
-//         ...
-//        y_array_shuffle("TAG", "SHUFFLE_TAG");
-//         
-//    now, suppose {TAG_1}="cow", {TAG_2}="chicken", {TAG_3}="boneless", {TAG_4}="redguy"
-//  then this could be the result: 
+/*! Shuffle a parameter array and store the result in a new array of parameters.
+
+\warning Unlike most of the parameter array functions, the source parameter array CANNOT be the same as the result parameter array.
+\note y_array_pick_random() is usually better and much faster than using this function. Only use it if you cannot allow the code to repeatedly pick the same element.
+
+\param [in] source_param_array_name The name of the array holding the values to be shuffled.
+\param [in] dest_param_array_name The parameter array holding the shuffled result. This array must NOT have the same name as the original array.
+
+\b Example:
+\code
+web_reg_save_param("TAG", "LB=<a", "RB=>", "ORD=ALL", LAST);
+web_url("URL=www.google.nl", LAST);
+y_array_shuffle("TAG", "SHUFFLE_TAG");
+y_array_dump("SHUFFLE_TAG");
+//  Now, suppose {TAG_1}="cow", {TAG_2}="chicken", {TAG_3}="boneless", {TAG_4}="redguy".
+//  Then this could be the result: 
 //         {SHUFFLE_TAG_1} = "chicken", {SHUFFLE_TAG_2}="redguy", {SHUFFLE_TAG_3} = "cow", {SHUFFLE_TAG_4}="boneless".
-//     to do: remove Dunglish.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\endcode
+
+\see y_array_pick_random()
+\author Raymond de Jongh, Floris Kraak
+*/
 void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
 {
-    int i;
     int *shuffle;
-    int source_length;
+    int source_length, i;
 
     if (strcmp(source_param_array_name, dest_param_array_name) == 0)
     {
@@ -725,34 +725,29 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     }
 
     source_length = y_array_count(source_param_array_name);
-
-    //lr_message("source_length: %d", source_length);
     if(source_length < 1)
     {
         lr_error_message("Cannot shuffle empty parameter arrays!");
         lr_abort();
         return;
     }
-
-    if(source_length == 1)
+    else if(source_length == 1)
     {
-        lr_log_message("Cannot shuffle a list with just 1 entry.");
+        lr_log_message("Warning: Cannot shuffle a list with just 1 entry.");
         y_array_save( y_array_get(source_param_array_name, 1), dest_param_array_name, 1);
         y_array_save_count(1, dest_param_array_name);
         return;
     }
 
-    // Now the cases where we can actually shuffle something:
-
-    shuffle=(int *)y_array_alloc(source_length+1, sizeof(int));
-
-    for (i=1; i<=source_length; i++)
+    // Now the cases where we can actually shuffle something: 
+    shuffle=(int *)y_array_alloc(source_length+1, sizeof(int)); // Allocate room for an array of ints.
+    for (i=1; i<=source_length; i++) // Fill it with the numbers 1 .. source length, denoting indexes into the source array, unshuffled.
     {
         //lr_message("i: %d", i);    
         shuffle[i]=i;
     }
 
-
+	// For each item in that list of ints, have it swap places with a randomly chosen item from that same list. (Switching with yourself is legal.)
     for(i=1; i<=source_length; i++)
     {
         int temp, r;
@@ -764,17 +759,14 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
         shuffle[r] = temp;
     }
 
-//    random_array_start_at_1(array, source_length);
-
+	// Now that we have a list of shuffled numbers, use those numbers to store the elements in the source parameter array into the corresponding slots of the destination.
     for(i=1; i<=source_length; i++)
     {
         y_array_save(
            y_array_get(source_param_array_name, shuffle[i]),
            dest_param_array_name, i);
     }
-
-    y_array_save_count(--i, dest_param_array_name);
-
+    y_array_save_count(--i, dest_param_array_name); // We can probably just use the source_length here instead.
     free (shuffle);
 }
 
