@@ -1,6 +1,6 @@
 /*
  * Ylib Loadrunner function library.
- * Copyright (C) 2005-2012 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
+ * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,8 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef _TRANSACTION_C
-#define _TRANSACTION_C
+#ifndef _Y_TRANSACTION_C_
+//! \cond include_protection
+#define _Y_TRANSACTION_C_
+//! \endcond
 
 //
 // Transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'
@@ -895,4 +897,4 @@ void y_waterfall_random_weighted_continue(char * stepname)
 }
 
 
-#endif // _TRANSACTION_C
+#endif // _Y_TRANSACTION_C_
