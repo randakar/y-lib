@@ -16,7 +16,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__timeb.html#a9b12daae5dfc9bd4a2b60836da302d01"><param name="Name" value="timezone"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a905edc1df49d4d9620221ffdfed20481"><param name="Name" value="_trans_status"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1bce67020ed820b0e6fc8b13cfba36af"><param name="Name" value="_TRANSACTION_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548"><param name="Name" value="_VTS_FUNC_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0"><param name="Name" value="_y_add_group_to_trans"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#af889acf62df6f4c07940d9c9e658d31f"><param name="Name" value="_y_random_array_index"></OBJECT>
@@ -691,7 +690,6 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a59572b55f1b7525c926b300ebf8fc13f"><param name="Name" value="__y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_dereference_error_in_vugen_when_running"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a905edc1df49d4d9620221ffdfed20481"><param name="Name" value="_trans_status"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1bce67020ed820b0e6fc8b13cfba36af"><param name="Name" value="_TRANSACTION_C"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0"><param name="Name" value="_y_add_group_to_trans"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ae19a2245288efe07813d327f8d96ea35"><param name="Name" value="_y_sub_transaction_nr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a92475ecaccb91644c60cc5d1e4244c9e"><param name="Name" value="_y_trans_end_impl"></OBJECT>
@@ -759,8 +757,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a9bd62e667d911b26ebd5e4474512dea8"><param name="Name" value="Y_TRANS_STATUS_AUTO_STARTED"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a3cd413fda78838a298f3a20d3c9abca1"><param name="Name" value="Y_TRANS_STATUS_NONE"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1d92bb711f1339755401fc2bd888e7bb"><param name="Name" value="Y_TRANS_STATUS_STARTED"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a4967a9e9cfcee3a09564b52394bb3b14"><param name="Name" value="Y_TRANS_WEB_LINK"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a7e6757e8923016916ff2ed54c462dc28"><param name="Name" value="y_trans_web_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a4967a9e9cfcee3a09564b52394bb3b14"><param name="Name" value="Y_TRANS_WEB_LINK"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1d68e4dcb0ab1e22daf3046673f4629f"><param name="Name" value="y_trigger_func"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a882f93c4823bcf37acfdc030e89d1e37"><param name="Name" value="y_waterfall_random_weighted_continue"></OBJECT>
   </UL>

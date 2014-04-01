@@ -398,7 +398,6 @@
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_transaction.c"><param name="Local" value="y__transaction_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="_TRANSACTION_C"><param name="Local" value="y__transaction_8c.html#a1bce67020ed820b0e6fc8b13cfba36af"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_and_increment_sub_transaction_nr"><param name="Local" value="y__transaction_8c.html#adab1c7cf7e6720fc3bf29f43a42c730b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_and_increment_transaction_nr"><param name="Local" value="y__transaction_8c.html#a894c88b68795406a06db81036b93126b"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_get_sub_transaction_nr"><param name="Local" value="y__transaction_8c.html#adee4fb0981ee45aeb6fa79b67cc442be"><param name="ImageNumber" value="11"></OBJECT>
