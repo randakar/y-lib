@@ -557,7 +557,6 @@ y_array_dump("VALUES2");
 \endcode
 
 \see y_array_grep(), y_array_concat(), y_array_pick_random()
-
 \author Floris Kraak
 */
 void y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
@@ -579,26 +578,31 @@ void y_array_filter( const char *pArrayName, const char *search, const char *res
 }
 
 
-// --------------------------------------------------------------------------------------------------
-// Merge two arrays into a single array. They have to be of the same length.
-//
-// The resulting items are each item from the left array appended to the item with
-// the same index in the right array, with an optional glue separator in the middle for
-// convenient re-splitting later.
-//
-// This thing is mostly created to facilitate situations where you have a list of links
-// but the titles of those links are really hard to capture in the same parameter. With this
-// function you can just look for them separately, merge the results, then pick one link based on
-// the title or something and then y_split() the resulting link back for further processing ..
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        lr_save_string("<apple><baloon><crayon><drum>", "THING");
-//        lr_save_string("<fruit><toy><art><music>", "CAT");
-//        y_array_save_param_list("THING", "<", ">", "THING2");    //    {THING2} contains "baloon" (no quotes)
-//        y_array_save_param_list("CAT", "<", ">", "CAT2");        //    {CAT2} contains "toy"
-//        y_array_merge("THING2", "CAT2", "=>", "RESULT");         //    {RESULT_2} now contains baloon=>toy
-//        y_array_dump("RESULT");
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*! Merge two parameter arrays into a single array. 
+
+\warning The source parameter arrays have to be of the same length.
+
+The resulting list contains each item from the left array appended to the item with the same index in the right array, with an optional glue separator in the middle for convenient re-splitting later.
+
+This thing is mostly created to facilitate situations where you have two lists of parameters that contain data that is related to each other.
+Example: Hyperlinks consist of a hyperlink and a title, and each of these is captured seperately. 
+Since the entries in these lists are closely correlated picking one involves correlating entries in the hyperlink list with the entries in the title list.
+
+With this function you can just glue the two lists together based on their index and continue processing from there.
+
+\b Example:
+\code
+lr_save_string("<apple><balloon><crayon><drum>", "THING");
+lr_save_string("<fruit><toy><art><music>", "CAT");
+y_array_save_param_list("THING", "<", ">", "THING2");    //    {THING2} contains "balloon" (no quotes)
+y_array_save_param_list("CAT", "<", ">", "CAT2");        //    {CAT2} contains "toy"
+y_array_merge("THING2", "CAT2", "=>", "RESULT");         //    {RESULT_2} now contains balloon=>toy
+y_array_dump("RESULT");
+\endcode
+
+\see y_array_grep(), y_array_concat(), y_array_pick_random()
+\author Floris Kraak
+*/
 int y_array_merge( const char *pArrayNameLeft, const char *pArrayNameRight, const char *separator, const char *resultArray)
 {
     int i = 1;
