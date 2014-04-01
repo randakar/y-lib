@@ -33,9 +33,9 @@ If you still use loadrunner versions earlier than 9 you may need to add the line
 
 \sa lr_paramarr_random(), lr_paramarr_idx()
 */
-#ifndef _Y_PARAM_ARRAY_C
+#ifndef _Y_PARAM_ARRAY_C_
 //! \cond include_protection
-#define _Y_PARAM_ARRAY_C
+#define _Y_PARAM_ARRAY_C_
 //! \endcond
 
 #include "vugen.h"
@@ -770,5 +770,4 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     free (shuffle);
 }
 
-// --------------------------------------------------------------------------------------------------
-#endif // _Y_PARAM_ARRAY_C
+#endif // _Y_PARAM_ARRAY_C_
