@@ -503,19 +503,24 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
     y_array_save_count(i, destArrayParam);
 }
 
+/*! \brief Search a parameter array fir a specific string and and build a new result array containing only parameters containing the string.
 
-// --------------------------------------------------------------------------------------------------
-// Search array 'pArrayName' for string 'search' and build a new result array
-// containing only parameters containing the string.
-//
-// Just call it 'grep' :P
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//     example usage:
-//        lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
-//        y_array_save_param_list("SOURCE", "<", ">", "VALUES");
-//        y_array_grep("VALUES", "r", "VALUES2");   // get all elements containing "r" (crayon and drum)
-//        y_array_dump("VALUES2");
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Let's just call it 'grep'. :)
+
+\param [in] pArrayName The name of the array to be searched.
+\param [in] The string to search for.
+\param [in] The name of the array to hold the values. Can be the same as the original parameter array.
+
+\b Example:
+\code
+lr_save_string("<apple><baloon><crayon><drum>", "SOURCE");
+y_array_save_param_list("SOURCE", "<", ">", "VALUES");
+y_array_grep("VALUES", "r", "VALUES2");   // get all elements containing "r" (crayon and drum)
+y_array_dump("VALUES2");
+\endcode
+
+\author Floris Kraak
+*/
 void y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
 {
     int i, j = 1;
@@ -537,7 +542,6 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
 
     y_array_save_count(j-1, resultArrayName);
 }
-// --------------------------------------------------------------------------------------------------
 
 
 
