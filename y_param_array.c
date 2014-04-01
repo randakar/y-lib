@@ -47,7 +47,7 @@ int _y_random_array_index = 0;
 
 /*! \def y_array_count
 \brief Determine the number of elements in the target parameter array.
-\param [in] param_array_name The name of the parameter array.
+\param [in] param_array The name of the parameter array.
 \return The number of elements in the array.
 
 \note Superseded by the LR 9 function lr_paramarr_len(). 
@@ -65,26 +65,26 @@ If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro ca
 \author Floris Kraak
 */
 #ifdef Y_COMPAT_LR_8
-int y_array_count( const char *param_array_name )
+int y_array_count( const char *param_array )
 {
     int result;
-    size_t size = strlen(pArrayName) +9; // 9 = strlen("{}_count") +1 -- the +1 is '\0'
+    size_t size = strlen(param_array) +9; // 9 = strlen("{}_count") +1 -- the +1 is '\0'
     char *tmp = y_mem_alloc(size);
 
-    snprintf(tmp , size, "{%s_count}" , param_array_name );
+    snprintf(tmp , size, "{%s_count}" , param_array );
     result = atoi(lr_eval_string(tmp));
     free(tmp);
     return result;
 }
 #else
-#define y_array_count( param_array_name ) lr_paramarr_len(param_array_name) 
+#define y_array_count( param_array ) lr_paramarr_len(param_array) 
 #endif // Y_COMPAT_LR_8
 
 
 /*! \def y_array_get
 \brief Fetch the content of a specific element from a parameter list based on index.
-\param [in] pArray The name of the parameter array.
-\param [in] pIndex The index of the chosen element.
+\param [in] source_param_array The name of the parameter array.
+\param [in] param_array_index The index of the chosen element.
 \return A char* pointer pointing to the content of the chosen element, if it exist. Will call lr_abort() if it doesn't.
 
 \note Superseded by the LR 9 function lr_paramarr_idx(). 
@@ -105,14 +105,14 @@ If Y_COMPAT_LR_8 is not defined this function is replaced with a simple macro ca
 \author Floris Kraak
 */
 #ifdef Y_COMPAT_LR_8
-char *y_array_get( const char *pArray, const int pIndex )
+char *y_array_get( const char *source_param_array, const int param_array_index )
 {
-    int size = y_array_count( pArray );
+    int size = y_array_count( source_param_array );
     char *tmp;
     char *result;
 
-    //lr_log_message("y_array_get(%s,%d)", pArray, pIndex ); 
-    if ( (pIndex > size) || (pIndex < 1) )
+    //lr_log_message("y_array_get(%s,%d)", source_param_array, param_array_index ); 
+    if ( (param_array_index > size) || (param_array_index < 1) )
     {
         lr_error_message("Index out of bounds");
         lr_abort();
@@ -121,9 +121,9 @@ char *y_array_get( const char *pArray, const int pIndex )
 
     // Calculate space requirements
     {
-        size_t bufsize = strlen(pArray)+y_int_strlen(pIndex)+4; // strlen() + size of index + {}_\0
+        size_t bufsize = strlen(source_param_array)+y_int_strlen(param_array_index)+4; // strlen() + size of index + {}_\0
         tmp = y_mem_alloc(bufsize); 
-        snprintf( tmp , bufsize, "{%s_%d}" , pArray , pIndex );
+        snprintf( tmp , bufsize, "{%s_%d}" , source_param_array , param_array_index );
     }
 
     result = lr_eval_string(tmp);
@@ -131,7 +131,7 @@ char *y_array_get( const char *pArray, const int pIndex )
     return result;
 }
 #else
-#define y_array_get( pArray, pIndex ) lr_paramarr_idx(pArray, pIndex)
+#define y_array_get( source_param_array, param_array_index ) lr_paramarr_idx(source_param_array, param_array_index)
 #endif // Y_COMPAT_LR_8
 
 
@@ -142,9 +142,9 @@ It's not ideal, but better than having your script break on this particular type
 
 \warning the return value of this function needs to be freed using lr_eval_string_ext_free().
 
-\param [in] pArray The name of the parameter array to get an element from.
-\param [in] pIndex The index number of the element to fetch.
-\returns The parameter value at index pIndex in the target parameter array.
+\param [in] source_param_array The name of the parameter array to get an element from.
+\param [in] param_array_index The index number of the element to fetch.
+\returns The parameter value at index param_array_index in the target parameter array.
 
 \warning the return value of this function needs to be freed using lr_eval_string_ext_free().
 
@@ -177,20 +177,20 @@ It's not ideal, but better than having your script break on this particular type
 \see y_array_get(), lr_paramarr_idx(), y_int_strlen(), lr_eval_string_ext()
 \author Floris Kraak
 */
-char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
+char* y_array_get_no_zeroes( const char *source_param_array, const int param_array_index )
 {
-    if ( (pIndex > y_array_count(pArray)) || (pIndex < 1) )
+    if ( (param_array_index > y_array_count(source_param_array)) || (param_array_index < 1) )
     {
-        lr_error_message("Parameter array %s does not exist or index %d out of bounds.", pArray, pIndex);
+        lr_error_message("Parameter array %s does not exist or index %d out of bounds.", source_param_array, param_array_index);
         lr_abort();
         return NULL;
     }
     else
     {
         // Calculate space requirements
-        size_t bufsize = strlen(pArray) + y_int_strlen(pIndex) +2; // strlen() + _\0
+        size_t bufsize = strlen(source_param_array) + y_int_strlen(param_array_index) +2; // strlen() + _\0
         char* tmp = y_mem_alloc(bufsize);
-        snprintf(tmp, bufsize, "%s_%d", pArray, pIndex );
+        snprintf(tmp, bufsize, "%s_%d", source_param_array, param_array_index );
         return y_get_cleansed_parameter(tmp, ' '); // <-- Might want to make that configurable..
     }
 }
@@ -200,8 +200,8 @@ char* y_array_get_no_zeroes( const char *pArray, const int pIndex )
 This does not update the size of the array.
 
 \param [in] value The value to store
-\param [in] pArray The name of the array to store the value in
-\param [in] pIndex The index of the element to be updated.
+\param [in] source_param_array The name of the array to store the value in
+\param [in] param_array_index The index of the element to be updated.
 
 \b Example:
 \code
@@ -214,9 +214,9 @@ lr_log_message("Value: %s", y_array_get("TAG", 2));    // print the value of {TA
 \see y_array_get(), y_array_count()
 \author Floris Kraak
 */
-void y_array_save(const char* value, const char* pArray, const int pIndex)
+void y_array_save(const char* value, const char* source_param_array, const int param_array_index)
 {
-    if(pArray == NULL)
+    if(source_param_array == NULL)
     {
         // In some cases calling this without a parameter name is entirely valid.
         // eg. y_split() on an array where you only need one half of the results.
@@ -224,9 +224,9 @@ void y_array_save(const char* value, const char* pArray, const int pIndex)
     }
     else
     {
-        int len = strlen(pArray) + y_int_strlen(pIndex) +2; // +2 = _\0
+        int len = strlen(source_param_array) + y_int_strlen(param_array_index) +2; // +2 = _\0
         char *result = y_mem_alloc(len);
-        snprintf(result, len, "%s_%d", pArray, pIndex);
+        snprintf(result, len, "%s_%d", source_param_array, param_array_index);
         lr_save_string(value, result);
         free(result);
     }
@@ -238,14 +238,14 @@ Updates the _count field of the chosen parameter array, changing the reported si
 \note This does not verify if the array in question actually contains that number of elements.
 
 \param [in] count The new size of the array.
-\param [in] pArray The target array to resize.
+\param [in] source_param_array The target array to resize.
 
 \see y_array_save()
 \author Floris Kraak
 */
-void y_array_save_count(const int count, const char *pArray)
+void y_array_save_count(const int count, const char *source_param_array)
 {
-    if( pArray == NULL )
+    if( source_param_array == NULL )
     {
         // In some cases calling this without a parameter name is entirely valid.
         // eg. y_split() on an array where you only need one half of the results.
@@ -253,10 +253,10 @@ void y_array_save_count(const int count, const char *pArray)
     }
     else 
     {
-        int len = strlen(pArray) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
+        int len = strlen(source_param_array) +7; // 7 = strlen("_count") +1, where +1 would be the '\0' byte at the end.
         char* result = y_mem_alloc(len);
 
-        snprintf(result, len, "%s_count", pArray);
+        snprintf(result, len, "%s_count", source_param_array);
         lr_save_int(count, result);
         free(result);
     }
@@ -266,7 +266,7 @@ void y_array_save_count(const int count, const char *pArray)
 
 \note This will call y_array_save_count() each time it is called. For bulk inserts this should not be used - the performance will suck.
 
-\param [in] pArray The target array to resize. If this array does not exist, a new one will be created.
+\param [in] source_param_array The target array to resize. If this array does not exist, a new one will be created.
 \param [in] value the value to add.
 
 \b Example:
@@ -279,11 +279,11 @@ y_array_add("TAG", "newValue");        // the added value (=last one) in {TAG} i
 \see y_array_save()
 \author Floris Kraak
 */
-void y_array_add( const char* pArray, const char* value )
+void y_array_add( const char* source_param_array, const char* value )
 {
-    int size = y_array_count(pArray) +1;
-    y_array_save(value, pArray, size);
-    y_array_save_count(size, pArray);
+    int size = y_array_count(source_param_array) +1;
+    y_array_save(value, source_param_array, size);
+    y_array_save_count(size, source_param_array);
 }
 
 /*! \brief Concatenate two arrays together and save the result into a third array.
@@ -302,15 +302,15 @@ y_array_concat("TAG1", "TAG2", "TAG");   // saves "TAG_1" to "TAG_26", "TAG_coun
 \see y_array_save()
 \author Floris Kraak
 */
-void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const char *resultArray)
+void y_array_concat(const char *source_param_array_first, const char *source_param_array_second, const char *result_array)
 {
-    int size_first = y_array_count(pArrayFirst);
-    int size_second = y_array_count(pArraySecond);
+    int size_first = y_array_count(source_param_array_first);
+    int size_second = y_array_count(source_param_array_second);
     int size_total = size_first + size_second;
     int i = 1;
     int j = 1;
 
-    //lr_log_message("y_array_concat(%s, %s, %s)", pArrayFirst, pArraySecond, resultArray);
+    //lr_log_message("y_array_concat(%s, %s, %s)", source_param_array_first, source_param_array_second, result_array);
     //lr_log_message("size_total = %d, i = %d", size_total, i);
 
     for(i=1; i <= size_total; i++)
@@ -320,18 +320,18 @@ void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const cha
 
         if( i <= size_first )
         {
-            value = y_array_get_no_zeroes(pArrayFirst,i);
+            value = y_array_get_no_zeroes(source_param_array_first,i);
         }
         else
         {
-            value = y_array_get_no_zeroes(pArraySecond,j);
+            value = y_array_get_no_zeroes(source_param_array_second,j);
             j++;
         }
 
-        y_array_save(value, resultArray, i);
+        y_array_save(value, result_array, i);
         lr_eval_string_ext_free(&value);
     }
-    y_array_save_count(size_total, resultArray);
+    y_array_save_count(size_total, result_array);
 }
 
 
@@ -340,7 +340,7 @@ void y_array_concat(const char *pArrayFirst, const char *pArraySecond, const cha
 Fetch the contents of a random element in a parameter array.
 As lr_paramarr_random(), but stores the rolled index number internally.
 
-\param [in] pArray The name of the parameter array to fetch a random value from.
+\param [in] source_param_array The name of the parameter array to fetch a random value from.
 \return The value of the randomly chosen parameter.
 
 \deprecated This doesn't really do anything that lr_paramarr_random() doesn't already do.
@@ -348,9 +348,9 @@ As lr_paramarr_random(), but stores the rolled index number internally.
 \sa lr_paramarr_random(), y_rand()
 \author Floris Kraak
 */
-char *y_array_get_random( const char *pArray )
+char *y_array_get_random( const char *source_param_array )
 {
-    int count = y_array_count( pArray );
+    int count = y_array_count( source_param_array );
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
@@ -358,7 +358,7 @@ char *y_array_get_random( const char *pArray )
     }
 
     _y_random_array_index= (y_rand() % count) +1;
-    return y_array_get(pArray, _y_random_array_index);
+    return y_array_get(source_param_array, _y_random_array_index);
 }
 
 
@@ -369,15 +369,15 @@ Stores the rolled index number internally.
 
 \warning the return value of this function needs to be freed using lr_eval_string_ext_free().
 
-\param [in] pArray The name of the parameter array to fetch a random value from.
+\param [in] source_param_array The name of the parameter array to fetch a random value from.
 \return The value of the randomly chosen parameter, minus any embedded \\x00 characters.
 
 \sa lr_paramarr_random(), y_array_get_random(), y_rand()
 \author Floris Kraak
 */
-char *y_array_get_random_no_zeroes( const char *pArray )
+char *y_array_get_random_no_zeroes( const char *source_param_array )
 {
-    int count = y_array_count( pArray );
+    int count = y_array_count( source_param_array );
     if( count < 1 )
     {
         lr_log_message("No elements found in parameter array!");
@@ -385,7 +385,7 @@ char *y_array_get_random_no_zeroes( const char *pArray )
     }
 
     _y_random_array_index = (y_rand() % count) +1;
-    return y_array_get_no_zeroes(pArray, _y_random_array_index);
+    return y_array_get_no_zeroes(source_param_array, _y_random_array_index);
 }
 
 
@@ -393,24 +393,24 @@ char *y_array_get_random_no_zeroes( const char *pArray )
 
 Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes, and saves it as a parameter with the same name.
 
-\param [in] pArray The name of the parameter array to fetch a random value from.
+\param [in] source_param_array The name of the parameter array to fetch a random value from.
 \return The index number of the randomly chosen parameter.
 
 \sa lr_paramarr_random(), y_array_get_random_no_zeroes(), y_rand()
 \author Floris Kraak
 */
-int y_array_pick_random( const char *pArray )
+int y_array_pick_random( const char *source_param_array )
 {
-    if(y_array_count(pArray))
+    if(y_array_count(source_param_array))
     {
-        char *result = y_array_get_random_no_zeroes(pArray);
-        lr_save_string(result, pArray);
+        char *result = y_array_get_random_no_zeroes(source_param_array);
+        lr_save_string(result, source_param_array);
         lr_eval_string_ext_free(&result);
         return _y_random_array_index;
     }
     else
     {
-        lr_save_string("", pArray);
+        lr_save_string("", source_param_array);
         //lr_output_message("y_array_pick_random(): Unknown parameter list");
         return 0;
     }
@@ -418,7 +418,7 @@ int y_array_pick_random( const char *pArray )
 
 /*! \brief Dump the contents of a list of saved parameters to standard output (the run log)
 
-\param [in] pArrayName The name of the array to log.
+\param [in] source_param_array The name of the array to log.
 
 \b Example:
 \code
@@ -428,15 +428,15 @@ y_array_dump("TAG"); // Prints the content of the parameter array named "TAG" to
 \endcode
 \author Raymond de Jongh
 */
-void y_array_dump( const char *pArrayName )
+void y_array_dump( const char *source_param_array )
 {
     int i;
     int count;
 
-    for ( i=1 ; i <= y_array_count(pArrayName); i++ )
+    for ( i=1 ; i <= y_array_count(source_param_array); i++ )
     {
-        char *msg = y_array_get_no_zeroes(pArrayName, i);
-        lr_output_message("{%s_%d} = %s" , pArrayName, i, msg);
+        char *msg = y_array_get_no_zeroes(source_param_array, i);
+        lr_output_message("{%s_%d} = %s" , source_param_array, i, msg);
         lr_eval_string_ext_free(&msg);
     }
 }
@@ -467,7 +467,7 @@ Using this function you can save the HTML for the entire dropdown box in a param
 \param [in] sourceParam The name of a single parameter containing a list of elements. See dropdown example, above.
 \param [in] LB The left boundary of the values you wish to save into a list. Example: `<option>`
 \param [in] RB The right boundary of the values you wish to save into a list. Example: `</option>`
-\param [in] destArrayParam The name of the parameter array to save the values into.
+\param [in] result_array The name of the parameter array to save the values into.
 
 \b Example:
 
@@ -479,7 +479,7 @@ y_array_dump("VALUES");    // {VALUES_1} contains "water" (no quotes)    {VALUES
 
 \author Floris Kraak
 */
-void y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *destArrayParam)
+void y_array_save_param_list(const char *sourceParam, const char *LB, const char *RB, const char *result_array)
 {
     int i = 0;
     char *source = y_get_parameter(sourceParam);
@@ -496,20 +496,20 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
         buffer[end - buffer] = '\0';
 
         i++;
-        y_array_save(next+strlen(LB), destArrayParam, i);
+        y_array_save(next+strlen(LB), result_array, i);
         next = end + strlen(RB);
     }
     free(buffer);
-    y_array_save_count(i, destArrayParam);
+    y_array_save_count(i, result_array);
 }
 
 /*! \brief Search a parameter array for a specific text and build a new array containing only parameters containing that text.
 
 Let's just call it 'grep'. :)
 
-\param [in] pArrayName The name of the array to be searched.
+\param [in] source_param_array The name of the array to be searched.
 \param [in] search The string to search for.
-\param [in] resultArrayName The name of the array to hold the resulting values. Can be the same as the original parameter array.
+\param [in] result_array The name of the array to hold the resulting values. Can be the same as the original parameter array.
 
 \b Example:
 \code
@@ -522,31 +522,31 @@ y_array_dump("VALUES2");
 \see y_array_filter(), y_array_concat(), y_array_pick_random()
 \author Floris Kraak
 */
-void y_array_grep( const char *pArrayName, const char *search, const char *resultArrayName)
+void y_array_grep( const char *source_param_array, const char *search, const char *result_array)
 {
     int i, j = 1;
     char *item;
-    int size = y_array_count(pArrayName);
+    int size = y_array_count(source_param_array);
 
     for( i=1; i <= size; i++)
     {
-        item = y_array_get_no_zeroes(pArrayName, i);
+        item = y_array_get_no_zeroes(source_param_array, i);
         if( strstr(item, search) )
         {
-            y_array_save(item, resultArrayName, j++);
+            y_array_save(item, result_array, j++);
         }
         lr_eval_string_ext_free(&item);
     }
-    y_array_save_count(j-1, resultArrayName);
+    y_array_save_count(j-1, result_array);
 }
 
 /*! \brief Search a parameter array for a specific string and and build a new result array containing only parameters NOT containing the string.
 
 As y_array_grep(), but reversed.
 
-\param [in] pArrayName The name of the array to be searched.
+\param [in] source_param_array The name of the array to be searched.
 \param [in] search The string to search for.
-\param [in] resultArrayName The name of the array to hold the resulting values. Can be the same as the original parameter array.
+\param [in] result_array The name of the array to hold the resulting values. Can be the same as the original parameter array.
 
 \b Example:
 \code
@@ -559,22 +559,22 @@ y_array_dump("VALUES2");
 \see y_array_grep(), y_array_concat(), y_array_pick_random()
 \author Floris Kraak
 */
-void y_array_filter( const char *pArrayName, const char *search, const char *resultArrayName)
+void y_array_filter( const char *source_param_array, const char *search, const char *result_array)
 {
     int i, j = 1;
     char *item;
-    int size = y_array_count(pArrayName);
+    int size = y_array_count(source_param_array);
 
     for( i=1; i <= size; i++)
     {
-        item = y_array_get_no_zeroes(pArrayName, i); // Some pages contain a null byte - \x00 in the input. Ugh.
+        item = y_array_get_no_zeroes(source_param_array, i); // Some pages contain a null byte - \x00 in the input. Ugh.
         if( strstr(item, search) == NULL )
         {
-            y_array_save(item, resultArrayName, j++);
+            y_array_save(item, result_array, j++);
         }
         lr_eval_string_ext_free(&item);
     }
-    y_array_save_count(j-1, resultArrayName);
+    y_array_save_count(j-1, result_array);
 }
 
 
@@ -590,10 +590,10 @@ Since the entries in these lists are closely correlated picking one involves cor
 
 With this function you can just glue the two lists together based on their index and continue processing from there.
 
-\param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations.
-\param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations.
+\param [in] param_array_left The parameter array to use for the lefthand side of the concatenations.
+\param [in] param_array_right The parameter array to use for the righthand side of the concatenations.
 \param [in] separator A fixed string to be used as a seperator between the two values.
-\param [in] resultArray The name of the array to hold the resulting values. Can be the same as either the left or the righthand parameter array.
+\param [in] result_array The name of the array to hold the resulting values. Can be the same as either the left or the righthand parameter array.
 
 
 \b Example:
@@ -609,36 +609,36 @@ y_array_dump("RESULT");
 \see y_array_split(), y_array_concat(), y_array_pick_random()
 \author Floris Kraak
 */
-int y_array_merge(const char *pArrayNameLeft, const char *pArrayNameRight, const char *separator, const char *resultArray)
+int y_array_merge(const char *param_array_left, const char *param_array_right, const char *separator, const char *result_array)
 {
     int i = 1;
     char *param;
-    int length = y_array_count(pArrayNameLeft);
+    int length = y_array_count(param_array_left);
     int seperator_size = strlen(separator);
 
-    if( length != y_array_count(pArrayNameRight) )
+    if( length != y_array_count(param_array_right) )
     {
         // If the sizes aren't the same there's a good chance numbers won't line up on both sides.
         // We definitely don't want to end up with records merged that don't actually correspond to each other!
-        lr_error_message("Unable to merge arrays %s and %s - sizes unequal!", pArrayNameLeft, pArrayNameRight);
+        lr_error_message("Unable to merge arrays %s and %s - sizes unequal!", param_array_left, param_array_right);
         lr_abort();
         return 0;
     }
 
     for( i=1; i <= length; i++)
     {
-        char *left = y_array_get_no_zeroes(pArrayNameLeft, i);
-        char *right = y_array_get_no_zeroes(pArrayNameRight, i);
+        char *left = y_array_get_no_zeroes(param_array_left, i);
+        char *right = y_array_get_no_zeroes(param_array_right, i);
         size_t size = strlen(left)+seperator_size+strlen(right)+1;
         char *result = y_mem_alloc(size);
 
         snprintf(result, size, "%s%s%s", left, separator, right);
         lr_eval_string_ext_free(&left);
         lr_eval_string_ext_free(&right);
-        y_array_save(result, resultArray, i);
+        y_array_save(result, result_array, i);
         free(result);
     }
-    y_array_save_count(i-1, resultArray);
+    y_array_save_count(i-1, result_array);
     return 1;
 }
 
@@ -651,24 +651,24 @@ This is the reverse of y_array_merge(). It will examine each parameter in turn a
 
 \note Using the same array for the left and right hand side result arrays will result in one side overwriting the values from the other side.
 
-\param [in] pInputArray The name of the array holding the values to be split.
+\param [in] source_param_array The name of the array holding the values to be split.
 \param [in] separator A fixed string to be used as a seperator between the two values.
-\param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array.
-\param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.
+\param [in] param_array_left The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array.
+\param [in] param_array_right The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.
 
 \see y_array_merge(), y_array_concat(), y_array_pick_random(), y_split_str()
 \author Floris Kraak
 */
-void y_array_split(const char *pInputArray, const char *separator, const char *pArrayNameLeft, const char *pArrayNameRight)
+void y_array_split(const char *source_param_array, const char *separator, const char *param_array_left, const char *param_array_right)
 {
     int i = 1;
-    int size = y_array_count(pInputArray);
+    int size = y_array_count(source_param_array);
 
-    //lr_log_message("y_array_split(%s, %s, %s, %s)", pInputArray, separator,pArrayNameLeft, pArrayNameRight);
+    //lr_log_message("y_array_split(%s, %s, %s, %s)", source_param_array, separator,param_array_left, param_array_right);
 
     for( i=1; i <= size; i++)
     {
-        char *item = y_array_get_no_zeroes(pInputArray, i);
+        char *item = y_array_get_no_zeroes(source_param_array, i);
         int len = strlen(item);
         char *left = y_mem_alloc(len);
         char *right = y_mem_alloc(len);
@@ -679,14 +679,14 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
         y_split_str(item, separator, left, right);
         lr_eval_string_ext_free(&item);
 
-        y_array_save(left, pArrayNameLeft, i);
+        y_array_save(left, param_array_left, i);
         free(left);
-        y_array_save(right, pArrayNameRight, i);
+        y_array_save(right, param_array_right, i);
         free(right);
     }
 
-    y_array_save_count(i-1,pArrayNameLeft);
-    y_array_save_count(i-1,pArrayNameRight);
+    y_array_save_count(i-1,param_array_left);
+    y_array_save_count(i-1,param_array_right);
 }
 
 
@@ -695,8 +695,8 @@ void y_array_split(const char *pInputArray, const char *separator, const char *p
 \warning Unlike most of the parameter array functions, the source parameter array CANNOT be the same as the result parameter array.
 \note y_array_pick_random() is usually better and much faster than using this function. Only use it if you cannot allow the code to repeatedly pick the same element.
 
-\param [in] source_param_array_name The name of the array holding the values to be shuffled.
-\param [in] dest_param_array_name The parameter array holding the shuffled result. This array must NOT have the same name as the original array.
+\param [in] source_param_array The name of the array holding the values to be shuffled.
+\param [in] result_array The parameter array holding the shuffled result. This array must NOT have the same name as the original array.
 
 \b Example:
 \code
@@ -712,19 +712,19 @@ y_array_dump("SHUFFLE_TAG");
 \see y_array_pick_random()
 \author Raymond de Jongh, Floris Kraak
 */
-void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
+void y_array_shuffle(char *source_param_array, char *result_array)
 {
     int *shuffle;
     int source_length, i;
 
-    if (strcmp(source_param_array_name, dest_param_array_name) == 0)
+    if (strcmp(source_param_array, result_array) == 0)
     {
         lr_error_message("Source and Destination parameter name can not be equal!");
         lr_abort();
         return;
     }
 
-    source_length = y_array_count(source_param_array_name);
+    source_length = y_array_count(source_param_array);
     if(source_length < 1)
     {
         lr_error_message("Cannot shuffle empty parameter arrays!");
@@ -734,8 +734,8 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     else if(source_length == 1)
     {
         lr_log_message("Warning: Cannot shuffle a list with just 1 entry.");
-        y_array_save( y_array_get(source_param_array_name, 1), dest_param_array_name, 1);
-        y_array_save_count(1, dest_param_array_name);
+        y_array_save( y_array_get(source_param_array, 1), result_array, 1);
+        y_array_save_count(1, result_array);
         return;
     }
 
@@ -763,10 +763,10 @@ void y_array_shuffle(char *source_param_array_name, char *dest_param_array_name)
     for(i=1; i<=source_length; i++)
     {
         y_array_save(
-           y_array_get(source_param_array_name, shuffle[i]),
-           dest_param_array_name, i);
+           y_array_get(source_param_array, shuffle[i]),
+           result_array, i);
     }
-    y_array_save_count(--i, dest_param_array_name); // We can probably just use the source_length here instead.
+    y_array_save_count(--i, result_array); // We can probably just use the source_length here instead.
     free (shuffle);
 }
 
