@@ -508,8 +508,8 @@ void y_array_save_param_list(const char *sourceParam, const char *LB, const char
 Let's just call it 'grep'. :)
 
 \param [in] pArrayName The name of the array to be searched.
-\param [in] The string to search for.
-\param [in] The name of the array to hold the values. Can be the same as the original parameter array.
+\param [in] search The string to search for.
+\param [in] resultArrayName The name of the array to hold the values. Can be the same as the original parameter array.
 
 \b Example:
 \code
@@ -527,8 +527,6 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
     char *item;
     int size = y_array_count(pArrayName);
 
-    //lr_log_message("y_array_grep(%s, %s, %s)", pArrayName, search, resultArrayName);
-    //y_log_turn_off();
     for( i=1; i <= size; i++)
     {
         item = y_array_get_no_zeroes(pArrayName, i);
@@ -538,12 +536,8 @@ void y_array_grep( const char *pArrayName, const char *search, const char *resul
         }
         lr_eval_string_ext_free(&item);
     }
-    //y_log_restore();
-
     y_array_save_count(j-1, resultArrayName);
 }
-
-
 
 
 
