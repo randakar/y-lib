@@ -592,7 +592,7 @@ With this function you can just glue the two lists together based on their index
 
 \param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations.
 \param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations.
-\param [in] seperator A fixed string to be used as a seperator between the two values.
+\param [in] separator A fixed string to be used as a seperator between the two values.
 \param [in] resultArray The name of the array to hold the resulting values. Can be the same as either the left or the righthand parameter array.
 
 
@@ -650,7 +650,7 @@ int y_array_merge(const char *pArrayNameLeft, const char *pArrayNameRight, const
 This is the reverse of y_array_merge(). It will examine each parameter in turn and save each value into two separate parameter lists.
 
 \param [in] pInputArray The name of the array holding the values to be split.
-\param [in] seperator A fixed string to be used as a seperator between the two values.
+\param [in] separator A fixed string to be used as a seperator between the two values.
 \param [in] pArrayNameLeft The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array.
 \param [in] pArrayNameRight The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.
 
