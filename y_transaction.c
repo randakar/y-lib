@@ -22,9 +22,38 @@
 #define _Y_TRANSACTION_C_
 //! \endcond
 
+
+/*! 
+\file y_transaction.c
+\brief ylib transaction library.
+
+Extend your script with the following features:
+* Automatic transaction naming and numbering.
+* Transaction triggers: Code to be run when a transaction starts or stops.
+* Custom transaction implementations; Add your own logging or time measurements to transactions.
+
+\b Usage:
+Include this file (or y_lib.c) in your script, call y_start_transaction() and y_end_transaction() everywhere you normally call the loadrunner variants.
+Use search-and-replace to convert existing scripts. Add calls to y_start_transaction_block() and y_end_transaction_block() to set a transaction prefix.
+
+== Transaction naming ==
+Y-lib transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'.
+Sub transaction names take the form:   '{transaction_prefix}_{transaction_nr}_{sub_transaction_nr}_{step_name}'.
+Calling y_start_transaction_block() starts a block of transactions that all use the name of the block as the transaction prefix.
+
+Optionally the vuser group name can be added to the transaction names as well. This allows differentiation between different types of users that are all running the same script otherwise.
+
+== Triggers ==
+A trigger is a function that will execute every time an ylib transaction starts or stops. You can define seperate triggers for transaction start, stop, and the sub transaction start and stop.
+The return value of the trigger is used to determine whether the transaction should pass or fail, in the case of end transaction triggers.
+
+== Custom transaction implementations ==
+Ylib can be configured to run your own custom transaction start/stop implementation instead of the usual loadrunner functions whenever a transaction starts or stops.
+This can be used for a variëty of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops.
+
+*/
+
 //
-// Transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'
-// This file helps do that automatically.
 //
 // 
 /* 
@@ -97,7 +126,6 @@ typedef int (y_trans_start_impl_func)(char* trans_name);
 typedef int (y_trans_end_impl_func)(char* trans_name, int status);
 y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
 y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
-
 
 // Functions
 
