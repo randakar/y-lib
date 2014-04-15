@@ -396,17 +396,9 @@ free(test);
 */
 char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
-    char *result;
     char *src = y_get_parameter_or_null(src_param);
     //lr_log_message("Copying source data: %s", src);
-    if(src == NULL)
-        return NULL;
-
-    result = y_mem_alloc( strlen(src) +1);
-    strcpy(result, src);
-
-    return result;
-    //lr_log_message("Copied result: %s", result);
+	return src ? strdup(src): NULL;
 }
 
 //! \cond function_removal
