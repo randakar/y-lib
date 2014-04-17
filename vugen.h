@@ -11,9 +11,9 @@
  * better than the HP LoadRunner Online Function Reference and more.
  *
  * \b Usage: Automatically included as part of y-lib. To use this stand-alone add vugen.h to the
- * script and add the folowing to globals.h or vuser_init.c:
+ * script and add the following to globals.h or vuser_init.c:
  * \code #include "vugen.h" \endcode
- * Or: add to include-directory and add the #include to lhrun.h on all Vugen machines and load generators. \n
+ * Or: add to include-directory and add the \#include to lhrun.h on all Vugen machines and load generators. \n
  * Initial version 2012-03-27, last update 2014-01-09
  * \author A.U. Luyer
  * \warning lrun.h contains: \code #define size_t int \endcode causing size_t to be defined as \b signed integer, which is incorrect.
@@ -32,8 +32,7 @@
 //! \brief Documented at http://www.cplusplus.com/reference/cstdio/snprintf/. \n
 //! This function was introduced by the latest revision of the C++ standard (2011). Older compilers may not support it.
 int snprintf(char *buffer, size_t n, const char *format_string, ...);
-//! \brief Documented at http://www.cplusplus.com/reference/cstdio/sprintf/. \n
-//! You should prefer snprintf over sprintf.
+//! \brief Documented at http://www.cplusplus.com/reference/cstdio/sprintf/. \n You should prefer ::snprintf over sprintf.
 int sprintf(char *buffer, const char *format_string, ...); 
 //! \brief Documented at http://www.cplusplus.com/reference/cstdio/sscanf/.
 int sscanf(const char *buffer, const char *format_string, ...);
@@ -55,6 +54,8 @@ char *strncat(char *to_string, const char *from_string, size_t n);
 int strncmp(const char *string1, const char *string2, size_t n);
 //! \brief Documented at http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.htm.
 int strnicmp(const char *string1, const char *string2, size_t num);
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/strncpy/.
+char *strncpy(char *destination, const char *source, size_t num);
 //! \brief Documented at http://www.cplusplus.com/reference/cstring/strrchr/.
 char *strrchr(const char *string, int c);
 //! \brief Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strset.html .
@@ -95,14 +96,14 @@ double strtod(const char *str, char **endptr);
 /*!
  * \def strcpy
  * \brief Force a compile time error when strcpy() is used. \n
- * The use of strcpy is banned because in practice strcpy is only used by novice coders doing unnecessary duplicating. \n
- * Evaluate your coding solution and avoid duplication. If you must, use the safer strncpy or snprintf.
+ * The use of strcpy is banned because in practice strcpy is only used by novice coders doing unnecessary duplicating.
+ * (Typically when trying to avoid using pointers when actually using pointers.) \n
+ * Evaluate your coding solution and avoid duplication. If you must, use the safer ::strncpy or ::snprintf.
  * 
  * \note Original declaration: char *strcpy(char *dest, const char *source);
  !*/
-#define strcpy(dest, source) 0_DO_NOT_USE_strcpy_DUPLICATION_IS_NOT_REQUIRED 
+#define strcpy(dest, source) 0_DO_NOT_USE_strcpy_DUPLICATION_IS_NOT_REQUIRED
 //! \}
-
 
 /* ctype.h -- http://www.acm.uiuc.edu/webmonkeys/book/c_guide/ */
 /*! \defgroup char Standard C character functions
@@ -145,9 +146,8 @@ int toupper(int character);
 //! \brief Documented at http://www.cplusplus.com/reference/cstring/memchr/.
 void *memchr(const void *s, int c, size_t n);
 //! \brief Documented at http://www.cplusplus.com/reference/cstring/memcmp/.
-//! \note The operation of memcpy is not guaranteed on overlap, use memmove instead
 int memcmp(const void *s1, const void *s2, size_t n);
-//! \brief Documented at http://www.cplusplus.com/reference/cstring/memcpy/.
+//! \brief Documented at http://www.cplusplus.com/reference/cstring/memcpy/. \note The operation of memcpy is not guaranteed on overlap, use ::memmove instead
 void *memcpy(void *dest, const void *src, size_t n);
 //! \brief Documented at http://www.cplusplus.com/reference/cstring/memmove/.
 void *memmove(void *dest, const void *src, size_t n);
@@ -161,7 +161,7 @@ void *calloc(size_t num_elems, size_t elem_size);
 void free(void *mem_address);
 //! \brief Documented at http://www.cplusplus.com/reference/cstdlib/malloc/.
 void *malloc(size_t num_bytes);
-//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/realloc/. \note realloc(NULL, size) === malloc(size)
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/realloc/. \note ::{realloc}(NULL, size) === ::{malloc}(size)
 void *realloc(void *mem_address, size_t size);
 //! \}
 
@@ -170,10 +170,11 @@ void *realloc(void *mem_address, size_t size);
  * \brief Standard C structures and functions to handle date and time (defined in ctime.h)
  * \{
 */
+//! \brief Type time_t can hold a Unix timestamp
 typedef long time_t;
 
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/tm/. \n
-//! Values outside of valid ranges can be used to calculate a new date/time using mktime. E.g. tm_mday = 0 means last day of previous month.
+//! Values outside of valid ranges can be used to calculate a new date/time using ::mktime. E.g. tm_mday = 0 means last day of previous month.
 struct tm {
 	//! \brief seconds after the minute - [0,61] (or [0,59] when \a leap \a seconds are not supported)
     int tm_sec;
@@ -188,7 +189,7 @@ struct tm {
 	//! \brief years since 1900
     int tm_year;
  	//! \brief days since Sunday - [0,6]
-   int tm_wday;
+    int tm_wday;
 	//! \brief days since January 1 - [0,365]
     int tm_yday;
 	//! \brief daylight savings time flag (>0 in effect, 0 not in effect, <0 unknown)
@@ -216,12 +217,16 @@ struct tm *localtime(const time_t *timer);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/tzset/.
 void tzset(void);
 
-//! \brief Used by ftime. Defined as _timeb (instead of timeb) just as in the on-line Help
+//! \brief Used by ::ftime. Defined as _timeb (instead of timeb) just as in the on-line Help
 //! \note On Windows accurate to 1/64 of a second (15.6 msec).
-struct _timeb { 
+struct _timeb {
+	//! \brief Time, in seconds, since the Unix Epoch, 1 January 1970 00:00:00 Coordinated Universal Time (UTC).
     time_t time; 
+	//! \brief Milliseconds. Actual accuracy may be lower.
     unsigned short millitm; 
+	//! \brief Difference in \b minutes of the timezone from UTC.
     short timezone; 
+	//! \brief Nonzero if in daylight savings time.
     short dstflag; 
 };
 
@@ -276,8 +281,12 @@ char *tmpnam(char *str);
 //! \brief Documented at http://www.cplusplus.com/reference/cstdio/setvbuf/.
 int setvbuf(long file_pointer, char * buffer, int mode, size_t size);
 
+#ifndef FILENAME_MAX
 #define FILENAME_MAX 1024
+#endif
+#ifndef L_tmpnam
 #define L_tmpnam FILENAME_MAX
+#endif
 
 //! \brief set file offset to offset
 #ifndef SEEK_SET
@@ -322,7 +331,7 @@ int putw(int word, long file_pointer);
 char *getenv(const char *varname);
 //! \brief Documented at http://www.cplusplus.com/reference/cstdlib/putenv/.
 int putenv(const char *envstring);
-//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/system/. The popen function is more useful
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/system/. \n The ::popen function is more useful in LR scripts
 int system(const char *string);
 
 /***** File system functions *****/
@@ -363,27 +372,45 @@ int rmdir(const char *path);
 //! \brief Documented at http://www.cplusplus.com/reference/clocale/setlocale/.
 char *setlocale(int category, const char *locale);
 
-//! \brief returned by localeconv. Documented at http://www.cplusplus.com/reference/clocale/lconv/.
+//! \brief Returned by ::localeconv. Documented at http://www.cplusplus.com/reference/clocale/lconv/.
 struct lconv {
+	//! \brief Decimal-point separator used for non-monetary quantities.
     char *decimal_point;
+	//! \brief Separators used to delimit groups of digits to the left of the decimal point for non-monetary quantities.
     char *thousands_sep;
+	//! \brief Specifies the amount of digits that form each of the groups to be separated by thousands_sep separator for non-monetary quantities.
     char *grouping;
+	//! \brief International currency symbol. This is formed by the three-letter ISO-4217 entry code for the currency.
     char *int_curr_symbol;
+	//! \brief Local currency symbol.
     char *currency_symbol;
+	//! \brief Decimal-point separator used for monetary quantities.
     char *mon_decimal_point;
+	//! \brief Separators used to delimit groups of digits to the left of the decimal point for monetary quantities.
     char *mon_thousands_sep;
+	//! \brief Specifies the amount of digits that form each of the groups to be separated by mon_thousands_sep separator for monetary quantities.
     char *mon_grouping;
+	//! \brief Sign to be used for positive or zero monetary quantities.
     char *positive_sign;
+	//! \brief Sign to be used for negative monetary quantities.
     char *negative_sign;
+	//! \brief Amount of fractional digits to the right of the decimal point for monetary quantities in the international format
     char int_frac_digits;
+	//! \brief Amount of fractional digits to the right of the decimal point for monetary quantities in the local format.
     char frac_digits;
+	//! \brief Boolean whether the currency symbol should precede positive or zero monetary quantities.
     char p_cs_precedes;
+	//! \brief Boolean whether the currency symbol should precede negative monetary quantities.
     char p_sep_by_space;
+	//! \brief Boolean whether a space should appear between the currency symbol and positive or zero monetary quantities.
     char n_cs_precedes;
+	//! \brief Boolean whether a space should appear between the currency symbol and negative monetary quantities.
     char n_sep_by_space;
+	//! \brief Position of the sign for positive or zero monetary quantities.
     char p_sign_posn;
+	//! \brief Position of the sign for negative monetary quantities.
     char n_sign_posn;
-/*  
+/*
 The members below are not yet supported (not complying with the C standard of 1999 or later).
     char int_n_cs_precedes;
     char int_n_sep_by_space;
@@ -398,26 +425,45 @@ struct lconv *localeconv(void);
 //! \}
 
 /***** Mathematic Functions *****/
-
+/*! \defgroup math Standard C mathematic functions
+ * \brief Mathematic functions (defined in cmath.h)
+ * \{
+*/ 
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/abs/.
 int abs(int n);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/fabs/.
 double fabs(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/ceil/.
 double ceil(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/floor/.
 double floor(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/fmod/.
 double fmod(double numerator, double denominator);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/modf/.
 double modf(double x, double *intpart);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/exp/.
 double exp(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/sqrt/.
 double sqrt(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/pow/.
 double pow(double base, double exponent);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/log/.
 double log(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/log10/.
 double log10(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/sin/.
 double sin(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/cos/.
 double cos(double x);
+//! \}
 
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/rand/.
 int rand(void);
+//! \brief Documented at http://www.cplusplus.com/reference/cstdlib/srand/.
 int srand(unsigned int seed);
 
 /***** Windows API Functions *****/
-//! \brief Windows API uninterruptable sleep in LR, better to use lr_force_think_time() or lr_usleep() instead.
+//! \brief Windows API uninterruptable sleep in LR, better to use \b lr_force_think_time() or \b lr_usleep() instead.
 void sleep(DWORD dwMilliseconds);
 /* alternative: #define sleep(msec) lr_force_think_time(msec / 1000.) */
 
