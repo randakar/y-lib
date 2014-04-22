@@ -33,12 +33,17 @@ This file contains two types of functions:
 
 #include "vugen.h"
 
+/*! \defgroup core Core of Ylib
+ * \{
+*/
 //! The virtual user id, as reported by lr_whoami(). \sa y_setup()
 int y_virtual_user_id = 0;
 //! The virtual user group, as reported by lr_whoami(). \sa y_setup()
 char* y_virtual_user_group = NULL;
 //! The virtual user scid, as reported by lr_whoami(). \sa y_setup()
 int y_scid;
+//! Boolean, true when running in Vugen. Not able to do this in pre-compile phase. \sa y_setup()
+int y_is_vugen_run_bool = 0;
 
 
 /*!
@@ -55,7 +60,7 @@ We define it here mostly for documentation, as we do not have access to the head
 \def Y_RAND_MAX 
 \brief Alternate RAND_MAX constant for use with y_rand.
 
-y_rand() provides for a far bigger ceiling to the random number generator: 31 bits, instead of 15.
+y_rand() provides for a far bigger ceiling to the random number generator: 30 bits, instead of 15.
 \author Floris Kraak
 */
 #define Y_RAND_MAX 1073741823
@@ -87,18 +92,24 @@ void y_setup()
 
     // Global variables, handle with care
     lr_whoami(&y_virtual_user_id, &y_virtual_user_group, &y_scid);
+	y_is_vugen_run_bool = y_virtual_user_id == -1;
+	
+	srand(time(NULL) + y_virtual_user_id + ((int)y_virtual_user_group) & 1023);
 }
+
+//! \brief Hook to ensure that ::y_setup() is called at start-up. This allows many performance improvements in the library.
+#define vuser_init() vuser_init() { y_setup(); return y_vuser_init(); } y_vuser_init()
 
 /*!
 \brief Test if this script is running in vugen (debug mode)
 \return 1 if running in vugen, zero otherwise.
 
 Recommended practice:
-Use this to create script debugging code that will hit all of the functional code inside the script when run in vugen, 
-but the full (semi-randomized) realistic scenario when it runs as part of a loadtest.
+Use this to create script debugging code that will hit all of the functional code inside the script when run in Vugen, 
+but the full (semi-randomized) realistic scenario when it runs as part of a load test.
 
-\note This relies on the y_virtual_user_id variable as an indication of where the script is running.
-Inside vugen that variable should be -1; Otherwise, it contains a non-negative number.
+\note This relies on the y_virtual_user_id_bool variable as an indication of where the script is running.
+Inside Vugen that variable should be -1; Otherwise, it contains a non-negative number.
 This can be manipulated to your advantage, but may break if HP ever changes that convention.
 
 \b Example:
@@ -123,16 +134,11 @@ Action()
 \endcode
 \sa y_setup()
 */
-int y_is_vugen_run()
-{
-    y_setup();
-    return (y_virtual_user_id == -1);
-}
+#define y_is_vugen_run() y_is_vugen_run_bool
 
-
-/*! \brief Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint).
-Seeds the random number generator - but only the first time this function is called.
-\return Random number (integer) between 0 and Y_RAND_MAX: 31-bit maxint - slightly over 1 billion.
+/*! \brief Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint).
+\return Random number (integer) between 0 and Y_RAND_MAX: 30-bit maxint - slightly over 1 billion.
+\note Superseded by ::y_drand
 
 \b Example:
 \code
@@ -140,61 +146,47 @@ int random_number;
 random_number=y_rand();
 \endcode
 \author Floris Kraak
+\deprecated Superseded by ::y_drand
 */
-long y_rand()
+long y_rand(void)
 {
-   // Have we initialized the random seed yet?
-   static int _y_random_seed_initialized = 0;
+   // Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits
+   // of randomness that a long affords us we are going to roll multiple numbers and basically 
+   // concatenate them together using bit shifts.
+   // 
+   // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
+   // because it will break people's expectations of what rand() does.)
+   return rand() << 15 | rand();
+}
 
-   if(!_y_random_seed_initialized)
-   {
-      int seed, tm, rnd;
-      y_setup();
+/*! \brief Generate a random number between 0 <= y_drand() < 1. This supersedes y_rand(). \n
+Better distribution of the random numbers over the range than by using y_rand() with modulo (%) -- thus no skewed results.
+Equal to Math.random in Java and JavaScript, Random.NextDouble in C#, etc.
 
-      // Seed the random number generator for later use.
-      // To make it random enough for our purposes mix in the vuser id and the adress of the vuser group name.
-      // In case the script itself already initialized the random number generator, use a random number from 
-      // there as well.
+\return Random number between 0 and 1 (exclusive).
+Accuracy: 9 digits (30 bits).
 
-      tm = (int)time(NULL);
-      rnd = rand();
-
-      //lr_log_message("Seed values - time: %d, y_virtual_user_id: %d, y_virtual_user_group: %d, rand: %d", tm, y_virtual_user_id, (int)y_virtual_user_group, rnd);
-      seed = tm%10000 + y_virtual_user_id + ((int)y_virtual_user_group)%1000 + rnd%1000;
-      //lr_log_message("Initialising random seed: %d", seed);
-      srand( seed );
-      _y_random_seed_initialized = 1;
-   }
-
-   {
-       // Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits
-       // of randomness that a long affords us we are going to roll multiple numbers and basically 
-       // concatenate them together using bit shifts.
-       // 
-       // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
-       // because it will break people's expectations of what rand() does.)
-
-       long result = rand() << 15 | rand(); 
-       //lr_log_message("y_rand: 30 random bits = %d, Y_RAND_MAX = %d", result, Y_RAND_MAX);
-
-       // Doing a third call to rand() just to get 1 bit of entropy isn't really efficiënt ..
-       //result = (result << 1) | (rand() & 0x0000000000000001); // add another bit and we're done.
-       //lr_log_message("y_rand: final random roll = %x, Y_RAND_MAX = %d", result, Y_RAND_MAX);
-
-       return result;
-   }
+\b Examples:
+\code
+if (y_drand() < 0.123) ... -> change 12.3% true
+double value = min + y_drand() * (max - min); // to range example, unless max < min
+int value = min + y_drand() * (max - min + 1); // for min <= value <= max
+\endcode
+\author A.U. Luyer
+*/
+double y_drand(void)
+{
+   return (rand() << 15 | rand())/1073741824.;
 }
 
 
 /*!
-\brief Ylib wrapper for malloc()
+\brief Ylib wrapper for ::malloc()
 
-Allocates a block of memory.
-Adds some simple checks to catch common errors.
+Allocates a block of memory, but aborts the Vuser if that fails.
 
 \param [in] size Number of bytes required.
-\returns A pre-zeroed block of memory of the requisite size allocated using calloc()
-\warning The memory resulting from this call will need to be freed using free().
+\warning The memory resulting from this call will need to be freed using ::free().
 
 \b Example:
 \code
@@ -203,25 +195,17 @@ int size = strlen(example_string)+1;
 char *example_string_copy = y_mem_alloc(size);
 snprintf(example_string_copy, size, "%s", example_string);
 lr_log_message("Copy of example string contains: %s", example_string_copy);
-free(test);
+free(example_string_copy);
 \endcode
-\sa y_array_alloc(), malloc()
+\sa ::y_array_alloc(), ::malloc()
 */
-char *y_mem_alloc(const int size)
+char *y_mem_alloc(size_t size)
 {
     char *buff;
-    int mem = size * sizeof(char);
-    
-    if(mem <= 0)
+	buff = malloc(size);
+    if (!buff)
     {
-        lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
-        return NULL;
-    }
-    //lr_output_message("Dynamic allocation of %d bytes of memory", mem);
-    
-    if ((buff = (char *)malloc(mem)) == NULL)
-    {
-        lr_error_message("Insufficient memory available, requested %d", mem);
+        lr_error_message("Insufficient memory available, requested %u bytes", size);
         // If this happens you're pretty much screwed anyway.
         lr_abort(); 
     }
@@ -231,38 +215,47 @@ char *y_mem_alloc(const int size)
 
 /*!
 \brief Allocates a character array and initializes all elements to zero
-As y_mem_alloc(), but using the 'calloc' function, rather than 'malloc().
-Adds some simple checks to catch common errors.
+As ::y_mem_alloc(), but using the '::calloc' function, rather than '::malloc()'.
 
 \param [in] length Expected number of characters.
-\param [in] bytesPerChar How much space a single character requires. Usually this should contain "sizeof(char)".
-\returns A pre-zeroed block of memory of the requisite size allocated using calloc().
-\warning The memory resulting from this call will need to be freed using free().
-\sa y_mem_alloc(), calloc()
+\param [in] size How much space a single character requires. Usually this should contain "sizeof char".
+\returns A pre-zeroed block of memory of the requisite size allocated using ::calloc().
+\warning The memory resulting from this call will need to be freed using ::free().
+\sa ::y_mem_alloc(), ::calloc()
 */
-char *y_array_alloc(int length, int bytesPerChar)
+char *y_array_alloc(size_t length, size_t size)
 {
     char *buff;
-    int size = bytesPerChar ; // * sizeof(char);
-    int mem = length * size;
-
-    if(mem <= 0)
+	buff = calloc(length, size);
+    if (!buff)
     {
-        lr_error_message("Requested non positive amounts (%d) of memory! Bailing out ..", mem);
-        return NULL;
-    }
-    //lr_output_message("Dynamic allocation of %d bytes of memory", mem);
-    
-    if ((buff = (char *)calloc(length, size)) == NULL)
-    {
-        // Fixme: implement some generic error handling facility to send this stuff to.
-        lr_error_message("Insufficient memory available, requested %d", mem);
+        lr_error_message("Insufficient memory available, requested %u * %u bytes", length, size);
         // If this happens you're pretty much screwed anyway.
         lr_abort();
     }
     return buff;
 }
 
+
+/*!
+\brief Copy a string into a ::malloc'd piece of memory using ::strdup(), and lr_abort() if the allocation fails.
+See the ::strdup() C documentation for what it does. 
+This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.
+
+\param [in] source The string to copy.
+\returns A copy of the string, allocated via ::strdup().
+\author Floris Kraak
+*/
+char* y_strdup(char* source)
+{
+    char* result = strdup(source);
+    if (!result)
+    {
+        lr_error_message("Out of memory while calling strdup()");
+        lr_abort();
+    }
+    return result;
+}
 
 /*!
 \brief Obtain the string required to fetch the contents of a parameter through lr_eval_string().
@@ -286,7 +279,7 @@ char* y_get_parameter_eval_string(const char *param_name)
 (These are two different things..)
 It would be nice if loadrunner had a builtin for this.
 \param [in] param_name The name of the parameter to 
-\returns 0 if the parameter is empty, a non-zero number otherwise.
+\returns non-zero (true) if the parameter is empty, zero (false) otherwise.
 \sa y_get_parameter_eval_string()
 \author Floris Kraak
 */
@@ -295,7 +288,7 @@ int y_is_empty_parameter(const char *param_name)
     char* param_eval_string = y_get_parameter_eval_string(param_name);
     char* param = lr_eval_string(param_eval_string);
     
-    int result = strlen(param) == 0 || strcmp(param, param_eval_string) == 0;
+    int result = *param == 0 || strcmp(param, param_eval_string) == 0;
     free(param_eval_string);
 
     return result;
@@ -309,7 +302,7 @@ This is useful mostly for code that wants to manipulate parameter contents but n
 
 \param [in] param_name The name of the parameter to fetch.
 \returns A char* buffer containing the contents of the parameter, allocated by lr_eval_string().
-\warning This returns memory allocated by lr_eval_string(). It is likely to disappear (get freed) at the end of the iteration.
+\warning This returns memory allocated by lr_eval_string(). It is freed at the end of the iteration.
 
 \b Example:
 \code
@@ -368,10 +361,7 @@ char* y_get_parameter_or_null(const char* param_name)
     free(param_eval_string);
     //lr_abort();
 
-    if(!exists)
-        return NULL;
-    else
-        return param;
+	return exists ? param: NULL;
 }
 
 
@@ -398,7 +388,7 @@ char* y_get_parameter_with_malloc_or_null(const char *src_param)
 {
     char *src = y_get_parameter_or_null(src_param);
     //lr_log_message("Copying source data: %s", src);
-	return src ? strdup(src): NULL;
+	return src ? y_strdup(src): NULL;
 }
 
 //! \cond function_removal
@@ -439,120 +429,6 @@ char* y_get_parameter_ext(const char *source_param)
     return buffer;
 }
 
-
-
-
-/*!
-\brief Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any.
-In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
-This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
-
-\warning The return value of this function needs to be freed using lr_eval_string_ext_free().
-
-\param [in] param_name The parameter to cleanse of nulls.
-\param [in] replacement A character that replaces any embedded nulls found.
-\returns The resulting parameter content.
-
-\b Example:
-\code
-{
-   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-   char *tmp;
-   lr_save_var(buffer, 11, 0, "broken");
-   tmp = y_get_cleansed_parameter("broken", '!');
-   lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
-   free(tmp);
-}
-\endcode
-*/
-char* y_get_cleansed_parameter(const char* param_name, char replacement)
-{
-   char* result;
-   unsigned long result_size;
-   size_t param_eval_size = strlen(param_name) +3; // parameter name + "{}" + '\0' (end of string)
-   char* param_eval_string = y_mem_alloc(param_eval_size);
-   //lr_log_message("y_cleanse_parameter(%s)", param_name );
-
-   // Get the contents of the parameter using lr_eval_string_ext() - we can't use the
-   // regular version if we expect to find NULL in there.
-   snprintf( param_eval_string, param_eval_size, "{%s}", param_name );
-   lr_eval_string_ext(param_eval_string, param_eval_size-1, &result, &result_size, 0, 0, -1);
-   if( strcmp(param_eval_string, result) == 0 )
-   {
-       lr_error_message("y_get_cleansed_parameter: Parameter %s does not exist.", param_name);
-       lr_abort();
-   }
-   free(param_eval_string);
-
-   //lr_log_message("Cleansing param %s, result starts with '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
-   {
-      size_t result_strlen;
-      // Now replace NULL bytes (NULL) in the input with something else..
-      for( result_strlen = strlen(result); result_strlen < result_size; result_strlen = strlen(result))
-      {
-         result[result_strlen] = replacement;
-         //lr_log_message("Cleansing param %s, result now '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
-      }
-   }
-   return result;
-}
-
-/*!
-\brief Clean a parameter by replacing any embedded NULL (null) characters with a replacement character.
-
-This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s).
-Any such characters are replaced with replacement_char and the result is stored in the original parameter.
-When no null-character is found, the result is unaltered.
-
-\warning Since the return value is allocated with malloc(), it will need to be freed using free() at some point.
-
-\param [in] param_name The parameter to cleanse of nulls.
-\param [in] replacement A character that replaces any embedded nulls found.
-\warning Since this changes existing parameters be careful what types of parameters you use this on.
-
-\b Example:
-\code
-{
-   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-   lr_save_var(buffer, 11, 0, "broken");
-   y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
-}
-\endcode
-*/
-void y_cleanse_parameter_ext(const char* param_name, char replacement)
-{
-    if( param_name && strlen(param_name) )
-    {
-        char* result = y_get_cleansed_parameter(param_name, replacement);
-        lr_save_string(result, param_name);
-        lr_eval_string_ext_free(&result);
-    }
-    else
-    {
-        lr_error_message("Empty or NULL parameter name passed to y_cleanse_parameter_ext(): %s", param_name);
-        lr_abort();
-    }
-}
-
-/*!
-\brief Clean a parameter by replacing any embedded NULL (null) characters with a space.
-This is identical to y_cleanse_parameter_ext() with " " (a single space) selected as the replacement character.
-
-\param [in] param_name The parameter to cleanse of nulls.
-\warning Since this changes existing parameters be careful what types of parameters you use this on.
-
-\b Example:
-\code
-{
-   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
-   lr_save_var(buffer, 11, 0, "broken");
-   y_cleanse_parameter("broken"); // will save " b ro ken  " into the "broken" parameter.
-}
-\endcode
-*/
-void y_cleanse_parameter(const char* param_name)
-{
-    y_cleanse_parameter_ext(param_name, ' ');
-}
+//! \}
 
 #endif // _Y_CORE_C_

@@ -34,6 +34,7 @@ This usually makes it easy to correlate a value (capturing it in a parameter), p
 
 #include "y_core.c"
 
+//! \cond function_removal
 /*!
 \def y_get_int_from_char 
 \brief Convert a *single* character 0-9 to an int
@@ -44,10 +45,11 @@ int i = y_get_int_from_char('9');
 lr_message("i = %d", i);  // result is "i = 9"
 \endcode
 \author Floris Kraak
+\deprecated If you need this you lack basic C foundation skills.
 */
 #define y_get_int_from_char(c) (isdigit(c) ? c - ‘0’: 0)
 
-
+//! \cond function_removal
 /*!
 \brief Calculate how much space storing the decimal representation of a number into a string requires.
 \param [in] number An integer number that needs to be stored in a string in decimal notation.
@@ -62,41 +64,10 @@ lr_message("i = %d", i);  // result is "i = 9"
     input = 0;
     lr_log_message("Length of %d = %d", input, y_int_strlen(input)); // Prints "Length of 0 = 1"
 \endcode
+\deprecated If you need this you lack basic C foundation skills.
 */
-size_t y_int_strlen(int number)
-{
-    size_t result = 1;
-    int power = abs(number);
-
-    // Negative numbers need more space.
-    if(number < 0)
-        result++;
-
-    // Every power of 10 we need another digit to store the number.
-    while(power = (power / 10))
-        result++;
-    return result;
-}
-
-/*!
-\brief Copy a string into a malloc'd piece of memory using strdup(), and lr_abort() if the allocation fails.
-See the strdup() c++ documentation for what strdup does. 
-This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.
-
-\param [in] source The string to copy.
-\returns A copy of the string, allocated via strdup().
-\author Floris Kraak
-*/
-char* y_strdup(char* source)
-{
-    char* result = strdup(source);
-    if( result == NULL )
-    {
-        lr_error_message("Out of memory while calling strdup()");
-        lr_abort();
-    }
-    return result;
-}
+#define y_int_strlen(number) (number?(int)floor(log10(abs(number)))+(number<0?2:1):1)
+//! \endcond
 
 /*!
 \brief Copy a parameter to a new name.
@@ -653,7 +624,7 @@ void y_remove_string_from_parameter(const char* paramName, const char* removeMe)
 
 /*!
 \brief Create a unique parameter.
-\param param The name of a parameter to store the resulting string in.
+\param param The name of a parameter to store the resulting string in. Length is always 22 (base64) characters.
 \return void
 \author Floris Kraak & André Luyer
 
@@ -664,33 +635,9 @@ y_param_unique("test");
 */
 void y_param_unique(char *param)
 {
-/*
-    struct _timeb ms;
-    static unsigned short i = 0;
-    static unsigned long vuser_group_hash = 0;
-
-    if(!vuser_group_hash) 
-    { 
-        y_setup();
-        vuser_group_hash = y_hash_sdbm(y_virtual_user_group);
-    }
-    ftime(&ms);
-
-    lr_log_message("y_param_unique(%s) in group %s (hash: %x) for user %d (%x) at time %d.%03d (%x.%x) with iterator %d (%x)", 
-        param, y_virtual_user_group, vuser_group_hash, y_virtual_user_id, y_virtual_user_id, ms.time, ms.millitm, ms.time, ms.millitm, i, i);
-
-    // Exactly 24 characters. No more, no less. Close enough for our purposes, I reckon. */
-    //lr_param_sprintf(param, "%08x%04x%08x%03x%01x", vuser_group_hash /*& 0xFFFFFFFF */, y_virtual_user_id & 0xFFFF, ms.time /*& 0xFFFFFFFF */, ms.millitm, i++ & 0xF);
-
-
-//     char buf[23];                   // UUID's are always 22 characters, plus null byte.
-//     lr_generate_uuid_on_buf(buf);
-//     lr_save_var(buf, 22, 0, param); // save & trim off ==
-
-    char buf[100]; // should be only 22 characters, but apparently not always ..
-    memset(buf, '\0', sizeof(buf) * sizeof(char));
-    lr_generate_uuid_on_buf(buf);
-    lr_save_var(buf, strlen(buf), 0, param); // save & trim off ==
+    char buf[25];                   // base64 of UUID's are always 24 characters, plus null byte.
+    lr_generate_uuid_on_buf(buf);   // Probably a wrapper for http://msdn.microsoft.com/en-us/library/windows/desktop/aa379205(v=vs.85).aspx
+    lr_save_var(buf, 22, 0, param); // save & trim off ==
 }
 
 
@@ -892,6 +839,126 @@ void y_random_string_buffer_hex(const char *parameter, int minimumLength, int ma
 {
    y_random_string_buffer_core(parameter, minimumLength, maximumLength, 0, 0, "0123456789ABCDEF");
 }
+
+
+
+/*!
+\brief Get the content of a parameter without embedded null bytes (\0 characters) from the named parameter, if any.
+In some cases we want to fetch the content of a parameter but the parameter contains embedded NULL characters which make further processing harder. 
+This will fetch a parameter but "cleanse" it from such contamination, leaving the rest of the data unaltered before returning it.
+
+\warning The return value of this function needs to be freed using lr_eval_string_ext_free().
+
+\param [in] param_name The parameter to cleanse of nulls.
+\param [in] replacement A character that replaces any embedded nulls found.
+\returns The resulting parameter content.
+
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   char *tmp;
+   lr_save_var(buffer, 11, 0, "broken");
+   tmp = y_get_cleansed_parameter("broken", '!');
+   lr_log_message("Result: %s", tmp); // Prints "Result: !b!ro!ken!!".
+   free(tmp);
+}
+\endcode
+*/
+char* y_get_cleansed_parameter(const char* param_name, char replacement)
+{
+   char* result;
+   unsigned long result_size;
+   size_t param_eval_size = strlen(param_name) +3; // parameter name + "{}" + '\0' (end of string)
+   char* param_eval_string = y_mem_alloc(param_eval_size);
+   //lr_log_message("y_cleanse_parameter(%s)", param_name );
+
+   // Get the contents of the parameter using lr_eval_string_ext() - we can't use the
+   // regular version if we expect to find NULL in there.
+   snprintf( param_eval_string, param_eval_size, "{%s}", param_name );
+   lr_eval_string_ext(param_eval_string, param_eval_size-1, &result, &result_size, 0, 0, -1);
+   if( strcmp(param_eval_string, result) == 0 )
+   {
+       lr_error_message("y_get_cleansed_parameter: Parameter %s does not exist.", param_name);
+       lr_abort();
+   }
+   free(param_eval_string);
+
+   //lr_log_message("Cleansing param %s, result starts with '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
+   if (result_size) {
+      char *ptr;
+	  for(ptr = result; result_size--; ptr++)
+	     if (*ptr == 0) *ptr = replacement;	  
+	  
+	  /*
+      // Now replace NULL bytes (NULL) in the input with something else..
+      for( result_strlen = strlen(result); result_strlen < result_size; result_strlen = strlen(result))
+      {
+         result[result_strlen] = replacement;
+         //lr_log_message("Cleansing param %s, result now '%-*.*s' and contains %d bytes.", param_name, result_size, result_size, result, result_size);
+      }*/
+   }
+   return result;
+}
+
+/*!
+\brief Clean a parameter by replacing any embedded NULL (null) characters with a replacement character.
+
+This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s).
+Any such characters are replaced with replacement_char and the result is stored in the original parameter.
+When no null-character is found, the result is unaltered.
+
+\warning Since the return value is allocated with malloc(), it will need to be freed using free() at some point.
+
+\param [in] param_name The parameter to cleanse of nulls.
+\param [in] replacement A character that replaces any embedded nulls found.
+\warning Since this changes existing parameters be careful what types of parameters you use this on.
+
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   lr_save_var(buffer, 11, 0, "broken");
+   y_cleanse_parameter_ext("broken", '!'); // will save "!b!ro!ken!!" into the "broken" parameter.
+}
+\endcode
+*/
+void y_cleanse_parameter_ext(const char* param_name, char replacement)
+{
+    if( param_name && strlen(param_name) )
+    {
+        char* result = y_get_cleansed_parameter(param_name, replacement);
+        lr_save_string(result, param_name);
+        lr_eval_string_ext_free(&result);
+    }
+    else
+    {
+        lr_error_message("Empty or NULL parameter name passed to y_cleanse_parameter_ext(): %s", param_name);
+        lr_abort();
+    }
+}
+
+/*!
+\brief Clean a parameter by replacing any embedded NULL (null) characters with a space.
+This is identical to y_cleanse_parameter_ext() with " " (a single space) selected as the replacement character.
+
+\param [in] param_name The parameter to cleanse of nulls.
+\warning Since this changes existing parameters be careful what types of parameters you use this on.
+
+\b Example:
+\code
+{
+   char buffer[11] = { '\0', 'b', '\0', 'r','o', '\0', 'k', 'e', 'n', '\0', '\0' };
+   lr_save_var(buffer, 11, 0, "broken");
+   y_cleanse_parameter("broken"); // will save " b ro ken  " into the "broken" parameter.
+}
+\endcode
+*/
+void y_cleanse_parameter(const char* param_name)
+{
+    y_cleanse_parameter_ext(param_name, ' ');
+}
+
 
 #endif // _Y_STRING_C_
 
