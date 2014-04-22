@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -47,54 +48,76 @@
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">lconv Struct Reference</div>  </div>
+<div class="title">lconv Struct Reference<div class="ingroups"><a class="el" href="group__locale.html">Standard C locale structures and functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Returned by <a class="el" href="group__locale.html#ga69b40f71a20a7c8bd67b9eeeae7f40c9" title="Documented at http://www.cplusplus.com/reference/clocale/localeconv/. ">localeconv</a>. Documented at <a href="http://www.cplusplus.com/reference/clocale/lconv/">http://www.cplusplus.com/reference/clocale/lconv/</a>.  
+ <a href="structlconv.html#details">More...</a></p>
 
 <p><code>#include &quot;<a class="el" href="vugen_8h_source.html">vugen.h</a>&quot;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a445e27fc7f797c8cca97b381f062fb60"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a445e27fc7f797c8cca97b381f062fb60">decimal_point</a></td></tr>
+<tr class="memdesc:a445e27fc7f797c8cca97b381f062fb60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decimal-point separator used for non-monetary quantities.  <a href="#a445e27fc7f797c8cca97b381f062fb60">More...</a><br/></td></tr>
 <tr class="separator:a445e27fc7f797c8cca97b381f062fb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aede8dfaac91d7b4e6b7fb0d96184d74d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#aede8dfaac91d7b4e6b7fb0d96184d74d">thousands_sep</a></td></tr>
+<tr class="memdesc:aede8dfaac91d7b4e6b7fb0d96184d74d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separators used to delimit groups of digits to the left of the decimal point for non-monetary quantities.  <a href="#aede8dfaac91d7b4e6b7fb0d96184d74d">More...</a><br/></td></tr>
 <tr class="separator:aede8dfaac91d7b4e6b7fb0d96184d74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46e468755a823be50de20f36be5ff2be"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a46e468755a823be50de20f36be5ff2be">grouping</a></td></tr>
+<tr class="memdesc:a46e468755a823be50de20f36be5ff2be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the amount of digits that form each of the groups to be separated by thousands_sep separator for non-monetary quantities.  <a href="#a46e468755a823be50de20f36be5ff2be">More...</a><br/></td></tr>
 <tr class="separator:a46e468755a823be50de20f36be5ff2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaeeafb02b68ba58c549458b196b9325"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#abaeeafb02b68ba58c549458b196b9325">int_curr_symbol</a></td></tr>
+<tr class="memdesc:abaeeafb02b68ba58c549458b196b9325"><td class="mdescLeft">&#160;</td><td class="mdescRight">International currency symbol. This is formed by the three-letter ISO-4217 entry code for the currency.  <a href="#abaeeafb02b68ba58c549458b196b9325">More...</a><br/></td></tr>
 <tr class="separator:abaeeafb02b68ba58c549458b196b9325"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3657bb8bf2a83a868cdeb0b108ab921"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#af3657bb8bf2a83a868cdeb0b108ab921">currency_symbol</a></td></tr>
+<tr class="memdesc:af3657bb8bf2a83a868cdeb0b108ab921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Local currency symbol.  <a href="#af3657bb8bf2a83a868cdeb0b108ab921">More...</a><br/></td></tr>
 <tr class="separator:af3657bb8bf2a83a868cdeb0b108ab921"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1aa08afe707c1d5d40b4d01369176480"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a1aa08afe707c1d5d40b4d01369176480">mon_decimal_point</a></td></tr>
+<tr class="memdesc:a1aa08afe707c1d5d40b4d01369176480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decimal-point separator used for monetary quantities.  <a href="#a1aa08afe707c1d5d40b4d01369176480">More...</a><br/></td></tr>
 <tr class="separator:a1aa08afe707c1d5d40b4d01369176480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f04f4fd9ea670d21fc76fb5c77c032d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a4f04f4fd9ea670d21fc76fb5c77c032d">mon_thousands_sep</a></td></tr>
+<tr class="memdesc:a4f04f4fd9ea670d21fc76fb5c77c032d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separators used to delimit groups of digits to the left of the decimal point for monetary quantities.  <a href="#a4f04f4fd9ea670d21fc76fb5c77c032d">More...</a><br/></td></tr>
 <tr class="separator:a4f04f4fd9ea670d21fc76fb5c77c032d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12ecf5d2f7ceb0cfe0f66fd3200eef54"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a12ecf5d2f7ceb0cfe0f66fd3200eef54">mon_grouping</a></td></tr>
+<tr class="memdesc:a12ecf5d2f7ceb0cfe0f66fd3200eef54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the amount of digits that form each of the groups to be separated by mon_thousands_sep separator for monetary quantities.  <a href="#a12ecf5d2f7ceb0cfe0f66fd3200eef54">More...</a><br/></td></tr>
 <tr class="separator:a12ecf5d2f7ceb0cfe0f66fd3200eef54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74bf5f6f32624be629f7de0dabd58a96"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a74bf5f6f32624be629f7de0dabd58a96">positive_sign</a></td></tr>
+<tr class="memdesc:a74bf5f6f32624be629f7de0dabd58a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign to be used for positive or zero monetary quantities.  <a href="#a74bf5f6f32624be629f7de0dabd58a96">More...</a><br/></td></tr>
 <tr class="separator:a74bf5f6f32624be629f7de0dabd58a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40dbb1b1d7fdf4926145138f5d8f6f5f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a40dbb1b1d7fdf4926145138f5d8f6f5f">negative_sign</a></td></tr>
+<tr class="memdesc:a40dbb1b1d7fdf4926145138f5d8f6f5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign to be used for negative monetary quantities.  <a href="#a40dbb1b1d7fdf4926145138f5d8f6f5f">More...</a><br/></td></tr>
 <tr class="separator:a40dbb1b1d7fdf4926145138f5d8f6f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b652f28cafc3092258b47c8099fe905"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a6b652f28cafc3092258b47c8099fe905">int_frac_digits</a></td></tr>
+<tr class="memdesc:a6b652f28cafc3092258b47c8099fe905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Amount of fractional digits to the right of the decimal point for monetary quantities in the international format.  <a href="#a6b652f28cafc3092258b47c8099fe905">More...</a><br/></td></tr>
 <tr class="separator:a6b652f28cafc3092258b47c8099fe905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa16e32ff4dcc95445742b5b165ffb071"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#aa16e32ff4dcc95445742b5b165ffb071">frac_digits</a></td></tr>
+<tr class="memdesc:aa16e32ff4dcc95445742b5b165ffb071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Amount of fractional digits to the right of the decimal point for monetary quantities in the local format.  <a href="#aa16e32ff4dcc95445742b5b165ffb071">More...</a><br/></td></tr>
 <tr class="separator:aa16e32ff4dcc95445742b5b165ffb071"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0651922c77fc926609bdd8746784e63"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#af0651922c77fc926609bdd8746784e63">p_cs_precedes</a></td></tr>
+<tr class="memdesc:af0651922c77fc926609bdd8746784e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean whether the currency symbol should precede positive or zero monetary quantities.  <a href="#af0651922c77fc926609bdd8746784e63">More...</a><br/></td></tr>
 <tr class="separator:af0651922c77fc926609bdd8746784e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ae3cb36f4426158e4ab2ea6dc4278ad"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a3ae3cb36f4426158e4ab2ea6dc4278ad">p_sep_by_space</a></td></tr>
+<tr class="memdesc:a3ae3cb36f4426158e4ab2ea6dc4278ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean whether the currency symbol should precede negative monetary quantities.  <a href="#a3ae3cb36f4426158e4ab2ea6dc4278ad">More...</a><br/></td></tr>
 <tr class="separator:a3ae3cb36f4426158e4ab2ea6dc4278ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad118b68a229527f7e96538ac875169ad"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#ad118b68a229527f7e96538ac875169ad">n_cs_precedes</a></td></tr>
+<tr class="memdesc:ad118b68a229527f7e96538ac875169ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean whether a space should appear between the currency symbol and positive or zero monetary quantities.  <a href="#ad118b68a229527f7e96538ac875169ad">More...</a><br/></td></tr>
 <tr class="separator:ad118b68a229527f7e96538ac875169ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7ac20ce034900155183b32fc3c6d9a3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#ab7ac20ce034900155183b32fc3c6d9a3">n_sep_by_space</a></td></tr>
+<tr class="memdesc:ab7ac20ce034900155183b32fc3c6d9a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boolean whether a space should appear between the currency symbol and negative monetary quantities.  <a href="#ab7ac20ce034900155183b32fc3c6d9a3">More...</a><br/></td></tr>
 <tr class="separator:ab7ac20ce034900155183b32fc3c6d9a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fdead36abe5c2ca673142ea401478e8"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#a1fdead36abe5c2ca673142ea401478e8">p_sign_posn</a></td></tr>
+<tr class="memdesc:a1fdead36abe5c2ca673142ea401478e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position of the sign for positive or zero monetary quantities.  <a href="#a1fdead36abe5c2ca673142ea401478e8">More...</a><br/></td></tr>
 <tr class="separator:a1fdead36abe5c2ca673142ea401478e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0bbe6f545952daef5a8cbdd054a184e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlconv.html#ae0bbe6f545952daef5a8cbdd054a184e">n_sign_posn</a></td></tr>
+<tr class="memdesc:ae0bbe6f545952daef5a8cbdd054a184e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position of the sign for negative monetary quantities.  <a href="#ae0bbe6f545952daef5a8cbdd054a184e">More...</a><br/></td></tr>
 <tr class="separator:ae0bbe6f545952daef5a8cbdd054a184e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00233">233</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<div class="textblock"><p>Returned by <a class="el" href="group__locale.html#ga69b40f71a20a7c8bd67b9eeeae7f40c9" title="Documented at http://www.cplusplus.com/reference/clocale/localeconv/. ">localeconv</a>. Documented at <a href="http://www.cplusplus.com/reference/clocale/lconv/">http://www.cplusplus.com/reference/clocale/lconv/</a>. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00376">376</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="af3657bb8bf2a83a868cdeb0b108ab921"></a>
 <div class="memitem">
@@ -106,7 +129,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00238">238</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Local currency symbol. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00386">386</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -120,7 +145,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00234">234</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Decimal-point separator used for non-monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00378">378</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -134,7 +161,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00245">245</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Amount of fractional digits to the right of the decimal point for monetary quantities in the local format. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00400">400</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -148,7 +177,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00236">236</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Specifies the amount of digits that form each of the groups to be separated by thousands_sep separator for non-monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00382">382</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -162,7 +193,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00237">237</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>International currency symbol. This is formed by the three-letter ISO-4217 entry code for the currency. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00384">384</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -176,7 +209,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00244">244</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Amount of fractional digits to the right of the decimal point for monetary quantities in the international format. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00398">398</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -190,7 +225,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00239">239</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Decimal-point separator used for monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00388">388</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +241,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00241">241</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Specifies the amount of digits that form each of the groups to be separated by mon_thousands_sep separator for monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00392">392</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -218,7 +257,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00240">240</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Separators used to delimit groups of digits to the left of the decimal point for monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00390">390</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -232,7 +273,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00248">248</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Boolean whether a space should appear between the currency symbol and positive or zero monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00406">406</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +289,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00249">249</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Boolean whether a space should appear between the currency symbol and negative monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00408">408</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -260,7 +305,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00251">251</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Position of the sign for negative monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00412">412</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +321,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00243">243</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Sign to be used for negative monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00396">396</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +337,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00246">246</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Boolean whether the currency symbol should precede positive or zero monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00402">402</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -302,7 +353,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00247">247</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Boolean whether the currency symbol should precede negative monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00404">404</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -316,7 +369,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00250">250</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Position of the sign for positive or zero monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00410">410</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -330,7 +385,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00242">242</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Sign to be used for positive or zero monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00394">394</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +401,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vugen_8h_source.html#l00235">235</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
+<p>Separators used to delimit groups of digits to the left of the decimal point for non-monetary quantities. </p>
+
+<p>Definition at line <a class="el" href="vugen_8h_source.html#l00380">380</a> of file <a class="el" href="vugen_8h_source.html">vugen.h</a>.</p>
 
 </div>
 </div>

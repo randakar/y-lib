@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -59,7 +60,7 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5">y_get_int_from_char</a>(c)&#160;&#160;&#160;(<a class="el" href="vugen_8h.html#a2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td></tr>
+<tr class="memitem:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5">y_get_int_from_char</a>(c)&#160;&#160;&#160;(<a class="el" href="group__char.html#ga2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td></tr>
 <tr class="memdesc:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <em>single</em> character 0-9 to an int.  <a href="#aecc6f4f2a809c8f7ef600a36d3c60df5">More...</a><br/></td></tr>
 <tr class="separator:aecc6f4f2a809c8f7ef600a36d3c60df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -69,7 +70,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ae32fba754c61429341686d6a5e387a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate how much space storing the decimal representation of a number into a string requires.  <a href="#ae32fba754c61429341686d6a5e387a06">More...</a><br/></td></tr>
 <tr class="separator:ae32fba754c61429341686d6a5e387a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a> (char *source)</td></tr>
-<tr class="memdesc:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.  <a href="#a8cba325c05b63bbbdc499702c4f5c6e9">More...</a><br/></td></tr>
+<tr class="memdesc:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a string into a malloc'd piece of memory using <a class="el" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script.  <a href="#a8cba325c05b63bbbdc499702c4f5c6e9">More...</a><br/></td></tr>
 <tr class="separator:a8cba325c05b63bbbdc499702c4f5c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b01815915da19b48aaca1a7a5ba30b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a> (char *source_param, char *dest_param)</td></tr>
 <tr class="memdesc:a7b01815915da19b48aaca1a7a5ba30b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a parameter to a new name. This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory.  <a href="#a7b01815915da19b48aaca1a7a5ba30b2">More...</a><br/></td></tr>
@@ -138,7 +139,7 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">c</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="vugen_8h.html#a2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td>
+          <td>&#160;&#160;&#160;(<a class="el" href="group__char.html#ga2bba38ef78f7131817546eaab9b5a416">isdigit</a>(c) ? c - ‘0’: 0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -936,14 +937,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copy a string into a malloc'd piece of memory using <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. </p>
+<p>Copy a string into a malloc'd piece of memory using <a class="el" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>, and lr_abort() if the allocation fails. See the <a class="el" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a> c++ documentation for what strdup does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>The string to copy. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A copy of the string, allocated via <a class="el" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of the string, allocated via <a class="el" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581" title="Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...">strdup()</a>. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 <p>Definition at line <a class="el" href="y__string_8c_source.html#l00090">90</a> of file <a class="el" href="y__string_8c_source.html">y_string.c</a>.</p>

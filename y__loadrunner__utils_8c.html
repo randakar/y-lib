@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -849,7 +850,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p>
 <dl class="section return"><dt>Returns</dt><dd>How many days into the future X workdays will be.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// Reserve a meeting room in &#39;reservationOffset&#39; days.</span></div>
-<div class="line"><span class="keywordtype">int</span> daysOffSet = <a class="code" href="y__loadrunner__utils_8c.html#afa6f1aa6d2647d9f58308c1864bd9eb6">y_workdays_from_today</a>( <a class="code" href="vugen_8h.html#ac5aa18897f547ff20f10c777c6a58f0a">atoi</a>(lr_eval_string(<span class="stringliteral">&quot;{reservationOffset}&quot;</span>)) );</div>
+<div class="line"><span class="keywordtype">int</span> daysOffSet = <a class="code" href="y__loadrunner__utils_8c.html#afa6f1aa6d2647d9f58308c1864bd9eb6">y_workdays_from_today</a>( <a class="code" href="group__string.html#gac5aa18897f547ff20f10c777c6a58f0a">atoi</a>(lr_eval_string(<span class="stringliteral">&quot;{reservationOffset}&quot;</span>)) );</div>
 <div class="line">lr_save_datetime(<span class="stringliteral">&quot;%d-%m-%Y&quot;</span>, DATE_NOW + (daysOffSet*ONE_DAY), <span class="stringliteral">&quot;ReservationDate&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">lr_vuser_status_message(lr_eval_string(<span class="stringliteral">&quot;Running with offset {reservationOffset} at day offset %d&quot;</span>), daysOffSet);</div>

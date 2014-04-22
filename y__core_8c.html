@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -61,7 +62,7 @@
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a690f251553b39fd4f31894826141b61a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a690f251553b39fd4f31894826141b61a">RAND_MAX</a>&#160;&#160;&#160;32767</td></tr>
-<tr class="memdesc:a690f251553b39fd4f31894826141b61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAND_MAX constant for use with <a class="el" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand()</a> - 15 bits integer.  <a href="#a690f251553b39fd4f31894826141b61a">More...</a><br/></td></tr>
+<tr class="memdesc:a690f251553b39fd4f31894826141b61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAND_MAX constant for use with <a class="el" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1" title="Documented at http://www.cplusplus.com/reference/cstdlib/rand/. ">rand()</a> - 15 bits integer.  <a href="#a690f251553b39fd4f31894826141b61a">More...</a><br/></td></tr>
 <tr class="separator:a690f251553b39fd4f31894826141b61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16db77ab873c5b767742a51c9613314b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a16db77ab873c5b767742a51c9613314b">Y_RAND_MAX</a>&#160;&#160;&#160;1073741823</td></tr>
 <tr class="memdesc:a16db77ab873c5b767742a51c9613314b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate RAND_MAX constant for use with y_rand.  <a href="#a16db77ab873c5b767742a51c9613314b">More...</a><br/></td></tr>
@@ -79,10 +80,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab31dd572cc0f21dae3583c83770d5fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number generator - but only the first time this function is called.  <a href="#ab31dd572cc0f21dae3583c83770d5fab">More...</a><br/></td></tr>
 <tr class="separator:ab31dd572cc0f21dae3583c83770d5fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44660f85cba534a4c186c29ec698c4fb"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a> (const int size)</td></tr>
-<tr class="memdesc:a44660f85cba534a4c186c29ec698c4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ylib wrapper for <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>  <a href="#a44660f85cba534a4c186c29ec698c4fb">More...</a><br/></td></tr>
+<tr class="memdesc:a44660f85cba534a4c186c29ec698c4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ylib wrapper for <a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a>  <a href="#a44660f85cba534a4c186c29ec698c4fb">More...</a><br/></td></tr>
 <tr class="separator:a44660f85cba534a4c186c29ec698c4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a697dba8aa84b866198cb29d2c1e4823f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f">y_array_alloc</a> (int length, int bytesPerChar)</td></tr>
-<tr class="memdesc:a697dba8aa84b866198cb29d2c1e4823f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a character array and initializes all elements to zero As <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>. Adds some simple checks to catch common errors.  <a href="#a697dba8aa84b866198cb29d2c1e4823f">More...</a><br/></td></tr>
+<tr class="memdesc:a697dba8aa84b866198cb29d2c1e4823f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a character array and initializes all elements to zero As <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a>. Adds some simple checks to catch common errors.  <a href="#a697dba8aa84b866198cb29d2c1e4823f">More...</a><br/></td></tr>
 <tr class="separator:a697dba8aa84b866198cb29d2c1e4823f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab903d513f84dc0cd3f7af7acf67e2fb2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a> (const char *param_name)</td></tr>
 <tr class="memdesc:ab903d513f84dc0cd3f7af7acf67e2fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain the string required to fetch the contents of a parameter through lr_eval_string().  <a href="#ab903d513f84dc0cd3f7af7acf67e2fb2">More...</a><br/></td></tr>
@@ -140,7 +141,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>RAND_MAX constant for use with <a class="el" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand()</a> - 15 bits integer. </p>
+<p>RAND_MAX constant for use with <a class="el" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1" title="Documented at http://www.cplusplus.com/reference/cstdlib/rand/. ">rand()</a> - 15 bits integer. </p>
 <p>Loadrunner does not give you full C headers, so the 'RAND_MAX' #define from &lt;stdlib.h&gt; is missing. We define it here mostly for documentation, as we do not have access to the header files themselves and therefore cannot change this. </p>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
@@ -191,7 +192,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Allocates a character array and initializes all elements to zero As <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>. Adds some simple checks to catch common errors. </p>
+<p>Allocates a character array and initializes all elements to zero As <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, but using the 'calloc' function, rather than '<a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a>. Adds some simple checks to catch common errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Expected number of characters. </td></tr>
@@ -199,9 +200,9 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a>. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>. </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2" title="Documented at http://www.cplusplus.com/reference/cstdlib/calloc/. ">calloc()</a>. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675" title="Documented at http://www.cplusplus.com/reference/cstdlib/free/. ">free()</a>. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a>, <a class="el" href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2" title="Documented at http://www.cplusplus.com/reference/cstdlib/calloc/. ">calloc()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00243">243</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
@@ -236,7 +237,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b">y_cleanse_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>); <span class="comment">// will save &quot; b ro ken  &quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00561">561</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00553">553</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -266,7 +267,7 @@ Variables</h2></td></tr>
 
 <p>Clean a parameter by replacing any embedded NULL (null) characters with a replacement character. </p>
 <p>This would normally only happen if you have used to web_reg_save_param() and the result contains one or more null-character(s). Any such characters are replaced with replacement_char and the result is stored in the original parameter. When no null-character is found, the result is unaltered.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Since the return value is allocated with <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a>, it will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> at some point.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Since the return value is allocated with <a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a>, it will need to be freed using <a class="el" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675" title="Documented at http://www.cplusplus.com/reference/cstdlib/free/. ">free()</a> at some point.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">param_name</td><td>The parameter to cleanse of nulls. </td></tr>
@@ -282,7 +283,7 @@ Variables</h2></td></tr>
 <div class="line">   <a class="code" href="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106">y_cleanse_parameter_ext</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>); <span class="comment">// will save &quot;!b!ro!ken!!&quot; into the &quot;broken&quot; parameter.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00530">530</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00522">522</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -327,10 +328,10 @@ Variables</h2></td></tr>
 <div class="line">   lr_save_var(buffer, 11, 0, <span class="stringliteral">&quot;broken&quot;</span>);</div>
 <div class="line">   tmp = <a class="code" href="y__core_8c.html#a9fc166c412bf848068685f7c391658bd">y_get_cleansed_parameter</a>(<span class="stringliteral">&quot;broken&quot;</span>, <span class="charliteral">&#39;!&#39;</span>);</div>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, tmp); <span class="comment">// Prints &quot;Result: !b!ro!ken!!&quot;.</span></div>
-<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
+<div class="line">   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00476">476</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00468">468</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -392,7 +393,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a char* allocated with <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The return argument will need to be freed via a call to <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The return argument will need to be freed via a call to <a class="el" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675" title="Documented at http://www.cplusplus.com/reference/cstdlib/free/. ">free()</a> </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, <a class="el" href="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c" title="Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...">y_get_parameter_ext()</a>, <a class="el" href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675" title="Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...">y_get_parameter_or_null()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
@@ -433,7 +434,7 @@ Variables</h2></td></tr>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c" title="Get the content of a parameter and return it as a char *. ">y_get_parameter()</a>, lr_eval_string_ext() </dd></dl>
 
-<p>Definition at line <a class="el" href="y__core_8c_source.html#l00440">440</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
+<p>Definition at line <a class="el" href="y__core_8c_source.html#l00432">432</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 
 </div>
 </div>
@@ -500,13 +501,13 @@ If the content of the parameter matches the name of the parameter surrounded by 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A char* buffer containing the contents of the parameter, allocated with <a class="el" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb" title="Ylib wrapper for malloc() ">y_mem_alloc()</a> </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Memory allocated in this manner must be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a> or it will linger.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Memory allocated in this manner must be freed using <a class="el" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675" title="Documented at http://www.cplusplus.com/reference/cstdlib/free/. ">free()</a> or it will linger.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *test;</div>
 <div class="line">lr_save_string(<span class="stringliteral">&quot;test123&quot;</span>, <span class="stringliteral">&quot;TestParam&quot;</span>);        <span class="comment">// save the string &quot;test123&quot; into parameter {TestParam}</span></div>
 <div class="line">test=y_get_parameter_in_malloc_string(<span class="stringliteral">&quot;TestParam&quot;</span>);</div>
 <div class="line">lr_message(<span class="stringliteral">&quot;Test: %s&quot;</span>, test);</div>
-<div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
+<div class="line"><a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00397">397</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
@@ -597,7 +598,7 @@ If the content of the parameter matches the name of the parameter surrounded by 
       </table>
 </div><div class="memdoc">
 
-<p>Ylib wrapper for <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a> </p>
+<p>Ylib wrapper for <a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a> </p>
 <p>Allocates a block of memory. Adds some simple checks to catch common errors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -605,16 +606,16 @@ If the content of the parameter matches the name of the parameter surrounded by 
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="vugen_8h.html#ae201ae1031fe85000b4e22abb3a824b2">calloc()</a> </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free()</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pre-zeroed block of memory of the requisite size allocated using <a class="el" href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2" title="Documented at http://www.cplusplus.com/reference/cstdlib/calloc/. ">calloc()</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The memory resulting from this call will need to be freed using <a class="el" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675" title="Documented at http://www.cplusplus.com/reference/cstdlib/free/. ">free()</a>.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> *example_string = <span class="stringliteral">&quot;some_text&quot;</span>;</div>
-<div class="line"><span class="keywordtype">int</span> size = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(example_string)+1;</div>
+<div class="line"><span class="keywordtype">int</span> size = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(example_string)+1;</div>
 <div class="line"><span class="keywordtype">char</span> *example_string_copy = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(size);</div>
-<div class="line"><a class="code" href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(example_string_copy, size, <span class="stringliteral">&quot;%s&quot;</span>, example_string);</div>
+<div class="line"><a class="code" href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(example_string_copy, size, <span class="stringliteral">&quot;%s&quot;</span>, example_string);</div>
 <div class="line">lr_log_message(<span class="stringliteral">&quot;Copy of example string contains: %s&quot;</span>, example_string_copy);</div>
-<div class="line"><a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
-</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f" title="Allocates a character array and initializes all elements to zero As y_mem_alloc(), but using the &#39;calloc&#39; function, rather than &#39;malloc(). Adds some simple checks to catch common errors. ">y_array_alloc()</a>, <a class="el" href="vugen_8h.html#a5f1a5df9b8c50bd259b8c34c0056e304">malloc()</a> </dd></dl>
+<div class="line"><a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(test);</div>
+</div><!-- fragment --> <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f" title="Allocates a character array and initializes all elements to zero As y_mem_alloc(), but using the &#39;calloc&#39; function, rather than &#39;malloc(). Adds some simple checks to catch common errors. ">y_array_alloc()</a>, <a class="el" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304" title="Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. ">malloc()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__core_8c_source.html#l00210">210</a> of file <a class="el" href="y__core_8c_source.html">y_core.c</a>.</p>
 

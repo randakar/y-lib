@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -429,10 +430,10 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <div class="line"></div>
 <div class="line">   result = <a class="code" href="y__param__array_8c.html#a54ded5171538f6c06ba4b15e3912c277">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;foo&quot;</span>, 1);</div>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, result); <span class="comment">// Prints &quot;Result: bar&quot; </span></div>
-<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
+<div class="line">   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
 <div class="line">   result = <a class="code" href="y__param__array_8c.html#a54ded5171538f6c06ba4b15e3912c277">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;foo&quot;</span>, 2);</div>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: %s&quot;</span>, result); <span class="comment">// Prints &quot;Result: baz&quot;</span></div>
-<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
+<div class="line">   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(result);</div>
 <div class="line">}</div>
 <div class="line">{</div>
 <div class="line">   <span class="keywordtype">char</span> buffer[11] = { <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;r&#39;</span>,<span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;k&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;n&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>, <span class="charliteral">&#39;\0&#39;</span> };</div>
@@ -441,7 +442,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <div class="line">   <a class="code" href="y__param__array_8c.html#a90307711b407c8d84f6774d928f9907c">y_array_save_count</a>(1, <span class="stringliteral">&quot;broken&quot;</span>);</div>
 <div class="line">   tmp = <a class="code" href="y__param__array_8c.html#a54ded5171538f6c06ba4b15e3912c277">y_array_get_no_zeroes</a>(<span class="stringliteral">&quot;broken&quot;</span>, 1);</div>
 <div class="line">   lr_log_message(<span class="stringliteral">&quot;Result: &#39;%s&#39;&quot;</span>, tmp); <span class="comment">// prints &quot;Result: &#39; b ro ken  &#39;&quot;</span></div>
-<div class="line">   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
+<div class="line">   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__param__array_8c.html#af976fbc26cbf53782e0c79db7028517e" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, lr_paramarr_idx(), <a class="el" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06" title="Calculate how much space storing the decimal representation of a number into a string requires...">y_int_strlen()</a>, lr_eval_string_ext() </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>

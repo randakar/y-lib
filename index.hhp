@@ -38,6 +38,14 @@ y__transaction_8c.html
 y__vts_8c.html
 todo.html
 deprecated.html
+group__string.html
+group__char.html
+group__memory.html
+group__time.html
+group__file.html
+group__process.html
+group__locale.html
+group__math.html
 struct__timeb.html
 structlconv.html
 structtm.html
@@ -45,6 +53,7 @@ structy__struct__browser.html
 structy__struct__flow.html
 index.html
 pages.html
+modules.html
 annotated.html
 classes.html
 functions.html

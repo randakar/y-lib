@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -78,7 +79,7 @@
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">   66</a></span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a>(<span class="keywordtype">int</span> number)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">size_t</span> result = 1;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> power = <a class="code" href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a>(number);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> power = <a class="code" href="group__math.html#gafd4f329c8efb45c0dfff44525047a0fa">abs</a>(number);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// Negative numbers need more space.</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">if</span>(number &lt; 0)</div>
@@ -92,7 +93,7 @@
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">   90</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(<span class="keywordtype">char</span>* source)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">char</span>* result = <a class="code" href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup</a>(source);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">char</span>* result = <a class="code" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581">strdup</a>(source);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>( result == NULL )</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Out of memory while calling strdup()&quot;</span>);</div>
@@ -106,8 +107,8 @@
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">char</span>* buffer;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> size;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">char</span>* source = <a class="code" href="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(source_param); <span class="comment">// Puts the parameter name into parameter seperators { }.</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    lr_eval_string_ext(source, <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(source), &amp;buffer, &amp;size, 0, 0, -1); <span class="comment">// Evaluates the result and copy the data into buffer.</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(source);                              <span class="comment">// Free the intermediate parameter name.</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    lr_eval_string_ext(source, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(source), &amp;buffer, &amp;size, 0, 0, -1); <span class="comment">// Evaluates the result and copy the data into buffer.</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(source);                              <span class="comment">// Free the intermediate parameter name.</span></div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    lr_save_var(buffer, size, 0, dest_param);  <span class="comment">// Save the result.</span></div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    lr_eval_string_ext_free(&amp;buffer);          <span class="comment">// Free the buffer.</span></div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
@@ -120,7 +121,7 @@
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Nonexistant parameter %s passed to y_uppercase_parameter(): Aborting.&quot;</span>, param_name);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        lr_abort();</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="vugen_8h.html#a3b3a432051b3200971d320bae89dbf2d">strupr</a>(result);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="group__string.html#ga3b3a432051b3200971d320bae89dbf2d">strupr</a>(result);</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    lr_save_string(result, param_name);</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
@@ -136,14 +137,14 @@
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="comment">// zoek start</span></div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span> (left) {</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        p1 = <a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(str, left);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordflow">if</span> (p1) str = p1 + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(left);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        p1 = <a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(str, left);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordflow">if</span> (p1) str = p1 + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(left);</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="comment">// else start is positie 0...</span></div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    }</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="comment">// zoek eind</span></div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordflow">if</span> (right) {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        p1 = <a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(str, right);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        p1 = <a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(str, right);</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">if</span> (p1) {</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            lr_param_sprintf(result_parameter, <span class="stringliteral">&quot;%.*s&quot;</span>, p1 - str, str); <span class="comment">// of sprintf</span></div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            <span class="keywordflow">return</span>;</div>
@@ -161,7 +162,7 @@
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        lr_error_message(<span class="stringliteral">&quot;y_left(): Error: Parameter %s does not exist!&quot;</span>, original_parameter);</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        lr_abort();</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    }</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    {</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        lr_save_string(original, result_parameter);</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        lr_log_message(<span class="stringliteral">&quot;Warning: Empty search parameter passed to y_left()&quot;</span>);</div>
@@ -170,7 +171,7 @@
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    {</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordtype">char</span> *buffer;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordtype">char</span> *posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, search);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordtype">char</span> *posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, search);</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="keywordtype">int</span> pos = (int)(posPtr - original);</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <span class="comment">//lr_log_message(&quot;y_left: original=%s, search=%s, resultParam=%s&quot;, original, search, resultParam);</span></div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
@@ -185,7 +186,7 @@
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        buffer = <a class="code" href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(original);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        buffer[pos] = <span class="charliteral">&#39;\0&#39;</span>; <span class="comment">// make the cut</span></div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        lr_save_string(buffer, result_parameter); <span class="comment">// save the result</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    }</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
@@ -198,7 +199,7 @@
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        lr_error_message(<span class="stringliteral">&quot;y_right(): Error: Parameter %s does not exist!&quot;</span>, original_parameter);</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        lr_abort();</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    }</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    {</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        lr_save_string(original, result_parameter);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        lr_log_message(<span class="stringliteral">&quot;Warning: Empty search parameter passed to y_right()&quot;</span>);</div>
@@ -206,7 +207,7 @@
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    }</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordtype">char</span>* posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, search);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordtype">char</span>* posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, search);</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="comment">//int pos = (int)(posPtr - original);</span></div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="comment">//lr_log_message(&quot;y_right: original=%s, search=%s, resultParam=%s&quot;, original, search, result_parameter);</span></div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    </div>
@@ -216,7 +217,7 @@
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        }</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="comment">//lr_log_message(&quot;pos = %d&quot;, pos);</span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        posPtr = posPtr + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        posPtr = posPtr + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search);</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        lr_save_string(posPtr, result_parameter);</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    }</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;}</div>
@@ -230,7 +231,7 @@
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        lr_error_message(<span class="stringliteral">&quot;y_last_right(): Error: Parameter %s does not exist!&quot;</span>, original_parameter);</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        lr_abort();</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    }</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>( search == NULL || <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search) == 0 )</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    {</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        lr_save_string(result, result_parameter);</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        lr_log_message(<span class="stringliteral">&quot;Warning: Empty search parameter passed to y_last_right()&quot;</span>);</div>
@@ -242,7 +243,7 @@
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="comment">//lr_log_message(&quot;y_last_right: original=%s, search=%s, resultParam=%s&quot;, original, search, resultParameter);</span></div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keywordflow">do</span> </div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(result, search);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(result, search);</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            <span class="comment">//pos = (int)(posPtr - result);</span></div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            <span class="comment">//lr_log_message(&quot;pos = %d&quot;, pos);</span></div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    </div>
@@ -253,7 +254,7 @@
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            }</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            <span class="comment">// found, update the result pointer and go find more..</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;            result = posPtr + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;            result = posPtr + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search);</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        } </div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keywordflow">while</span>(1);</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    }</div>
@@ -263,7 +264,7 @@
 <div class="line"><a name="l00370"></a><span class="lineno"><a class="line" href="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff">  370</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff">y_split_str</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *original, <span class="keyword">const</span> <span class="keywordtype">char</span> *separator, <span class="keywordtype">char</span> *left, <span class="keywordtype">char</span> *right)</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;{</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordtype">char</span> *buffer;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordtype">char</span> *posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, separator);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordtype">char</span> *posPtr = (<span class="keywordtype">char</span> *)<a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(original, separator);</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordtype">int</span> pos = (int)(posPtr - original);;</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="comment">//lr_log_message(&quot;y_split_str: original=%s, search=%s&quot;, original, search);</span></div>
@@ -271,19 +272,19 @@
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">if</span>( posPtr == NULL )</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    {</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="comment">// Copy the original to the left hand output buffer.</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        strncpy(left, original, <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(original)+1); <span class="comment">// Let&#39;s not forget to copy the null byte, too.</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        <a class="code" href="group__string.html#gac25b4990403370b02ac7f8403a6b3230">strncpy</a>(left, original, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(original)+1); <span class="comment">// Let&#39;s not forget to copy the null byte, too.</span></div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    }</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="comment">//lr_log_message(&quot;pos = %d&quot;, pos);</span></div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="comment">// Copy the left hand using pos bytes from the original</span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    strncpy(left, original, pos);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <a class="code" href="group__string.html#gac25b4990403370b02ac7f8403a6b3230">strncpy</a>(left, original, pos);</div>
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    left[pos] = <span class="charliteral">&#39;\0&#39;</span>; <span class="comment">// make the cut by putting a null character at the end.</span></div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="comment">// Copy the right hand side starting from the position just after the found string.</span></div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    {</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="keywordtype">char</span> *start = posPtr + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(separator);</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        strncpy(right, start, <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(start)+1); <span class="comment">// Let&#39;s not forget to copy the null byte, too.</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="keywordtype">char</span> *start = posPtr + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(separator);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        <a class="code" href="group__string.html#gac25b4990403370b02ac7f8403a6b3230">strncpy</a>(right, start, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(start)+1); <span class="comment">// Let&#39;s not forget to copy the null byte, too.</span></div>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    }</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;}</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
@@ -291,9 +292,9 @@
 <div class="line"><a name="l00418"></a><span class="lineno"><a class="line" href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92">  418</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92">y_split</a>( <span class="keyword">const</span> <span class="keywordtype">char</span> *originalParameter, <span class="keyword">const</span> <span class="keywordtype">char</span> *separator, <span class="keyword">const</span> <span class="keywordtype">char</span> *leftParameter, <span class="keyword">const</span> <span class="keywordtype">char</span> *rightParameter)</div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;{</div>
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="keywordtype">char</span> *item = <a class="code" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(originalParameter);</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="keywordtype">int</span> len = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(item);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="keywordtype">int</span> len = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(item);</div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keywordflow">if</span>( len &lt; <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(separator) )</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keywordflow">if</span>( len &lt; <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(separator) )</div>
 <div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    {</div>
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <span class="comment">// Since the separator doesn&#39;t even fit in the item, searching is pointless.</span></div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;        <span class="comment">// Store the original in the left hand parameter, the right hand is empty.</span></div>
@@ -313,7 +314,7 @@
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        <span class="comment">// Right hand side</span></div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="comment">// If the separator gets found in position 1 the remainder of the</span></div>
 <div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;        <span class="comment">// original string gets stored here (and left gets a zero-length string).</span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;        <span class="keywordtype">char</span> *right = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(len-<a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(separator)+1);</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;        <span class="keywordtype">char</span> *right = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>(len-<a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(separator)+1);</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        <span class="comment">// Start off with zero-length strings. We can safely assume</span></div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        <span class="comment">// both variables contain garbage when freshly allocated.</span></div>
@@ -325,9 +326,9 @@
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;</div>
 <div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;        <span class="comment">// Store the results in parameters.</span></div>
 <div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;        lr_save_string(left, leftParameter);</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(left);</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(left);</div>
 <div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        lr_save_string(right, rightParameter);</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(right);</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(right);</div>
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    }</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;}</div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;</div>
@@ -352,7 +353,7 @@
 <div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="comment">//lr_output_message(&quot;result after removal of leading whitespace: %s&quot;, result);</span></div>
 <div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    </div>
 <div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    <span class="comment">// y_chop trailing whitespace</span></div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    i = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(result)-1;    </div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    i = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(result)-1;    </div>
 <div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;    character = result[i];</div>
 <div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    <span class="keywordflow">while</span>( (i &gt;= 0) &amp;&amp;</div>
 <div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;           (  (character == <span class="charliteral">&#39; &#39;</span> ) ||</div>
@@ -380,16 +381,16 @@
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;   <span class="keywordtype">char</span> *buffer;              <span class="comment">// buffer voor bewerkingen</span></div>
 <div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;   <span class="keywordtype">char</span> *string;              <span class="comment">// originele string waar we in zoeken</span></div>
 <div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keywordflow">if</span> ((search == NULL)     || (<a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(search) &lt;1)) </div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;   <span class="keywordflow">if</span> ((search == NULL)     || (<a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(search) &lt;1)) </div>
 <div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;       <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;   <span class="keywordflow">if</span> (!search || !replace)      <span class="keywordflow">return</span>;   <span class="comment">// ongeldige search of_replace</span></div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="vugen_8h.html#a04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(search, replace)) <span class="keywordflow">return</span>;   <span class="comment">// search == replace: geen wijziging</span></div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;   <span class="keywordflow">if</span> (!<a class="code" href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(search, replace)) <span class="keywordflow">return</span>;   <span class="comment">// search == replace: geen wijziging</span></div>
 <div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   slen = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a> (search);          <span class="comment">// de lengte van search</span></div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   rlen = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a> (replace);         <span class="comment">// de lengte van replace</span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;   slen = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a> (search);          <span class="comment">// de lengte van search</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;   rlen = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a> (replace);         <span class="comment">// de lengte van replace</span></div>
 <div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;</div>
 <div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;   <span class="keywordtype">string</span> = <a class="code" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(parameter); <span class="comment">// &lt;-- memory allocated by loadrunner, too small if replace &gt; search</span></div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   plen = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(<span class="keywordtype">string</span>);</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;   plen = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(<span class="keywordtype">string</span>);</div>
 <div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;</div>
 <div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;   <span class="comment">//lr_log_message(&quot;y_replace(%s, %s, %s) - slen %d, rlen %d, plen %d&quot;, parameter, search, replace, slen, rlen, plen);</span></div>
 <div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    </div>
@@ -398,7 +399,7 @@
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;      <span class="comment">// Reserve memory for -limit- replacements.</span></div>
 <div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;      <span class="keywordtype">size_t</span> size = plen + ((rlen-slen) * limit);</div>
 <div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;      buffer = <a class="code" href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a>( size );</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;      <a class="code" href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a>( buffer, size, <span class="stringliteral">&quot;%s&quot;</span>, <span class="keywordtype">string</span> );</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;      <a class="code" href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a>( buffer, size, <span class="stringliteral">&quot;%s&quot;</span>, <span class="keywordtype">string</span> );</div>
 <div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;   }</div>
 <div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;   <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;   {</div>
@@ -406,10 +407,10 @@
 <div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;      buffer = string;</div>
 <div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;   }</div>
 <div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;   last = buffer + <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(buffer) +1;      <span class="comment">// het einde van de string, de null byte</span></div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;   last = buffer + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(buffer) +1;      <span class="comment">// het einde van de string, de null byte</span></div>
 <div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;   c = buffer;                             <span class="comment">// initialiseer c - buffer moet intact blijven</span></div>
 <div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordflow">while</span> (c = (<span class="keywordtype">char</span>*) <a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>(c, search))   <span class="comment">// doorzoek de search string vanaf waar je gebleven bent</span></div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;   <span class="keywordflow">while</span> (c = (<span class="keywordtype">char</span>*) <a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>(c, search))   <span class="comment">// doorzoek de search string vanaf waar je gebleven bent</span></div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;   {</div>
 <div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;      <span class="comment">//lr_output_message(&quot;c:%s&quot;, c);</span></div>
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160; </div>
@@ -423,18 +424,18 @@
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;         }</div>
 <div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;         cend = c+slen;                        <span class="comment">// cend is de plaats van waaraf de string moet opschuiven</span></div>
 <div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;         <span class="comment">//lr_output_message(&quot;memmove(dest=%d, src=%d, size=%d)&quot;, (long)(c+rlen), (long)(cend), (long)(last-cend) );</span></div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;         <a class="code" href="vugen_8h.html#a802c986820d3866639922b6bc9484f90">memmove</a> (c+rlen , cend, last-cend);   <span class="comment">// verplaats de rest van de string - als de geheugenberekening niet klopt gaat dit stuk!</span></div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;         <a class="code" href="group__memory.html#ga802c986820d3866639922b6bc9484f90">memmove</a> (c+rlen , cend, last-cend);   <span class="comment">// verplaats de rest van de string - als de geheugenberekening niet klopt gaat dit stuk!</span></div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;         <span class="comment">//lr_output_message(&quot;memmove completed, result = %s&quot;, c);</span></div>
 <div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;         last = last - slen + rlen;            <span class="comment">// en bereken het nieuwe eindpunt</span></div>
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;      }</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      <a class="code" href="vugen_8h.html#a802c986820d3866639922b6bc9484f90">memmove</a>(c, replace, rlen);  <span class="comment">// execute the replacement</span></div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;      <a class="code" href="group__memory.html#ga802c986820d3866639922b6bc9484f90">memmove</a>(c, replace, rlen);  <span class="comment">// execute the replacement</span></div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;      c += rlen;                  <span class="comment">// start the next search at the point where the replacement ended</span></div>
 <div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;   }</div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;   lr_save_string(buffer, parameter);</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;</div>
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;   <span class="keywordflow">if</span>( rlen &gt; slen )</div>
 <div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;   {</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;      <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;      <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
 <div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;   }</div>
 <div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;}</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;</div>
@@ -454,15 +455,15 @@
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;   parameter = <a class="code" href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(paramName);</div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;   <span class="comment">// removePtr is used to track our progress through this string</span></div>
 <div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;   removePtr = parameter;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   remlen = <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(removeMe);</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;   remlen = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(removeMe);</div>
 <div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;</div>
 <div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;   <span class="comment">// while we find occurrances of the string we&#39;re looking for</span></div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="keywordflow">while</span> ( removePtr = (<span class="keywordtype">char</span> *)<a class="code" href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a>( removePtr, removeMe ) )</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;   <span class="keywordflow">while</span> ( removePtr = (<span class="keywordtype">char</span> *)<a class="code" href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a>( removePtr, removeMe ) )</div>
 <div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;   {</div>
 <div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;      <span class="comment">// copy the characters between the end of the data we wish to remove and end-of-string </span></div>
 <div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      <span class="comment">// to the place where we found our offending content.</span></div>
 <div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      <span class="keywordtype">char</span>* origin = removePtr + remlen;</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      strncpy(removePtr, origin, (<a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(origin)+1));</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      <a class="code" href="group__string.html#gac25b4990403370b02ac7f8403a6b3230">strncpy</a>(removePtr, origin, (<a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(origin)+1));</div>
 <div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;   }</div>
 <div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;   <span class="comment">// store it in the original parameter</span></div>
@@ -496,9 +497,9 @@
 <div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;<span class="comment">//     lr_save_var(buf, 22, 0, param); // save &amp; trim off ==</span></div>
 <div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;</div>
 <div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    <span class="keywordtype">char</span> buf[100]; <span class="comment">// should be only 22 characters, but apparently not always ..</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;    <a class="code" href="vugen_8h.html#a484916591c59d130107eea6380337b69">memset</a>(buf, <span class="charliteral">&#39;\0&#39;</span>, <span class="keyword">sizeof</span>(buf) * <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>));</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;    <a class="code" href="group__memory.html#ga484916591c59d130107eea6380337b69">memset</a>(buf, <span class="charliteral">&#39;\0&#39;</span>, <span class="keyword">sizeof</span>(buf) * <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>));</div>
 <div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;    lr_generate_uuid_on_buf(buf);</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    lr_save_var(buf, <a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(buf), 0, param); <span class="comment">// save &amp; trim off ==</span></div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    lr_save_var(buf, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(buf), 0, param); <span class="comment">// save &amp; trim off ==</span></div>
 <div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;}</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;</div>
 <div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;</div>
@@ -515,7 +516,7 @@
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;   <span class="keywordtype">char</span> randomNumber;</div>
 <div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;   <span class="keywordtype">int</span> lettersInWord;</div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   charSetSize=<a class="code" href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a>(characterSet);</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;   charSetSize=<a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(characterSet);</div>
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;</div>
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;   <span class="comment">//lr_message(&quot;minimumLength %d -- maximumLength %d -- minWordLength %d -- maxWordLength %d&quot;, </span></div>
 <div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;   <span class="comment">//      minimumLength, maximumLength, minWordLength, maxWordLength);</span></div>
@@ -593,7 +594,7 @@
 <div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;   buffer[max] = <span class="charliteral">&#39;\0&#39;</span>;</div>
 <div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;</div>
 <div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;   lr_save_string(buffer, parameter);</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   <a class="code" href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
 <div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;}</div>
 <div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;</div>
 <div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;</div>
@@ -626,41 +627,42 @@
 <div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;</div>
 <div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;<span class="preprocessor">#endif // _Y_STRING_C_</span></div>
 <div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;<span class="preprocessor"></span></div>
-<div class="ttc" id="vugen_8h_html_a2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="vugen_8h.html#a2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
-<div class="ttc" id="vugen_8h_html_afd4f329c8efb45c0dfff44525047a0fa"><div class="ttname"><a href="vugen_8h.html#afd4f329c8efb45c0dfff44525047a0fa">abs</a></div><div class="ttdeci">int abs(int n)</div></div>
-<div class="ttc" id="vugen_8h_html_a04ee58caa7e5071bb02f298a1921a5f4"><div class="ttname"><a href="vugen_8h.html#a04ee58caa7e5071bb02f298a1921a5f4">strcmp</a></div><div class="ttdeci">int strcmp(const char *string1, const char *string2)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strcmp/. </div></div>
+<div class="ttc" id="group__string_html_ga3b3a432051b3200971d320bae89dbf2d"><div class="ttname"><a href="group__string.html#ga3b3a432051b3200971d320bae89dbf2d">strupr</a></div><div class="ttdeci">char * strupr(char *string)</div><div class="ttdoc">Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strupr.html . </div></div>
 <div class="ttc" id="y__string_8c_html_abced95074b83aebcfb1454f15890c2b5"><div class="ttname"><a href="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5">y_left</a></div><div class="ttdeci">void y_left(const char *original_parameter, const char *search, const char *result_parameter)</div><div class="ttdoc">Split a string into 2 parts using the search string. Save the left part into the result parameter...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00217">y_string.c:217</a></div></div>
 <div class="ttc" id="y__core_8c_html_ab903d513f84dc0cd3f7af7acf67e2fb2"><div class="ttname"><a href="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a></div><div class="ttdeci">char * y_get_parameter_eval_string(const char *param_name)</div><div class="ttdoc">Obtain the string required to fetch the contents of a parameter through lr_eval_string(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00275">y_core.c:275</a></div></div>
-<div class="ttc" id="vugen_8h_html_aedc7fca209acba7af0ad9e91573e89a6"><div class="ttname"><a href="vugen_8h.html#aedc7fca209acba7af0ad9e91573e89a6">strstr</a></div><div class="ttdeci">char * strstr(const char *string1, const char *string2)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strstr/. </div></div>
+<div class="ttc" id="group__string_html_ga86e0df1bf9e434074f958434e0af7581"><div class="ttname"><a href="group__string.html#ga86e0df1bf9e434074f958434e0af7581">strdup</a></div><div class="ttdeci">char * strdup(const char *string)</div><div class="ttdoc">Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...</div></div>
 <div class="ttc" id="y__string_8c_html_a27ae9506d1f756e8138c9eb85d098308"><div class="ttname"><a href="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308">y_chop</a></div><div class="ttdeci">void y_chop(const char *parameter)</div><div class="ttdoc">Remove leading and trailing whitespace from a parameter. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00484">y_string.c:484</a></div></div>
-<div class="ttc" id="vugen_8h_html_ac9626ce5468b43d954c3598c1ffe9725"><div class="ttname"><a href="vugen_8h.html#ac9626ce5468b43d954c3598c1ffe9725">snprintf</a></div><div class="ttdeci">int snprintf(char *buffer, size_t n, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/snprintf/. </div></div>
+<div class="ttc" id="group__string_html_gaedc7fca209acba7af0ad9e91573e89a6"><div class="ttname"><a href="group__string.html#gaedc7fca209acba7af0ad9e91573e89a6">strstr</a></div><div class="ttdeci">char * strstr(const char *string1, const char *string2)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strstr/. </div></div>
 <div class="ttc" id="y__core_8c_html"><div class="ttname"><a href="y__core_8c.html">y_core.c</a></div><div class="ttdoc">Contains core ylib support functions needed for the functioning of the library. </div></div>
 <div class="ttc" id="y__string_8c_html_abdcde34b0a15516dd5b47b29196cf61b"><div class="ttname"><a href="y__string_8c.html#abdcde34b0a15516dd5b47b29196cf61b">y_remove_string_from_parameter</a></div><div class="ttdeci">void y_remove_string_from_parameter(const char *paramName, const char *removeMe)</div><div class="ttdoc">Remove all occurrences of a specified text from a parameter. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00623">y_string.c:623</a></div></div>
+<div class="ttc" id="group__string_html_ga04ee58caa7e5071bb02f298a1921a5f4"><div class="ttname"><a href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a></div><div class="ttdeci">int strcmp(const char *string1, const char *string2)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strcmp/. </div></div>
 <div class="ttc" id="y__string_8c_html_a6c487cce1d850e956bcd5af4c4acac73"><div class="ttname"><a href="y__string_8c.html#a6c487cce1d850e956bcd5af4c4acac73">y_substr</a></div><div class="ttdeci">void y_substr(const char *original_parameter, const char *result_parameter, const char *left, const char *right)</div><div class="ttdoc">Save a substring of a parameter into a new parameter. Search for a specific substring inside a parame...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00173">y_string.c:173</a></div></div>
 <div class="ttc" id="y__string_8c_html_ab751d549b344736ced6cf495d019ebc6"><div class="ttname"><a href="y__string_8c.html#ab751d549b344736ced6cf495d019ebc6">y_random_string_buffer</a></div><div class="ttdeci">void y_random_string_buffer(const char *parameter, int minimumLength, int maximumLength)</div><div class="ttdoc">Returns a random string with (pseudo) words created from a given string of characters. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00837">y_string.c:837</a></div></div>
+<div class="ttc" id="group__memory_html_ga802c986820d3866639922b6bc9484f90"><div class="ttname"><a href="group__memory.html#ga802c986820d3866639922b6bc9484f90">memmove</a></div><div class="ttdeci">void * memmove(void *dest, const void *src, size_t n)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/memmove/. </div></div>
 <div class="ttc" id="y__string_8c_html_a9ff7d0f5c99aad7760fa9f32d0d21d25"><div class="ttname"><a href="y__string_8c.html#a9ff7d0f5c99aad7760fa9f32d0d21d25">y_replace</a></div><div class="ttdeci">void y_replace(const char *parameter, const char *search, const char *replace)</div><div class="ttdoc">Search and replace inside a parameter. This replaces the content of the originally passed-in paramete...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00537">y_string.c:537</a></div></div>
 <div class="ttc" id="y__loadrunner__utils_8c_html_aa50b7745f6d186a97d1dc21eebf52bb3"><div class="ttname"><a href="y__loadrunner__utils_8c.html#aa50b7745f6d186a97d1dc21eebf52bb3">y_rand_between</a></div><div class="ttdeci">int y_rand_between(int lowerbound, int upperbound)</div><div class="ttdoc">Create a random number between two boundaries. (the boundaries are included!) </div><div class="ttdef"><b>Definition:</b> <a href="y__loadrunner__utils_8c_source.html#l00128">y_loadrunner_utils.c:128</a></div></div>
-<div class="ttc" id="vugen_8h_html_a802c986820d3866639922b6bc9484f90"><div class="ttname"><a href="vugen_8h.html#a802c986820d3866639922b6bc9484f90">memmove</a></div><div class="ttdeci">void * memmove(void *dest, const void *src, size_t n)</div></div>
 <div class="ttc" id="y__string_8c_html_a8fa8cb819a971b562b07cf9ab9c84bba"><div class="ttname"><a href="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba">y_right</a></div><div class="ttdeci">void y_right(const char *original_parameter, const char *search, const char *result_parameter)</div><div class="ttdoc">Split a string into 2 parts using the search string. Save the right part into the result parameter...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00269">y_string.c:269</a></div></div>
 <div class="ttc" id="y__string_8c_html_a91e3109c43cfdf0f6378b943d39871bd"><div class="ttname"><a href="y__string_8c.html#a91e3109c43cfdf0f6378b943d39871bd">y_random_number_buffer</a></div><div class="ttdeci">void y_random_number_buffer(const char *parameter, int minimumLength, int maximumLength)</div><div class="ttdoc">Returns a random string of numbers with a given minimum and maximum length. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00854">y_string.c:854</a></div></div>
-<div class="ttc" id="vugen_8h_html_a86e0df1bf9e434074f958434e0af7581"><div class="ttname"><a href="vugen_8h.html#a86e0df1bf9e434074f958434e0af7581">strdup</a></div><div class="ttdeci">char * strdup(const char *string)</div><div class="ttdoc">Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...</div></div>
+<div class="ttc" id="group__math_html_gafd4f329c8efb45c0dfff44525047a0fa"><div class="ttname"><a href="group__math.html#gafd4f329c8efb45c0dfff44525047a0fa">abs</a></div><div class="ttdeci">int abs(int n)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/abs/. </div></div>
 <div class="ttc" id="y__string_8c_html_ae264f7c6576cb429747b914657ff8e92"><div class="ttname"><a href="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92">y_split</a></div><div class="ttdeci">void y_split(const char *originalParameter, const char *separator, const char *leftParameter, const char *rightParameter)</div><div class="ttdoc">Split a parameter in two based on a seperating string. If the seperator is not found in the original ...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00418">y_string.c:418</a></div></div>
 <div class="ttc" id="y__core_8c_html_af81efb56d5afc4806cdc79f64ba3d675"><div class="ttname"><a href="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a></div><div class="ttdeci">char * y_get_parameter_or_null(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *, or return NULL if it wasn&amp;#39;t set...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00361">y_core.c:361</a></div></div>
 <div class="ttc" id="y__string_8c_html_a3e11c4662cca5dd346ad89590d5eef24"><div class="ttname"><a href="y__string_8c.html#a3e11c4662cca5dd346ad89590d5eef24">y_random_string_buffer_core</a></div><div class="ttdeci">void y_random_string_buffer_core(const char *parameter, int minimumLength, int maximumLength, int minWordLength, int maxWordLength, char *characterSet)</div><div class="ttdoc">Generates a random string with (pseudo) words created from a given string of characters. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00731">y_string.c:731</a></div></div>
+<div class="ttc" id="group__memory_html_ga484916591c59d130107eea6380337b69"><div class="ttname"><a href="group__memory.html#ga484916591c59d130107eea6380337b69">memset</a></div><div class="ttdeci">void * memset(void *buffer, int c, size_t n)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/memset/. </div></div>
 <div class="ttc" id="y__core_8c_html_ab31dd572cc0f21dae3583c83770d5fab"><div class="ttname"><a href="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab">y_rand</a></div><div class="ttdeci">long y_rand()</div><div class="ttdoc">Generate a random (integer) number between 0 and Y_RAND_MAX (31 bit maxint). Seeds the random number ...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00144">y_core.c:144</a></div></div>
+<div class="ttc" id="group__string_html_ga2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
 <div class="ttc" id="y__string_8c_html_ad96e67d8e69e1df570958aa1e1d5e97e"><div class="ttname"><a href="y__string_8c.html#ad96e67d8e69e1df570958aa1e1d5e97e">y_last_right</a></div><div class="ttdeci">void y_last_right(const char *original_parameter, const char *search, const char *result_parameter)</div><div class="ttdoc">Split a string into 2 parts using the search string. Save the rightmost part into the result paramete...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00319">y_string.c:319</a></div></div>
+<div class="ttc" id="group__string_html_gac9626ce5468b43d954c3598c1ffe9725"><div class="ttname"><a href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a></div><div class="ttdeci">int snprintf(char *buffer, size_t n, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/snprintf/.  This function was introduced by t...</div></div>
 <div class="ttc" id="y__string_8c_html_ae32fba754c61429341686d6a5e387a06"><div class="ttname"><a href="y__string_8c.html#ae32fba754c61429341686d6a5e387a06">y_int_strlen</a></div><div class="ttdeci">size_t y_int_strlen(int number)</div><div class="ttdoc">Calculate how much space storing the decimal representation of a number into a string requires...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00066">y_string.c:66</a></div></div>
 <div class="ttc" id="y__string_8c_html_a20420f9a082c1e2a89b70409d6008931"><div class="ttname"><a href="y__string_8c.html#a20420f9a082c1e2a89b70409d6008931">y_uppercase_parameter</a></div><div class="ttdeci">void y_uppercase_parameter(const char *param_name)</div><div class="ttdoc">Convert the content of a parameter to UPPERCASE. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00143">y_string.c:143</a></div></div>
-<div class="ttc" id="vugen_8h_html_a3b3a432051b3200971d320bae89dbf2d"><div class="ttname"><a href="vugen_8h.html#a3b3a432051b3200971d320bae89dbf2d">strupr</a></div><div class="ttdeci">char * strupr(char *string)</div><div class="ttdoc">Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strupr.html . </div></div>
 <div class="ttc" id="y__string_8c_html_a8cbde93e30abaf3392c172f8f83e5889"><div class="ttname"><a href="y__string_8c.html#a8cbde93e30abaf3392c172f8f83e5889">y_random_string_buffer_hex</a></div><div class="ttdeci">void y_random_string_buffer_hex(const char *parameter, int minimumLength, int maximumLength)</div><div class="ttdoc">Generates a random string with a hexadecimal number, of a given minimum and maximum length...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00891">y_string.c:891</a></div></div>
 <div class="ttc" id="y__string_8c_html_a7b01815915da19b48aaca1a7a5ba30b2"><div class="ttname"><a href="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2">y_copy_param</a></div><div class="ttdeci">void y_copy_param(char *source_param, char *dest_param)</div><div class="ttdoc">Copy a parameter to a new name. This is a semi-efficiënt parameter copy using lr_eval_string_ext(), with appropriate freeing of memory. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00115">y_string.c:115</a></div></div>
+<div class="ttc" id="group__string_html_gac25b4990403370b02ac7f8403a6b3230"><div class="ttname"><a href="group__string.html#gac25b4990403370b02ac7f8403a6b3230">strncpy</a></div><div class="ttdeci">char * strncpy(char *destination, const char *source, size_t num)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strncpy/. </div></div>
 <div class="ttc" id="y__string_8c_html_a18ccd408f76375cb48aceed43aa76bff"><div class="ttname"><a href="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff">y_split_str</a></div><div class="ttdeci">void y_split_str(const char *original, const char *separator, char *left, char *right)</div><div class="ttdoc">Split a string into 2 parts based on a search string. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00370">y_string.c:370</a></div></div>
 <div class="ttc" id="y__string_8c_html_a8cba325c05b63bbbdc499702c4f5c6e9"><div class="ttname"><a href="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a></div><div class="ttdeci">char * y_strdup(char *source)</div><div class="ttdoc">Copy a string into a malloc&amp;#39;d piece of memory using strdup(), and lr_abort() if the allocation fails...</div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00090">y_string.c:90</a></div></div>
 <div class="ttc" id="y__string_8c_html_aac658f815d53b5fbda9abe49b34148e1"><div class="ttname"><a href="y__string_8c.html#aac658f815d53b5fbda9abe49b34148e1">y_random_string_buffer_curses</a></div><div class="ttdeci">void y_random_string_buffer_curses(const char *parameter, int minimumLength, int maximumLength)</div><div class="ttdoc">Returns a string containing only the &quot;shift-1...shift 9 characters (on a US-keyboard). </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00871">y_string.c:871</a></div></div>
 <div class="ttc" id="y__core_8c_html_a44660f85cba534a4c186c29ec698c4fb"><div class="ttname"><a href="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(const int size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00210">y_core.c:210</a></div></div>
-<div class="ttc" id="vugen_8h_html_a557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="vugen_8h.html#a557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div></div>
+<div class="ttc" id="group__memory_html_ga557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/free/. </div></div>
 <div class="ttc" id="y__core_8c_html_a8252a459f15c52a8680fff9ddbd7356c"><div class="ttname"><a href="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a></div><div class="ttdeci">char * y_get_parameter(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00324">y_core.c:324</a></div></div>
-<div class="ttc" id="vugen_8h_html_a484916591c59d130107eea6380337b69"><div class="ttname"><a href="vugen_8h.html#a484916591c59d130107eea6380337b69">memset</a></div><div class="ttdeci">void * memset(void *buffer, int c, size_t n)</div></div>
 <div class="ttc" id="y__string_8c_html_a0213fca8c623a194e44b3a846a834729"><div class="ttname"><a href="y__string_8c.html#a0213fca8c623a194e44b3a846a834729">y_param_unique</a></div><div class="ttdeci">void y_param_unique(char *param)</div><div class="ttdoc">Create a unique parameter. </div><div class="ttdef"><b>Definition:</b> <a href="y__string_8c_source.html#l00665">y_string.c:665</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

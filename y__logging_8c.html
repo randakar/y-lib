@@ -31,6 +31,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -59,7 +60,7 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af5f7233cc156519f399367ba558adba8"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8">y_make_datetimestamp</a> (<a class="el" href="vugen_8h.html#a824afaa48b313f905546cf45822800fc">time_t</a> <a class="el" href="vugen_8h.html#a8038cf2bfae47bdf6942741c58a2c530">time</a>, unsigned short millitm)</td></tr>
+<tr class="memitem:af5f7233cc156519f399367ba558adba8"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8">y_make_datetimestamp</a> (<a class="el" href="group__time.html#ga824afaa48b313f905546cf45822800fc">time_t</a> <a class="el" href="group__time.html#ga8038cf2bfae47bdf6942741c58a2c530">time</a>, unsigned short millitm)</td></tr>
 <tr class="memdesc:af5f7233cc156519f399367ba558adba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.  <a href="#af5f7233cc156519f399367ba558adba8">More...</a><br/></td></tr>
 <tr class="separator:af5f7233cc156519f399367ba558adba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b402b9377251d1b78db7507c76fd886"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__logging_8c.html#a9b402b9377251d1b78db7507c76fd886">y_get_datetimestamp</a> ()</td></tr>
@@ -199,7 +200,7 @@ Functions</h2></td></tr>
 
 <p>Returns the current time converted represented as YYYY-MM-DD HH:MM:SS.mmm. </p>
 <dl class="section return"><dt>Returns</dt><dd>The string represation of the current time, formatted as YYYY-MM-DD HH:MM:SS.mmm.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Use lr_save_datetime() or direct <a class="el" href="vugen_8h.html#a02b53b2075c6fd6d1d695bf8176991a0">ftime()</a> calls instead.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Use lr_save_datetime() or direct <a class="el" href="group__time.html#gafc0d3a1676a915f3cedcad79759f6802" title="Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/f/ftime.html . ">ftime()</a> calls instead.</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__logging_8c.html#af5f7233cc156519f399367ba558adba8" title="Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm. ">y_make_datetimestamp()</a>, <a class="el" href="y__loadrunner__utils_8c.html#a17b08587d9d4bead3865b4778bda878b" title="Get the current time in seconds since 1970, as a double. ">y_get_current_time()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__logging_8c_source.html#l00087">87</a> of file <a class="el" href="y__logging_8c_source.html">y_logging.c</a>.</p>
@@ -503,7 +504,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">char* y_make_datetimestamp </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="vugen_8h.html#a824afaa48b313f905546cf45822800fc">time_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__time.html#ga824afaa48b313f905546cf45822800fc">time_t</a>&#160;</td>
           <td class="paramname"><em>time</em>, </td>
         </tr>
         <tr>
@@ -523,7 +524,7 @@ Functions</h2></td></tr>
 <p>Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>- the unix time stamp, as reported by <a class="el" href="vugen_8h.html#a02b53b2075c6fd6d1d695bf8176991a0">ftime()</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>- the unix time stamp, as reported by <a class="el" href="group__time.html#gafc0d3a1676a915f3cedcad79759f6802" title="Documented at http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/f/ftime.html . ">ftime()</a> </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">millitm</td><td>- the milliseconds belonging to the time stamp</td></tr>
   </table>
   </dd>
@@ -551,7 +552,7 @@ Functions</h2></td></tr>
 
 <p>Turn on 'extra logging', when available. </p>
 <p>This is one of the remnants of a bit of old code that would log every transaction stop/start with a timestamp, so that post-test-analysis of responstimes could be done with custom tools. Unless you are running a very old y-lib based script there is no reason why you should use this, as y_set_start_transaction_impl() and y_set_end_transaction_impl() should give you the tools you need to do something like that without polluting y-lib with it ;-)</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done. Note that <a class="el" href="y__transaction_8c.html">y_transaction.c</a> hasn't used the extra logging stuff in some time ..</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done. Note that <a class="el" href="y__transaction_8c.html" title="ylib transaction library. ">y_transaction.c</a> hasn't used the extra logging stuff in some time ..</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="y__logging_8c.html#a440898bcda285688344b7147e26ff5b7" title="If extra logging was enabled force a line to be logged to the logfile - even if regular logging was t...">y_log_to_report()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__logging_8c_source.html#l00110">110</a> of file <a class="el" href="y__logging_8c_source.html">y_logging.c</a>.</p>
