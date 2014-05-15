@@ -759,7 +759,18 @@ int y_end_sub_transaction(char *transaction_name, int status)
     return status;
 }
 
-
+int y_get_last_transaction_status()
+{
+    char* last_trans_status_string = y_get_parameter_or_null("y_last_transaction_status");
+    if( last_trans_status_string == NULL )
+    {
+        return LR_AUTO; // No earlier transaction, the parameter doesn't even exist.
+    }
+    else
+    {
+        return atoi(last_trans_status_string);
+    }
+}
 
 
 // Handy shortcuts //
