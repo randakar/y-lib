@@ -45,165 +45,38 @@
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">y_vts.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;vts2.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="y__string_8c_source.html">y_string.c</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>&quot;</code><br />
-</div>
+
+<p>VTS functions for LR 11.5 and above.  
+<a href="#details">More...</a></p>
+
 <p><a href="y__vts_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab85c4147088754ab8284d6bb3e0a0548"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548">_VTS_FUNC_C</a></td></tr>
-<tr class="separator:ab85c4147088754ab8284d6bb3e0a0548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af5fd6e72c49a15f1c90791a4d5a57a39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a> (char *errortext)</td></tr>
-<tr class="separator:af5fd6e72c49a15f1c90791a4d5a57a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9eab9ca03005e3c3f33450539d22343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343">VTS_setup</a> ()</td></tr>
-<tr class="separator:ad9eab9ca03005e3c3f33450539d22343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf4edb49fe893387db7b6f84d2c2b549"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a> (int returncode)</td></tr>
-<tr class="memdesc:aaf4edb49fe893387db7b6f84d2c2b549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error translation and reporting facility for VTS return codes. This will emit VTS errors using lr_error_message() in human readable form, if the code represents a VTS error.  <a href="#aaf4edb49fe893387db7b6f84d2c2b549">More...</a><br /></td></tr>
-<tr class="separator:aaf4edb49fe893387db7b6f84d2c2b549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7536c4ebc4a53b24a3938749c34e3ae8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a> ()</td></tr>
-<tr class="separator:a7536c4ebc4a53b24a3938749c34e3ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91b1420978a193be969c77f7a1be7ac1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a> ()</td></tr>
-<tr class="separator:a91b1420978a193be969c77f7a1be7ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac06f9b88c25c04f1d6c5f036b2e7b8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">VTS_pushlast_with_flag</a> (char *columnname, char *value, int unique)</td></tr>
-<tr class="separator:aac06f9b88c25c04f1d6c5f036b2e7b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a586699f6a949b6e350b71be5adccc219"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219">VTS_pushlast_unique</a> (char *columnname, char *value)</td></tr>
-<tr class="separator:a586699f6a949b6e350b71be5adccc219"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76e3d4057f3a4958b90a45143a010436"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436">VTS_pushlast</a> (char *columnname, char *value)</td></tr>
-<tr class="separator:a76e3d4057f3a4958b90a45143a010436"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08dbc5fd5bb076e1ea0ece2f2949dfd3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3">VTS_clearColumn</a> (char *columnname)</td></tr>
-<tr class="separator:a08dbc5fd5bb076e1ea0ece2f2949dfd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4a8e2dc6a6c2d407482811129b3f095"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095">VTS_readRandom</a> (char *columnname, char *ParameterName)</td></tr>
-<tr class="separator:ac4a8e2dc6a6c2d407482811129b3f095"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1393f6eb92179ec1d8da224cb4bc042b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b">VTS_popfirst</a> (char *columnname)</td></tr>
-<tr class="separator:a1393f6eb92179ec1d8da224cb4bc042b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cd09387d9dc56c4ed1af6fc49a7e633"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633">VTS_push_multiple_columns_unique</a> (char *columnnames, char *data)</td></tr>
-<tr class="separator:a5cd09387d9dc56c4ed1af6fc49a7e633"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8378af03d646e031c1115786d763226"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#ad8378af03d646e031c1115786d763226">VTS_popfirstMultipleColumns</a> (char *gewenste_databasevelden)</td></tr>
-<tr class="separator:ad8378af03d646e031c1115786d763226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a146f94f9381eb760bcc8c539edcd1ab4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4">VTS_push_multiple_columns</a> (char *columnnames, char *data)</td></tr>
-<tr class="separator:a146f94f9381eb760bcc8c539edcd1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd182aa7660107f9f0ea013f003556e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e">y_vts_report_error</a> (char *message)</td></tr>
+<tr class="separator:a8bd182aa7660107f9f0ea013f003556e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae18a7b8d23a91712fe6eb9a8f7bf96"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96">y_vts_process_returncode</a> (int returncode)</td></tr>
+<tr class="memdesc:aaae18a7b8d23a91712fe6eb9a8f7bf96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error translation and reporting facility for VTS return codes. This will emit VTS errors using lr_error_message() in human readable form, if the code represents a VTS error.  <a href="#aaae18a7b8d23a91712fe6eb9a8f7bf96">More...</a><br /></td></tr>
+<tr class="separator:aaae18a7b8d23a91712fe6eb9a8f7bf96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ab85c4147088754ab8284d6bb3e0a0548"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>VTS functions for LR 11.5 and above. </p>
+<p>Library wrapperrs for talking to a VTS-server. This is part of LR 11.5 and needs to be installed seperately. For LR versions older than 11.5, see the old <a class="el" href="y__vts_8c.html" title="VTS functions for LR 11.5 and above. ">y_vts.c</a>.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This <a class="el" href="y__vts_8c.html" title="VTS functions for LR 11.5 and above. ">y_vts.c</a> is NOT compatible with the vts version that was shipped before LR 11.5, and the older <a class="el" href="y__vts_8c.html" title="VTS functions for LR 11.5 and above. ">y_vts.c</a> is NOT compatible with the version in LR 11.5 either. </dd></dl>
+
+<p>Definition in file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="aaae18a7b8d23a91712fe6eb9a8f7bf96"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _VTS_FUNC_C</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00044">44</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a08dbc5fd5bb076e1ea0ece2f2949dfd3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_clearColumn </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00308">308</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7536c4ebc4a53b24a3938749c34e3ae8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_connect </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00193">193</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a91b1420978a193be969c77f7a1be7ac1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_disconnect </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00217">217</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1393f6eb92179ec1d8da224cb4bc042b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_popfirst </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00402">402</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad8378af03d646e031c1115786d763226"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_popfirstMultipleColumns </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>gewenste_databasevelden</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00485">485</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aaf4edb49fe893387db7b6f84d2c2b549"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_process_returncode </td>
+          <td class="memname">int y_vts_process_returncode </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>returncode</em></td><td>)</td>
@@ -219,8 +92,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the returncode </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the returncode</dd></dl>
 <p>This is what the header file vts2.h tells us about error codes:</p>
 <div class="fragment"><div class="line"><span class="comment">//VTS Error Codes</span></div>
 <div class="line"><span class="preprocessor">#define  VTCERR_OK                            0</span></div>
@@ -238,217 +110,48 @@ Functions</h2></td></tr>
 <div class="line"><span class="preprocessor">#define  VTCERR_OPERATION_ERROR_BASE     -11000</span></div>
 <div class="line"><span class="preprocessor">#define  VTCERR_SERVER_IS_BUSY           (VTCERR_OPERATION_ERROR_BASE - 0xFF)</span></div>
 <div class="line"><span class="preprocessor">#define  VTCERR_CLIENT_REQUEST_ERROR     (VTCERR_OPERATION_ERROR_BASE - 0xFE)</span></div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00092">92</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
+</div><!-- fragment --><p>Loadrunner 11.52 expanded that a little, to the following definition in the help files:</p>
+<div class="fragment"><div class="line">VTCERR_OK 0 Success </div>
+<div class="line">VTCERR_INVALID_CONNECTION_INFO -10000 The corresponding handle does not exist or the connection information is corrupted. Disconnect and reconnect. </div>
+<div class="line">VTCERR_FAILED_TO_RESOLVE_ADDR -10001 Failed to find server. </div>
+<div class="line">VTCERR_FAILED_TO_CREATE_SOCKET -10002 Failed to create socket. </div>
+<div class="line">VTCERR_FAILED_TO_CONNECT -10003 Failed to connect. Check the server name, port number, network connectivity, and whether server is on line. </div>
+<div class="line">VTCERR_INVALID_API_CALL -10004 Failed to <span class="keyword">get</span> the API entry.  &lt;-- NEW</div>
+<div class="line"></div>
+<div class="line">VTCERR_INCOMPLETE_REQUEST -10100 Communications packet from client is invalid. </div>
+<div class="line">VTCERR_FAILED_TO_RECV_RESPONSE -10101 No response received from server. </div>
+<div class="line">VTCERR_INCOMPLETE_RESPONSE -10102 Communications packet from server is invalid. </div>
+<div class="line">VTCERR_RESPONSE_ARGS_UNMATCH -10103 Unexpected count of arguments in server response. </div>
+<div class="line">VTCERR_INVALID_ARGUMENT -10104 Invalid argument.  &lt;-- NEW</div>
+<div class="line">VTCERR_HANDLE_NOT_EXIST -10105 Connection handle does not exist. &lt;-- NEW</div>
+<div class="line">VTCERR_INNER_JSON_CONVERT -10106 Cannot parse server response. &lt;-- NEW</div>
+<div class="line">VTCERR_INNER_UTF8_CONVERT -10107 Cannot convert between UTF8 and Locale.  &lt;-- NEW</div>
+<div class="line">VTCERR_COL_FORMAT_ERROR -10108 Invalid or empty column name.  &lt;-- NEW</div>
+<div class="line">VTCERR_COL_VALUE_NO_MATCH -10109 Column names list and messages list <span class="keywordflow">do</span> not have the same number of values. Check delimiters.  &lt;-- NEW</div>
+<div class="line">VTCERR_EVAL_STRING -10110 Error evaluating parameter value.  &lt;-- NEW</div>
+<div class="line">VTCERR_DATA_NOT_EXIST -10111 There is no data at the specified column and row.  &lt;-- NEW</div>
+</div><!-- fragment --><p>.. note however that the "Operation Error Base" codes are gone.</p>
+<dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00103">103</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a146f94f9381eb760bcc8c539edcd1ab4"></a>
+<a class="anchor" id="a8bd182aa7660107f9f0ea013f003556e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int VTS_push_multiple_columns </td>
+          <td class="memname">void y_vts_report_error </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnnames</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00525">525</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a5cd09387d9dc56c4ed1af6fc49a7e633"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_push_multiple_columns_unique </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnnames</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00442">442</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a76e3d4057f3a4958b90a45143a010436"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_pushlast </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00295">295</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a586699f6a949b6e350b71be5adccc219"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_pushlast_unique </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00285">285</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aac06f9b88c25c04f1d6c5f036b2e7b8d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_pushlast_with_flag </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>unique</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00236">236</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac4a8e2dc6a6c2d407482811129b3f095"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int VTS_readRandom </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>columnname</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>ParameterName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00346">346</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af5fd6e72c49a15f1c90791a4d5a57a39"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void VTS_report_error </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>errortext</em></td><td>)</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00053">53</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad9eab9ca03005e3c3f33450539d22343"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void VTS_setup </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00065">65</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
+<p>Definition at line <a class="el" href="y__vts_8c_source.html#l00042">42</a> of file <a class="el" href="y__vts_8c_source.html">y_vts.c</a>.</p>
 
 </div>
 </div>

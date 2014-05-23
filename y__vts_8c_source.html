@@ -51,7 +51,7 @@
 <a href="y__vts_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Ylib Loadrunner function library.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (C) 2009-2010 Raymond de Jongh &lt;ferretproof@gmail.com&gt; | &lt;rdjongh@ymor.nl&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Copyright (C) 2010 Floris Kraak &lt;randakar@gmail.com&gt; | &lt;fkraak@ymor.nl&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Copyright (C) 2010,2014 Floris Kraak &lt;randakar@gmail.com&gt; | &lt;fkraak@ymor.nl&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> * This program is free software; you can redistribute it and/or</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * modify it under the terms of the GNU General Public License</span></div>
@@ -68,538 +68,128 @@
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> */</span> </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/*****************************************************************************************************</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">  - VTS functies -</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">datum   :   2008-11-13</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">            2009-09-03</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">benodigd:   VTS-server. Deze is normaal gesproken te vinden op een pc met loadrunner.</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">            Bij mij staat deze op C:\Program Files\HP\LoadRunner\bin\vtconsole.exe</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">            Het ip-adres en poortnummer kan je instellen via de parameters VTSServer en VTSPort</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">            Deze instellingen moeten overeenkomen met die van de VTSServer.</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">VTS installeren:</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">1) Obtain VTS2 from Mercury Support Representatives. (Downloadable Binaries)</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">2) Unzip the file into the main LoadRunner directory (using the directory structure provided).</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">   (eg. &quot;..\Mercury Interactive\LoadRunner&quot;)</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">   </span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">3) Register &quot;vtsctls.ocx&quot; in the &quot;..\LoadRunner\bin&quot; directory.</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">  (eg. regsvr32 &quot;c:\Program Files\Mercury Interactive\LoadRunner\bin\vtsctls.ocx&quot;)</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">  </span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">VTS starten:</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">    C:\Program Files\HP\LoadRunner\bin\vtconsole.exe</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">*****************************************************************************************************/</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifndef _VTS_FUNC_C</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548">   44</a></span>&#160;<span class="preprocessor">#define _VTS_FUNC_C</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &quot;vts2.h&quot;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__string_8c.html">y_string.c</a>&quot;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a>&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">// Standardised error reporting for all VTS functions.</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">// @author Floris Kraak</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">   53</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(<span class="keywordtype">char</span>* errortext)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* errorheader = <span class="stringliteral">&quot;****** VTS ERROR: &quot;</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">char</span> *buffer = <a class="code" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a>( <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(errorheader) + <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(errortext) +1 );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="group__string.html#ga29bf81ae8cf71b6743fec5bcfbe8afcd">sprintf</a>(buffer, <span class="stringliteral">&quot;%s%s&quot;</span>, errorheader, errortext);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    lr_error_message(buffer);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    lr_save_string(buffer, <span class="stringliteral">&quot;VTS_ERROR_MESSAGE&quot;</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(buffer);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">// Initialisation of the VTS client library.</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">// @author Floris Kraak</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343">   65</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343">VTS_setup</a>()</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> result;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> setup_completed = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">if</span>( setup_completed )</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">// Load the client VTS DLL // TODO: This is probably the wrong thing to do on LR 11.52, where the DLL doesn&#39;t need to be loaded.</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">if</span>( (result = lr_load_dll(<span class="stringliteral">&quot;vtclient.dll&quot;</span>)) != 0 )</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(<span class="stringliteral">&quot;Unable to load Virtual Table Server client dll. Please check your VTS installation.&quot;</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        lr_exit(LR_EXIT_VUSER, LR_FAIL);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    setup_completed = 1;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">   92</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a>(<span class="keywordtype">int</span> returncode)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">char</span>* errortext;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="comment">// Encode the above information in a simple lookup table.</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">switch</span>(returncode)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">case</span> VTCERR_OK:</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            errortext = <span class="stringliteral">&quot;INFO: VTS command succeeded.&quot;</span>;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            lr_message(errortext);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordflow">return</span> returncode;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keywordflow">break</span>; <span class="comment">// &lt;-- never reached, but kept for readability.</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">case</span> VTCERR_INVALID_CONNECTION_INFO:</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            errortext = <span class="stringliteral">&quot;Invalid connection info.&quot;</span>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_RESOLVE_ADDR:</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to resolve address.&quot;</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_CREATE_SOCKET:</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to create socket.&quot;</span>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_CONNECT:</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to connect.&quot;</span>;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">case</span> VTCERR_INCOMPLETE_REQUEST:</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            errortext = <span class="stringliteral">&quot;Incomplete request.&quot;</span>;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_RECV_RESPONSE:</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to receive response.&quot;</span>;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keywordflow">case</span> VTCERR_INCOMPLETE_RESPONSE:</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            errortext = <span class="stringliteral">&quot;Incomplete response.&quot;</span>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordflow">case</span> VTCERR_RESPONSE_ARGS_UNMATCH:</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            errortext = <span class="stringliteral">&quot;Received error code VTCERR_RESPONSE_ARGS_UNMATCH.&quot;</span>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="keywordflow">case</span> VTCERR_OPERATION_ERROR_BASE:</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            errortext = <span class="stringliteral">&quot;Received error code VTCERR_OPERATION_ERROR_BASE.&quot;</span>;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">case</span> VTCERR_SERVER_IS_BUSY:</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            errortext = <span class="stringliteral">&quot;Server is busy. Go away.&quot;</span>;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">case</span> VTCERR_CLIENT_REQUEST_ERROR:</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            errortext = <span class="stringliteral">&quot;Client request error.&quot;</span>;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            errortext = <span class="stringliteral">&quot;Unknown VTC error code.&quot;</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    }</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="comment">// Report the error to the user. (The &quot;All OK&quot; case jumped out of this function earlier ..)</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(errortext);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment">// At this point it might be an idea to call lr_abort() or lr_exit(LR_EXIT_VUSER, LR_FAIL)</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">return</span> returncode;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">// maak een verbinding met de VTS-server</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment">// nodig: parameter VTSServer, bevat de URL of ip-adres van de VTS-server</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">//        parameter VTSPort, bevat de Poortnummer van de VTS-server</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">  193</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>()</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;{</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    PVCI ppp;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <a class="code" href="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343">VTS_setup</a>();</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">// Connect to the Virtual Table Server and grab the Handle, and print it.</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="comment">//ppp = vtc_connect(lr_eval_string(&quot;{VTSServer}&quot;), atoi(lr_eval_string(&quot;{VTSPort}&quot;)), VTOPT_KEEP_ALIVE);</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    ppp = lrvtc_connect(lr_eval_string(<span class="stringliteral">&quot;{VTSServer}&quot;</span>), <a class="code" href="group__string.html#gac5aa18897f547ff20f10c777c6a58f0a">atoi</a>(lr_eval_string(<span class="stringliteral">&quot;{VTSPort}&quot;</span>)), VTOPT_KEEP_ALIVE);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">if</span>( <a class="code" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a>(vtc_get_last_error(ppp)) != VTCERR_OK )</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    {</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        ppp = -1;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    }</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="comment">// lr_output_message(&quot;&gt;&gt; The VTS Handle is : %d&quot;, ppp);</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    lr_save_int(ppp, <span class="stringliteral">&quot;VTS_ppp&quot;</span>); <span class="comment">// Deprecate this .. appears to be unused internally.</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">return</span> ppp;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="comment">// verbinding met VTS verbreken</span></div>
-<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">  217</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>()</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;{</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    lrvtc_disconnect(); <span class="comment">// return code?</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">// Voeg een waarde toe aan de onderkant van de tabel. </span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment">// Als de unique vlag groter dan 0 is gebeurt dat alleen onder voorwaarde dat de waarde niet al </span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">// bestaat in de tabel.</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="comment">// Todo: convert these functions to return a VTCERR rather than a simple int.</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">// @author Floris Kraak</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno"><a class="line" href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">  236</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">VTS_pushlast_with_flag</a>(<span class="keywordtype">char</span>* columnname, <span class="keywordtype">char</span>* value, <span class="keywordtype">int</span> unique)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;{</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">int</span> errorcode = 0;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordtype">char</span>* errortext = <span class="stringliteral">&quot;Write to VTS: OK.&quot;</span>;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    PVCI ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    {</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    }</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">if</span>( unique &gt; 0 )</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        errorcode = vtc_send_if_unique(ppp, columnname, value, &amp;status);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    }</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        errorcode = vtc_send_message(ppp, columnname, value, &amp;status);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    vtc_free(value);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="comment">//lr_log_message(&quot;result: %d .... send message status: %d&quot;, errorcode, status);</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a>(errorcode) == VTCERR_OK)</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <span class="keywordflow">if</span>(status == 1)</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        {</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            <span class="comment">// Success!</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            lr_message(<span class="stringliteral">&quot;INFO: Value pushed onto column successfully.&quot;</span>);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        {</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            errorcode = -2;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            errortext = <span class="stringliteral">&quot;Can not write to VTS: value (most likely) already exists in VTS.&quot;</span>;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(errortext);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        }</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    }</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;}</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">// Voeg een waarde toe aan de onderkant van de tabel, onder voorwaarde dat deze waarde niet al bestaat!</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219">  285</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219">VTS_pushlast_unique</a>(<span class="keywordtype">char</span>* columnname, <span class="keywordtype">char</span>* value)</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;{</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">VTS_pushlast_with_flag</a>(columnname, value, 1);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;}</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="comment">// Voeg een waarde toe aan de onderkant van de tabel.</span></div>
-<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436">  295</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436">VTS_pushlast</a>(<span class="keywordtype">char</span>* columnname, <span class="keywordtype">char</span>* value)</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;{</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">VTS_pushlast_with_flag</a>(columnname, value, 0);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;}</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *the end* * *</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="comment">// maak de hele kolom (met name &quot;columnname&quot;) leeg</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3">  308</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3">VTS_clearColumn</a>(<span class="keywordtype">char</span>* columnname)</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    PVCI ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordtype">int</span> errorcode = 0;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    }</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    errorcode = vtc_clear_column(ppp, columnname, &amp;status);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a>(errorcode) == VTCERR_OK)</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    {</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        <span class="keywordflow">if</span>(status == 1)</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        {</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            <span class="comment">// Success!</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            lr_message(<span class="stringliteral">&quot;INFO: Content of the column is deleted.&quot;</span>);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        }</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            errorcode = -2;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(<span class="stringliteral">&quot;Failed to clear column.&quot;</span>);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        }</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;}</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *the end* * *</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment">// lees een willekeurige cel uit de tabel columnname</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno"><a class="line" href="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095">  346</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095">VTS_readRandom</a>(<span class="keywordtype">char</span>* columnname, <span class="keywordtype">char</span>* ParameterName)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;{</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    PVCI ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordtype">int</span> rc = 0;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordtype">int</span> errorcode = 0;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordtype">char</span>* errortext;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordtype">int</span> tablesize;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">int</span> rand_row;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordtype">char</span>* value = NULL;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    {</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">if</span>((rc = vtc_column_size(ppp, columnname, &amp;tablesize)) != 0)</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        errorcode = rc;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        errortext = <span class="stringliteral">&quot;Can not determine column size. Error code %d.&quot;</span>;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    }</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="comment">//lr_log_message(&quot;tablesize: %d\n&quot;, tablesize);</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    rand_row = <a class="code" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a>() % tablesize + 1;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">if</span>((rc = vtc_query_column(ppp, columnname, rand_row, &amp;value)) != 0)</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    {</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        errortext = <span class="stringliteral">&quot;******************** VTS Error - Query Return Code = %d&quot;</span>;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        errorcode = rc;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    }</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    {</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        errortext = <span class="stringliteral">&quot;INFO: VTS random read succeeded.&quot;</span>;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        lr_save_string(value,ParameterName);        </div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    }</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    vtc_free(value);    </div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();   </div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keywordflow">if</span>(errorcode != 0)</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    {</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        lr_error_message(errortext, errorcode);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    }</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    lr_param_sprintf(<span class="stringliteral">&quot;VTS_ERROR_MESSAGE&quot;</span>, errortext, errorcode);</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;}</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="comment">// input: een waarde waarin de kolomnamen staan die uitgelezen moeten worden </span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="comment">// output: parameter die de naam heeft van de kolomnamen. </span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">// verwerking: de waarde van de opgegeven kolom worden in een parameter gezet en vervolgens wordt deze waarden </span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="comment">//             uit de database verwijderd. Zodoende kan een deze waarde nooit 2x gebruikt worden.</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b">  402</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b">VTS_popfirst</a>(<span class="keywordtype">char</span> *columnname)</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;{</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    PVCI           ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordtype">int</span>            rc = 0;</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="keywordtype">int</span>            size;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordtype">int</span>            errorcode = 0;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    </div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    {</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    }</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    </div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="keywordflow">if</span>( (rc = lrvtc_retrieve_message(columnname)) != 0)</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    {</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        lr_error_message(<span class="stringliteral">&quot;******************** VTS Error - Query Return Code = %d&quot;</span>, rc);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    }</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    {</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        <span class="comment">// dit werkt niet helemaal goed. Dit geeft de tekst &quot;columname&quot; terug, ipv de inhoud van {columnname}</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        lr_output_message (<span class="stringliteral">&quot;Retrieved value is : %s&quot;</span>, <a class="code" href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(columnname));</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    }</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;}</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment">// VTS_push_multiple_columns()</span></div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="comment">//     Voeg data toe aan meerdere kolommen tegelijk, aan de onderkant van de database.</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="comment">//     De kolomnamen staan in 1 string, gescheiden door een punt-komma.</span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment">//     De data staan in 1 string, gescheiden door een punt-komma.</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">// Voorbeeld:</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">//     VTS_push_multiple_columns(&quot;VOORNAAM,ACHTERNAAM,ADRES&quot;, &quot;Pietje;Puk;Wegiswegweg 3&quot;);</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633">  442</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633">VTS_push_multiple_columns_unique</a>(<span class="keywordtype">char</span> *columnnames, <span class="keywordtype">char</span> *data)</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;{</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    PVCI           ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    <span class="keywordtype">int</span>            rc = 0;</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    <span class="keywordtype">int</span>            errorcode = 0;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    {</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    }</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    rc=lrvtc_send_row1(columnnames, data, <span class="stringliteral">&quot;;&quot;</span>, VTSEND_STACKED_UNIQUE);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordflow">if</span>(rc != 0)</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    {</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        lr_save_string(<span class="stringliteral">&quot;Can not write to columns: &quot;</span>, <span class="stringliteral">&quot;VTS_ERROR_MESSAGE&quot;</span>);</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;        lr_error_message(lr_eval_string(<span class="stringliteral">&quot;{VTS_ERROR_MESSAGE}&quot;</span>));</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        errorcode = -1;</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    }</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;}</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">// VTS_popfirstMultipleColumns()</span></div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="comment">// Haal uit VTS de bovenste rij uit de opgegeven kolommen.</span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="comment">// deze kolommen staan in 1 string, gescheiden door een punt-komma.</span></div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="comment">// Voorbeeld:</span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment">//     VTS_popfirstMultipleColumns(&quot;Voornaam;Achternaam;Adres&quot;);</span></div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="comment">//        Het resultaat wordt dan in {Voornaam}, {Acternaam} en {Adres} geplaatst.</span></div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">//    snelheid:</span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">//     wanneer in VTS 1 miljoen records staan, en 1000x het volgende wordt uitgevoerd:</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="comment">//           VTS_push_multiple_columns(&quot;CRDNUM;UTN;EMBNM1&quot;, &quot;123123123;123123123;JANSEN&quot;);</span></div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="comment">//            VTS_popfirstMultipleColumns2(&quot;CRDNUM;UTN;EMBNM1&quot;);</span></div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="comment">//     dan duurt dat ca. 12,5 sec. Dat is gemiddeld dus per push en pop: 12,5 msec. </span></div>
-<div class="line"><a name="l00485"></a><span class="lineno"><a class="line" href="y__vts_8c.html#ad8378af03d646e031c1115786d763226">  485</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#ad8378af03d646e031c1115786d763226">VTS_popfirstMultipleColumns</a>(<span class="keywordtype">char</span> *gewenste_databasevelden)</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;{</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    PVCI           ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="keywordtype">int</span>            rc = 0;</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    <span class="keywordtype">int</span>            errorcode = 0;</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    {</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    }</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;    <span class="keywordflow">if</span>( (rc = lrvtc_retrieve_messages1(gewenste_databasevelden, <span class="stringliteral">&quot;;&quot;</span>)) != 0)</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    {</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        lr_error_message(<span class="stringliteral">&quot;******************** VTS Error - Query Return Code = %d&quot;</span>, rc);</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    }</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    {</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;        <span class="comment">// lr_output_message(&quot;******************** Query Column 1 Result = %s&quot;, value);</span></div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="comment">// lr_save_string(value,lr_eval_string(&quot;{databaseveld}&quot;));</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    }</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;}</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="comment">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="comment">// ***************************************************************************************************</span></div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="comment">// VTS_push_multiple_columns()</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="comment">//     Voeg data toe aan meerdere kolommen tegelijk, aan de onderkant van de database.</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="comment">//     De kolomnamen staan in 1 string, gescheiden door een punt-komma.</span></div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="comment">//     De data staan in 1 string, gescheiden door een punt-komma.</span></div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="comment">// </span></div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="comment">// Voorbeeld:</span></div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="comment">//     VTS_push_multiple_columns(&quot;VOORNAAM,ACHTERNAAM,ADRES&quot;, &quot;Pietje;Puk;Wegiswegweg 3&quot;);</span></div>
-<div class="line"><a name="l00525"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4">  525</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4">VTS_push_multiple_columns</a>(<span class="keywordtype">char</span>* columnnames, <span class="keywordtype">char</span>* data)</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;{</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    <span class="keywordtype">int</span>            rc = 0;</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> status;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    <span class="keywordtype">int</span>            errorcode = 0;</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    PVCI ppp = <a class="code" href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a>();</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;    <span class="keywordflow">if</span>( ppp == -1 )</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    {</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;        <span class="comment">// VTS_connect() should have set the error message already.</span></div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;    }</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    errorcode=vtc_send_row1(ppp, columnnames, data, <span class="stringliteral">&quot;;&quot;</span>, VTSEND_SAME_ROW, &amp;status);</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    <span class="comment">//lr_message(&quot;status: %d&quot;, status);</span></div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    <a class="code" href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a>();</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a>(errorcode) == VTCERR_OK)</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    {</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        <span class="keywordflow">if</span>(status &gt; 0)</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        {</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;            <span class="comment">// Success!</span></div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            lr_message(<span class="stringliteral">&quot;INFO: Data written to multiple columns.&quot;</span>);</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        }</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;        {</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;            errorcode = -2;</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;            <a class="code" href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a>(<span class="stringliteral">&quot;Failed to write to multiple columns.&quot;</span>);</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        }</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;    }</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    <span class="keywordflow">return</span> errorcode;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;}</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="preprocessor">#endif // _VTS_FUNC_C</span></div>
-<div class="ttc" id="y__string_8c_html"><div class="ttname"><a href="y__string_8c.html">y_string.c</a></div><div class="ttdoc">Y-lib string function library. </div></div>
-<div class="ttc" id="y__vts_8c_html_a586699f6a949b6e350b71be5adccc219"><div class="ttname"><a href="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219">VTS_pushlast_unique</a></div><div class="ttdeci">int VTS_pushlast_unique(char *columnname, char *value)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00285">y_vts.c:285</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a5cd09387d9dc56c4ed1af6fc49a7e633"><div class="ttname"><a href="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633">VTS_push_multiple_columns_unique</a></div><div class="ttdeci">int VTS_push_multiple_columns_unique(char *columnnames, char *data)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00442">y_vts.c:442</a></div></div>
-<div class="ttc" id="group__core_html_ga71b54880fd4fe004b3cb8141255c6474"><div class="ttname"><a href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(size_t size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00202">y_core.c:202</a></div></div>
-<div class="ttc" id="y__vts_8c_html_af5fd6e72c49a15f1c90791a4d5a57a39"><div class="ttname"><a href="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39">VTS_report_error</a></div><div class="ttdeci">void VTS_report_error(char *errortext)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00053">y_vts.c:53</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a08dbc5fd5bb076e1ea0ece2f2949dfd3"><div class="ttname"><a href="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3">VTS_clearColumn</a></div><div class="ttdeci">int VTS_clearColumn(char *columnname)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00308">y_vts.c:308</a></div></div>
-<div class="ttc" id="group__string_html_gac5aa18897f547ff20f10c777c6a58f0a"><div class="ttname"><a href="group__string.html#gac5aa18897f547ff20f10c777c6a58f0a">atoi</a></div><div class="ttdeci">int atoi(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/atoi/. </div></div>
-<div class="ttc" id="y__vts_8c_html_aac06f9b88c25c04f1d6c5f036b2e7b8d"><div class="ttname"><a href="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d">VTS_pushlast_with_flag</a></div><div class="ttdeci">int VTS_pushlast_with_flag(char *columnname, char *value, int unique)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00236">y_vts.c:236</a></div></div>
-<div class="ttc" id="y__vts_8c_html_ad9eab9ca03005e3c3f33450539d22343"><div class="ttname"><a href="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343">VTS_setup</a></div><div class="ttdeci">void VTS_setup()</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00065">y_vts.c:65</a></div></div>
-<div class="ttc" id="y__vts_8c_html_ac4a8e2dc6a6c2d407482811129b3f095"><div class="ttname"><a href="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095">VTS_readRandom</a></div><div class="ttdeci">int VTS_readRandom(char *columnname, char *ParameterName)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00346">y_vts.c:346</a></div></div>
-<div class="ttc" id="group__string_html_ga29bf81ae8cf71b6743fec5bcfbe8afcd"><div class="ttname"><a href="group__string.html#ga29bf81ae8cf71b6743fec5bcfbe8afcd">sprintf</a></div><div class="ttdeci">int sprintf(char *buffer, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/sprintf/.   You should prefer snprintf over s...</div></div>
-<div class="ttc" id="y__vts_8c_html_a91b1420978a193be969c77f7a1be7ac1"><div class="ttname"><a href="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1">VTS_disconnect</a></div><div class="ttdeci">int VTS_disconnect()</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00217">y_vts.c:217</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a146f94f9381eb760bcc8c539edcd1ab4"><div class="ttname"><a href="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4">VTS_push_multiple_columns</a></div><div class="ttdeci">int VTS_push_multiple_columns(char *columnnames, char *data)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00525">y_vts.c:525</a></div></div>
-<div class="ttc" id="group__string_html_ga2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
-<div class="ttc" id="y__loadrunner__utils_8c_html"><div class="ttname"><a href="y__loadrunner__utils_8c.html">y_loadrunner_utils.c</a></div><div class="ttdoc">Collection of miscellaneous support functions. </div></div>
-<div class="ttc" id="y__vts_8c_html_ad8378af03d646e031c1115786d763226"><div class="ttname"><a href="y__vts_8c.html#ad8378af03d646e031c1115786d763226">VTS_popfirstMultipleColumns</a></div><div class="ttdeci">int VTS_popfirstMultipleColumns(char *gewenste_databasevelden)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00485">y_vts.c:485</a></div></div>
-<div class="ttc" id="group__core_html_ga0419985b32761cce3f5d75e6aad36f05"><div class="ttname"><a href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a></div><div class="ttdeci">long y_rand(void)</div><div class="ttdoc">Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00151">y_core.c:151</a></div></div>
-<div class="ttc" id="group__core_html_ga8252a459f15c52a8680fff9ddbd7356c"><div class="ttname"><a href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a></div><div class="ttdeci">char * y_get_parameter(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00317">y_core.c:317</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a76e3d4057f3a4958b90a45143a010436"><div class="ttname"><a href="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436">VTS_pushlast</a></div><div class="ttdeci">int VTS_pushlast(char *columnname, char *value)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00295">y_vts.c:295</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a1393f6eb92179ec1d8da224cb4bc042b"><div class="ttname"><a href="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b">VTS_popfirst</a></div><div class="ttdeci">int VTS_popfirst(char *columnname)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00402">y_vts.c:402</a></div></div>
-<div class="ttc" id="y__vts_8c_html_a7536c4ebc4a53b24a3938749c34e3ae8"><div class="ttname"><a href="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8">VTS_connect</a></div><div class="ttdeci">int VTS_connect()</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00193">y_vts.c:193</a></div></div>
-<div class="ttc" id="y__vts_8c_html_aaf4edb49fe893387db7b6f84d2c2b549"><div class="ttname"><a href="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549">VTS_process_returncode</a></div><div class="ttdeci">int VTS_process_returncode(int returncode)</div><div class="ttdoc">Error translation and reporting facility for VTS return codes. This will emit VTS errors using lr_err...</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00092">y_vts.c:92</a></div></div>
-<div class="ttc" id="group__memory_html_ga557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/free/. </div></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifndef _Y_VTS_FUNC_C_</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define _Y_VTS_FUNC_C_</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* \brief Standardised error reporting for all VTS functions.</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">\author Floris Kraak</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e">y_vts_report_error</a>(<span class="keywordtype">char</span>* message)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    lr_error_message(<span class="stringliteral">&quot;****** VTS ERROR: %s&quot;</span>, message);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96">  103</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96">y_vts_process_returncode</a>(<span class="keywordtype">int</span> returncode)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">char</span>* errortext;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="comment">// Encode the above information in a simple lookup table.</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">switch</span>(returncode)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">case</span> VTCERR_OK:</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            errortext = <span class="stringliteral">&quot;INFO: VTS command succeeded.&quot;</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            lr_message(errortext);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordflow">return</span> returncode;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">break</span>; <span class="comment">// &lt;-- never reached, but kept for readability.</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">case</span> VTCERR_INVALID_CONNECTION_INFO:</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            errortext = <span class="stringliteral">&quot;The corresponding handle does not exist or the connection information is corrupted. Disconnect and reconnect.&quot;</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_RESOLVE_ADDR:</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to resolve server address.&quot;</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_CREATE_SOCKET:</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to create socket.&quot;</span>;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_CONNECT:</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to connect. Check the server name, port number, network connectivity, and whether server is on line.&quot;</span>; <span class="comment">// LR 11.52 simply calls lr_abort() if this happens.</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">case</span> VTCERR_INVALID_API_CALL: </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            errortext = <span class="stringliteral">&quot;Failed to get the API entry.&quot;</span>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">case</span> VTCERR_INCOMPLETE_REQUEST:</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            errortext = <span class="stringliteral">&quot;Communications packet from client is invalid.&quot;</span>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keywordflow">case</span> VTCERR_FAILED_TO_RECV_RESPONSE:</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            errortext = <span class="stringliteral">&quot;No response received from server.&quot;</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">case</span> VTCERR_INCOMPLETE_RESPONSE:</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            errortext = <span class="stringliteral">&quot;Response from server is incomplete.&quot;</span>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">case</span> VTCERR_RESPONSE_ARGS_UNMATCH:</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            errortext = <span class="stringliteral">&quot;Unexpected count of arguments in server response.&quot;</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">case</span> VTCERR_INVALID_ARGUMENT:</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            errortext = <span class="stringliteral">&quot;Invalid argument.&quot;</span>;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordflow">case</span> VTCERR_HANDLE_NOT_EXIST:</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            errortext = <span class="stringliteral">&quot;Connection handle does not exist.&quot;</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">case</span> VTCERR_INNER_JSON_CONVERT:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            errortext = <span class="stringliteral">&quot;Cannot parse server (JSON) response.&quot;</span>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">case</span> VTCERR_INNER_UTF8_CONVERT:</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            errortext = <span class="stringliteral">&quot;Cannot convert between UTF8 and Locale.&quot;</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keywordflow">case</span> VTCERR_COL_FORMAT_ERROR:</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            errortext = <span class="stringliteral">&quot;Invalid or empty column name.&quot;</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">case</span> VTCERR_COL_VALUE_NO_MATCH:</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            errortext = <span class="stringliteral">&quot;Column names list and messages list do not have the same number of values. Check delimiters.&quot;</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">case</span> VTCERR_EVAL_STRING:</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            errortext = <span class="stringliteral">&quot;Error evaluating parameter value.&quot;</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">case</span> VTCERR_DATA_NOT_EXIST:</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            errortext = <span class="stringliteral">&quot;There is no data at the specified column and row.&quot;</span>;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="comment">// These operation base errors may not exist in LR 11.52. The documentation no longer mentions them.            </span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">case</span> VTCERR_OPERATION_ERROR_BASE:</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            errortext = <span class="stringliteral">&quot;Received error code VTCERR_OPERATION_ERROR_BASE.&quot;</span>;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordflow">case</span> VTCERR_SERVER_IS_BUSY:</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            errortext = <span class="stringliteral">&quot;Server is busy. Go away.&quot;</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">case</span> VTCERR_CLIENT_REQUEST_ERROR:</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            errortext = <span class="stringliteral">&quot;Client request error.&quot;</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            errortext = <span class="stringliteral">&quot;Unknown VTC error code.&quot;</span>;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="comment">// Report the error to the user. (The &quot;All OK&quot; case jumped out of this function earlier ..)</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <a class="code" href="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e">y_vts_report_error</a>(errortext);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="comment">// At this point it might be an idea to call lr_abort() or lr_exit(LR_EXIT_VUSER, LR_FAIL)</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">return</span> returncode;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="comment">// --------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#endif // _Y_VTS_FUNC_C_</span></div>
+<div class="ttc" id="y__vts_8c_html_a8bd182aa7660107f9f0ea013f003556e"><div class="ttname"><a href="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e">y_vts_report_error</a></div><div class="ttdeci">void y_vts_report_error(char *message)</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00042">y_vts.c:42</a></div></div>
+<div class="ttc" id="y__vts_8c_html_aaae18a7b8d23a91712fe6eb9a8f7bf96"><div class="ttname"><a href="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96">y_vts_process_returncode</a></div><div class="ttdeci">int y_vts_process_returncode(int returncode)</div><div class="ttdoc">Error translation and reporting facility for VTS return codes. This will emit VTS errors using lr_err...</div><div class="ttdef"><b>Definition:</b> <a href="y__vts_8c_source.html#l00103">y_vts.c:103</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

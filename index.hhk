@@ -28,7 +28,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__timeb.html#a9b12daae5dfc9bd4a2b60836da302d01"><param name="Name" value="timezone"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a905edc1df49d4d9620221ffdfed20481"><param name="Name" value="_trans_status"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548"><param name="Name" value="_VTS_FUNC_C"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0"><param name="Name" value="_y_add_group_to_trans"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#af889acf62df6f4c07940d9c9e658d31f"><param name="Name" value="_y_random_array_index"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ae19a2245288efe07813d327f8d96ea35"><param name="Name" value="_y_sub_transaction_nr"></OBJECT>
@@ -39,6 +38,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a6080765857b538d37feca241be9ad8be"><param name="Name" value="_y_trigger_end_trans"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a806e5fbc5d61fb9a2db6a05ecf54f898"><param name="Name" value="_y_trigger_start_sub_trans"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a3cf739fca44b3ff513cdccd178b38221"><param name="Name" value="_y_trigger_start_trans"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a325dd6ae8f5f42d039791757012a2f0c"><param name="Name" value="_y_wasted_time_graph"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="group__math.html#gafd4f329c8efb45c0dfff44525047a0fa"><param name="Name" value="abs"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__math.html#gafd4f329c8efb45c0dfff44525047a0fa"><param name="Name" value="math"></OBJECT>
@@ -100,6 +100,30 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__process.html#gafb9b67085ccc81981d853faca68f821c"><param name="Name" value="process"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__process.html#gafb9b67085ccc81981d853faca68f821c"><param name="Name" value="vugen.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html"><param name="Name" value="Core of Ylib"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html"><param name="Name" value="core"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga690f251553b39fd4f31894826141b61a"><param name="Name" value="RAND_MAX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga2af77582aacd5cada48e9860f67d67e1"><param name="Name" value="vuser_init"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4"><param name="Name" value="y_array_alloc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga319710d6642f34a8ea51a1a9898869fc"><param name="Name" value="y_drand"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_get_parameter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_get_parameter_eval_string"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_get_parameter_ext"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_get_parameter_or_null"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_get_parameter_with_malloc_or_null"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_is_empty_parameter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5"><param name="Name" value="y_is_vugen_run"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d"><param name="Name" value="y_is_vugen_run_bool"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga71b54880fd4fe004b3cb8141255c6474"><param name="Name" value="y_mem_alloc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga0419985b32761cce3f5d75e6aad36f05"><param name="Name" value="y_rand"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga16db77ab873c5b767742a51c9613314b"><param name="Name" value="Y_RAND_MAX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_scid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_setup"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_virtual_user_group"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga312065213820734af47b86c233a26c0d"><param name="Name" value="y_virtual_user_id"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="group__math.html#ga5e7b53a694b3cf0f2d7debd444140fbd"><param name="Name" value="cos"></OBJECT>
   <UL>
@@ -572,7 +596,11 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__process.html#ga2700ec93bb976995aac3741ed33589b4"><param name="Name" value="vugen.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1"><param name="Name" value="rand"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a690f251553b39fd4f31894826141b61a"><param name="Name" value="RAND_MAX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga690f251553b39fd4f31894826141b61a"><param name="Name" value="RAND_MAX"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga690f251553b39fd4f31894826141b61a"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga690f251553b39fd4f31894826141b61a"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="group__memory.html#ga51227fbfcbdfb8a8452db918cb9e6f30"><param name="Name" value="realloc"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__memory.html#ga51227fbfcbdfb8a8452db918cb9e6f30"><param name="Name" value="memory"></OBJECT>
@@ -873,20 +901,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="group__time.html#ga7089a565743ec7206aa9de50705b2041"><param name="Name" value="vugen.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structy__struct__browser.html#a16bc380cdebe6e933459af85b527c3a1"><param name="Name" value="user_agent_string"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3"><param name="Name" value="VTS_clearColumn"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8"><param name="Name" value="VTS_connect"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1"><param name="Name" value="VTS_disconnect"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b"><param name="Name" value="VTS_popfirst"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ad8378af03d646e031c1115786d763226"><param name="Name" value="VTS_popfirstMultipleColumns"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549"><param name="Name" value="VTS_process_returncode"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4"><param name="Name" value="VTS_push_multiple_columns"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633"><param name="Name" value="VTS_push_multiple_columns_unique"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436"><param name="Name" value="VTS_pushlast"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219"><param name="Name" value="VTS_pushlast_unique"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d"><param name="Name" value="VTS_pushlast_with_flag"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095"><param name="Name" value="VTS_readRandom"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39"><param name="Name" value="VTS_report_error"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343"><param name="Name" value="VTS_setup"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html"><param name="Name" value="vugen.h"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#gaf7475971eb93ce0184379e71fe7626e9"><param name="Name" value="_IOFBF"></OBJECT>
@@ -1016,9 +1030,18 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#gafb31888b7421a495b93aa91bdecd51c9"><param name="Name" value="toupper"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="vugen_8h.html#ga7089a565743ec7206aa9de50705b2041"><param name="Name" value="tzset"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga2af77582aacd5cada48e9860f67d67e1"><param name="Name" value="vuser_init"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga2af77582aacd5cada48e9860f67d67e1"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga2af77582aacd5cada48e9860f67d67e1"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structy__struct__flow.html#a6086d79b26a7f187338d989eda48623d"><param name="Name" value="weight"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#aa0fe0d3743e4c4577b4e43eb8f1b19c8"><param name="Name" value="y_array_add"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f"><param name="Name" value="y_array_alloc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4"><param name="Name" value="y_array_alloc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#a8a002613e728f5275aa14b904e937d51"><param name="Name" value="y_array_concat"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#a7527bcb8881e6089ef3c1838cab596f3"><param name="Name" value="y_array_count"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#a29953807502dd227ec8ce69a0e51310f"><param name="Name" value="y_array_dump"></OBJECT>
@@ -1059,30 +1082,31 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#a671539a946ce4dde8dfd0854b8550a8b"><param name="Name" value="y_choose_browser_from_list"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__flow__list_8c.html#ae48988ed13b93f561717ecdaefbe3ecc"><param name="Name" value="y_choose_flow"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308"><param name="Name" value="y_chop"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="Name" value="y_cleanse_parameter"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="Name" value="y_cleanse_parameter_ext"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="Name" value="y_cleanse_parameter"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="Name" value="y_cleanse_parameter_ext"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2"><param name="Name" value="y_copy_param"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html"><param name="Name" value="y_core.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a690f251553b39fd4f31894826141b61a"><param name="Name" value="RAND_MAX"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a697dba8aa84b866198cb29d2c1e4823f"><param name="Name" value="y_array_alloc"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="Name" value="y_cleanse_parameter"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="Name" value="y_cleanse_parameter_ext"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="Name" value="y_get_cleansed_parameter"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_get_parameter"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_get_parameter_eval_string"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_get_parameter_ext"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_get_parameter_or_null"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_get_parameter_with_malloc_or_null"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_is_empty_parameter"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a00aa2e3c4dbd5c6d8b9c1c9d643fc399"><param name="Name" value="y_is_vugen_run"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb"><param name="Name" value="y_mem_alloc"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab"><param name="Name" value="y_rand"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a16db77ab873c5b767742a51c9613314b"><param name="Name" value="Y_RAND_MAX"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_scid"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_setup"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_virtual_user_group"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a312065213820734af47b86c233a26c0d"><param name="Name" value="y_virtual_user_id"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga690f251553b39fd4f31894826141b61a"><param name="Name" value="RAND_MAX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga2af77582aacd5cada48e9860f67d67e1"><param name="Name" value="vuser_init"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga084a530700465b1a7a10d103f2a2e6d4"><param name="Name" value="y_array_alloc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga319710d6642f34a8ea51a1a9898869fc"><param name="Name" value="y_drand"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_get_parameter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_get_parameter_eval_string"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_get_parameter_ext"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gaf81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_get_parameter_or_null"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_get_parameter_with_malloc_or_null"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_is_empty_parameter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#gaed34897cb0a5fb0ae18cf0d6facc35b5"><param name="Name" value="y_is_vugen_run"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga6946e1e353167a7a711e3ddcb8a39b6d"><param name="Name" value="y_is_vugen_run_bool"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga71b54880fd4fe004b3cb8141255c6474"><param name="Name" value="y_mem_alloc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga0419985b32761cce3f5d75e6aad36f05"><param name="Name" value="y_rand"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga16db77ab873c5b767742a51c9613314b"><param name="Name" value="Y_RAND_MAX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_scid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_setup"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_virtual_user_group"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ga312065213820734af47b86c233a26c0d"><param name="Name" value="y_virtual_user_id"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#addb3bf81422985ec5ec9a1b38722ec20"><param name="Name" value="y_create_new_sub_transaction_name"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#aa282308c5f5218e451b60a7c355b60a7"><param name="Name" value="y_create_new_transaction_name"></OBJECT>
@@ -1093,6 +1117,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a5064e6f0187a332841c80df8aa79bbdc"><param name="Name" value="y_delay_until"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329"><param name="Name" value="y_disk_space_guard"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803"><param name="Name" value="y_disk_space_usage_guard"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga319710d6642f34a8ea51a1a9898869fc"><param name="Name" value="y_drand"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga319710d6642f34a8ea51a1a9898869fc"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga319710d6642f34a8ea51a1a9898869fc"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#a673ca5f966149455097c6eb431045e9c"><param name="Name" value="y_emulate_browser"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a28468dfca4fd956b1ba9b9c84fdb0af0"><param name="Name" value="y_end_action_block"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a659dfc22ea5f64d11f7f262a3c99d5cc"><param name="Name" value="y_end_sub_transaction"></OBJECT>
@@ -1110,7 +1139,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#adab1c7cf7e6720fc3bf29f43a42c730b"><param name="Name" value="y_get_and_increment_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a894c88b68795406a06db81036b93126b"><param name="Name" value="y_get_and_increment_transaction_nr"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="Name" value="y_get_cleansed_parameter"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="Name" value="y_get_cleansed_parameter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#aaac937467885091d9e77d63cb872d316"><param name="Name" value="y_get_current_sub_transaction_name"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a17b08587d9d4bead3865b4778bda878b"><param name="Name" value="y_get_current_time"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a54ae1b999707ab201d3bdeec607bfb4c"><param name="Name" value="y_get_current_transaction_name"></OBJECT>
@@ -1118,14 +1147,34 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__flow__list_8c.html#aca4c6de81bafa3e28b8a6151cb6a7dff"><param name="Name" value="y_get_flow_by_name"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77"><param name="Name" value="y_get_free_disk_space_in_mebibytes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5"><param name="Name" value="y_get_free_disk_space_percentage"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5"><param name="Name" value="y_get_int_from_char"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a52108dd8853a8bd14a6632b320e14d9d"><param name="Name" value="y_get_last_transaction_status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a925fce08fef42ba94c23a5ece5616f4e"><param name="Name" value="y_get_next_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ae7e6210279f7f1adeaea07b7725575d5"><param name="Name" value="y_get_next_transaction_nr"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_get_parameter"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_get_parameter_eval_string"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#aa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_get_parameter_ext"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#af81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_get_parameter_or_null"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_get_parameter_with_malloc_or_null"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_get_parameter"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_get_parameter_eval_string"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_get_parameter_ext"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_get_parameter_or_null"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_get_parameter_with_malloc_or_null"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#adee4fb0981ee45aeb6fa79b67cc442be"><param name="Name" value="y_get_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a24993dac17320f290997ce51bf524c5c"><param name="Name" value="y_get_transaction_end_implementation"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a04c8d7185823215e70822cf142363851"><param name="Name" value="y_get_transaction_nr"></OBJECT>
@@ -1135,9 +1184,21 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a4ad4afc7aabf4e2fcc7752ba227ae226"><param name="Name" value="y_hash_sdbm"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ab4a939d93aed97410a4c90e52e2d42e5"><param name="Name" value="y_increment_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a7672d883aaf18287c950c985ce4d3f95"><param name="Name" value="y_increment_transaction_nr"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ae32fba754c61429341686d6a5e387a06"><param name="Name" value="y_int_strlen"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_is_empty_parameter"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a00aa2e3c4dbd5c6d8b9c1c9d643fc399"><param name="Name" value="y_is_vugen_run"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_is_empty_parameter"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0778c8b8f3da732862ab82176857be8"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gac0778c8b8f3da732862ab82176857be8"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5"><param name="Name" value="y_is_vugen_run"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d"><param name="Name" value="y_is_vugen_run_bool"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ad96e67d8e69e1df570958aa1e1d5e97e"><param name="Name" value="y_last_right"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5"><param name="Name" value="y_left"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#ab38ac7501bf33d86e9fa82a53f43b95b"><param name="Name" value="y_load_kernel_dll"></OBJECT>
@@ -1163,6 +1224,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a375a16360f75738d68c6b8c706e84eb0"><param name="Name" value="y_think_time_for_rampup_ext"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a192a83f87c6d0c63de76432ac985bfcc"><param name="Name" value="y_user_data_point"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#afa6f1aa6d2647d9f58308c1864bd9eb6"><param name="Name" value="y_workdays_from_today"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a09a5167c980ec4de95cf198c320c179e"><param name="Name" value="y_write_parameter_to_file"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c"><param name="Name" value="y_write_to_file"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#a203e1535a0424f47fd044816fed2234b"><param name="Name" value="y_log_browser"></OBJECT>
@@ -1201,7 +1263,11 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e"><param name="Name" value="y_write_to_log"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#af5f7233cc156519f399367ba558adba8"><param name="Name" value="y_make_datetimestamp"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a44660f85cba534a4c186c29ec698c4fb"><param name="Name" value="y_mem_alloc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga71b54880fd4fe004b3cb8141255c6474"><param name="Name" value="y_mem_alloc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga71b54880fd4fe004b3cb8141255c6474"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga71b54880fd4fe004b3cb8141255c6474"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html"><param name="Name" value="y_param_array.c"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__param__array_8c.html#af889acf62df6f4c07940d9c9e658d31f"><param name="Name" value="_y_random_array_index"></OBJECT>
@@ -1227,10 +1293,18 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#af06c62517da4536d9b79a5f67b12c96a"><param name="Name" value="y_pause_transaction_block"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#af7f464ac229672aa21f63ce0f9cd8ab7"><param name="Name" value="y_post_increment_sub_transaction_nr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a4ce1cf19821f9eabdc90e247270c99bc"><param name="Name" value="y_post_increment_transaction_nr"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#ab31dd572cc0f21dae3583c83770d5fab"><param name="Name" value="y_rand"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga0419985b32761cce3f5d75e6aad36f05"><param name="Name" value="y_rand"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga0419985b32761cce3f5d75e6aad36f05"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga0419985b32761cce3f5d75e6aad36f05"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#aa50b7745f6d186a97d1dc21eebf52bb3"><param name="Name" value="y_rand_between"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#ae983b9ef76c2dac577cd9bb17920b6ea"><param name="Name" value="y_rand_in_sliding_window"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a16db77ab873c5b767742a51c9613314b"><param name="Name" value="Y_RAND_MAX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga16db77ab873c5b767742a51c9613314b"><param name="Name" value="Y_RAND_MAX"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga16db77ab873c5b767742a51c9613314b"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga16db77ab873c5b767742a51c9613314b"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a91e3109c43cfdf0f6378b943d39871bd"><param name="Name" value="y_random_number_buffer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ab751d549b344736ced6cf495d019ebc6"><param name="Name" value="y_random_string_buffer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a3e11c4662cca5dd346ad89590d5eef24"><param name="Name" value="y_random_string_buffer_core"></OBJECT>
@@ -1249,7 +1323,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a14010a877f5f12712afd4bfa0a713b3e"><param name="Name" value="y_save_attribute_to_parameter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#ac26c6e8c89f6857da3f8cb8d1a828329"><param name="Name" value="y_save_browser_to_parameters"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#adf52dbc0beeae4f4ab24365dfcc22411"><param name="Name" value="y_save_transaction_end_status"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_scid"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_scid"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ac2618772922e0b5e0cf811024f8d7acf"><param name="Name" value="y_set_add_group_to_transaction"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ad085c39c1a2b342a84a47ce611655314"><param name="Name" value="y_set_current_sub_transaction_name"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a073e480cfd3ff2a01c708bb3870717d6"><param name="Name" value="y_set_current_transaction_name"></OBJECT>
@@ -1264,7 +1342,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a305472b429df2bc9da417c23014abf95"><param name="Name" value="y_set_transaction_prefix"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#af162a70445ef1b47634dd433ca5f3732"><param name="Name" value="y_set_transaction_start_implementation"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ab5e31480bbce381a34940670036f2d08"><param name="Name" value="y_set_transaction_start_trigger"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_setup"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_setup"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#aa639505ee3cfd56b36ac1b46fc7a4b44"><param name="Name" value="y_setup_browser_emulation"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#a720f749da2d75510c8134048f226b0c5"><param name="Name" value="y_setup_browser_emulation_from_file"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__browseremulation_8c.html#a00dd5481644afd50232ee3626de161c4"><param name="Name" value="y_setup_browser_emulation_from_parameters"></OBJECT>
@@ -1278,13 +1360,18 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec"><param name="Name" value="y_start_transaction"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d"><param name="Name" value="y_start_transaction_block"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a7d227ad4eda69681af69a26838a344ba"><param name="Name" value="y_start_transaction_with_number"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html"><param name="Name" value="y_string.c"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a27ae9506d1f756e8138c9eb85d098308"><param name="Name" value="y_chop"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a2c65e959425f4624e427649ec8c7b22b"><param name="Name" value="y_cleanse_parameter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a36d93cd0fa4942600d58fcb81bf6f106"><param name="Name" value="y_cleanse_parameter_ext"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a7b01815915da19b48aaca1a7a5ba30b2"><param name="Name" value="y_copy_param"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#aecc6f4f2a809c8f7ef600a36d3c60df5"><param name="Name" value="y_get_int_from_char"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ae32fba754c61429341686d6a5e387a06"><param name="Name" value="y_int_strlen"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a9fc166c412bf848068685f7c391658bd"><param name="Name" value="y_get_cleansed_parameter"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ad96e67d8e69e1df570958aa1e1d5e97e"><param name="Name" value="y_last_right"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#abced95074b83aebcfb1454f15890c2b5"><param name="Name" value="y_left"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a0213fca8c623a194e44b3a846a834729"><param name="Name" value="y_param_unique"></OBJECT>
@@ -1298,7 +1385,6 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8fa8cb819a971b562b07cf9ab9c84bba"><param name="Name" value="y_right"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#ae264f7c6576cb429747b914657ff8e92"><param name="Name" value="y_split"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff"><param name="Name" value="y_split_str"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a8cba325c05b63bbbdc499702c4f5c6e9"><param name="Name" value="y_strdup"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a6c487cce1d850e956bcd5af4c4acac73"><param name="Name" value="y_substr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a20420f9a082c1e2a89b70409d6008931"><param name="Name" value="y_uppercase_parameter"></OBJECT>
   </UL>
@@ -1341,6 +1427,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a6080765857b538d37feca241be9ad8be"><param name="Name" value="_y_trigger_end_trans"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a806e5fbc5d61fb9a2db6a05ecf54f898"><param name="Name" value="_y_trigger_start_sub_trans"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a3cf739fca44b3ff513cdccd178b38221"><param name="Name" value="_y_trigger_start_trans"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a325dd6ae8f5f42d039791757012a2f0c"><param name="Name" value="_y_wasted_time_graph"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a2c39978bd241c358b487436f454dc4ec"><param name="Name" value="y_calculate_actual_transaction_prefix"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#addb3bf81422985ec5ec9a1b38722ec20"><param name="Name" value="y_create_new_sub_transaction_name"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#aa282308c5f5218e451b60a7c355b60a7"><param name="Name" value="y_create_new_transaction_name"></OBJECT>
@@ -1354,6 +1441,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a894c88b68795406a06db81036b93126b"><param name="Name" value="y_get_and_increment_transaction_nr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#aaac937467885091d9e77d63cb872d316"><param name="Name" value="y_get_current_sub_transaction_name"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a54ae1b999707ab201d3bdeec607bfb4c"><param name="Name" value="y_get_current_transaction_name"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a52108dd8853a8bd14a6632b320e14d9d"><param name="Name" value="y_get_last_transaction_status"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a925fce08fef42ba94c23a5ece5616f4e"><param name="Name" value="y_get_next_sub_transaction_nr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#ae7e6210279f7f1adeaea07b7725575d5"><param name="Name" value="y_get_next_transaction_nr"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#adee4fb0981ee45aeb6fa79b67cc442be"><param name="Name" value="y_get_sub_transaction_nr"></OBJECT>
@@ -1407,28 +1495,26 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a1d68e4dcb0ab1e22daf3046673f4629f"><param name="Name" value="y_trigger_func"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__string_8c.html#a20420f9a082c1e2a89b70409d6008931"><param name="Name" value="y_uppercase_parameter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a192a83f87c6d0c63de76432ac985bfcc"><param name="Name" value="y_user_data_point"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_virtual_user_group"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__core_8c.html#a312065213820734af47b86c233a26c0d"><param name="Name" value="y_virtual_user_id"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_virtual_user_group"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga312065213820734af47b86c233a26c0d"><param name="Name" value="y_virtual_user_id"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga312065213820734af47b86c233a26c0d"><param name="Name" value="core"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__core.html#ga312065213820734af47b86c233a26c0d"><param name="Name" value="y_core.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html"><param name="Name" value="y_vts.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ab85c4147088754ab8284d6bb3e0a0548"><param name="Name" value="_VTS_FUNC_C"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a08dbc5fd5bb076e1ea0ece2f2949dfd3"><param name="Name" value="VTS_clearColumn"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a7536c4ebc4a53b24a3938749c34e3ae8"><param name="Name" value="VTS_connect"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a91b1420978a193be969c77f7a1be7ac1"><param name="Name" value="VTS_disconnect"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a1393f6eb92179ec1d8da224cb4bc042b"><param name="Name" value="VTS_popfirst"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ad8378af03d646e031c1115786d763226"><param name="Name" value="VTS_popfirstMultipleColumns"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aaf4edb49fe893387db7b6f84d2c2b549"><param name="Name" value="VTS_process_returncode"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a146f94f9381eb760bcc8c539edcd1ab4"><param name="Name" value="VTS_push_multiple_columns"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a5cd09387d9dc56c4ed1af6fc49a7e633"><param name="Name" value="VTS_push_multiple_columns_unique"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a76e3d4057f3a4958b90a45143a010436"><param name="Name" value="VTS_pushlast"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a586699f6a949b6e350b71be5adccc219"><param name="Name" value="VTS_pushlast_unique"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aac06f9b88c25c04f1d6c5f036b2e7b8d"><param name="Name" value="VTS_pushlast_with_flag"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ac4a8e2dc6a6c2d407482811129b3f095"><param name="Name" value="VTS_readRandom"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#af5fd6e72c49a15f1c90791a4d5a57a39"><param name="Name" value="VTS_report_error"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#ad9eab9ca03005e3c3f33450539d22343"><param name="Name" value="VTS_setup"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96"><param name="Name" value="y_vts_process_returncode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e"><param name="Name" value="y_vts_report_error"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#aaae18a7b8d23a91712fe6eb9a8f7bf96"><param name="Name" value="y_vts_process_returncode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__vts_8c.html#a8bd182aa7660107f9f0ea013f003556e"><param name="Name" value="y_vts_report_error"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__transaction_8c.html#a882f93c4823bcf37acfdc030e89d1e37"><param name="Name" value="y_waterfall_random_weighted_continue"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#afa6f1aa6d2647d9f58308c1864bd9eb6"><param name="Name" value="y_workdays_from_today"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a09a5167c980ec4de95cf198c320c179e"><param name="Name" value="y_write_parameter_to_file"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c"><param name="Name" value="y_write_to_file"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="y__logging_8c.html#acd38a10a5e25caf792c6c6c5be68ab5e"><param name="Name" value="y_write_to_log"></OBJECT>
 </UL>

@@ -93,6 +93,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a1975c6dcb009fd4ebc670efa3805bf3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c">y_write_to_file</a> (char *filename, char *content)</td></tr>
 <tr class="memdesc:a1975c6dcb009fd4ebc670efa3805bf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a string to a file.  <a href="#a1975c6dcb009fd4ebc670efa3805bf3c">More...</a><br /></td></tr>
 <tr class="separator:a1975c6dcb009fd4ebc670efa3805bf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a5167c980ec4de95cf198c320c179e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a09a5167c980ec4de95cf198c320c179e">y_write_parameter_to_file</a> (char *filename, char *content_parameter)</td></tr>
+<tr class="memdesc:a09a5167c980ec4de95cf198c320c179e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the content of a parameter to a file.  <a href="#a09a5167c980ec4de95cf198c320c179e">More...</a><br /></td></tr>
+<tr class="separator:a09a5167c980ec4de95cf198c320c179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7841e4b695b3dbae20f9d9276eecc07a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a7841e4b695b3dbae20f9d9276eecc07a">y_datetime</a> ()</td></tr>
 <tr class="memdesc:a7841e4b695b3dbae20f9d9276eecc07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the current date/time into a LR-parameter.  <a href="#a7841e4b695b3dbae20f9d9276eecc07a">More...</a><br /></td></tr>
 <tr class="separator:a7841e4b695b3dbae20f9d9276eecc07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,7 +185,7 @@ Functions</h2></td></tr>
 <p>Hence: delay_once</p>
 <p>This is a macro because a function call would make it impossible to use this more than once in a script - it would execute the delay the first time this function is called, independent of where it was called <em>from</em>. Which would be rather counterintuitive. </p><dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00682">682</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00731">731</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -247,7 +250,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00369">369</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00418">418</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -269,7 +272,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section return"><dt>Returns</dt><dd>the amount of time waited, in seconds.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00653">653</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00702">702</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -290,7 +293,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section return"><dt>Returns</dt><dd>The current time in seconds since 1970-01-01 00:00 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00640">640</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00689">689</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -321,7 +324,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a09204e6a1bad95cf41fbc2a575c357a5" title="Get the free diskspace percentage on the target folder on the load generator. ">y_get_free_disk_space_percentage()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00532">532</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00581">581</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -352,7 +355,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a2318c8db530202522ef982ce1f0e4a77" title="get the amount of free disk space in the target folder in mebibytes (SI unit) ">y_get_free_disk_space_in_mebibytes()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00501">501</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00550">550</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -413,7 +416,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__logging_8c.html#adfccbf59127c2e9106022bb3b4dc8329" title="Detect low disk space situations on the generator and turn all logging off if not enough space is lef...">y_disk_space_guard()</a>, <a class="el" href="y__logging_8c.html#a516cb215f2125635444363eeb2eb8803" title="Detect excessive disk usage by the test and turn all further logging off if more than a specific limi...">y_disk_space_usage_guard()</a>, lr_abort() </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00462">462</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00511">511</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -609,7 +612,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00586">586</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00635">635</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -721,7 +724,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00811">811</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00860">860</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -786,7 +789,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section warning"><dt>Warning</dt><dd>Do not set TPS_initial lower than 0,1 or the calculated think times may get really large.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00734">734</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00783">783</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -817,7 +820,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd>lr_user_data_point() </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00631">631</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00680">680</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -844,7 +847,54 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <div class="line">lr_vuser_status_message(lr_eval_string(<span class="stringliteral">&quot;Running with offset {reservationOffset} at day offset %d&quot;</span>), daysOffSet);</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00393">393</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00442">442</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a09a5167c980ec4de95cf198c320c179e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int y_write_parameter_to_file </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>content_parameter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the content of a parameter to a file. </p>
+<p>Write the content of a parameter to a file. Creates the file if it doesn't exist. Appends to an existing file.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>Name of the file in which the content is saved. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">content_parameter</td><td>The name of the parameter to be saved. No checking is done - if this doesn't exist, it will just write {content_parameter} or something to your file! </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Negative number in case of an error, zero otherwise.</dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> result;</div>
+<div class="line">y_save_string(<span class="stringliteral">&quot;a very long string including newlines, null bytes, what have you&quot;</span>, <span class="stringliteral">&quot;content_parameter&quot;</span>);</div>
+<div class="line">result=<a class="code" href="y__loadrunner__utils_8c.html#a09a5167c980ec4de95cf198c320c179e">y_write_parameter_to_file</a>(<span class="stringliteral">&quot;c:\\temp.txt&quot;</span>, <span class="stringliteral">&quot;content_parameter&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (result != 0)</div>
+<div class="line">{   <span class="comment">// o dear, something went wrong!</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>André Luyer, Floris Kraak </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c" title="Write a string to a file. ">y_write_to_file()</a>, y_read_parameter_from_file() </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00367">367</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -888,7 +938,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <div class="line">{   <span class="comment">// o dear, something went wrong!</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a5d8d307cc6497d0ae26051c7b5272adf" title="Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one...">y_breadcrumb_reset()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a09a5167c980ec4de95cf198c320c179e" title="Write the content of a parameter to a file. ">y_write_parameter_to_file()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00324">324</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
