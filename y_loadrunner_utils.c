@@ -319,7 +319,7 @@ if (result != 0)
 }
 \endcode
 \author Raymond de Jongh
-\sa y_breadcrumb_reset()
+\sa y_write_parameter_to_file()
 */
 int y_write_to_file(char *filename, char *content)
 {
@@ -346,6 +346,55 @@ int y_write_to_file(char *filename, char *content)
    return 0;                // everything worked great!
 }
 
+//! Write the content of a parameter to a file.
+/*! Write the content of a parameter to a file. Creates the file if it doesn't exist. Appends to an existing file.
+
+\param[in] filename Name of the file in which the content is saved.
+\param[in] content_parameter The name of the parameter to be saved. No checking is done - if this doesn't exist, it will just write {content_parameter} or something to your file!
+\return Negative number in case of an error, zero otherwise.
+
+\code
+int result;
+y_save_string("a very long string including newlines, null bytes, what have you", "content_parameter");
+result=y_write_parameter_to_file("c:\\temp.txt", "content_parameter");
+if (result != 0)
+{   // o dear, something went wrong!
+}
+\endcode
+\author André Luyer, Floris Kraak
+\sa y_write_to_file(), y_read_parameter_from_file()
+*/
+int y_write_parameter_to_file(char *filename, char *content_parameter)
+{
+    long fp;
+    char *szBuf;
+    unsigned long nLength;
+    int result, tmp = 0;
+
+    // Get the parameter content. Tricky because of the possibility of embedded null bytes in there.
+    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
+
+    // Open the file.
+    fp = fopen(filename, "wb");
+    if (!fp) {
+    	lr_error_message("Cannot open file %s for writing!", filename);
+   	    lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
+    	lr_abort();
+    	return -1;
+    }
+    
+    // Write the file.
+    result = fwrite(szBuf, nLength, 1, fp);
+    
+    // Close the file.
+    tmp = fclose(fp); // errors during writing should not stop us from closing the file
+    if( result == 0 )
+        result = tmp; // if no error occured during writing, use the result from fclose().
+
+    // Free the parameter content buffer.
+    lr_eval_string_ext_free(&szBuf);
+    return result;
+}
 
 // --------------------------------------------------------------------------------------------------
 
