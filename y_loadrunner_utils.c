@@ -326,7 +326,7 @@ int y_write_to_file(char *filename, char *content)
    long file;
    int result;
 
-   lr_message("LOGGING: %s", content);
+   lr_log_message("y_write_to_file(%s, %s)", filename, content);
 
    if ((file = fopen(filename, "at")) == NULL)
    { 
@@ -369,27 +369,42 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     long fp;
     char *szBuf;
     unsigned long nLength;
-    int result, tmp = 0;
+    int result = 0;
+    int tmp = 0;
 
+    lr_log_message("y_write_parameter_to_file(\"%s\", \"%s\")", filename, content_parameter);
+    
     // Get the parameter content. Tricky because of the possibility of embedded null bytes in there.
     lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
 
     // Open the file.
-    fp = fopen(filename, "wb");
-    if (!fp) {
+    if( !(fp = fopen(filename, "wb")) ) 
+    {
     	lr_error_message("Cannot open file %s for writing!", filename);
    	    lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
     	lr_abort();
-    	return -1;
+    	return -1; // Errors while opening the file means writing to it is pointless.
     }
     
     // Write the file.
-    result = fwrite(szBuf, nLength, 1, fp);
+    if( (fwrite(szBuf, nLength, 1, fp)) < 0 )
+    {
+        lr_error_message("Error while writing %d bytes to file: %s ; Only %d bytes were written.", nLength, filename, result);
+        result = -2;
+        // errors during writing should not stop us from closing the file..
+    }
+    else
+    {
+        result = 0;
+    }
     
     // Close the file.
-    tmp = fclose(fp); // errors during writing should not stop us from closing the file
-    if( result == 0 )
-        result = tmp; // if no error occured during writing, use the result from fclose().
+    if( (tmp = fclose(fp)) != 0 )
+    {
+        lr_error_message("Error code %d while closing file %s", tmp, filename);
+        if( result >= 0 )  // if no error occured during writing, fclose() failed, return -3.
+            result = -3;
+    }
 
     // Free the parameter content buffer.
     lr_eval_string_ext_free(&szBuf);
@@ -636,9 +651,11 @@ int y_read_file_into_parameter(char* filename, char* param)
 {
     long pos;
     char *bytes;
-    long f = fopen(filename, "rb");
+    long f;
+    lr_log_message("y_read_file_into_parameter(%s, %s)", filename, param);
 
-    if( f == NULL )
+    // Open the file.
+    if( (f = fopen(filename, "rb")) == NULL )
     {
         lr_error_message("Unable to open file %s", filename);
         lr_abort();
@@ -868,5 +885,4 @@ double y_think_time_for_rampup(const int rampup_period, double TPS_max)
 }
 
 
-// --------------------------------------------------------------------------------------------------
 #endif // _LOADRUNNER_UTILS_C
