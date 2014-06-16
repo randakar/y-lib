@@ -636,12 +636,14 @@ void y_user_data_point(char* param)
 /*! \brief Get the current time in seconds since 1970, as a double.
 \returns The current time in seconds since 1970-01-01 00:00
 \author Floris Kraak
+
+AuL bugfix: changed constant from integer (1000) to double (1000.) to avoid rounding down before conversion to double
 */
 double y_get_current_time()
 {
     struct _timeb timebuffer;
     ftime(&timebuffer);
-    return timebuffer.time + (timebuffer.millitm / 1000);
+    return timebuffer.time + (timebuffer.millitm / 1000.);
 }
 
 
