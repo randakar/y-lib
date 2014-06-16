@@ -707,7 +707,7 @@ double y_get_current_time()
 {
     struct _timeb timebuffer;
     ftime(&timebuffer);
-    return timebuffer.time + (timebuffer.millitm / 1000);
+    return timebuffer.time + (timebuffer.millitm / 1000.);
 }
 
 
