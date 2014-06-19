@@ -101,6 +101,7 @@ This can be used for a variëty of things; For example, calculating the 99th perc
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
 int _y_add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
+int _y_wasted_time_graph = 0;       // whether to create a graph detailing wasted time. Debugging option.
 
     // We could allocate _block_transaction with malloc
     // but freeing that gets complicated quickly. Too quickly.
@@ -673,7 +674,7 @@ int y_end_transaction(char *transaction_name, int status)
 
     // Debugging: report wasted time.
     // People who implement their own triggers will have to do this themselves.
-    if( _y_trans_end_impl == lr_end_transaction )
+    if( _y_wasted_time_graph && _y_trans_end_impl == lr_end_transaction )
         lr_user_data_point( lr_eval_string("wasted_{y_current_transaction}"), lr_get_transaction_wasted_time(trans_name));
 
     // End the transaction
@@ -741,7 +742,8 @@ int y_end_sub_transaction(char *transaction_name, int status)
     y_save_transaction_end_status(trans_name, "y_last_sub_transaction_status", status);
 
     // Debugging: report wasted time.
-    lr_user_data_point( lr_eval_string("wasted_{y_current_sub_transaction}"), lr_get_transaction_wasted_time(trans_name));
+    if( _y_wasted_time_graph ) 
+        lr_user_data_point( lr_eval_string("wasted_{y_current_sub_transaction}"), lr_get_transaction_wasted_time(trans_name));
 
     // End the transaction
     status = lr_end_sub_transaction(trans_name, status);
@@ -757,7 +759,18 @@ int y_end_sub_transaction(char *transaction_name, int status)
     return status;
 }
 
-
+int y_get_last_transaction_status()
+{
+    char* last_trans_status_string = y_get_parameter_or_null("y_last_transaction_status");
+    if( last_trans_status_string == NULL )
+    {
+        return LR_AUTO; // No earlier transaction, the parameter doesn't even exist.
+    }
+    else
+    {
+        return atoi(last_trans_status_string);
+    }
+}
 
 
 // Handy shortcuts //
