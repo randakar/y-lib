@@ -2,7 +2,7 @@
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
- * Copyright (C) 2013 André Luyer
+ * Copyright (C) 2013 AndrÃ© Luyer
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -361,7 +361,7 @@ if (result != 0)
 {   // o dear, something went wrong!
 }
 \endcode
-\author André Luyer, Floris Kraak
+\author AndrÃ© Luyer, Floris Kraak
 \sa y_write_to_file(), y_read_parameter_from_file()
 */
 int y_write_parameter_to_file(char *filename, char *content_parameter)
@@ -380,10 +380,10 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     // Open the file.
     if( !(fp = fopen(filename, "wb")) ) 
     {
-    	lr_error_message("Cannot open file %s for writing!", filename);
-   	    lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
-    	lr_abort();
-    	return -1; // Errors while opening the file means writing to it is pointless.
+        lr_error_message("Cannot open file %s for writing!", filename);
+           lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
+        lr_abort();
+        return -1; // Errors while opening the file means writing to it is pointless.
     }
     
     // Write the file.
@@ -637,11 +637,11 @@ projectname_some_request_transaction()
 
    y_start_transaction("some_request");
    web_custom_request("some_request", 
-		"URL=http://{Host}/some/request/v1/", 
-		"Method=POST", "Resource=0", 
-		"Body={request_body}",
-		"EncType=text/xml; charset=utf-8",
-		LAST);   
+        "URL=http://{Host}/some/request/v1/", 
+        "Method=POST", "Resource=0", 
+        "Body={request_body}",
+        "EncType=text/xml; charset=utf-8",
+        LAST);   
    y_end_transaction("", LR_AUTO);
 }
 \endcode
@@ -882,6 +882,85 @@ double y_think_time_for_rampup(const int rampup_period, double TPS_max)
     const int virtual_users = 1;                   // How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS.
 
     return y_think_time_for_rampup_ext(rampup_period, TPS_initial, TPS_max, virtual_users);
+}
+
+/*! \brief Execute a windows shell command
+Implements proper error checking.
+
+\todo Fix the memory allocation to provide for commands that result in more than 10Kb of output.
+
+\param [in] command A windows shell command, as passed to CMD.exe
+\param [in] debug If zero, log the first line; Otherwise, log full command output.
+\author Sander van Wanrooij, Floris Kraak
+*/
+y_execute_shell_command(char* command, int debug)
+{
+    const int buffer_size = 10240; // 10 KB;
+    char buffer[10240];            // allocate memory for the output of the command.
+                                   // Has to be hardcoded because this compiler is stupid about const keywords and I do not want to use #define because of potential side effects. -- FBK
+    long fp;           // file/stream pointer
+    int count;         // number of characters that have been read from the stream.
+    char *token;
+    char *command_evaluated = lr_eval_string(command);
+
+    lr_save_string("-- command not yet executed --", "command_result");
+    lr_log_message("Executing command: %s", command_evaluated);
+
+    fp = popen(command_evaluated, "r");
+    if (fp == NULL) {
+        lr_error_message("Error opening stream.");
+        return -1;
+    }
+
+    buffer[0] = '\0';  // Clear the buffer before we try to fill it - Prevents the previous command output from showing up in here. -- FBK
+    count = fread(buffer, sizeof(char), buffer_size, fp); // read up to 10KB
+    if (feof(fp) == 0) 
+    {
+        lr_error_message("Did not reach the end of the input stream when reading. Try increasing buffer_size.");
+        pclose(fp);
+        return -1;
+    }
+    if (ferror(fp)) 
+    {
+        lr_error_message ("I/O error during read."); 
+        pclose(fp);
+        return -1;
+    }
+    count = fread(buffer, sizeof(char), (sizeof buffer) - 1, fp);
+    lr_save_var(buffer, count, 0, "command_output");
+
+    // Split the stream at each newline character, and save them to a parameter array.
+    token = (char*) strtok(buffer, "\n"); // Get the first token
+ 
+    if (token == NULL) {
+        lr_save_string("", "command_result");        
+    }
+    else 
+    {
+        lr_save_string(token, "command_result"); // First token saved
+
+        if(debug)
+        {
+            char param_buf[10];         // buffer to hold the parameter name.
+            int i = 1;
+    
+            while (token != NULL) { // While valid tokens are returned 
+                sprintf(param_buf, "output_%d", i);
+                lr_save_string(token, param_buf);
+                i++;
+                token = (char*) strtok(NULL, "\n");
+             }
+            lr_save_int(i-1, "output_count");
+            
+            // Print all values of the parameter array.
+            for (i=1; i<=lr_paramarr_len("output"); i++) {
+                lr_output_message("Parameter value: %s", lr_paramarr_idx("output", i));
+            } 
+        }
+    }
+    
+    pclose(fp);
+    return 0;
 }
 
 
