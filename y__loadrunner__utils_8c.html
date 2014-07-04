@@ -129,6 +129,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a123bd2be5b33b914a321e11a7122dba6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#a123bd2be5b33b914a321e11a7122dba6">y_think_time_for_rampup</a> (const int rampup_period, double TPS_max)</td></tr>
 <tr class="memdesc:a123bd2be5b33b914a321e11a7122dba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ramp up the load by using varying amounts of think time instead of virtual users. For simulating situations with limited amounts of connections on the client side.  <a href="#a123bd2be5b33b914a321e11a7122dba6">More...</a><br /></td></tr>
 <tr class="separator:a123bd2be5b33b914a321e11a7122dba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6724943ea9deafd1a035fd2957774bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#aa6724943ea9deafd1a035fd2957774bf">y_execute_shell_command</a> (char *command, int debug)</td></tr>
+<tr class="memdesc:aa6724943ea9deafd1a035fd2957774bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a windows shell command Implements proper error checking.  <a href="#aa6724943ea9deafd1a035fd2957774bf">More...</a><br /></td></tr>
+<tr class="separator:aa6724943ea9deafd1a035fd2957774bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe608ed84cb017342f34c8d76aee5e77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__loadrunner__utils_8c.html#abe608ed84cb017342f34c8d76aee5e77">y_errorcheck</a> (int ok)</td></tr>
+<tr class="memdesc:abe608ed84cb017342f34c8d76aee5e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Errorflood guard. Also known as "the error check".  <a href="#abe608ed84cb017342f34c8d76aee5e77">More...</a><br /></td></tr>
+<tr class="separator:abe608ed84cb017342f34c8d76aee5e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collection of miscellaneous support functions. </p>
@@ -273,6 +279,84 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
 <p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00719">719</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abe608ed84cb017342f34c8d76aee5e77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int y_errorcheck </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ok</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Errorflood guard. Also known as "the error check". </p>
+<p>Prevent error floods by inserting forced thinktime at the start of the iteration if too many iterations fail.</p>
+<p>Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups. In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. Keeping the load 'stable' at that stage may also prevent the backend from coming back up normaly after the original disruption has ended. Plus, if the system <em>stays</em> down keeping the full load on it will only cause the generator's log storage to overflow.</p>
+<p>Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).</p>
+<p><b>Usage:</b> </p><div class="fragment"><div class="line"><a class="code" href="y__loadrunner__utils_8c.html#abe608ed84cb017342f34c8d76aee5e77">y_errorcheck</a>(0);  <span class="comment">// Marks the start of the iteration, will insert forced delay if this spot is reached too many times in a row without reaching the end.</span></div>
+<div class="line"><a class="code" href="y__loadrunner__utils_8c.html#abe608ed84cb017342f34c8d76aee5e77">y_errorcheck</a>(1);  <span class="comment">// Marks the end of the iteration. Resets the error counter.</span></div>
+</div><!-- fragment --><p>Three virtual user attributes are used to control this functionality:</p><ul>
+<li>errorcheck_enabled: 0 or 1; If set to 1, error flood checking is performed. Otherwise, it isn't. Default 0 (off).</li>
+<li>errorcheck_limit: How many iteration failures are tolerated before forcibly pausing the virtual user. Default 10 iterations.</li>
+<li>errorcheck_pause_time_seconds: The amount of time to pause if the floodguard fires, in seconds. Default 900 (15 minutes).</li>
+</ul>
+<dl class="section warning"><dt>Warning</dt><dd>the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The forced pause ignores runtime thinktime settings.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ok</td><td>Start/end iteration marker. Should be set to 0 at the start of the iteration, and 1 at the end of the iteration. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section author"><dt>Author</dt><dd>André Luyer, Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00997">997</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa6724943ea9deafd1a035fd2957774bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">y_execute_shell_command </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>debug</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute a windows shell command Implements proper error checking. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Fix the memory allocation to provide for commands that result in more than 10Kb of output.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">command</td><td>A windows shell command, as passed to CMD.exe </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">debug</td><td>If zero, log the first line; Otherwise, log full command output. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section author"><dt>Author</dt><dd>Sander van Wanrooij, Floris Kraak </dd></dl>
+
+<p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00896">896</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>
 
 </div>
 </div>
@@ -891,7 +975,7 @@ YYYYMMDD,HHMMSS (yes, separated by a comma.) </p><dl class="section return"><dt>
 <div class="line"><span class="keywordflow">if</span> (result != 0)</div>
 <div class="line">{   <span class="comment">// o dear, something went wrong!</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>André Luyer, Floris Kraak </dd></dl>
+</div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>AndrÃ© Luyer, Floris Kraak </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__loadrunner__utils_8c.html#a1975c6dcb009fd4ebc670efa3805bf3c" title="Write a string to a file. ">y_write_to_file()</a>, y_read_parameter_from_file() </dd></dl>
 
 <p>Definition at line <a class="el" href="y__loadrunner__utils_8c_source.html#l00367">367</a> of file <a class="el" href="y__loadrunner__utils_8c_source.html">y_loadrunner_utils.c</a>.</p>

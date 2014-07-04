@@ -785,7 +785,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <div class="line">&lt;/select&gt;</div>
 </div><!-- fragment --><p>These cannot be correlated using just <code>&lt;option&gt;</code> and <code>&lt;/option&gt;</code> as the left and right boundaries if there is more than one dropdown box on a page. Using this function you can save the HTML for the entire dropdown box in a parameter instead, then have the options saved as a parameter list afterwards.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Using this for large lists can be really slow. This is running lr_save_string() in a loop, and lr_save_string() will slow down if you use it a few thousand times.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML dropdown boxes, as that is the most common case.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Write a wrapper around this - let's call it 'y_dropdown()' specifically for HTML dropdown boxes, as that is the most common case.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sourceParam</td><td>The name of a single parameter containing a list of elements. See dropdown example, above. </td></tr>
