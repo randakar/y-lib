@@ -964,4 +964,74 @@ y_execute_shell_command(char* command, int debug)
 }
 
 
+/*! \brief Errorflood guard.
+Also known as "the error check".
+
+Prevent error floods by inserting forced thinktime at the start of the iteration if too many iterations fail.
+
+Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups.
+In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. 
+Keeping the load 'stable' at that stage may also prevent the backend from coming back up normaly after the original disruption has ended.
+Plus, if the system *stays* down keeping the full load on it will only cause the generator's log storage to overflow.
+
+Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
+
+\b Usage:
+\code
+y_errorcheck(0);  // Marks the start of the iteration, will insert forced delay if this spot is reached too many times in a row without reaching the end.
+y_errorcheck(1);  // Marks the end of the iteration. Resets the error counter.
+\endcode
+
+Three virtual user attributes are used to control this functionality:
+- errorcheck_enabled: 0 or 1; If set to 1, error flood checking is performed. Otherwise, it isn't. Default 0 (off).
+- errorcheck_limit: How many iteration failures are tolerated before forcibly pausing the virtual user. Default 10 iterations.
+- errorcheck_pause_time_seconds: The amount of time to pause if the floodguard fires, in seconds. Default 900 (15 minutes).
+
+\warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
+
+\note The forced pause ignores runtime thinktime settings.
+
+\param [in] ok Start/end iteration marker. Should be set to 0 at the start of the iteration, and 1 at the end of the iteration.
+\author André Luyer, Floris Kraak
+*/
+int y_errorcheck(int ok)
+{
+    static int errorcount = 0; // Static means this value will not be reset to zero when a new iteration starts.
+
+    // Configuration from virtual user group command line or runtime attribute settings.
+    long enabled_attrib     = lr_get_attrib_long("errorcheck_enabled");
+    long error_limit_attrib = lr_get_attrib_long("errorcheck_limit");
+    long pause_time_attrib  = lr_get_attrib_long("errorcheck_pause_time_seconds");
+
+    // Defaults
+    int enabled     = enabled_attrib     >= 0 ? enabled_attrib     :   0; // default off (Should not be used for breaktesting, should be ON for peakload or endurance testing.)
+    int error_limit = error_limit_attrib >= 0 ? error_limit_attrib :  10; // number of failed iterations before firing
+    int pause_time  = pause_time_attrib  >= 0 ? pause_time_attrib  : 900; // how much time to wait (in seconds) when this fires.
+
+    //lr_log_message("y_errorcheck() enabled: %d (%d), error_limit: %d (%d), pause_time: %d (%d)", enabled, enabled_attrib, error_limit, error_limit_attrib, pause_time, pause_time_attrib );
+
+    if( !enabled )
+        return 0;
+    if (ok) 
+    {
+        errorcount = 0;
+    }
+    else 
+    {
+        if (errorcount >= error_limit) 
+        {
+            lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
+            lr_set_transaction(lr_eval_string("---TOO MANY ERRORS - THROTTLING LOAD---"), 0, LR_FAIL);
+            lr_force_think_time(pause_time); // alternative would be calling lr_abort();
+        }
+        if (errorcount) 
+            lr_log_message("Number of failed iterations: %d", errorcount);
+
+        lr_user_data_point( "y_errorcheck_errorcount", errorcount++);
+    }
+
+    return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
+}
+
+
 #endif // _LOADRUNNER_UTILS_C
