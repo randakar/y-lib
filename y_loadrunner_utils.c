@@ -375,7 +375,8 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     lr_log_message("y_write_parameter_to_file(\"%s\", \"%s\")", filename, content_parameter);
     
     // Get the parameter content. Tricky because of the possibility of embedded null bytes in there.
-    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
+    //    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
+    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), strlen(content_parameter)+2,&szBuf, &nLength, 0, 0, -1);
 
     // Open the file.
     if( !(fp = fopen(filename, "wb")) ) 
