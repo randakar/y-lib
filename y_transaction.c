@@ -415,6 +415,27 @@ void y_save_transaction_end_status(char* transaction_name, const char* saveparam
 /////////// END HELPERS //////////
 
 
+//! Transaction counting support for use with y_start_session() / y_end_session()
+int y_transaction_count = -1;
+
+int y_transaction_count_increment()
+{
+    return y_transaction_count++;
+}
+
+void y_transaction_count_report(char* count_name)
+{
+    lr_save_string(count_name, "y_transaction_count_name");
+    lr_message( lr_eval_string("Transaction count for %s: %d"), count_name, y_transaction_count);
+    lr_user_data_point( lr_eval_string("y_transaction_count_{y_transaction_count_name}"), y_transaction_count);
+}
+
+void y_transaction_count_reset()
+{
+    y_transaction_count = 0;
+}
+
+
 
 //
 // Transaction blocks. Prefix all transactions in a series with the same text.
@@ -684,6 +705,9 @@ int y_end_transaction(char *transaction_name, int status)
     // so if a sub-transaction is created it may have to fake this.
     _trans_status = Y_TRANS_STATUS_NONE;
 
+    if( y_transaction_count >= 0 ) // Values smaller than 0 means that transaction counting is disabled.
+        y_transaction_count_increment();
+    
     return status;
 }
 
@@ -773,6 +797,61 @@ int y_get_last_transaction_status()
 }
 
 
+
+//! Session timer variable for session timer support.
+merc_timer_handle_t y_session_timer = NULL;
+
+
+void y_session_timer_start(char* session_name)
+{
+    lr_save_string(session_name, "y_session_name");
+    y_transaction_count_reset();
+
+    y_session_timer = lr_start_timer();
+}
+
+// Meet sessie duur en forceer een pause tot het einde van de sessie, indien nodig.
+#define Y_NO_PAUSE    0
+#define Y_FORCE_PAUSE 1
+
+
+void y_session_timer_end(int required_session_duration, int force_pause)
+{
+    double measured_duration;
+
+    if( y_session_timer == NULL )
+    {
+        lr_error_message("Error: y_session_timer_end() called without matching call to y_session_timer_end()!");
+        lr_set_transaction( "__y_sesssion_timer_end_call_without_y_session_timer_end_call", 0, LR_FAIL);
+        return;
+    }
+    else
+    {
+        double measured_duration = lr_end_timer(y_session_timer);
+        // Calculate how much time remains until the session should end.
+        int remaining_time = required_session_duration - measured_duration;
+
+        // Reset the timer insofar lr_end_timer() hasn't done that already.
+        y_session_timer = NULL;
+
+        lr_user_data_point( lr_eval_string("y_session_duration_{y_session_name}"), measured_duration);
+        if ( remaining_time > 0 ) 
+        {
+            if( force_pause == Y_FORCE_PAUSE )
+            {
+                lr_force_think_time(remaining_time);
+            }
+        }
+        else
+        {
+            lr_error_message( lr_eval_string("WARNING!: Measured duration of session {y_session_name} (%f) exceeded specified maximum of %d seconds!"), measured_duration, required_session_duration);
+            lr_set_transaction( lr_eval_string("_{y_session_name}_session_duration_overrun"), measured_duration, LR_FAIL);
+        }
+    }
+
+    y_transaction_count_report(lr_eval_string("{y_session_name}"));
+}
+
 // Handy shortcuts //
 
 
@@ -848,7 +927,6 @@ do {                                                                      \
                                                                           \
     free(tmp);                                                            \
 } while(0)
-
 
 
 //
