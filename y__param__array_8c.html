@@ -249,7 +249,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a5616917c1f83ef8792af24ffc4826a04" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00282">282</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00280">280</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a5616917c1f83ef8792af24ffc4826a04" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00305">305</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00303">303</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -324,7 +324,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <div class="line"><a class="code" href="y__param__array_8c.html#a29953807502dd227ec8ce69a0e51310f">y_array_dump</a>(<span class="stringliteral">&quot;TAG&quot;</span>); <span class="comment">// Prints the content of the parameter array named &quot;TAG&quot; to the output log.</span></div>
 </div><!-- fragment --> <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00431">431</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00429">429</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -375,7 +375,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a3683ad6f8ac7fd907d896e5e4ab1c7df" title="Search a parameter array for a specific text and build a new array containing only parameters contain...">y_array_grep()</a>, <a class="el" href="y__param__array_8c.html#a8a002613e728f5275aa14b904e937d51" title="Concatenate two arrays together and save the result into a third array. ">y_array_concat()</a>, <a class="el" href="y__param__array_8c.html#a2a3537ce64003babb7cb8b913c17ebab" title="Choose an element at random from a saved parameter list and store it in a parameter with the same nam...">y_array_pick_random()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00562">562</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00560">560</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -405,7 +405,6 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 
 <p>Get the content the nth member of target parameter array, but without embedded zeroes. </p>
 <p>As <a class="el" href="y__param__array_8c.html#af976fbc26cbf53782e0c79db7028517e" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, but it filters embedded zeroes from the input, replacing them with a single space: ' '. It's not ideal, but better than having your script break on this particular type of broken web page.</p>
-<dl class="section warning"><dt>Warning</dt><dd>the return value of this function needs to be freed using lr_eval_string_ext_free().</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">source_param_array</td><td>The name of the parameter array to get an element from. </td></tr>
@@ -440,7 +439,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#af976fbc26cbf53782e0c79db7028517e" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, lr_paramarr_idx(), y_int_strlen(), lr_eval_string_ext() </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00180">180</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00178">178</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -471,7 +470,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <dl class="section see"><dt>See also</dt><dd>lr_paramarr_random(), <a class="el" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05" title="Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). ">y_rand()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00351">351</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00349">349</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -502,7 +501,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <dl class="section see"><dt>See also</dt><dd>lr_paramarr_random(), <a class="el" href="y__param__array_8c.html#afb0cc8ca2f0a0f64b015d2becd2cbe39" title="Get a random element from a parameter list. ">y_array_get_random()</a>, <a class="el" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05" title="Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). ">y_rand()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00378">378</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00376">376</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -553,7 +552,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#ad81f8aaee3cb1632a23f718b62a2a990" title="Search a parameter array for a specific string and and build a new result array containing only param...">y_array_filter()</a>, <a class="el" href="y__param__array_8c.html#a8a002613e728f5275aa14b904e937d51" title="Concatenate two arrays together and save the result into a third array. ">y_array_concat()</a>, <a class="el" href="y__param__array_8c.html#a2a3537ce64003babb7cb8b913c17ebab" title="Choose an element at random from a saved parameter list and store it in a parameter with the same nam...">y_array_pick_random()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00525">525</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00523">523</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -615,7 +614,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a245f5bbf3ad6f1b9c016942e2376f8d4">y_array_split()</a>, <a class="el" href="y__param__array_8c.html#a8a002613e728f5275aa14b904e937d51" title="Concatenate two arrays together and save the result into a third array. ">y_array_concat()</a>, <a class="el" href="y__param__array_8c.html#a2a3537ce64003babb7cb8b913c17ebab" title="Choose an element at random from a saved parameter list and store it in a parameter with the same nam...">y_array_pick_random()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00612">612</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00610">610</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -645,7 +644,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <dl class="section see"><dt>See also</dt><dd>lr_paramarr_random(), <a class="el" href="y__param__array_8c.html#a32e2b577deeaac5f09d74785e2cfca55" title="Get a random element from a parameter list without embedded zeroes. ">y_array_get_random_no_zeroes()</a>, <a class="el" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05" title="Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). ">y_rand()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00402">402</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00400">400</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -696,7 +695,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#af976fbc26cbf53782e0c79db7028517e" title="Fetch the content of a specific element from a parameter list based on index. ">y_array_get()</a>, <a class="el" href="y__param__array_8c.html#a7527bcb8881e6089ef3c1838cab596f3" title="Determine the number of elements in the target parameter array. ">y_array_count()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00217">217</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00215">215</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -735,7 +734,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a5616917c1f83ef8792af24ffc4826a04" title="Save a string value into an array at a specified position. ">y_array_save()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00246">246</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00244">244</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -801,7 +800,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <div class="line"><a class="code" href="y__param__array_8c.html#a29953807502dd227ec8ce69a0e51310f">y_array_dump</a>(<span class="stringliteral">&quot;VALUES&quot;</span>);    <span class="comment">// {VALUES_1} contains &quot;water&quot; (no quotes)    {VALUES_2} contains &quot;fire&quot; (no quotes)    etc...</span></div>
 </div><!-- fragment --><dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00482">482</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00480">480</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -848,7 +847,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a2a3537ce64003babb7cb8b913c17ebab" title="Choose an element at random from a saved parameter list and store it in a parameter with the same nam...">y_array_pick_random()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Raymond de Jongh, Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00715">715</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00713">713</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
@@ -902,7 +901,7 @@ If the data inside the parameter contains embedded null (\x00) characters you ma
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="y__param__array_8c.html#a5208b198c4f2f72e37b5c21addda46ca">y_array_merge()</a>, <a class="el" href="y__param__array_8c.html#a8a002613e728f5275aa14b904e937d51" title="Concatenate two arrays together and save the result into a third array. ">y_array_concat()</a>, <a class="el" href="y__param__array_8c.html#a2a3537ce64003babb7cb8b913c17ebab" title="Choose an element at random from a saved parameter list and store it in a parameter with the same nam...">y_array_pick_random()</a>, <a class="el" href="y__string_8c.html#a18ccd408f76375cb48aceed43aa76bff" title="Split a string into 2 parts based on a search string. ">y_split_str()</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Floris Kraak </dd></dl>
 
-<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00662">662</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
+<p>Definition at line <a class="el" href="y__param__array_8c_source.html#l00660">660</a> of file <a class="el" href="y__param__array_8c_source.html">y_param_array.c</a>.</p>
 
 </div>
 </div>
