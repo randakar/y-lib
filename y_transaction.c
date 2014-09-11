@@ -85,7 +85,7 @@ Testcase
 
 
 
-// Needed to compile this - the definition of LAST is missing if it's not included
+// Needed to compile this - the definition of LAST is missing if it's not included.
 #include "web_api.h"
 
 // More C definitions
@@ -107,17 +107,23 @@ int _y_add_group_to_trans = 0;      //
 //! INTERNAL: Whether to create a graph detailing wasted time. Debugging option.
 int _y_wasted_time_graph = 0;       
 
-    // We could allocate _block_transaction with malloc
-    // but freeing that gets complicated quickly. Too quickly.
-//char _block_transaction[100] = "";
+//! INTERNAL: Transaction counting for transaction blocks: \see y_start_transaction_block() and y_start_transaction()
 int _y_transaction_nr = 1;
+//! INTERNAL: Transaction counting for sub transactions: \see y_start_sub_transaction()
 int _y_sub_transaction_nr = 1;
 
-// Transaction status tracking
+//! Transaction counting support for sessions. \see y_session_timer_start() and y_session_timer_end()
+int y_session_transaction_count = -1;
+
+
+//! Transaction status tracking
 #define Y_TRANS_STATUS_NONE         0
+//! Transaction status tracking
 #define Y_TRANS_STATUS_STARTED      1
+//! Transaction status tracking
 #define Y_TRANS_STATUS_AUTO_STARTED 2
-int _trans_status = Y_TRANS_STATUS_NONE;
+//! INTERNAL: Transaction status tracking
+int _y_trans_status = Y_TRANS_STATUS_NONE;
 
 //! Transaction trigger support typedef
 typedef int (y_trigger_func)();
@@ -139,8 +145,6 @@ y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
 //! End transaction implementation pointer. Default lr_end_transaction(). \see y_set_transaction_end_implementation()
 y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
 
-//! Transaction counting support for sessions. \see y_session_timer_start() and y_session_timer_end()
-int y_session_transaction_count = -1;
 
 
 // Functions
@@ -270,7 +274,7 @@ void y_set_next_sub_transaction_nr(int trans_nr)
 
 int y_get_transaction_running()
 {
-    return _trans_status;
+    return _y_trans_status;
 }
 
 
@@ -669,7 +673,7 @@ int y_start_transaction(char *transaction_name)
 
     // Stops sub transactions from automagically
     // creating outer transactions for themselves.
-    _trans_status = Y_TRANS_STATUS_STARTED;
+    _y_trans_status = Y_TRANS_STATUS_STARTED;
 
     //return lr_start_transaction(lr_eval_string("{y_current_transaction}"));
     return _y_trans_start_impl(lr_eval_string("{y_current_transaction}"));
@@ -715,7 +719,7 @@ int y_end_transaction(char *transaction_name, int status)
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
-    _trans_status = Y_TRANS_STATUS_NONE;
+    _y_trans_status = Y_TRANS_STATUS_NONE;
 
     if( y_session_transaction_count >= 0 ) // Values smaller than 0 means that transaction counting is disabled.
         y_session_transaction_count_increment();
@@ -737,10 +741,10 @@ int y_end_transaction(char *transaction_name, int status)
 int y_start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
-    if( _trans_status == Y_TRANS_STATUS_NONE )
+    if( _y_trans_status == Y_TRANS_STATUS_NONE )
     {
         y_start_transaction(transaction_name);
-        _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
+        _y_trans_status = Y_TRANS_STATUS_AUTO_STARTED;
     }
 
 
@@ -788,7 +792,7 @@ int y_end_sub_transaction(char *transaction_name, int status)
     //
     // Note: It might be an idea to move this to y_start_(sub_)transaction() instead, for
     // better grouping. That may not be without it's problems though.
-    if( _trans_status == Y_TRANS_STATUS_AUTO_STARTED)
+    if( _y_trans_status == Y_TRANS_STATUS_AUTO_STARTED)
     {
         y_end_transaction(transaction_name, status);
     }
