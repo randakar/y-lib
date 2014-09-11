@@ -149,10 +149,13 @@ y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
 
 // Functions
 
-// If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running.
-// Adding calls to lr_start_transaction() and lr_end_transaction() that are never actually used is enough to stop that from occurring.
-// Alternatively, the "y_start_trans_impl_func" and "y_end_trans_impl_func" pointers could be initialized to NULL. But that would stop y_start/y_end_transaction() from
-// actually recording transactions.. so we're not going to do that.
+/*! \brief Workaround for a bug in LR 11. 
+
+If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running.
+Adding calls to lr_start_transaction() and lr_end_transaction() that are never actually used is enough to stop that from occurring.
+Alternatively, the "y_start_trans_impl_func" and "y_end_trans_impl_func" pointers could be initialized to NULL. But that would stop y_start/y_end_transaction() from
+actually recording transactions.. so we're not going to do that. :)
+*/
 void __y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_dereference_error_in_vugen_when_running()
 {
     lr_start_transaction("y_workaround_transaction_to_prevent_null_dereference");
@@ -527,6 +530,19 @@ void y_end_action_block()
 #define y_calculate_actual_action_prefix 0_y_calculate_actual_action_prefix_no_longer_exists_please_use_y_calculate_actual_transaction_prefix
 //! \endcond
 
+
+/*! \brief Transaction name factory helper.
+
+Add together the transaction prefix, vuser group name (if applicable), and transaction number, seperated by "_", and return the result in a newly allocated piece of memory on the heap.
+Automatically called by y_start_transaction() and friends as needed.
+
+\param [in] transaction_prefix The current transaction prefix as given to y_start_transaction_block()
+\returns A newly allocated piece of memory on the heap containing the complete prefix, ready for concatenation with the actual transaction name.
+
+\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
+
+\see y_start_transaction()
+*/
 char *y_calculate_actual_transaction_prefix(const char *transaction_prefix)
 {
     const char seperator[] = "_";
