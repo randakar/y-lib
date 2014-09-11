@@ -164,25 +164,45 @@ void __y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_der
 
 
 // Getters / Setters //
+/*! Get the most recent transaction name as set by y_start_transaction().
+\return The current full transaction name as set by y_start_transaction()
+\note Returned pointer points to memory allocated by lr_eval_string().
 
+\see y_start_transaction()
+*/
 char *y_get_current_transaction_name()
 {
     return lr_eval_string("{y_current_transaction}");
 }
 
+/*! Store the name of the current transaction.
 
+\param [in] trans_name The full name of the transaction.
+\see y_start_transaction()
+*/
 void y_set_current_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "y_current_transaction");
 }
 
 
+/*! Get the most recent subtransaction name as set by y_start_sub_transaction().
+\return The current full subtransaction name as set by y_start_sub_transaction()
+\note Returned pointer points to memory allocated by lr_eval_string().
+
+\see y_start_sub_transaction()
+*/
 char *y_get_current_sub_transaction_name()
 {
     return lr_eval_string("{y_current_sub_transaction}");
 }
 
 
+/*! Store the name of the current subtransaction.
+
+\param [in] trans_name The full name of the subtransaction.
+\see y_start_sub_transaction()
+*/
 void y_set_current_sub_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "y_current_sub_transaction");
@@ -539,9 +559,9 @@ Automatically called by y_start_transaction() and friends as needed.
 \param [in] transaction_prefix The current transaction prefix as given to y_start_transaction_block()
 \returns A newly allocated piece of memory on the heap containing the complete prefix, ready for concatenation with the actual transaction name.
 
-\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
+\warning the return value of this function needs to be freed using free().
 
-\see y_start_transaction()
+\see y_start_transaction(), y_create_transaction_name()
 */
 char *y_calculate_actual_transaction_prefix(const char *transaction_prefix)
 {
