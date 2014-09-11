@@ -209,6 +209,14 @@ void y_set_current_sub_transaction_name(char *trans_name)
 }
 
 
+/*! Toggle using the vuser group name in ylib transaction names
+Useful if you wish to set up two virtual user groups executing the exact same script with some kind of subtle different that makes it necessary to differentiate between the transactions from each group.
+Default is off.
+
+\param [in] add_group_to_trans Value determining if the group name is added to transaction name. Set to 1 it will be added, if set to 0 it will not be.
+
+\see y_start_transaction()
+*/ 
 void y_set_add_group_to_transaction(int add_group_to_trans)
 {
     _y_add_group_to_trans = add_group_to_trans;
@@ -220,13 +228,28 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 #define y_get_action_prefix 0_y_get_action_prefix_no_longer_exists_please_use_y_get_transaction_prefix
 //! \endcond
 
+/*! Set the common transaction prefix for all subsequent transactions.
 
+\param [in] transaction_prefix The transaction prefix to store.
+Used automatically by y_start_transaction_block() and friends.
+
+\see y_start_transaction_block()
+*/
 void y_set_transaction_prefix(char *transaction_prefix)
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
     lr_save_string(transaction_prefix, "y_transaction_prefix");
 }
 
+/*! Get the currently used transaction prefix.
+
+In some cases you may wish to make decisions based on what kind of clickflow is currently executing. The transaction prefix may provide exactly what you need to determine that, if you use different transaction blocks for different clickflows.
+
+\return the current transaction_prefix.
+\note The returned pointer points to memory allocated by lr_eval_string()
+
+\see y_start_transaction_block(), y_set_transaction_prefix()
+*/
 char *y_get_transaction_prefix()
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
