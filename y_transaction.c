@@ -262,18 +262,37 @@ char *y_get_transaction_prefix()
         return lr_eval_string("{y_transaction_prefix}");
 }
 
+/*! Get the transaction number used for the next transaction started by y_start_transaction()
 
+Useful for complicated flows where a little bit of handcrafted helper code is needed to keep the count correct.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_post_increment_transaction_nr()
+*/
 int y_get_next_transaction_nr()
 {
     return _y_transaction_nr;
 }
 
+/*! Increment the transaction number used by the transaction naming code.
 
+\deprecated - y_increment_transaction_nr() does the same thing.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_get_next_transaction_nr()
+*/
 int y_post_increment_transaction_nr()
 {
     return _y_transaction_nr++;
 }
 
+/*! Increment the transaction number used by the transaction naming code.
+
+Used internally.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_get_next_transaction_nr()
+*/
 int y_increment_transaction_nr()
 {
     return _y_transaction_nr++;
