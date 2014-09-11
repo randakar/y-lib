@@ -94,6 +94,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a1d68e4dcb0ab1e22daf3046673f4629f"><td class="memItemLeft" align="right" valign="top">typedef int(&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a1d68e4dcb0ab1e22daf3046673f4629f">y_trigger_func</a> )()</td></tr>
+<tr class="memdesc:a1d68e4dcb0ab1e22daf3046673f4629f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transaction trigger support typedef.  <a href="#a1d68e4dcb0ab1e22daf3046673f4629f">More...</a><br /></td></tr>
 <tr class="separator:a1d68e4dcb0ab1e22daf3046673f4629f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f0bc57d7369919725da9f18a3bab925"><td class="memItemLeft" align="right" valign="top">typedef int(&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a3f0bc57d7369919725da9f18a3bab925">y_trans_start_impl_func</a> )(char *trans_name)</td></tr>
 <tr class="separator:a3f0bc57d7369919725da9f18a3bab925"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,12 +163,12 @@ Functions</h2></td></tr>
 <tr class="separator:af5746396fe605a388a6ad1fd741e3150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf52dbc0beeae4f4ab24365dfcc22411"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#adf52dbc0beeae4f4ab24365dfcc22411">y_save_transaction_end_status</a> (char *transaction_name, const char *saveparam, int status)</td></tr>
 <tr class="separator:adf52dbc0beeae4f4ab24365dfcc22411"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73758b378bf462644c820578a9d9963c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a73758b378bf462644c820578a9d9963c">y_transaction_count_increment</a> ()</td></tr>
-<tr class="separator:a73758b378bf462644c820578a9d9963c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a753d7477cc2d169bed446559919f98f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a753d7477cc2d169bed446559919f98f6">y_transaction_count_report</a> (char *count_name)</td></tr>
-<tr class="separator:a753d7477cc2d169bed446559919f98f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2213aac5fe0c8ffc5c716dfd289257ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a2213aac5fe0c8ffc5c716dfd289257ee">y_transaction_count_reset</a> ()</td></tr>
-<tr class="separator:a2213aac5fe0c8ffc5c716dfd289257ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686bda9dd04c2bf7b16c93ed802981ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a686bda9dd04c2bf7b16c93ed802981ab">y_session_transaction_count_increment</a> ()</td></tr>
+<tr class="separator:a686bda9dd04c2bf7b16c93ed802981ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a554d8a8739567405d3bbb722221816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a6a554d8a8739567405d3bbb722221816">y_session_transaction_count_report</a> (char *session_name)</td></tr>
+<tr class="separator:a6a554d8a8739567405d3bbb722221816"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9ef1b16e19fe8718acb2f25d1ddf218"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#ad9ef1b16e19fe8718acb2f25d1ddf218">y_session_transaction_count_reset</a> ()</td></tr>
+<tr class="separator:ad9ef1b16e19fe8718acb2f25d1ddf218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada7352d93a852b8d1182fe52668a1d7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d">y_start_transaction_block</a> (char *transaction_prefix)</td></tr>
 <tr class="separator:ada7352d93a852b8d1182fe52668a1d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bc5e0dbcdd96e9377a0d8911158144b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a4bc5e0dbcdd96e9377a0d8911158144b">y_end_transaction_block</a> ()</td></tr>
@@ -218,8 +219,10 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:afb976a7de1869efe42486f8b764a4fa0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0">_y_add_group_to_trans</a> = 0</td></tr>
+<tr class="memdesc:afb976a7de1869efe42486f8b764a4fa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">INTERNAL: Whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.  <a href="#afb976a7de1869efe42486f8b764a4fa0">More...</a><br /></td></tr>
 <tr class="separator:afb976a7de1869efe42486f8b764a4fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a325dd6ae8f5f42d039791757012a2f0c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a325dd6ae8f5f42d039791757012a2f0c">_y_wasted_time_graph</a> = 0</td></tr>
+<tr class="memdesc:a325dd6ae8f5f42d039791757012a2f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">INTERNAL: Whether to create a graph detailing wasted time. Debugging option.  <a href="#a325dd6ae8f5f42d039791757012a2f0c">More...</a><br /></td></tr>
 <tr class="separator:a325dd6ae8f5f42d039791757012a2f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6be2f70e550b1a24e6e54a66d9ba693b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a6be2f70e550b1a24e6e54a66d9ba693b">_y_transaction_nr</a> = 1</td></tr>
 <tr class="separator:a6be2f70e550b1a24e6e54a66d9ba693b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,25 +239,57 @@ Variables</h2></td></tr>
 <tr class="memitem:a08675f19b8a85c8524a47c0848c0a5c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="y__transaction_8c.html#a1d68e4dcb0ab1e22daf3046673f4629f">y_trigger_func</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a08675f19b8a85c8524a47c0848c0a5c4">_y_trigger_end_sub_trans</a> = NULL</td></tr>
 <tr class="separator:a08675f19b8a85c8524a47c0848c0a5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27c3b8bf824f836bfc7bbc70a56ddb1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="y__transaction_8c.html#a3f0bc57d7369919725da9f18a3bab925">y_trans_start_impl_func</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a27c3b8bf824f836bfc7bbc70a56ddb1f">_y_trans_start_impl</a> = &amp;lr_start_transaction</td></tr>
+<tr class="memdesc:a27c3b8bf824f836bfc7bbc70a56ddb1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start transaction implementation pointer. Default lr_start_transaction().  <a href="#a27c3b8bf824f836bfc7bbc70a56ddb1f">More...</a><br /></td></tr>
 <tr class="separator:a27c3b8bf824f836bfc7bbc70a56ddb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92475ecaccb91644c60cc5d1e4244c9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="y__transaction_8c.html#ab6d57d01e7d0e230bda54b5fe59f7383">y_trans_end_impl_func</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a92475ecaccb91644c60cc5d1e4244c9e">_y_trans_end_impl</a> = &amp;lr_end_transaction</td></tr>
+<tr class="memdesc:a92475ecaccb91644c60cc5d1e4244c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">End transaction implementation pointer. Default lr_end_transaction().  <a href="#a92475ecaccb91644c60cc5d1e4244c9e">More...</a><br /></td></tr>
 <tr class="separator:a92475ecaccb91644c60cc5d1e4244c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d3ca6a6268b6bb9456fe165472a66e7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a8d3ca6a6268b6bb9456fe165472a66e7">y_transaction_count</a> = -1</td></tr>
-<tr class="memdesc:a8d3ca6a6268b6bb9456fe165472a66e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transaction counting support for use with y_start_session() / y_end_session()  <a href="#a8d3ca6a6268b6bb9456fe165472a66e7">More...</a><br /></td></tr>
-<tr class="separator:a8d3ca6a6268b6bb9456fe165472a66e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d3b35e19c7a2e901b67538474c3686"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a92d3b35e19c7a2e901b67538474c3686">y_session_transaction_count</a> = -1</td></tr>
+<tr class="memdesc:a92d3b35e19c7a2e901b67538474c3686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transaction counting support for sessions.  <a href="#a92d3b35e19c7a2e901b67538474c3686">More...</a><br /></td></tr>
+<tr class="separator:a92d3b35e19c7a2e901b67538474c3686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bbe091d6896743a9f04b1466ffeb6aa"><td class="memItemLeft" align="right" valign="top">merc_timer_handle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="y__transaction_8c.html#a1bbe091d6896743a9f04b1466ffeb6aa">y_session_timer</a> = NULL</td></tr>
 <tr class="memdesc:a1bbe091d6896743a9f04b1466ffeb6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Session timer variable for session timer support.  <a href="#a1bbe091d6896743a9f04b1466ffeb6aa">More...</a><br /></td></tr>
 <tr class="separator:a1bbe091d6896743a9f04b1466ffeb6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ylib transaction library. </p>
-<p>Extend your script with the following features: Automatic transaction naming and numbering. Transaction triggers: Code to be run when a transaction starts or stops. Custom transaction implementations; Add your own logging or time measurements to transactions.</p>
-<p><b>Usage:</b> Include this file (or <a class="el" href="y__lib_8c.html" title="Main y_lib include file. ">y_lib.c</a>) in your script, call <a class="el" href="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec">y_start_transaction()</a> and <a class="el" href="y__transaction_8c.html#aeda63958441fd6618f31857cdaed40cc">y_end_transaction()</a> everywhere you normally call the loadrunner variants. Use search-and-replace to convert existing scripts. Add calls to <a class="el" href="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d">y_start_transaction_block()</a> and <a class="el" href="y__transaction_8c.html#a4bc5e0dbcdd96e9377a0d8911158144b">y_end_transaction_block()</a> to set a transaction prefix.</p>
-<p>== Transaction naming == Y-lib transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'. Sub transaction names take the form: '{transaction_prefix}_{transaction_nr}_{sub_transaction_nr}_{step_name}'. Calling <a class="el" href="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d">y_start_transaction_block()</a> starts a block of transactions that all use the name of the block as the transaction prefix.</p>
+<p>Allows you to extend your script with the following features:</p><ul>
+<li>Automatic transaction naming and numbering.</li>
+<li>Transaction triggers: Code to be run when a transaction starts or stops.</li>
+<li>Custom transaction implementations - Adding your own logging or time measurements to transactions.</li>
+</ul>
+<h2>Usage </h2>
+<p>Include this file (or <a class="el" href="y__lib_8c.html" title="Main y_lib include file. ">y_lib.c</a>) in your script, call <a class="el" href="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec">y_start_transaction()</a> and <a class="el" href="y__transaction_8c.html#aeda63958441fd6618f31857cdaed40cc">y_end_transaction()</a> everywhere you normally call the loadrunner variants. Use search-and-replace to convert existing scripts. Add calls to <a class="el" href="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d">y_start_transaction_block()</a> and <a class="el" href="y__transaction_8c.html#a4bc5e0dbcdd96e9377a0d8911158144b">y_end_transaction_block()</a> to set a transaction prefix.</p>
+<h2>Transaction naming </h2>
+<p>Y-lib transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'. Sub transaction names take the form: '{transaction_prefix}_{transaction_nr}_{sub_transaction_nr}_{step_name}'. Calling <a class="el" href="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d">y_start_transaction_block()</a> starts a block of transactions that all use the name of the block as the transaction prefix.</p>
 <p>Optionally the vuser group name can be added to the transaction names as well. This allows differentiation between different types of users that are all running the same script otherwise.</p>
-<p>== Triggers == A trigger is a function that will execute every time an ylib transaction starts or stops. You can define seperate triggers for transaction start, stop, and the sub transaction start and stop. The return value of the trigger is used to determine whether the transaction should pass or fail, in the case of end transaction triggers.</p>
-<p>== Custom transaction implementations == Ylib can be configured to run your own custom transaction start/stop implementation instead of the usual loadrunner functions whenever a transaction starts or stops. This can be used for a variëty of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops. </p>
-
+<h2>Triggers </h2>
+<p>A trigger is a function that will execute every time an ylib transaction starts or stops. You can define seperate triggers for transaction start, stop, and the sub transaction start and stop. The return value of the trigger is used to determine whether the transaction should pass or fail, in the case of end transaction triggers.</p>
+<h2>Custom transaction implementations </h2>
+<p>Ylib can be configured to run your own custom transaction start/stop implementation instead of the usual loadrunner functions whenever a transaction starts or stops. This can be used for a variety of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops.</p>
+<h2>Testcase </h2>
+<div class="fragment"><div class="line"><a class="code" href="y__logging_8c.html#ad22b9fb4ae6f4a47b69cd37b9f33ceff">y_setup_logging</a>();                   <span class="comment">// Initialisation. May be omitted. (testcase?)</span></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a544da91832d6266b76cb9dd1185a0501">y_start_sub_transaction</a>(<span class="stringliteral">&quot;alpha&quot;</span>);    <span class="comment">// starts trans &#39;01 alpha&#39; and subtrans &#39;01_01 alpha&#39;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a659dfc22ea5f64d11f7f262a3c99d5cc">y_end_sub_transaction</a>(<span class="stringliteral">&quot;&quot;</span>, LR_AUTO);  <span class="comment">// ends both.</span></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#aae650c30d550e670f811d3cf83b1ea2d">y_start_action_block</a>(<span class="stringliteral">&quot;one&quot;</span>);         <span class="comment">// starts action block &quot;one&quot;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a544da91832d6266b76cb9dd1185a0501">y_start_sub_transaction</a>(<span class="stringliteral">&quot;beta&quot;</span>);     <span class="comment">// starts trans &#39;one_01 beta&#39; and subtrans &#39;one_01_01 beta&#39;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a659dfc22ea5f64d11f7f262a3c99d5cc">y_end_sub_transaction</a>(<span class="stringliteral">&quot;&quot;</span>, LR_AUTO);  <span class="comment">// ends both.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a28468dfca4fd956b1ba9b9c84fdb0af0">y_end_action_block</a>();                <span class="comment">// ends action block &quot;one&quot;.</span></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#ac2618772922e0b5e0cf811024f8d7acf">y_set_add_group_to_transaction</a>(1);   <span class="comment">// start adding the groupname - &#39;None&#39;, when running inside vugen.</span></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a544da91832d6266b76cb9dd1185a0501">y_start_sub_transaction</a>(<span class="stringliteral">&quot;gamma&quot;</span>);    <span class="comment">// starts trans &#39;None_02 gamma&#39; and subtrans &#39;None_02_01 gamma&#39;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a659dfc22ea5f64d11f7f262a3c99d5cc">y_end_sub_transaction</a>(<span class="stringliteral">&quot;&quot;</span>, LR_AUTO);  <span class="comment">// ends both.</span></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#aae650c30d550e670f811d3cf83b1ea2d">y_start_action_block</a>(<span class="stringliteral">&quot;two&quot;</span>);         <span class="comment">// starts action block &quot;two&quot;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a544da91832d6266b76cb9dd1185a0501">y_start_sub_transaction</a>(<span class="stringliteral">&quot;delta&quot;</span>);    <span class="comment">// starts trans &#39;None_two_01 delta&#39; and subtrans &#39;None_two_01_01 delta&#39;.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a659dfc22ea5f64d11f7f262a3c99d5cc">y_end_sub_transaction</a>(<span class="stringliteral">&quot;&quot;</span>, LR_AUTO);  <span class="comment">// ends both.</span></div>
+<div class="line"><a class="code" href="y__transaction_8c.html#a28468dfca4fd956b1ba9b9c84fdb0af0">y_end_action_block</a>();                <span class="comment">// ends action block &quot;two&quot;.</span></div>
+<div class="line">lr_abort();                          <span class="comment">// end testcase ;-)</span></div>
+<div class="line"><span class="keywordflow">return</span>;</div>
+</div><!-- fragment --> 
 <p>Definition in file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="aa03c7dc74f50885577a32bfc1308bd46"></a>
@@ -267,7 +302,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00815">815</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00827">827</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -281,7 +316,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00252">252</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00267">267</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -295,7 +330,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00250">250</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00265">265</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -309,7 +344,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00251">251</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00266">266</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -323,7 +358,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00249">249</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00264">264</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -337,7 +372,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00814">814</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00826">826</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -351,7 +386,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00253">253</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00268">268</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -365,7 +400,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00248">248</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00263">263</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -379,7 +414,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00115">115</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00119">119</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -393,7 +428,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00113">113</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00117">117</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -407,7 +442,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00114">114</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00118">118</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -457,14 +492,14 @@ Variables</h2></td></tr>
 <div class="line"><a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">                                                                          \</a></div>
 <div class="line"><a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">    free</a>(tmp);                                                            \</div>
 <div class="line">} <span class="keywordflow">while</span>(0)</div>
-<div class="ttc" id="y__transaction_8c_html_aeda63958441fd6618f31857cdaed40cc"><div class="ttname"><a href="y__transaction_8c.html#aeda63958441fd6618f31857cdaed40cc">y_end_transaction</a></div><div class="ttdeci">int y_end_transaction(char *transaction_name, int status)</div><div class="ttdef"><b>Definition:</b> <a href="y__transaction_8c_source.html#l00677">y_transaction.c:677</a></div></div>
+<div class="ttc" id="y__transaction_8c_html_aeda63958441fd6618f31857cdaed40cc"><div class="ttname"><a href="y__transaction_8c.html#aeda63958441fd6618f31857cdaed40cc">y_end_transaction</a></div><div class="ttdeci">int y_end_transaction(char *transaction_name, int status)</div><div class="ttdef"><b>Definition:</b> <a href="y__transaction_8c_source.html#l00689">y_transaction.c:689</a></div></div>
 <div class="ttc" id="group__core_html_ga71b54880fd4fe004b3cb8141255c6474"><div class="ttname"><a href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(size_t size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00202">y_core.c:202</a></div></div>
-<div class="ttc" id="y__transaction_8c_html_a280ea9c983a11b5286c0458fb923c0ec"><div class="ttname"><a href="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec">y_start_transaction</a></div><div class="ttdeci">int y_start_transaction(char *transaction_name)</div><div class="ttdef"><b>Definition:</b> <a href="y__transaction_8c_source.html#l00643">y_transaction.c:643</a></div></div>
+<div class="ttc" id="y__transaction_8c_html_a280ea9c983a11b5286c0458fb923c0ec"><div class="ttname"><a href="y__transaction_8c.html#a280ea9c983a11b5286c0458fb923c0ec">y_start_transaction</a></div><div class="ttdeci">int y_start_transaction(char *transaction_name)</div><div class="ttdef"><b>Definition:</b> <a href="y__transaction_8c_source.html#l00655">y_transaction.c:655</a></div></div>
 <div class="ttc" id="group__string_html_ga2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
 <div class="ttc" id="group__string_html_gac9626ce5468b43d954c3598c1ffe9725"><div class="ttname"><a href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a></div><div class="ttdeci">int snprintf(char *buffer, size_t n, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/snprintf/.  This function was introduced by t...</div></div>
 <div class="ttc" id="group__memory_html_ga557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/free/. </div></div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00906">906</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00918">918</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -478,8 +513,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#a857d6cb3306c0cd09e628d0630efc231">y_set_transaction_end_implementation()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00127">127</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00136">136</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -492,8 +528,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#af162a70445ef1b47634dd433ca5f3732">y_set_transaction_start_implementation()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00126">126</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00134">134</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -507,7 +544,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00119">119</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Transaction trigger support typedef. </p>
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00123">123</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -525,7 +564,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00137">137</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00152">152</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -543,7 +582,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00514">514</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00526">526</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -583,7 +622,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00604">604</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00616">616</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -617,7 +656,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00574">574</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00586">586</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -635,7 +674,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00626">626</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00638">638</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -653,7 +692,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00594">594</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00606">606</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -670,7 +709,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00503">503</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00515">515</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -698,7 +737,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00754">754</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00766">766</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -726,7 +765,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00677">677</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00689">689</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -743,7 +782,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00456">456</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00468">468</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -760,7 +799,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00158">158</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00173">173</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -777,7 +816,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00146">146</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00161">161</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -794,7 +833,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00786">786</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00798">798</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -811,7 +850,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00224">224</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00239">239</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -828,7 +867,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00201">201</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00216">216</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -845,7 +884,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00339">339</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00354">354</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -862,7 +901,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00188">188</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00203">203</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -879,7 +918,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00256">256</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00271">271</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -896,7 +935,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00334">334</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00349">349</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -913,7 +952,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00235">235</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00250">250</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -930,7 +969,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00212">212</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00227">227</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -947,7 +986,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00463">463</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00475">475</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -964,7 +1003,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00230">230</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00245">245</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -981,7 +1020,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00207">207</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00222">222</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -999,7 +1038,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00476">476</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00488">488</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1016,7 +1055,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00376">376</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00391">391</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1033,7 +1072,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00367">367</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00382">382</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1050,7 +1089,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00358">358</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00373">373</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1067,7 +1106,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00349">349</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00364">364</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1101,7 +1140,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00389">389</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00404">404</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1129,7 +1168,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00818">818</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00830">830</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1147,7 +1186,59 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00805">805</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00817">817</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a686bda9dd04c2bf7b16c93ed802981ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int y_session_transaction_count_increment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00434">434</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6a554d8a8739567405d3bbb722221816"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void y_session_transaction_count_report </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>session_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00439">439</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad9ef1b16e19fe8718acb2f25d1ddf218"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void y_session_transaction_count_reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00445">445</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1256,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00170">170</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00185">185</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1183,7 +1274,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00164">164</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00179">179</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1201,7 +1292,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00152">152</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00167">167</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1219,7 +1310,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00240">240</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00255">255</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1237,7 +1328,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00218">218</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00233">233</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1255,7 +1346,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00310">310</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00325">325</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1273,7 +1364,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00305">305</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00320">320</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1291,7 +1382,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00329">329</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00344">344</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1309,7 +1400,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00300">300</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00315">315</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1327,7 +1418,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00182">182</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00197">197</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1345,7 +1436,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00324">324</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00339">339</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1363,7 +1454,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00295">295</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00310">310</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1380,7 +1471,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00957">957</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00969">969</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1398,7 +1489,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00496">496</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00508">508</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1416,7 +1507,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00725">725</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00737">737</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1444,7 +1535,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00746">746</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00758">758</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1462,7 +1553,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00643">643</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00655">655</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1480,7 +1571,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00444">444</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00456">456</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1508,7 +1599,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00667">667</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00679">679</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1536,59 +1627,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00868">868</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a73758b378bf462644c820578a9d9963c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int y_transaction_count_increment </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00421">421</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a753d7477cc2d169bed446559919f98f6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_transaction_count_report </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>count_name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00426">426</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2213aac5fe0c8ffc5c716dfd289257ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void y_transaction_count_reset </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00433">433</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00880">880</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1606,7 +1645,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00986">986</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00998">998</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1621,7 +1660,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00116">116</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00120">120</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1635,7 +1674,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00103">103</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>INTERNAL: Whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off. </p>
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00106">106</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1649,7 +1690,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00110">110</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00114">114</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1663,7 +1704,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00129">129</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>End transaction implementation pointer. Default lr_end_transaction(). </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#a857d6cb3306c0cd09e628d0630efc231">y_set_transaction_end_implementation()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00140">140</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1677,7 +1721,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00128">128</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Start transaction implementation pointer. Default lr_start_transaction(). </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#af162a70445ef1b47634dd433ca5f3732">y_set_transaction_start_implementation()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00138">138</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1691,7 +1738,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00109">109</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00113">113</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1704,8 +1751,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#ae922d63ada471e7cf215efccf48f9f43">y_set_sub_transaction_end_trigger()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00123">123</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00131">131</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1718,8 +1766,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#a2347eac00c9f2e6e08920180c722f1a9">y_set_transaction_end_trigger()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00121">121</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00127">127</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1732,8 +1781,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#a0016a9d5caae6fddbbfc76b772625eb6">y_set_sub_transaction_start_trigger()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00122">122</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00129">129</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1746,8 +1796,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#ab5e31480bbce381a34940670036f2d08">y_set_transaction_start_trigger()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00120">120</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00125">125</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1761,7 +1812,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00104">104</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>INTERNAL: Whether to create a graph detailing wasted time. Debugging option. </p>
+
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00108">108</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
@@ -1777,23 +1830,24 @@ Variables</h2></td></tr>
 
 <p>Session timer variable for session timer support. </p>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00802">802</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00814">814</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8d3ca6a6268b6bb9456fe165472a66e7"></a>
+<a class="anchor" id="a92d3b35e19c7a2e901b67538474c3686"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int y_transaction_count = -1</td>
+          <td class="memname">int y_session_transaction_count = -1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Transaction counting support for use with y_start_session() / y_end_session() </p>
+<p>Transaction counting support for sessions. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="y__transaction_8c.html#abd287dfea8faf750b4d920143c52382a">y_session_timer_start()</a> and <a class="el" href="y__transaction_8c.html#ac289d4eaf281d5e75ca629f602625ad7">y_session_timer_end()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00419">419</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
+<p>Definition at line <a class="el" href="y__transaction_8c_source.html#l00143">143</a> of file <a class="el" href="y__transaction_8c_source.html">y_transaction.c</a>.</p>
 
 </div>
 </div>

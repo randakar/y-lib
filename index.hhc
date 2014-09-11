@@ -623,6 +623,9 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_save_transaction_end_status"><param name="Local" value="y__transaction_8c.html#adf52dbc0beeae4f4ab24365dfcc22411"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_timer_end"><param name="Local" value="y__transaction_8c.html#ac289d4eaf281d5e75ca629f602625ad7"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_timer_start"><param name="Local" value="y__transaction_8c.html#abd287dfea8faf750b4d920143c52382a"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_transaction_count_increment"><param name="Local" value="y__transaction_8c.html#a686bda9dd04c2bf7b16c93ed802981ab"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_transaction_count_report"><param name="Local" value="y__transaction_8c.html#a6a554d8a8739567405d3bbb722221816"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_transaction_count_reset"><param name="Local" value="y__transaction_8c.html#ad9ef1b16e19fe8718acb2f25d1ddf218"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_set_add_group_to_transaction"><param name="Local" value="y__transaction_8c.html#ac2618772922e0b5e0cf811024f8d7acf"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_set_current_sub_transaction_name"><param name="Local" value="y__transaction_8c.html#ad085c39c1a2b342a84a47ce611655314"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_set_current_transaction_name"><param name="Local" value="y__transaction_8c.html#a073e480cfd3ff2a01c708bb3870717d6"><param name="ImageNumber" value="11"></OBJECT>
@@ -643,9 +646,6 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_start_transaction_block"><param name="Local" value="y__transaction_8c.html#ada7352d93a852b8d1182fe52668a1d7d"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_start_transaction_with_number"><param name="Local" value="y__transaction_8c.html#a7d227ad4eda69681af69a26838a344ba"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_trans_web_link"><param name="Local" value="y__transaction_8c.html#a7e6757e8923016916ff2ed54c462dc28"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_transaction_count_increment"><param name="Local" value="y__transaction_8c.html#a73758b378bf462644c820578a9d9963c"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_transaction_count_report"><param name="Local" value="y__transaction_8c.html#a753d7477cc2d169bed446559919f98f6"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_transaction_count_reset"><param name="Local" value="y__transaction_8c.html#a2213aac5fe0c8ffc5c716dfd289257ee"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_waterfall_random_weighted_continue"><param name="Local" value="y__transaction_8c.html#a882f93c4823bcf37acfdc030e89d1e37"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="_trans_status"><param name="Local" value="y__transaction_8c.html#a905edc1df49d4d9620221ffdfed20481"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="_y_add_group_to_trans"><param name="Local" value="y__transaction_8c.html#afb976a7de1869efe42486f8b764a4fa0"><param name="ImageNumber" value="11"></OBJECT>
@@ -659,7 +659,7 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="_y_trigger_start_trans"><param name="Local" value="y__transaction_8c.html#a3cf739fca44b3ff513cdccd178b38221"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="_y_wasted_time_graph"><param name="Local" value="y__transaction_8c.html#a325dd6ae8f5f42d039791757012a2f0c"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_timer"><param name="Local" value="y__transaction_8c.html#a1bbe091d6896743a9f04b1466ffeb6aa"><param name="ImageNumber" value="11"></OBJECT>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_transaction_count"><param name="Local" value="y__transaction_8c.html#a8d3ca6a6268b6bb9456fe165472a66e7"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="y_session_transaction_count"><param name="Local" value="y__transaction_8c.html#a92d3b35e19c7a2e901b67538474c3686"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="y_vts.c"><param name="Local" value="y__vts_8c.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
