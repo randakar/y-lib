@@ -78,183 +78,185 @@
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1">   44</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1">y_scid</a>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d">   46</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d">y_is_vugen_run_bool</a> = 0;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#ifndef RAND_MAX</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="group__core.html#ga690f251553b39fd4f31894826141b61a">   57</a></span>&#160;<span class="preprocessor">#define RAND_MAX 32767</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="group__core.html#ga16db77ab873c5b767742a51c9613314b">   66</a></span>&#160;<span class="preprocessor">#define Y_RAND_MAX 1073741823</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="group__core.html#ga16db77ab873c5b767742a51c9613314b">   67</a></span>&#160;<span class="preprocessor">#define Y_RAND_MAX 1073741823</span></div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">   81</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>()</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">// if this is filled y_setup() has already been called.</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">if</span>( <a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a> != NULL )</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">// Loadrunner sets the locale to &quot;&quot;, causing scripts running in locales other than en_US to misbehave.</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">// Let&#39;s set it to something sensible, that actually works for people who don&#39;t want to mess with this stuff.</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="group__locale.html#gafe784c4f5d12b74272740c5211c960c5">setlocale</a>(<a class="code" href="group__locale.html#ga9cc5213b5dca4f8e48e64586ee444c33">LC_ALL</a>, <span class="stringliteral">&quot;C&quot;</span>);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">// Global variables, handle with care</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    lr_whoami(&amp;<a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a>, &amp;<a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>, &amp;<a class="code" href="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1">y_scid</a>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d">y_is_vugen_run_bool</a> = <a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a> == -1;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="vugen_8h.html#a2cd7242befd15ed58919f8abc0f065c5">srand</a>(<a class="code" href="group__time.html#ga8038cf2bfae47bdf6942741c58a2c530">time</a>(NULL) + <a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a> + ((<span class="keywordtype">int</span>)<a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>) &amp; 1023);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="group__core.html#ga2af77582aacd5cada48e9860f67d67e1">  101</a></span>&#160;<span class="preprocessor">#define vuser_init() vuser_init() { y_setup(); return y_vuser_init(); } y_vuser_init()</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5">  137</a></span>&#160;<span class="preprocessor">#define y_is_vugen_run() y_is_vugen_run_bool</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">  151</a></span>&#160;<span class="keywordtype">long</span> <a class="code" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a>(<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;{</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;   <span class="comment">// Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   <span class="comment">// of randomness that a long affords us we are going to roll multiple numbers and basically </span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;   <span class="comment">// concatenate them together using bit shifts.</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   <span class="comment">// </span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="comment">// ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   <span class="comment">// because it will break people&#39;s expectations of what rand() does.)</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>() &lt;&lt; 15 | <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>();</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno"><a class="line" href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">  177</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">y_drand</a>(<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;{</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;   <span class="keywordflow">return</span> (<a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>() &lt;&lt; 15 | <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>())/1073741824.;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">   82</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a>()</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">// if this is filled y_setup() has already been called.</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">if</span>( <a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a> != NULL )</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">// Loadrunner sets the locale to &quot;&quot;, causing scripts running in locales other than en_US to misbehave.</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">// Let&#39;s set it to something sensible, that actually works for people who don&#39;t want to mess with this stuff.</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="group__locale.html#gafe784c4f5d12b74272740c5211c960c5">setlocale</a>(<a class="code" href="group__locale.html#ga9cc5213b5dca4f8e48e64586ee444c33">LC_ALL</a>, <span class="stringliteral">&quot;C&quot;</span>);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// Global variables, handle with care</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    lr_whoami(&amp;<a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a>, &amp;<a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>, &amp;<a class="code" href="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1">y_scid</a>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d">y_is_vugen_run_bool</a> = <a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a> == -1;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="vugen_8h.html#a2cd7242befd15ed58919f8abc0f065c5">srand</a>(<a class="code" href="group__time.html#ga8038cf2bfae47bdf6942741c58a2c530">time</a>(NULL) + <a class="code" href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a> + ((<span class="keywordtype">int</span>)<a class="code" href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a>) &amp; 1023);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="group__core.html#ga2af77582aacd5cada48e9860f67d67e1">  102</a></span>&#160;<span class="preprocessor">#define vuser_init() vuser_init() { y_setup(); return y_vuser_init(); } y_vuser_init()</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="group__core.html#gaed34897cb0a5fb0ae18cf0d6facc35b5">  138</a></span>&#160;<span class="preprocessor">#define y_is_vugen_run() y_is_vugen_run_bool</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">  152</a></span>&#160;<span class="keywordtype">long</span> <a class="code" href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;{</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;   <span class="comment">// Because rand() does not return numbers above 32767 and we want to get at least 30 of the 31 bits</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;   <span class="comment">// of randomness that a long affords us we are going to roll multiple numbers and basically </span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;   <span class="comment">// concatenate them together using bit shifts.</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;   <span class="comment">// </span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;   <span class="comment">// ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;   <span class="comment">// because it will break people&#39;s expectations of what rand() does.)</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;   <span class="keywordflow">return</span> <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>() &lt;&lt; 15 | <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>();</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;}</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">  178</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">y_drand</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;   <span class="keywordflow">return</span> (<a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>() &lt;&lt; 15 | <a class="code" href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a>())/1073741824.;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">  202</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a>(<span class="keywordtype">size_t</span> size)</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;{</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordtype">char</span> *buff;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    buff = <a class="code" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304">malloc</a>(size);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">if</span> (!buff)</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    {</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Insufficient memory available, requested %u bytes&quot;</span>, size);</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="comment">// If this happens you&#39;re pretty much screwed anyway.</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        lr_abort(); </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    }</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordflow">return</span> buff;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">  203</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a>(<span class="keywordtype">size_t</span> size)</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;{</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordtype">char</span> *buff;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    buff = <a class="code" href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304">malloc</a>(size);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">if</span> (!buff)</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    {</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Insufficient memory available, requested %u bytes&quot;</span>, size);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="comment">// If this happens you&#39;re pretty much screwed anyway.</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        lr_abort(); </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordflow">return</span> buff;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;}</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">  226</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">y_array_alloc</a>(<span class="keywordtype">size_t</span> length, <span class="keywordtype">size_t</span> size)</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;{</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">char</span> *buff;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    buff = <a class="code" href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2">calloc</a>(length, size);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">if</span> (!buff)</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    {</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Insufficient memory available, requested %u * %u bytes&quot;</span>, length, size);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="comment">// If this happens you&#39;re pretty much screwed anyway.</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        lr_abort();</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    }</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">return</span> buff;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;}</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">  227</a></span>&#160;<span class="keywordtype">char</span> *<a class="code" href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">y_array_alloc</a>(<span class="keywordtype">size_t</span> length, <span class="keywordtype">size_t</span> size)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;{</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">char</span> *buff;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    buff = <a class="code" href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2">calloc</a>(length, size);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">if</span> (!buff)</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    {</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Insufficient memory available, requested %u * %u bytes&quot;</span>, length, size);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="comment">// If this happens you&#39;re pretty much screwed anyway.</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        lr_abort();</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    }</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">return</span> buff;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">  249</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(<span class="keywordtype">char</span>* source)</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;{</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keywordtype">char</span>* result = <a class="code" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581">strdup</a>(source);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">if</span> (!result)</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Out of memory while calling strdup()&quot;</span>);</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        lr_abort();</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;}</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">  268</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param_name)</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;{</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordtype">size_t</span> size = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(param_name) +3; <span class="comment">// parameter name + &quot;{}&quot; + &#39;\0&#39; (end of string)</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordtype">char</span> *result = <a class="code" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a>( size ); </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <a class="code" href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(result, size, <span class="stringliteral">&quot;{%s}&quot;</span>, param_name );</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="group__core.html#gac0778c8b8f3da732862ab82176857be8">  286</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="group__core.html#gac0778c8b8f3da732862ab82176857be8">y_is_empty_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param_name)</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;{</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordtype">char</span>* param_eval_string = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keywordtype">char</span>* param = lr_eval_string(param_eval_string);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordtype">int</span> result = *param == 0 || <a class="code" href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(param, param_eval_string) == 0;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(param_eval_string);</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
-<div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">  317</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* param_name)</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;{</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;   <span class="keywordtype">char</span>* tmp = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   <span class="keywordtype">char</span>* parameter = lr_eval_string(tmp);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   <span class="keywordflow">return</span> parameter;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
+<div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">  250</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(<span class="keywordtype">char</span>* source)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;{</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordtype">char</span>* result = <a class="code" href="group__string.html#ga86e0df1bf9e434074f958434e0af7581">strdup</a>(source);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">if</span> (!result)</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        lr_error_message(<span class="stringliteral">&quot;Out of memory while calling strdup()&quot;</span>);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        lr_abort();</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">  269</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param_name)</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;{</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordtype">size_t</span> size = <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(param_name) +3; <span class="comment">// parameter name + &quot;{}&quot; + &#39;\0&#39; (end of string)</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordtype">char</span> *result = <a class="code" href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a>( size ); </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <a class="code" href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a>(result, size, <span class="stringliteral">&quot;{%s}&quot;</span>, param_name );</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
+<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="group__core.html#gac0778c8b8f3da732862ab82176857be8">  287</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="group__core.html#gac0778c8b8f3da732862ab82176857be8">y_is_empty_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param_name)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;{</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keywordtype">char</span>* param_eval_string = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordtype">char</span>* param = lr_eval_string(param_eval_string);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keywordtype">int</span> result = *param == 0 || <a class="code" href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(param, param_eval_string) == 0;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(param_eval_string);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">  318</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* param_name)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;{</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;   <span class="keywordtype">char</span>* tmp = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;   <span class="keywordtype">char</span>* parameter = lr_eval_string(tmp);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;   <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(tmp);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;   </div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;   <span class="keywordflow">return</span> parameter;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;}</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno"><a class="line" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">  354</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* param_name)</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;{</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordtype">char</span>* param_eval_string = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keywordtype">char</span>* param = lr_eval_string(param_eval_string);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordtype">int</span> exists = <a class="code" href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(param, param_eval_string) != 0; <span class="comment">// Result doesn&#39;t match the param eval string (eg: &#39;{param}&#39;)</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="comment">//lr_log_message(&quot;y_get_parameter_or_null for param_name %s, pre-eval string is %s, lr_eval_string result is %s, exists: %d&quot;, param_name, param_eval_string, param, exists);</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(param_eval_string);</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="comment">//lr_abort();</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keywordflow">return</span> exists ? param: NULL;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;}</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
+<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">  355</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* param_name)</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;{</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keywordtype">char</span>* param_eval_string = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(param_name);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordtype">char</span>* param = lr_eval_string(param_eval_string);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordtype">int</span> exists = <a class="code" href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a>(param, param_eval_string) != 0; <span class="comment">// Result doesn&#39;t match the param eval string (eg: &#39;{param}&#39;)</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="comment">//lr_log_message(&quot;y_get_parameter_or_null for param_name %s, pre-eval string is %s, lr_eval_string result is %s, exists: %d&quot;, param_name, param_eval_string, param, exists);</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(param_eval_string);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="comment">//lr_abort();</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordflow">return</span> exists ? param: NULL;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}</div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
-<div class="line"><a name="l00387"></a><span class="lineno"><a class="line" href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">  387</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *src_param)</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;{</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordtype">char</span> *src = <a class="code" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a>(src_param);</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="comment">//lr_log_message(&quot;Copying source data: %s&quot;, src);</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="keywordflow">return</span> src ? <a class="code" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(src): NULL;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">#define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
-<div class="line"><a name="l00422"></a><span class="lineno"><a class="line" href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">  422</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *source_param)</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;{</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordtype">char</span>* buffer;</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> size;</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keywordtype">char</span>* source = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(source_param); <span class="comment">// Puts the parameter name into parameter seperators { }.</span></div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    lr_eval_string_ext(source, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(source), &amp;buffer, &amp;size, 0, 0, -1); <span class="comment">// Evaluates the result and copy the data into buffer.</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(source);                                             <span class="comment">// Free the intermediate parameter name.</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keywordflow">return</span> buffer;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor">#endif // _Y_CORE_C_</span></div>
-<div class="ttc" id="group__core_html_ga7350ca6bb0383b2169ef4eaae3b091e7"><div class="ttname"><a href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a></div><div class="ttdeci">void y_setup()</div><div class="ttdoc">Ylib setup - determines and stores the identity of the virtual user. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00081">y_core.c:81</a></div></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno"><a class="line" href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">  388</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *src_param)</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;{</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keywordtype">char</span> *src = <a class="code" href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a>(src_param);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="comment">//lr_log_message(&quot;Copying source data: %s&quot;, src);</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">return</span> src ? <a class="code" href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a>(src): NULL;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;}</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor">#define y_get_parameter_malloc_string 0_please_use_y_get_parameter_with_malloc_or_null</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
+<div class="line"><a name="l00423"></a><span class="lineno"><a class="line" href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">  423</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *source_param)</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;{</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keywordtype">char</span>* buffer;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> size;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keywordtype">char</span>* source = <a class="code" href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a>(source_param); <span class="comment">// Puts the parameter name into parameter seperators { }.</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    lr_eval_string_ext(source, <a class="code" href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a>(source), &amp;buffer, &amp;size, 0, 0, -1); <span class="comment">// Evaluates the result and copy the data into buffer.</span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <a class="code" href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a>(source);                                             <span class="comment">// Free the intermediate parameter name.</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;}</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">#endif // _Y_CORE_C_</span></div>
+<div class="ttc" id="group__core_html_ga7350ca6bb0383b2169ef4eaae3b091e7"><div class="ttname"><a href="group__core.html#ga7350ca6bb0383b2169ef4eaae3b091e7">y_setup</a></div><div class="ttdeci">void y_setup()</div><div class="ttdoc">Ylib setup - determines and stores the identity of the virtual user. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00082">y_core.c:82</a></div></div>
 <div class="ttc" id="vugen_8h_html_a2cd7242befd15ed58919f8abc0f065c5"><div class="ttname"><a href="vugen_8h.html#a2cd7242befd15ed58919f8abc0f065c5">srand</a></div><div class="ttdeci">int srand(unsigned int seed)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/srand/. </div></div>
-<div class="ttc" id="group__core_html_ga319710d6642f34a8ea51a1a9898869fc"><div class="ttname"><a href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">y_drand</a></div><div class="ttdeci">double y_drand(void)</div><div class="ttdoc">Generate a random number between 0 <= y_drand() < 1. This supersedes y_rand().  Better distribution o...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00177">y_core.c:177</a></div></div>
+<div class="ttc" id="group__core_html_ga319710d6642f34a8ea51a1a9898869fc"><div class="ttname"><a href="group__core.html#ga319710d6642f34a8ea51a1a9898869fc">y_drand</a></div><div class="ttdeci">double y_drand(void)</div><div class="ttdoc">Generate a random number between 0 <= y_drand() < 1. This supersedes y_rand().  Better distribution o...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00178">y_core.c:178</a></div></div>
 <div class="ttc" id="vugen_8h_html"><div class="ttname"><a href="vugen_8h.html">vugen.h</a></div><div class="ttdoc">Standard C function headers. </div></div>
 <div class="ttc" id="group__string_html_ga86e0df1bf9e434074f958434e0af7581"><div class="ttname"><a href="group__string.html#ga86e0df1bf9e434074f958434e0af7581">strdup</a></div><div class="ttdeci">char * strdup(const char *string)</div><div class="ttdoc">Documented at http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html ...</div></div>
 <div class="ttc" id="group__memory_html_ga5f1a5df9b8c50bd259b8c34c0056e304"><div class="ttname"><a href="group__memory.html#ga5f1a5df9b8c50bd259b8c34c0056e304">malloc</a></div><div class="ttdeci">void * malloc(size_t num_bytes)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/malloc/. </div></div>
 <div class="ttc" id="group__memory_html_gae201ae1031fe85000b4e22abb3a824b2"><div class="ttname"><a href="group__memory.html#gae201ae1031fe85000b4e22abb3a824b2">calloc</a></div><div class="ttdeci">void * calloc(size_t num_elems, size_t elem_size)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/calloc/. </div></div>
 <div class="ttc" id="group__core_html_ga1ebd23898db36692c02dd58d9649f4a1"><div class="ttname"><a href="group__core.html#ga1ebd23898db36692c02dd58d9649f4a1">y_scid</a></div><div class="ttdeci">int y_scid</div><div class="ttdoc">The virtual user scid, as reported by lr_whoami(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00044">y_core.c:44</a></div></div>
-<div class="ttc" id="group__core_html_ga71b54880fd4fe004b3cb8141255c6474"><div class="ttname"><a href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(size_t size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00202">y_core.c:202</a></div></div>
-<div class="ttc" id="group__core_html_ga084a530700465b1a7a10d103f2a2e6d4"><div class="ttname"><a href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">y_array_alloc</a></div><div class="ttdeci">char * y_array_alloc(size_t length, size_t size)</div><div class="ttdoc">Allocates a character array and initializes all elements to zero As y_mem_alloc(), but using the &#39;calloc&#39; function, rather than &#39;malloc()&#39;. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00226">y_core.c:226</a></div></div>
+<div class="ttc" id="group__core_html_ga71b54880fd4fe004b3cb8141255c6474"><div class="ttname"><a href="group__core.html#ga71b54880fd4fe004b3cb8141255c6474">y_mem_alloc</a></div><div class="ttdeci">char * y_mem_alloc(size_t size)</div><div class="ttdoc">Ylib wrapper for malloc() </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00203">y_core.c:203</a></div></div>
+<div class="ttc" id="group__core_html_ga084a530700465b1a7a10d103f2a2e6d4"><div class="ttname"><a href="group__core.html#ga084a530700465b1a7a10d103f2a2e6d4">y_array_alloc</a></div><div class="ttdeci">char * y_array_alloc(size_t length, size_t size)</div><div class="ttdoc">Allocates a character array and initializes all elements to zero As y_mem_alloc(), but using the &#39;calloc&#39; function, rather than &#39;malloc()&#39;. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00227">y_core.c:227</a></div></div>
 <div class="ttc" id="group__string_html_ga04ee58caa7e5071bb02f298a1921a5f4"><div class="ttname"><a href="group__string.html#ga04ee58caa7e5071bb02f298a1921a5f4">strcmp</a></div><div class="ttdeci">int strcmp(const char *string1, const char *string2)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strcmp/. </div></div>
 <div class="ttc" id="group__core_html_ga312065213820734af47b86c233a26c0d"><div class="ttname"><a href="group__core.html#ga312065213820734af47b86c233a26c0d">y_virtual_user_id</a></div><div class="ttdeci">int y_virtual_user_id</div><div class="ttdoc">The virtual user id, as reported by lr_whoami(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00040">y_core.c:40</a></div></div>
 <div class="ttc" id="group__locale_html_gafe784c4f5d12b74272740c5211c960c5"><div class="ttname"><a href="group__locale.html#gafe784c4f5d12b74272740c5211c960c5">setlocale</a></div><div class="ttdeci">char * setlocale(int category, const char *locale)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/clocale/setlocale/. </div></div>
-<div class="ttc" id="group__core_html_gab903d513f84dc0cd3f7af7acf67e2fb2"><div class="ttname"><a href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a></div><div class="ttdeci">char * y_get_parameter_eval_string(const char *param_name)</div><div class="ttdoc">Obtain the string required to fetch the contents of a parameter through lr_eval_string(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00268">y_core.c:268</a></div></div>
+<div class="ttc" id="group__core_html_gab903d513f84dc0cd3f7af7acf67e2fb2"><div class="ttname"><a href="group__core.html#gab903d513f84dc0cd3f7af7acf67e2fb2">y_get_parameter_eval_string</a></div><div class="ttdeci">char * y_get_parameter_eval_string(const char *param_name)</div><div class="ttdoc">Obtain the string required to fetch the contents of a parameter through lr_eval_string(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00269">y_core.c:269</a></div></div>
 <div class="ttc" id="group__core_html_ga6946e1e353167a7a711e3ddcb8a39b6d"><div class="ttname"><a href="group__core.html#ga6946e1e353167a7a711e3ddcb8a39b6d">y_is_vugen_run_bool</a></div><div class="ttdeci">int y_is_vugen_run_bool</div><div class="ttdoc">Boolean, true when running in Vugen. Not able to do this in pre-compile phase. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00046">y_core.c:46</a></div></div>
-<div class="ttc" id="group__core_html_ga8cba325c05b63bbbdc499702c4f5c6e9"><div class="ttname"><a href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a></div><div class="ttdeci">char * y_strdup(char *source)</div><div class="ttdoc">Copy a string into a malloc&#39;d piece of memory using strdup(), and lr_abort() if the allocation fails...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00249">y_core.c:249</a></div></div>
+<div class="ttc" id="group__core_html_ga8cba325c05b63bbbdc499702c4f5c6e9"><div class="ttname"><a href="group__core.html#ga8cba325c05b63bbbdc499702c4f5c6e9">y_strdup</a></div><div class="ttdeci">char * y_strdup(char *source)</div><div class="ttdoc">Copy a string into a malloc&#39;d piece of memory using strdup(), and lr_abort() if the allocation fails...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00250">y_core.c:250</a></div></div>
 <div class="ttc" id="group__string_html_ga2869404e70f06f4477271f26ce8c4920"><div class="ttname"><a href="group__string.html#ga2869404e70f06f4477271f26ce8c4920">strlen</a></div><div class="ttdeci">size_t strlen(const char *string)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstring/strlen/. </div></div>
-<div class="ttc" id="group__core_html_gac0778c8b8f3da732862ab82176857be8"><div class="ttname"><a href="group__core.html#gac0778c8b8f3da732862ab82176857be8">y_is_empty_parameter</a></div><div class="ttdeci">int y_is_empty_parameter(const char *param_name)</div><div class="ttdoc">Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00286">y_core.c:286</a></div></div>
-<div class="ttc" id="group__core_html_gac0c6a383cf2934da4acc1451a1cdea21"><div class="ttname"><a href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a></div><div class="ttdeci">char * y_get_parameter_with_malloc_or_null(const char *src_param)</div><div class="ttdoc">Get the content of a parameter and return it as a char * (malloc version) </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00387">y_core.c:387</a></div></div>
+<div class="ttc" id="group__core_html_gac0778c8b8f3da732862ab82176857be8"><div class="ttname"><a href="group__core.html#gac0778c8b8f3da732862ab82176857be8">y_is_empty_parameter</a></div><div class="ttdeci">int y_is_empty_parameter(const char *param_name)</div><div class="ttdoc">Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00287">y_core.c:287</a></div></div>
+<div class="ttc" id="group__core_html_gac0c6a383cf2934da4acc1451a1cdea21"><div class="ttname"><a href="group__core.html#gac0c6a383cf2934da4acc1451a1cdea21">y_get_parameter_with_malloc_or_null</a></div><div class="ttdeci">char * y_get_parameter_with_malloc_or_null(const char *src_param)</div><div class="ttdoc">Get the content of a parameter and return it as a char * (malloc version) </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00388">y_core.c:388</a></div></div>
 <div class="ttc" id="group__locale_html_ga9cc5213b5dca4f8e48e64586ee444c33"><div class="ttname"><a href="group__locale.html#ga9cc5213b5dca4f8e48e64586ee444c33">LC_ALL</a></div><div class="ttdeci">#define LC_ALL</div><div class="ttdef"><b>Definition:</b> <a href="vugen_8h_source.html#l00365">vugen.h:365</a></div></div>
 <div class="ttc" id="group__string_html_gac9626ce5468b43d954c3598c1ffe9725"><div class="ttname"><a href="group__string.html#gac9626ce5468b43d954c3598c1ffe9725">snprintf</a></div><div class="ttdeci">int snprintf(char *buffer, size_t n, const char *format_string,...)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdio/snprintf/.  This function was introduced by t...</div></div>
-<div class="ttc" id="group__core_html_ga0419985b32761cce3f5d75e6aad36f05"><div class="ttname"><a href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a></div><div class="ttdeci">long y_rand(void)</div><div class="ttdoc">Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00151">y_core.c:151</a></div></div>
+<div class="ttc" id="group__core_html_ga0419985b32761cce3f5d75e6aad36f05"><div class="ttname"><a href="group__core.html#ga0419985b32761cce3f5d75e6aad36f05">y_rand</a></div><div class="ttdeci">long y_rand(void)</div><div class="ttdoc">Generate a random (integer) number between 0 and Y_RAND_MAX (30 bit maxint). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00152">y_core.c:152</a></div></div>
 <div class="ttc" id="group__core_html_ga36fcd2d9a92671f11bfebf8b7bfa34ae"><div class="ttname"><a href="group__core.html#ga36fcd2d9a92671f11bfebf8b7bfa34ae">y_virtual_user_group</a></div><div class="ttdeci">char * y_virtual_user_group</div><div class="ttdoc">The virtual user group, as reported by lr_whoami(). </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00042">y_core.c:42</a></div></div>
 <div class="ttc" id="vugen_8h_html_ae23144bcbb8e3742b00eb687c36654d1"><div class="ttname"><a href="vugen_8h.html#ae23144bcbb8e3742b00eb687c36654d1">rand</a></div><div class="ttdeci">int rand(void)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/rand/. </div></div>
-<div class="ttc" id="group__core_html_ga8252a459f15c52a8680fff9ddbd7356c"><div class="ttname"><a href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a></div><div class="ttdeci">char * y_get_parameter(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00317">y_core.c:317</a></div></div>
-<div class="ttc" id="group__core_html_gaf81efb56d5afc4806cdc79f64ba3d675"><div class="ttname"><a href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a></div><div class="ttdeci">char * y_get_parameter_or_null(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00354">y_core.c:354</a></div></div>
-<div class="ttc" id="group__core_html_gaa80c4db4c75cdc0c03aad6f69b3dff3c"><div class="ttname"><a href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a></div><div class="ttdeci">char * y_get_parameter_ext(const char *source_param)</div><div class="ttdoc">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00422">y_core.c:422</a></div></div>
+<div class="ttc" id="group__core_html_ga8252a459f15c52a8680fff9ddbd7356c"><div class="ttname"><a href="group__core.html#ga8252a459f15c52a8680fff9ddbd7356c">y_get_parameter</a></div><div class="ttdeci">char * y_get_parameter(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *. </div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00318">y_core.c:318</a></div></div>
+<div class="ttc" id="group__core_html_gaf81efb56d5afc4806cdc79f64ba3d675"><div class="ttname"><a href="group__core.html#gaf81efb56d5afc4806cdc79f64ba3d675">y_get_parameter_or_null</a></div><div class="ttdeci">char * y_get_parameter_or_null(const char *param_name)</div><div class="ttdoc">Get the content of a parameter and return it as a char *, or return NULL if it wasn&#39;t set...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00355">y_core.c:355</a></div></div>
+<div class="ttc" id="group__core_html_gaa80c4db4c75cdc0c03aad6f69b3dff3c"><div class="ttname"><a href="group__core.html#gaa80c4db4c75cdc0c03aad6f69b3dff3c">y_get_parameter_ext</a></div><div class="ttdeci">char * y_get_parameter_ext(const char *source_param)</div><div class="ttdoc">Get the content of a parameter and return it as a char * (lr_eval_string_ext() version) ...</div><div class="ttdef"><b>Definition:</b> <a href="y__core_8c_source.html#l00423">y_core.c:423</a></div></div>
 <div class="ttc" id="group__time_html_ga8038cf2bfae47bdf6942741c58a2c530"><div class="ttname"><a href="group__time.html#ga8038cf2bfae47bdf6942741c58a2c530">time</a></div><div class="ttdeci">time_t time(time_t *timeptr)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/ctime/time/. </div></div>
 <div class="ttc" id="group__memory_html_ga557a44efb227bec48c165bf5e016b675"><div class="ttname"><a href="group__memory.html#ga557a44efb227bec48c165bf5e016b675">free</a></div><div class="ttdeci">void free(void *mem_address)</div><div class="ttdoc">Documented at http://www.cplusplus.com/reference/cstdlib/free/. </div></div>
 </div><!-- fragment --></div><!-- contents -->
