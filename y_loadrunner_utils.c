@@ -1,8 +1,8 @@
-ï»¿/*
+/*
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
- * Copyright (C) 2013-2014 AndrÃ© Luyer
+ * Copyright (C) 2013-2014 André Luyer
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -364,7 +364,7 @@ if (result != 0)
 {   // o dear, something went wrong!
 }
 \endcode
-\author AndrÃ© Luyer, Floris Kraak
+\author André Luyer, Floris Kraak
 \sa y_write_to_file(), y_read_parameter_from_file()
 */
 int y_write_parameter_to_file(char *filename, char *content_parameter)
@@ -533,7 +533,7 @@ The value of 0 is returned on error (e.g. no access to disk).
 
 \remark Completely rewritten. The 16 TiB limit is lifted.
 
-\author AndrÃ© Luyer
+\author André Luyer
 */
 void y_get_disk_space(const char *folder_name, double *available, double *total)
 {
@@ -595,7 +595,7 @@ void y_get_disk_space(const char *folder_name, double *available, double *total)
 
 \note This function is a wrapper around ::y_get_disk_space for backwards compatibility
 \sa y_get_disk_space()
-\author AndrÃ© Luyer
+\author André Luyer
 */
 double y_get_free_disk_space_in_mebibytes(const char* folder_name)
 {
@@ -614,7 +614,7 @@ double y_get_free_disk_space_in_mebibytes(const char* folder_name)
 
 \note This function is a wrapper around ::y_get_disk_space for backwards compatibility
 \sa y_get_disk_space()
-\author AndrÃ© Luyer
+\author André Luyer
 */
 double y_get_free_disk_space_percentage(const char* folder_name)
 {
@@ -1018,7 +1018,7 @@ This will force an extra pacing of 5 minutes after 10 successive failed transact
 \note The forced pause ignores runtime thinktime settings.
 
 \param [in] ok Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration.
-\author AndrÃ© Luyer, Floris Kraak
+\author André Luyer, Floris Kraak
 */
 int y_errorcheck(int ok)
 {
