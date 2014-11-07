@@ -1011,7 +1011,7 @@ For example:
 \code
 -errorcheck_enabled -errorcheck_limit 10/20 -errorcheck_pause_time 5:00
 \endcode
-This will force an extra pacing of 5 minutes after 10 successive failed transactions and aborts after 20 successive failed transactions.
+This will force an extra pacing of 5 minutes after 10 successive failed iterations and aborts after 20 successive failed iterations.
 
 \warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
 
