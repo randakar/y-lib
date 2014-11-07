@@ -392,7 +392,7 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     }
     
     // Write the file.
-    if( (result = fwrite(szBuf, nLength, 1, fp)) < nLength )
+    if( (result = fwrite(szBuf, 1, nLength, fp)) < nLength )
     {
         lr_error_message("Error while writing %d bytes to file: %s ; Only %d bytes were written.", nLength, filename, result);
         result = -2;
