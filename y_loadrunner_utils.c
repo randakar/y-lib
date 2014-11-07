@@ -2,7 +2,7 @@
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
- * Copyright (C) 2013 André Luyer
+ * Copyright (C) 2013 AndrÃ© Luyer
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -361,7 +361,7 @@ if (result != 0)
 {   // o dear, something went wrong!
 }
 \endcode
-\author André Luyer, Floris Kraak
+\author AndrÃ© Luyer, Floris Kraak
 \sa y_write_to_file(), y_read_parameter_from_file()
 */
 int y_write_parameter_to_file(char *filename, char *content_parameter)
@@ -375,15 +375,16 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     lr_log_message("y_write_parameter_to_file(\"%s\", \"%s\")", filename, content_parameter);
     
     // Get the parameter content. Tricky because of the possibility of embedded null bytes in there.
-    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
+    //    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
+    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), strlen(content_parameter)+2,&szBuf, &nLength, 0, 0, -1);
 
     // Open the file.
     if( !(fp = fopen(filename, "wb")) ) 
     {
-    	lr_error_message("Cannot open file %s for writing!", filename);
-   	    lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
-    	lr_abort();
-    	return -1; // Errors while opening the file means writing to it is pointless.
+        lr_error_message("Cannot open file %s for writing!", filename);
+           lr_eval_string_ext_free(&szBuf); // Free the parameter content buffer.
+        lr_abort();
+        return -1; // Errors while opening the file means writing to it is pointless.
     }
     
     // Write the file.
@@ -637,11 +638,11 @@ projectname_some_request_transaction()
 
    y_start_transaction("some_request");
    web_custom_request("some_request", 
-		"URL=http://{Host}/some/request/v1/", 
-		"Method=POST", "Resource=0", 
-		"Body={request_body}",
-		"EncType=text/xml; charset=utf-8",
-		LAST);   
+        "URL=http://{Host}/some/request/v1/", 
+        "Method=POST", "Resource=0", 
+        "Body={request_body}",
+        "EncType=text/xml; charset=utf-8",
+        LAST);   
    y_end_transaction("", LR_AUTO);
 }
 \endcode
@@ -884,6 +885,155 @@ double y_think_time_for_rampup(const int rampup_period, double TPS_max)
     const int virtual_users = 1;                   // How many virtual users the script is using. If you use "1", you can just use TPS / virtual user for the initial target TPS.
 
     return y_think_time_for_rampup_ext(rampup_period, TPS_initial, TPS_max, virtual_users);
+}
+
+/*! \brief Execute a windows shell command
+Implements proper error checking.
+
+\todo Fix the memory allocation to provide for commands that result in more than 10Kb of output.
+
+\param [in] command A windows shell command, as passed to CMD.exe
+\param [in] debug If zero, log the first line; Otherwise, log full command output.
+\author Sander van Wanrooij, Floris Kraak
+*/
+y_execute_shell_command(char* command, int debug)
+{
+    const int buffer_size = 10240; // 10 KB;
+    char buffer[10240];            // allocate memory for the output of the command.
+                                   // Has to be hardcoded because this compiler is stupid about const keywords and I do not want to use #define because of potential side effects. -- FBK
+    long fp;           // file/stream pointer
+    int count;         // number of characters that have been read from the stream.
+    char *token;
+    char *command_evaluated = lr_eval_string(command);
+
+    lr_save_string("-- command not yet executed --", "command_result");
+    lr_log_message("Executing command: %s", command_evaluated);
+
+    fp = popen(command_evaluated, "r");
+    if (fp == NULL) {
+        lr_error_message("Error opening stream.");
+        return -1;
+    }
+
+    buffer[0] = '\0';  // Clear the buffer before we try to fill it - Prevents the previous command output from showing up in here. -- FBK
+    count = fread(buffer, sizeof(char), buffer_size, fp); // read up to 10KB
+    if (feof(fp) == 0) 
+    {
+        lr_error_message("Did not reach the end of the input stream when reading. Try increasing buffer_size.");
+        pclose(fp);
+        return -1;
+    }
+    if (ferror(fp)) 
+    {
+        lr_error_message ("I/O error during read."); 
+        pclose(fp);
+        return -1;
+    }
+    count = fread(buffer, sizeof(char), (sizeof buffer) - 1, fp);
+    lr_save_var(buffer, count, 0, "command_output");
+
+    // Split the stream at each newline character, and save them to a parameter array.
+    token = (char*) strtok(buffer, "\n"); // Get the first token
+ 
+    if (token == NULL) {
+        lr_save_string("", "command_result");        
+    }
+    else 
+    {
+        lr_save_string(token, "command_result"); // First token saved
+
+        if(debug)
+        {
+            char param_buf[10];         // buffer to hold the parameter name.
+            int i = 1;
+    
+            while (token != NULL) { // While valid tokens are returned 
+                sprintf(param_buf, "output_%d", i);
+                lr_save_string(token, param_buf);
+                i++;
+                token = (char*) strtok(NULL, "\n");
+             }
+            lr_save_int(i-1, "output_count");
+            
+            // Print all values of the parameter array.
+            for (i=1; i<=lr_paramarr_len("output"); i++) {
+                lr_output_message("Parameter value: %s", lr_paramarr_idx("output", i));
+            } 
+        }
+    }
+    
+    pclose(fp);
+    return 0;
+}
+
+
+/*! \brief Errorflood guard.
+Also known as "the error check".
+
+Prevent error floods by inserting forced thinktime at the start of the iteration if too many iterations fail.
+
+Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups.
+In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. 
+Keeping the load 'stable' at that stage may also prevent the backend from coming back up normaly after the original disruption has ended.
+Plus, if the system *stays* down keeping the full load on it will only cause the generator's log storage to overflow.
+
+Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
+
+\b Usage:
+\code
+y_errorcheck(0);  // Marks the start of the iteration, will insert forced delay if this spot is reached too many times in a row without reaching the end.
+y_errorcheck(1);  // Marks the end of the iteration. Resets the error counter.
+\endcode
+
+Three virtual user attributes are used to control this functionality:
+- errorcheck_enabled: 0 or 1; If set to 1, error flood checking is performed. Otherwise, it isn't. Default 0 (off).
+- errorcheck_limit: How many iteration failures are tolerated before forcibly pausing the virtual user. Default 10 iterations.
+- errorcheck_pause_time_seconds: The amount of time to pause if the floodguard fires, in seconds. Default 900 (15 minutes).
+
+\warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
+
+\note The forced pause ignores runtime thinktime settings.
+
+\param [in] ok Start/end iteration marker. Should be set to 0 at the start of the iteration, and 1 at the end of the iteration.
+\author André Luyer, Floris Kraak
+*/
+int y_errorcheck(int ok)
+{
+    static int errorcount = 0; // Static means this value will not be reset to zero when a new iteration starts.
+
+    // Configuration from virtual user group command line or runtime attribute settings.
+    long enabled_attrib     = lr_get_attrib_long("errorcheck_enabled");
+    long error_limit_attrib = lr_get_attrib_long("errorcheck_limit");
+    long pause_time_attrib  = lr_get_attrib_long("errorcheck_pause_time_seconds");
+
+    // Defaults
+    int enabled     = enabled_attrib     >= 0 ? enabled_attrib     :   0; // default off (Should not be used for breaktesting, should be ON for peakload or endurance testing.)
+    int error_limit = error_limit_attrib >= 0 ? error_limit_attrib :  10; // number of failed iterations before firing
+    int pause_time  = pause_time_attrib  >= 0 ? pause_time_attrib  : 900; // how much time to wait (in seconds) when this fires.
+
+    //lr_log_message("y_errorcheck() enabled: %d (%d), error_limit: %d (%d), pause_time: %d (%d)", enabled, enabled_attrib, error_limit, error_limit_attrib, pause_time, pause_time_attrib );
+
+    if( !enabled )
+        return 0;
+    if (ok) 
+    {
+        errorcount = 0;
+    }
+    else 
+    {
+        if (errorcount >= error_limit) 
+        {
+            lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
+            lr_set_transaction(lr_eval_string("---TOO MANY ERRORS - THROTTLING LOAD---"), 0, LR_FAIL);
+            lr_force_think_time(pause_time); // alternative would be calling lr_abort();
+        }
+        if (errorcount) 
+            lr_log_message("Number of failed iterations: %d", errorcount);
+
+        lr_user_data_point( "y_errorcheck_errorcount", errorcount++);
+    }
+
+    return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
 }
 
 

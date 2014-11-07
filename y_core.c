@@ -45,7 +45,7 @@ int y_scid;
 //! Boolean, true when running in Vugen. Not able to do this in pre-compile phase. \sa y_setup()
 int y_is_vugen_run_bool = 0;
 
-
+#ifndef RAND_MAX
 /*!
 \def RAND_MAX
 \brief RAND_MAX constant for use with rand() - 15 bits integer.
@@ -55,6 +55,7 @@ We define it here mostly for documentation, as we do not have access to the head
 \author Floris Kraak
 */
 #define RAND_MAX 32767
+#endif
 
 /*!
 \def Y_RAND_MAX 

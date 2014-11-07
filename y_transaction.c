@@ -27,37 +27,38 @@
 \file y_transaction.c
 \brief ylib transaction library.
 
-Extend your script with the following features:
-* Automatic transaction naming and numbering.
-* Transaction triggers: Code to be run when a transaction starts or stops.
-* Custom transaction implementations; Add your own logging or time measurements to transactions.
+Allows you to extend your script with the following features:
++ Automatic transaction naming and numbering.
++ Transaction triggers: Code to be run when a transaction starts or stops.
++ Custom transaction implementations - Adding your own logging or time measurements to transactions.
 
-\b Usage:
+Usage
+-----
 Include this file (or y_lib.c) in your script, call y_start_transaction() and y_end_transaction() everywhere you normally call the loadrunner variants.
 Use search-and-replace to convert existing scripts. Add calls to y_start_transaction_block() and y_end_transaction_block() to set a transaction prefix.
 
-== Transaction naming ==
+Transaction naming
+------------------
 Y-lib transaction names take the form: '{transaction_prefix}_{transaction_nr}_{step_name}'.
 Sub transaction names take the form:   '{transaction_prefix}_{transaction_nr}_{sub_transaction_nr}_{step_name}'.
 Calling y_start_transaction_block() starts a block of transactions that all use the name of the block as the transaction prefix.
 
 Optionally the vuser group name can be added to the transaction names as well. This allows differentiation between different types of users that are all running the same script otherwise.
 
-== Triggers ==
+Triggers
+--------
 A trigger is a function that will execute every time an ylib transaction starts or stops. You can define seperate triggers for transaction start, stop, and the sub transaction start and stop.
 The return value of the trigger is used to determine whether the transaction should pass or fail, in the case of end transaction triggers.
 
-== Custom transaction implementations ==
+Custom transaction implementations
+----------------------------------
 Ylib can be configured to run your own custom transaction start/stop implementation instead of the usual loadrunner functions whenever a transaction starts or stops.
-This can be used for a variëty of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops.
+This can be used for a variety of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops.
 
-*/
+Testcase
+--------
 
-//
-//
-// 
-/* 
-    // Testcase:
+\code
     y_setup_logging();                   // Initialisation. May be omitted. (testcase?)
 
     y_start_sub_transaction("alpha");    // starts trans '01 alpha' and subtrans '01_01 alpha'.
@@ -79,11 +80,12 @@ This can be used for a variëty of things; For example, calculating the 99th perc
     y_end_action_block();                // ends action block "two".
     lr_abort();                          // end testcase ;-)
     return;
+\endcode
 */
 
 
 
-// Needed to compile this - the definition of LAST is missing if it's not included
+// Needed to compile this - the definition of LAST is missing if it's not included.
 #include "web_api.h"
 
 // More C definitions
@@ -100,40 +102,60 @@ This can be used for a variëty of things; For example, calculating the 99th perc
 
 // Never access these variables directly - names may change. 
 // Use the get() and set() functions instead, if available. (otherwise, add them?)
-int _y_add_group_to_trans = 0;      // whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
-int _y_wasted_time_graph = 0;       // whether to create a graph detailing wasted time. Debugging option.
+//! INTERNAL: Whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off.
+int _y_add_group_to_trans = 0;      // 
+//! INTERNAL: Whether to create a graph detailing wasted time. Debugging option.
+int _y_wasted_time_graph = 0;       
 
-    // We could allocate _block_transaction with malloc
-    // but freeing that gets complicated quickly. Too quickly.
-//char _block_transaction[100] = "";
+//! INTERNAL: Transaction counting for transaction blocks: \see y_start_transaction_block() and y_start_transaction()
 int _y_transaction_nr = 1;
+//! INTERNAL: Transaction counting for sub transactions: \see y_start_sub_transaction()
 int _y_sub_transaction_nr = 1;
 
-// Transaction status tracking
-#define Y_TRANS_STATUS_NONE         0
-#define Y_TRANS_STATUS_STARTED      1
-#define Y_TRANS_STATUS_AUTO_STARTED 2
-int _trans_status = Y_TRANS_STATUS_NONE;
+//! Transaction counting support for sessions. \see y_session_timer_start() and y_session_timer_end()
+int y_session_transaction_count = -1;
 
-// Transaction trigger support
+
+//! Transaction status tracking
+#define Y_TRANS_STATUS_NONE         0
+//! Transaction status tracking
+#define Y_TRANS_STATUS_STARTED      1
+//! Transaction status tracking
+#define Y_TRANS_STATUS_AUTO_STARTED 2
+//! INTERNAL: Transaction status tracking
+int _y_trans_status = Y_TRANS_STATUS_NONE;
+
+//! Transaction trigger support typedef
 typedef int (y_trigger_func)();
+//! \see y_set_transaction_start_trigger()
 y_trigger_func* _y_trigger_start_trans = NULL;
+//! \see y_set_transaction_end_trigger()
 y_trigger_func* _y_trigger_end_trans = NULL;
+//! \see y_set_sub_transaction_start_trigger()
 y_trigger_func* _y_trigger_start_sub_trans = NULL;
+//! \see y_set_sub_transaction_end_trigger()
 y_trigger_func* _y_trigger_end_sub_trans = NULL;
 
-// Transaction implementation pointers
+//! \see y_set_transaction_start_implementation()
 typedef int (y_trans_start_impl_func)(char* trans_name);
+//! \see y_set_transaction_end_implementation()
 typedef int (y_trans_end_impl_func)(char* trans_name, int status);
+//! Start transaction implementation pointer. Default lr_start_transaction(). \see y_set_transaction_start_implementation()
 y_trans_start_impl_func* _y_trans_start_impl = &lr_start_transaction;
+//! End transaction implementation pointer. Default lr_end_transaction(). \see y_set_transaction_end_implementation()
 y_trans_end_impl_func* _y_trans_end_impl = &lr_end_transaction;
+
+
 
 // Functions
 
-// If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running.
-// Adding calls to lr_start_transaction() and lr_end_transaction() that are never actually used is enough to stop that from occurring.
-// Alternatively, the "y_start_trans_impl_func" and "y_end_trans_impl_func" pointers could be initialized to NULL. But that would stop y_start/y_end_transaction() from
-// actually recording transactions.. so we're not going to do that.
+/*! \brief Workaround for a bug in LR 11. 
+
+If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running.
+Adding calls to lr_start_transaction() and lr_end_transaction() that are never actually used is enough to stop that from occurring.
+Alternatively, the "y_start_trans_impl_func" and "y_end_trans_impl_func" pointers could be initialized to NULL. But that would stop y_start/y_end_transaction() from
+actually recording transactions.. so we're not going to do that. :)
+*/
 void __y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_dereference_error_in_vugen_when_running()
 {
     lr_start_transaction("y_workaround_transaction_to_prevent_null_dereference");
@@ -142,31 +164,59 @@ void __y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_der
 
 
 // Getters / Setters //
+/*! Get the most recent transaction name as set by y_start_transaction().
+\return The current full transaction name as set by y_start_transaction()
+\note Returned pointer points to memory allocated by lr_eval_string().
 
+\see y_start_transaction()
+*/
 char *y_get_current_transaction_name()
 {
     return lr_eval_string("{y_current_transaction}");
 }
 
+/*! Store the name of the current transaction.
 
+\param [in] trans_name The full name of the transaction.
+\see y_start_transaction()
+*/
 void y_set_current_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "y_current_transaction");
 }
 
 
+/*! Get the most recent subtransaction name as set by y_start_sub_transaction().
+\return The current full subtransaction name as set by y_start_sub_transaction()
+\note Returned pointer points to memory allocated by lr_eval_string().
+
+\see y_start_sub_transaction()
+*/
 char *y_get_current_sub_transaction_name()
 {
     return lr_eval_string("{y_current_sub_transaction}");
 }
 
 
+/*! Store the name of the current subtransaction.
+
+\param [in] trans_name The full name of the subtransaction.
+\see y_start_sub_transaction()
+*/
 void y_set_current_sub_transaction_name(char *trans_name)
 {
     lr_save_string(lr_eval_string(trans_name), "y_current_sub_transaction");
 }
 
 
+/*! Toggle using the vuser group name in ylib transaction names
+Useful if you wish to set up two virtual user groups executing the exact same script with some kind of subtle different that makes it necessary to differentiate between the transactions from each group.
+Default is off.
+
+\param [in] add_group_to_trans Value determining if the group name is added to transaction name. Set to 1 it will be added, if set to 0 it will not be.
+
+\see y_start_transaction()
+*/ 
 void y_set_add_group_to_transaction(int add_group_to_trans)
 {
     _y_add_group_to_trans = add_group_to_trans;
@@ -174,17 +224,32 @@ void y_set_add_group_to_transaction(int add_group_to_trans)
 
 //! \cond function_removal
 // Complain loudly at compile time if somebody tries to use the old versions of these calls
-#define y_set_action_prefix 0_y_set_action_prefix_no_longer_exists_please_use_y_set_transaction_prefix
+#define y_set_action_prefix 0_y_set_action_prefix_no_longer_exists_please_use_action_prefix
 #define y_get_action_prefix 0_y_get_action_prefix_no_longer_exists_please_use_y_get_transaction_prefix
 //! \endcond
 
+/*! Set the common transaction prefix for all subsequent transactions.
 
+\param [in] transaction_prefix The transaction prefix to store.
+Used automatically by y_start_transaction_block() and friends.
+
+\see y_start_transaction_block()
+*/
 void y_set_transaction_prefix(char *transaction_prefix)
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
     lr_save_string(transaction_prefix, "y_transaction_prefix");
 }
 
+/*! Get the currently used transaction prefix.
+
+In some cases you may wish to make decisions based on what kind of clickflow is currently executing. The transaction prefix may provide exactly what you need to determine that, if you use different transaction blocks for different clickflows.
+
+\return the current transaction_prefix.
+\note The returned pointer points to memory allocated by lr_eval_string()
+
+\see y_start_transaction_block(), y_set_transaction_prefix()
+*/
 char *y_get_transaction_prefix()
 {
     // Bother. Let's do this the eminently simple and predictable way, then:
@@ -197,18 +262,37 @@ char *y_get_transaction_prefix()
         return lr_eval_string("{y_transaction_prefix}");
 }
 
+/*! Get the transaction number used for the next transaction started by y_start_transaction()
 
+Useful for complicated flows where a little bit of handcrafted helper code is needed to keep the count correct.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_post_increment_transaction_nr()
+*/
 int y_get_next_transaction_nr()
 {
     return _y_transaction_nr;
 }
 
+/*! Increment the transaction number used by the transaction naming code.
 
+\deprecated - y_increment_transaction_nr() does the same thing.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_get_next_transaction_nr()
+*/
 int y_post_increment_transaction_nr()
 {
     return _y_transaction_nr++;
 }
 
+/*! Increment the transaction number used by the transaction naming code.
+
+Used internally.
+
+\returns The transaction number used for the next transaction started by y_start_transaction()
+\see y_start_transaction(), y_get_next_transaction_nr()
+*/
 int y_increment_transaction_nr()
 {
     return _y_transaction_nr++;
@@ -255,7 +339,7 @@ void y_set_next_sub_transaction_nr(int trans_nr)
 
 int y_get_transaction_running()
 {
-    return _trans_status;
+    return _y_trans_status;
 }
 
 
@@ -416,6 +500,24 @@ void y_save_transaction_end_status(char* transaction_name, const char* saveparam
 
 
 
+int y_session_transaction_count_increment()
+{
+    return y_session_transaction_count++;
+}
+
+void y_session_transaction_count_report(char* session_name)
+{
+    lr_message( lr_eval_string("Transaction count for %s: %d"), session_name, y_session_transaction_count);
+    lr_user_data_point( session_name, y_session_transaction_count);
+}
+
+void y_session_transaction_count_reset()
+{
+    y_session_transaction_count = 0;
+}
+
+
+
 //
 // Transaction blocks. Prefix all transactions in a series with the same text.
 // 
@@ -490,6 +592,19 @@ void y_end_action_block()
 #define y_calculate_actual_action_prefix 0_y_calculate_actual_action_prefix_no_longer_exists_please_use_y_calculate_actual_transaction_prefix
 //! \endcond
 
+
+/*! \brief Transaction name factory helper.
+
+Add together the transaction prefix, vuser group name (if applicable), and transaction number, seperated by "_", and return the result in a newly allocated piece of memory on the heap.
+Automatically called by y_start_transaction() and friends as needed.
+
+\param [in] transaction_prefix The current transaction prefix as given to y_start_transaction_block()
+\returns A newly allocated piece of memory on the heap containing the complete prefix, ready for concatenation with the actual transaction name.
+
+\warning the return value of this function needs to be freed using free().
+
+\see y_start_transaction(), y_create_transaction_name()
+*/
 char *y_calculate_actual_transaction_prefix(const char *transaction_prefix)
 {
     const char seperator[] = "_";
@@ -636,7 +751,7 @@ int y_start_transaction(char *transaction_name)
 
     // Stops sub transactions from automagically
     // creating outer transactions for themselves.
-    _trans_status = Y_TRANS_STATUS_STARTED;
+    _y_trans_status = Y_TRANS_STATUS_STARTED;
 
     //return lr_start_transaction(lr_eval_string("{y_current_transaction}"));
     return _y_trans_start_impl(lr_eval_string("{y_current_transaction}"));
@@ -682,8 +797,11 @@ int y_end_transaction(char *transaction_name, int status)
 
     // Tell our subtransaction support that there is no outer transaction
     // so if a sub-transaction is created it may have to fake this.
-    _trans_status = Y_TRANS_STATUS_NONE;
+    _y_trans_status = Y_TRANS_STATUS_NONE;
 
+    if( y_session_transaction_count >= 0 ) // Values smaller than 0 means that transaction counting is disabled.
+        y_session_transaction_count_increment();
+    
     return status;
 }
 
@@ -701,10 +819,10 @@ int y_end_transaction(char *transaction_name, int status)
 int y_start_sub_transaction(char *transaction_name)
 {
     // if there is no outer transaction yet, fake one
-    if( _trans_status == Y_TRANS_STATUS_NONE )
+    if( _y_trans_status == Y_TRANS_STATUS_NONE )
     {
         y_start_transaction(transaction_name);
-        _trans_status = Y_TRANS_STATUS_AUTO_STARTED;
+        _y_trans_status = Y_TRANS_STATUS_AUTO_STARTED;
     }
 
 
@@ -752,7 +870,7 @@ int y_end_sub_transaction(char *transaction_name, int status)
     //
     // Note: It might be an idea to move this to y_start_(sub_)transaction() instead, for
     // better grouping. That may not be without it's problems though.
-    if( _trans_status == Y_TRANS_STATUS_AUTO_STARTED)
+    if( _y_trans_status == Y_TRANS_STATUS_AUTO_STARTED)
     {
         y_end_transaction(transaction_name, status);
     }
@@ -772,6 +890,61 @@ int y_get_last_transaction_status()
     }
 }
 
+
+
+//! Session timer variable for session timer support.
+merc_timer_handle_t y_session_timer = NULL;
+
+
+void y_session_timer_start(char* session_name)
+{
+    lr_save_string(session_name, "y_session_name");
+    y_session_transaction_count_reset();
+
+    y_session_timer = lr_start_timer();
+}
+
+// Meet sessie duur en forceer een pause tot het einde van de sessie, indien nodig.
+#define Y_NO_PAUSE    0
+#define Y_FORCE_PAUSE 1
+
+
+void y_session_timer_end(int required_session_duration, int force_pause)
+{
+    double measured_duration;
+
+    if( y_session_timer == NULL )
+    {
+        lr_error_message("Error: y_session_timer_end() called without matching call to y_session_timer_end()!");
+        lr_set_transaction( "__y_sesssion_timer_end_call_without_y_session_timer_end_call", 0, LR_FAIL);
+        return;
+    }
+    else
+    {
+        double measured_duration = lr_end_timer(y_session_timer);
+        // Calculate how much time remains until the session should end.
+        int remaining_time = required_session_duration - measured_duration;
+
+        // Reset the timer insofar lr_end_timer() hasn't done that already.
+        y_session_timer = NULL;
+
+        lr_user_data_point( lr_eval_string("y_session_duration_{y_session_name}"), measured_duration);
+        if ( remaining_time > 0 ) 
+        {
+            if( force_pause == Y_FORCE_PAUSE )
+            {
+                lr_force_think_time(remaining_time);
+            }
+        }
+        else
+        {
+            lr_error_message( lr_eval_string("WARNING!: Measured duration of session {y_session_name} (%f) exceeded specified maximum of %d seconds!"), measured_duration, required_session_duration);
+            lr_set_transaction( lr_eval_string("_{y_session_name}_session_duration_overrun"), measured_duration, LR_FAIL);
+        }
+    }
+
+    y_session_transaction_count_report(lr_eval_string("y_transaction_count_{y_session_name}"));
+}
 
 // Handy shortcuts //
 
@@ -848,7 +1021,6 @@ do {                                                                      \
                                                                           \
     free(tmp);                                                            \
 } while(0)
-
 
 
 //
