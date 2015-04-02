@@ -1,0 +1,217 @@
+\hypertarget{y__flow__list_8c}{\section{y\-\_\-flow\-\_\-list.\-c File Reference}
+\label{y__flow__list_8c}\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}}
+}
+
+
+Business logic / clickflow support.  
+
+
+{\ttfamily \#include \char`\"{}y\-\_\-core.\-c\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structy__struct__flow}{y\-\_\-struct\-\_\-flow}
+\begin{DoxyCompactList}\small\item\em Descriptor for one single flow in a flow list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int( \hyperlink{y__flow__list_8c_a01580762036bdc8332d4dcf0df9dffc4}{y\-\_\-flow\-\_\-func} )()
+\begin{DoxyCompactList}\small\item\em Type definition of a function pointer to the flow to execute. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structy__struct__flow}{y\-\_\-struct\-\_\-flow} \hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow}
+\begin{DoxyCompactList}\small\item\em Descriptor for one single flow in a flow list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{y__flow__list_8c_a8773a7f8388e2081d42d071e2f2b10f1}{y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total} (\hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} flow\-\_\-list\mbox{[}$\,$\mbox{]}, int flow\-\_\-count)
+\begin{DoxyCompactList}\small\item\em Calculate the total of the weights in a given flow list. \end{DoxyCompactList}\item 
+\hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} $\ast$ \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow} (\hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} flow\-\_\-list\mbox{[}$\,$\mbox{]}, int flow\-\_\-count)
+\begin{DoxyCompactList}\small\item\em Choose a flow from a list of flows. \end{DoxyCompactList}\item 
+int \hyperlink{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{y\-\_\-exec\-\_\-flow} (\hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} $\ast$chosen\-\_\-flow)
+\begin{DoxyCompactList}\small\item\em Execute a flow from a flow list. \end{DoxyCompactList}\item 
+\hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} $\ast$ \hyperlink{y__flow__list_8c_aca4c6de81bafa3e28b8a6151cb6a7dff}{y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name} (char $\ast$flow\-\_\-name, \hyperlink{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{y\-\_\-flow} flow\-\_\-list\mbox{[}$\,$\mbox{]}, int flow\-\_\-count)
+\begin{DoxyCompactList}\small\item\em Fetch a specific item from a flow list, by name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Business logic / clickflow support. This file implements flow lists. A flow list is is a lists of actions (clickflow) that the script will choose from at random, using a set of predetermined weights. An 'action' is defined as a function that takes no arguments and returns an int -\/ such as an action block, or a function without a specifically defined return type. \begin{DoxyNote}{Note}
+The weights can be percentages, hit counts, or whatever you like, as long as the total of the weights does not exceed Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X.
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} browse()
+\{
+    y\_start\_transaction(\textcolor{stringliteral}{"browse"});
+    web\_link(\textcolor{stringliteral}{"..."}, LAST);
+    y\_end\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);
+\}
+
+buy()
+\{
+    y\_start\_transaction(\textcolor{stringliteral}{"buy"});
+    web\_link(\textcolor{stringliteral}{"..."}, LAST);
+    y\_end\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);
+\}
+
+\textcolor{comment}{// Define other actions as required.}
+
+loadtest\_flow()
+\{
+    \textcolor{comment}{// Define the weights}
+    \textcolor{keyword}{static} \hyperlink{structy__struct__flow}{y\_flow} flow\_list[] = \{
+        \{ 0, \textcolor{stringliteral}{"action block for browsing the site"},  browse,          3700 \},   \textcolor{comment}{// 37.00%}
+        \{ 1, \textcolor{stringliteral}{"action block for buying a product"},   buy,             2100 \},   \textcolor{comment}{// 21.00%}
+        \{ 2, \textcolor{stringliteral}{"action block for checking out"},       checkout,         200 \},   \textcolor{comment}{//  2.00%}
+        \{ 3, \textcolor{stringliteral}{"function for resetting the database"}, wipe\_database,   2500 \},   \textcolor{comment}{// 25.00%}
+        \{ 4, \textcolor{stringliteral}{"end the script for no reason"},        lr\_abort,        1500 \} \}; \textcolor{comment}{// 15.00%}
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} flow\_count = (\textcolor{keyword}{sizeof} flow\_list / \textcolor{keyword}{sizeof} flow\_list[0]); 
+
+    \textcolor{comment}{// Choose a flow to execute}
+    \hyperlink{structy__struct__flow}{y\_flow} *chosen\_flow = \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\_choose\_flow}(flow\_list, flow\_count);
+
+    \textcolor{comment}{// Change the next transaction number to make sure the numbering stays contiguous.}
+    \textcolor{comment}{// (This is optional. You can use that number for whatever you want, this is just a common use for that
+       field.)}
+    y\_set\_next\_transaction\_nr( \hyperlink{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{y\_get\_next\_transaction\_nr}() + chosen\_flow->
+      \hyperlink{structy__struct__flow_ae41d27d59268dd262885785904ee47ab}{number});
+
+    \textcolor{comment}{// Execute the chosen flow.}
+    \hyperlink{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{y\_exec\_flow}(chosen\_flow);
+\}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow}, \hyperlink{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{y\-\_\-exec\-\_\-flow}, y\-\_\-set\-\_\-next\-\_\-transaction\-\_\-nr, \hyperlink{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr}. 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{y__flow__list_8c_ad56792e50738f663831a3703cf728420}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-flow@{y\-\_\-flow}}
+\index{y\-\_\-flow@{y\-\_\-flow}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-flow}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf y\-\_\-struct\-\_\-flow} {\bf y\-\_\-flow}}}\label{y__flow__list_8c_ad56792e50738f663831a3703cf728420}
+
+
+Descriptor for one single flow in a flow list. 
+
+Hides the exact type for y\-\_\-flow (\hyperlink{structy__struct__flow}{y\-\_\-struct\-\_\-flow}) from code using flow lists. This struct wraps the y\-\_\-flow\-\_\-func function pointer in a structure that gives the flow a name and a weight, as well as an (arbitrary) number. The chance of a specific flow getting executed is 1 in the total of the weights in the list of flows. \hypertarget{y__flow__list_8c_a01580762036bdc8332d4dcf0df9dffc4}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-flow\-\_\-func@{y\-\_\-flow\-\_\-func}}
+\index{y\-\_\-flow\-\_\-func@{y\-\_\-flow\-\_\-func}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-flow\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}typedef int( y\-\_\-flow\-\_\-func)()}}\label{y__flow__list_8c_a01580762036bdc8332d4dcf0df9dffc4}
+
+
+Type definition of a function pointer to the flow to execute. 
+
+This matches the prototype for Action() blocks, so you can assign a action blocks to variables of this type. 
+
+\subsection{Function Documentation}
+\hypertarget{y__flow__list_8c_a8773a7f8388e2081d42d071e2f2b10f1}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total@{y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total}}
+\index{y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total@{y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-calc\-\_\-flow\-\_\-weight\-\_\-total (
+\begin{DoxyParamCaption}
+\item[{{\bf y\-\_\-flow}}]{flow\-\_\-list\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{flow\-\_\-count}
+\end{DoxyParamCaption}
+)}}\label{y__flow__list_8c_a8773a7f8388e2081d42d071e2f2b10f1}
+
+
+Calculate the total of the weights in a given flow list. 
+
+Given a flowlist of a specified length, calculate the total weight of all flows in a flow list. This is used by other ylib functions. Calling it directly from a script should normally not be needed.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}, \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em flow\-\_\-list} & An array of y\-\_\-flow structs, each describing a specific choice in a clickpath. \\
+\hline
+\mbox{\tt in}  & {\em flow\-\_\-count} & The number of flows in the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-choose\-\_\-flow@{y\-\_\-choose\-\_\-flow}}
+\index{y\-\_\-choose\-\_\-flow@{y\-\_\-choose\-\_\-flow}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-choose\-\_\-flow}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-flow}$\ast$ y\-\_\-choose\-\_\-flow (
+\begin{DoxyParamCaption}
+\item[{{\bf y\-\_\-flow}}]{flow\-\_\-list\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{flow\-\_\-count}
+\end{DoxyParamCaption}
+)}}\label{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}
+
+
+Choose a flow from a list of flows. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em flow\-\_\-list} & An array of y\-\_\-flow structs, each describing a specific choice in a clickpath. \\
+\hline
+\mbox{\tt in}  & {\em flow\-\_\-count} & The number of flows in the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to a randomly chosen flow, or N\-U\-L\-L if somehow the weights don't add up. (flow list corrupt, flow\-\_\-count incorrect, etc.)
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}, \hyperlink{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{y\-\_\-exec\-\_\-flow()} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+The flow\-\_\-count argument should exactly match the number of flows in the array or the script might blow up with M\-E\-M\-O\-R\-Y\-\_\-\-A\-C\-C\-E\-S\-S\-\_\-\-V\-I\-O\-L\-A\-T\-I\-O\-N errors. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-exec\-\_\-flow@{y\-\_\-exec\-\_\-flow}}
+\index{y\-\_\-exec\-\_\-flow@{y\-\_\-exec\-\_\-flow}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-exec\-\_\-flow}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-exec\-\_\-flow (
+\begin{DoxyParamCaption}
+\item[{{\bf y\-\_\-flow} $\ast$}]{chosen\-\_\-flow}
+\end{DoxyParamCaption}
+)}}\label{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}
+
+
+Execute a flow from a flow list. 
+
+Usually this is a flow as determined by \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}, \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em chosen\-\_\-flow} & The flow to execute. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the flow's function return value. 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__flow__list_8c_aca4c6de81bafa3e28b8a6151cb6a7dff}{\index{y\-\_\-flow\-\_\-list.\-c@{y\-\_\-flow\-\_\-list.\-c}!y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name@{y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name}}
+\index{y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name@{y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name}!y_flow_list.c@{y\-\_\-flow\-\_\-list.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-flow}$\ast$ y\-\_\-get\-\_\-flow\-\_\-by\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{flow\-\_\-name, }
+\item[{{\bf y\-\_\-flow}}]{flow\-\_\-list\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{flow\-\_\-count}
+\end{DoxyParamCaption}
+)}}\label{y__flow__list_8c_aca4c6de81bafa3e28b8a6151cb6a7dff}
+
+
+Fetch a specific item from a flow list, by name. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em flow\-\_\-name} & The name of the flow to fetch. \\
+\hline
+\mbox{\tt in}  & {\em flow\-\_\-list} & The flow list in question. \\
+\hline
+\mbox{\tt in}  & {\em flow\-\_\-count} & The number of flows in the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the requested flow. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}, \hyperlink{y__flow__list_8c_ae48988ed13b93f561717ecdaefbe3ecc}{y\-\_\-choose\-\_\-flow()}, \hyperlink{y__flow__list_8c_a4469a1262f14dbde36a69e1d8e18f1e0}{y\-\_\-exec\-\_\-flow()} 
+\end{DoxySeeAlso}

@@ -1,0 +1,842 @@
+\hypertarget{group__loadrunner__utils}{\section{Load\-Runner Utils of Ylib}
+\label{group__loadrunner__utils}\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+}
+
+
+Collection of miscellaneous support functions.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{y\-\_\-breadcrumb\-\_\-reset}()~lr\-\_\-save\-\_\-string(\char`\"{}\char`\"{}, \char`\"{}breadcrumb\char`\"{})
+\begin{DoxyCompactList}\small\item\em Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__loadrunner__utils_ga8aa00bc42e12484cc21af8bb58158ab5}{y\-\_\-delay\-\_\-once}(delay\-\_\-in\-\_\-seconds)
+\begin{DoxyCompactList}\small\item\em Delay for delay\-\_\-in\-\_\-seconds seconds, once. This macro will put the code to sleep for the specified amount of seconds, but only the first time the current position in the code is reached. If you use this in more than one place each of the calls will sleep exactly once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window} (int lowerbound, int upperbound, int rand\-\_\-max)
+\begin{DoxyCompactList}\small\item\em Generate random number and test if it lies between 2 given boundaries. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}{y\-\_\-rand\-\_\-between} (int lowerbound, int upperbound)
+\begin{DoxyCompactList}\small\item\em Create a random number between two boundaries. (the boundaries are included!) \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter} (char $\ast$attrib, char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Fetch attribute from v\-User's command line and store it in a parameter. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}{y\-\_\-save\-\_\-attribute} (char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Fetch attribute from v\-User's command lin and store it in a parameter of the same name. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to \hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter()} \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_gab3671570eefb1129ab15401916c07b05}{y\-\_\-log\-\_\-rendezvous\-\_\-result} (int result)
+\begin{DoxyCompactList}\small\item\em Process the result code of lr\-\_\-rendezvous() call to log human readable errors. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\-\_\-breadcrumb} (char $\ast$breadcrumb)
+\begin{DoxyCompactList}\small\item\em Keep track of the steps in the script. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}{y\-\_\-write\-\_\-to\-\_\-file} (char $\ast$filename, char $\ast$content)
+\begin{DoxyCompactList}\small\item\em Write a string to a file. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file} (char $\ast$filename, char $\ast$content\-\_\-parameter)
+\begin{DoxyCompactList}\small\item\em Write the content of a parameter to a file. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{y\-\_\-datetime} ()
+\begin{DoxyCompactList}\small\item\em Saves the current date/time into a L\-R-\/parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gafa6f1aa6d2647d9f58308c1864bd9eb6}{y\-\_\-workdays\-\_\-from\-\_\-today} (int workdays)
+\begin{DoxyCompactList}\small\item\em Calculate the difference in days between today and X workdays into the future. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space} (const char $\ast$folder\-\_\-name, double $\ast$available, double $\ast$total)
+\begin{DoxyCompactList}\small\item\em Get the free disk space on the target folder on the load generator. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_gae654a05e25d0f5477caa15301a4e278c}{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes} (const char $\ast$folder\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the amount of free disk space in the target folder in mebibytes (S\-I unit) \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_gab41dd2018d6f14f318dfae6b75d5a7a2}{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage} (const char $\ast$folder\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the free disk space percentage on the target folder on the load generator. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gaec8d4aac19ec5f0a24d82f261a300b51}{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter} (char $\ast$filename, char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Read the contents of a file into a single parameter. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga192a83f87c6d0c63de76432ac985bfcc}{y\-\_\-user\-\_\-data\-\_\-point} (char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Create a user data point for a parameter. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time} ()
+\begin{DoxyCompactList}\small\item\em Get the current time in seconds since 1970, as a double. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga5064e6f0187a332841c80df8aa79bbdc}{y\-\_\-delay\-\_\-until} (double timestamp)
+\begin{DoxyCompactList}\small\item\em Delay until a certain time. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext} (int rampup\-\_\-period, double T\-P\-S\-\_\-initial, double T\-P\-S\-\_\-max, int virtual\-\_\-users)
+\begin{DoxyCompactList}\small\item\em Ramp up the load by using varying amounts of think time instead of virtual users. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup} (const int rampup\-\_\-period, double T\-P\-S\-\_\-max)
+\begin{DoxyCompactList}\small\item\em Ramp up the load by using varying amounts of think time instead of virtual users. For simulating situations with limited amounts of connections on the client side. \end{DoxyCompactList}\item 
+\hyperlink{group__loadrunner__utils_gaa6724943ea9deafd1a035fd2957774bf}{y\-\_\-execute\-\_\-shell\-\_\-command} (char $\ast$command, int debug)
+\begin{DoxyCompactList}\small\item\em Execute a windows shell command Implements proper error checking. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}{y\-\_\-errorcheck} (int ok)
+\begin{DoxyCompactList}\small\item\em Errorflood guard. Also known as \char`\"{}the error check\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Collection of miscellaneous support functions. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-breadcrumb\-\_\-reset@{y\-\_\-breadcrumb\-\_\-reset}}
+\index{y\-\_\-breadcrumb\-\_\-reset@{y\-\_\-breadcrumb\-\_\-reset}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-breadcrumb\-\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}\#define y\-\_\-breadcrumb\-\_\-reset(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~lr\-\_\-save\-\_\-string(\char`\"{}\char`\"{}, \char`\"{}breadcrumb\char`\"{})}}\label{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}
+
+
+Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one. 
+
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\-\_\-breadcrumb()} 
+\end{DoxySeeAlso}
+\hypertarget{group__loadrunner__utils_ga8aa00bc42e12484cc21af8bb58158ab5}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-delay\-\_\-once@{y\-\_\-delay\-\_\-once}}
+\index{y\-\_\-delay\-\_\-once@{y\-\_\-delay\-\_\-once}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-delay\-\_\-once}]{\setlength{\rightskip}{0pt plus 5cm}\#define y\-\_\-delay\-\_\-once(
+\begin{DoxyParamCaption}
+\item[{}]{delay\-\_\-in\-\_\-seconds}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga8aa00bc42e12484cc21af8bb58158ab5}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\{                                              \(\backslash\)
+    static \textcolor{keywordtype}{int} delay\_done = 0;                 \(\backslash\)
+                                               \(\backslash\)
+    if( !delay\_done )                          \(\backslash\)
+    \{                                          \(\backslash\)
+        delay\_done = 1;                        \(\backslash\)
+        lr\_force\_think\_time(delay\_in\_seconds); \(\backslash\)
+    \}                                          \(\backslash\)
+\}
+\end{DoxyCode}
+
+
+Delay for delay\-\_\-in\-\_\-seconds seconds, once. This macro will put the code to sleep for the specified amount of seconds, but only the first time the current position in the code is reached. If you use this in more than one place each of the calls will sleep exactly once. 
+
+The particular usecase this was made for is a case where users need to register themselves prior to the actual test run. We want to seperate this registration period from the actual rampup, so when each user finishes registering we want a delay. But, we only want it once, and we will only know that we're done registering when we hit the regular load path for the first time.
+
+Hence\-: delay\-\_\-once
+
+This is a macro because a function call would make it impossible to use this more than once in a script -\/ it would execute the delay the first time this function is called, independent of where it was called {\itshape from}. Which would be rather counterintuitive. \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-breadcrumb@{y\-\_\-breadcrumb}}
+\index{y\-\_\-breadcrumb@{y\-\_\-breadcrumb}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-breadcrumb}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-breadcrumb (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{breadcrumb}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}
+
+
+Keep track of the steps in the script. 
+
+Adds (another) string (read\-: step) to the L\-R-\/parameter \{breadcrumb\} Use this to keep track of the steps taken by the script. Very useful if you have a script which does things in a random order and you want to know (in the end) which order it actually used. You can, of course, write this to a (log)file. Don't forget to use \hyperlink{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{y\-\_\-breadcrumb\-\_\-reset()} to clear the parameter at the start of the script. (else you end up with a very long breadcrumb (breadstick?).)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em breadcrumb} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\-R parameter \{breadcrumb\} 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{y\_breadcrumb\_reset}();    \textcolor{comment}{// clean the breadcrumb-variable. (previous data in \{breadcrumb\}
+       is deleted.}
+\hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\_breadcrumb}(\textcolor{stringliteral}{"start"});
+\textcolor{comment}{// .... some code....}
+\hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\_breadcrumb}(\textcolor{stringliteral}{"processing data"})
+\textcolor{comment}{//... some code ....}
+\hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\_breadcrumb}("finished")
+The result is that \{breadcrumb\} contains \textcolor{stringliteral}{"start;processing data;finished"}   
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{y\-\_\-breadcrumb\-\_\-reset()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-datetime@{y\-\_\-datetime}}
+\index{y\-\_\-datetime@{y\-\_\-datetime}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-datetime}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-datetime (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}
+
+
+Saves the current date/time into a L\-R-\/parameter. 
+
+Stores the current date/time into L\-R-\/parameter \{D\-A\-T\-E\-\_\-\-T\-I\-M\-E\-\_\-\-S\-T\-R\-I\-N\-G\} in this format\-:\par
+Y\-Y\-Y\-Y\-M\-M\-D\-D,H\-H\-M\-M\-S\-S (yes, separated by a comma.) \begin{DoxyReturn}{Returns}
+current date/time into L\-R-\/parameter \{D\-A\-T\-E\-\_\-\-T\-I\-M\-E\-\_\-\-S\-T\-R\-I\-N\-G\}.
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000007}{Deprecated}]\begin{DoxyNote}{Note}
+This doesn't add much. People should be able to call lr\-\_\-save\-\_\-datetime() themselves, right? Putting it on the deprecation list for that reason. 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{y\_datetime}();
+lr\_message(\textcolor{stringliteral}{"Current date/time: %s"}, lr\_eval\_string(\textcolor{stringliteral}{"\{DATE\_TIME\_STRING\}"}));
+\end{DoxyCode}
+ 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\end{DoxyRefDesc}
+\hypertarget{group__loadrunner__utils_ga5064e6f0187a332841c80df8aa79bbdc}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-delay\-\_\-until@{y\-\_\-delay\-\_\-until}}
+\index{y\-\_\-delay\-\_\-until@{y\-\_\-delay\-\_\-until}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-delay\-\_\-until}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-delay\-\_\-until (
+\begin{DoxyParamCaption}
+\item[{double}]{timestamp}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga5064e6f0187a332841c80df8aa79bbdc}
+
+
+Delay until a certain time. 
+
+\begin{DoxyReturn}{Returns}
+the amount of time waited, in seconds.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-errorcheck@{y\-\_\-errorcheck}}
+\index{y\-\_\-errorcheck@{y\-\_\-errorcheck}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-errorcheck}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-errorcheck (
+\begin{DoxyParamCaption}
+\item[{int}]{ok}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}
+
+
+Errorflood guard. Also known as \char`\"{}the error check\char`\"{}. 
+
+Prevent error floods by inserting forced thinktime at the start of the iteration if too many successive iterations fail.
+
+Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups. In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. Keeping the load 'stable' at that stage may also prevent the back-\/end from coming back up normally after the original disruption has ended. Plus, if the system {\itshape stays} down keeping the full load on it will only cause the generator's log storage to overflow.
+
+Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
+
+{\bfseries Usage\-:} 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}{y\_errorcheck}(0);  \textcolor{comment}{// Marks the start of the iteration, this will insert a forced delay or an
+       abort at this point if too many failed successive iterations occurred.}
+\hyperlink{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}{y\_errorcheck}(1);  \textcolor{comment}{// Marks the end of the iteration as successful. Resets the error counter.}
+\end{DoxyCode}
+
+
+Three virtual user command line attributes are used to control this functionality\-:
+\begin{DoxyItemize}
+\item -\/errorcheck\-\_\-enabled\-: 0 or 1; If set to 1 or used as a flag, error flood checking is performed. Otherwise, it is disabled. Default off (0).
+\item -\/errorcheck\-\_\-limit x\mbox{[}/y\mbox{]}\-: How many iteration failures are allowed before intervening. \par
+ x is the amount of failed iterations before forcibly pausing the virtual user. Default 10 iterations. \par
+ y (optional) is the amount of failed iterations before aborting. Default off (-\/1).
+\item -\/errorcheck\-\_\-pause\-\_\-time \mbox{[}mm\-:\mbox{]}ss\-: The amount of time to pause if the floodguard fires. Default 15\-:00 or 900 (15 minutes).
+\end{DoxyItemize}
+
+Use this in the command line setting in a test scenario. The 'Additional attributes' in the Run-\/\-Time settings allows you the set your own defaults in the script.
+
+For example\-: 
+\begin{DoxyCode}
+-errorcheck\_enabled -errorcheck\_limit 10/20 -errorcheck\_pause\_time 5:00
+\end{DoxyCode}
+ This will force an extra pacing of 5 minutes after 10 successive failed iterations and aborts after 20 successive failed iterations.
+
+\begin{DoxyWarning}{Warning}
+the \char`\"{}errorcheck\-\_\-enabled\char`\"{} attribute must be set to a positive integer number for this code to do anything!
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+The forced pause ignores runtime thinktime settings.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em ok} & Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+André Luyer, Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gaa6724943ea9deafd1a035fd2957774bf}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-execute\-\_\-shell\-\_\-command@{y\-\_\-execute\-\_\-shell\-\_\-command}}
+\index{y\-\_\-execute\-\_\-shell\-\_\-command@{y\-\_\-execute\-\_\-shell\-\_\-command}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-execute\-\_\-shell\-\_\-command}]{\setlength{\rightskip}{0pt plus 5cm}y\-\_\-execute\-\_\-shell\-\_\-command (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{command, }
+\item[{int}]{debug}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gaa6724943ea9deafd1a035fd2957774bf}
+
+
+Execute a windows shell command Implements proper error checking. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000001}{Todo}]Fix the memory allocation to provide for commands that result in more than 10\-Kb of output.\end{DoxyRefDesc}
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em command} & A windows shell command, as passed to C\-M\-D.\-exe \\
+\hline
+\mbox{\tt in}  & {\em debug} & If zero, log the first line; Otherwise, log full command output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Sander van Wanrooij, Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-get\-\_\-current\-\_\-time@{y\-\_\-get\-\_\-current\-\_\-time}}
+\index{y\-\_\-get\-\_\-current\-\_\-time@{y\-\_\-get\-\_\-current\-\_\-time}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-current\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-get\-\_\-current\-\_\-time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}
+
+
+Get the current time in seconds since 1970, as a double. 
+
+\begin{DoxyReturn}{Returns}
+The current time in seconds since 1970-\/01-\/01 00\-:00 U\-T\-C 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-get\-\_\-disk\-\_\-space@{y\-\_\-get\-\_\-disk\-\_\-space}}
+\index{y\-\_\-get\-\_\-disk\-\_\-space@{y\-\_\-get\-\_\-disk\-\_\-space}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-disk\-\_\-space}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-get\-\_\-disk\-\_\-space (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{folder\-\_\-name, }
+\item[{double $\ast$}]{available, }
+\item[{double $\ast$}]{total}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}
+
+
+Get the free disk space on the target folder on the load generator. 
+
+In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has. This function retrieves information about the amount of space that is available on a disk volume, which is the total amount of space and the total amount of free space available to the vuser.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em folder\-\_\-name} & The name of the folder to report on. If this parameter is N\-U\-L\-L, the function uses the root of the current disk. \\
+\hline
+\mbox{\tt out}  & {\em available} & The total number of free bytes on a disk that are available to the vuser \\
+\hline
+\mbox{\tt out}  & {\em total} & The total number of bytes on a disk that are available to the vuser\\
+\hline
+\end{DoxyParams}
+Both parameters available and total may by N\-U\-L\-L when not required. If per-\/user quotas are being used, the value(s) may be less than the total number of (free) bytes on a disk. The value of 0 is returned on error (e.\-g. no access to disk).
+
+\begin{DoxyRemark}{Remarks}
+Completely rewritten. The 16 Ti\-B limit is lifted.
+\end{DoxyRemark}
+\begin{DoxyAuthor}{Author}
+André Luyer 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gae654a05e25d0f5477caa15301a4e278c}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes@{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes}}
+\index{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes@{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{folder\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gae654a05e25d0f5477caa15301a4e278c}
+
+
+Get the amount of free disk space in the target folder in mebibytes (S\-I unit) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em folder\-\_\-name} & The name of the folder to report on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The amount of mebibytes free, as a double.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function is a wrapper around \hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space} for backwards compatibility 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+André Luyer 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gab41dd2018d6f14f318dfae6b75d5a7a2}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage@{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage}}
+\index{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage@{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{folder\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gab41dd2018d6f14f318dfae6b75d5a7a2}
+
+
+Get the free disk space percentage on the target folder on the load generator. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em folder\-\_\-name} & The name of the folder to report on.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The percentage of free space, as a double.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function is a wrapper around \hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space} for backwards compatibility 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+André Luyer 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gab3671570eefb1129ab15401916c07b05}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-log\-\_\-rendezvous\-\_\-result@{y\-\_\-log\-\_\-rendezvous\-\_\-result}}
+\index{y\-\_\-log\-\_\-rendezvous\-\_\-result@{y\-\_\-log\-\_\-rendezvous\-\_\-result}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-log\-\_\-rendezvous\-\_\-result}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-rendezvous\-\_\-result (
+\begin{DoxyParamCaption}
+\item[{int}]{result}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gab3671570eefb1129ab15401916c07b05}
+
+
+Process the result code of lr\-\_\-rendezvous() call to log human readable errors. 
+
+When calling lr\-\_\-rendezvous() the result code indicates the end state of the rendezvous. This function will translate the codes into human readable errors which are then logged as normal.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em result} & code from lr\-\_\-rendezvous() \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\begin{DoxyCode}
+\{
+    \textcolor{keywordtype}{int} result = lr\_rendezvous(\textcolor{stringliteral}{"03\_Portefeuille"});
+
+    y\_start\_transaction(\textcolor{stringliteral}{"Rendezvous\_me"});
+    \textcolor{comment}{// Perform the transaction in question.}
+    y\_end\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);
+
+    \hyperlink{group__loadrunner__utils_gab3671570eefb1129ab15401916c07b05}{y\_log\_rendezvous\_result}(result);
+\}
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-rand\-\_\-between@{y\-\_\-rand\-\_\-between}}
+\index{y\-\_\-rand\-\_\-between@{y\-\_\-rand\-\_\-between}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-rand\-\_\-between}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-rand\-\_\-between (
+\begin{DoxyParamCaption}
+\item[{int}]{lowerbound, }
+\item[{int}]{upperbound}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}
+
+
+Create a random number between two boundaries. (the boundaries are included!) 
+
+When the lower boundary equals the upper boundary, \hyperlink{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}{y\-\_\-rand\-\_\-between()} simply returns the lower boundary. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lowerbound} & Lower boundary of the generated number \\
+\hline
+\mbox{\tt in}  & {\em upperbound} & Upper boundary of the generated number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+random number
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} random;        
+random = \hyperlink{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}{y\_rand\_between}(0, 10);        \textcolor{comment}{// generate a random number between 0 and 10
+       (including 0 and 10!)}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window@{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window}}
+\index{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window@{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window (
+\begin{DoxyParamCaption}
+\item[{int}]{lowerbound, }
+\item[{int}]{upperbound, }
+\item[{int}]{rand\-\_\-max}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}
+
+
+Generate random number and test if it lies between 2 given boundaries. 
+
+This will generate a random number between (and including) 0 and rand\-\_\-max, and tell us if that number lies between the lower and upper bounds or not. Boundaries are included!
+
+This is useful for pathing decisions\-: Say that at point P in a script a choice has to be made between continuing with actions A, B, and C. The decision is made based on a percentage\-: A = 10\% chance, B = 50\% chance, C = 40\% chance. This function was written to support the code that would make this decision.
+
+\begin{DoxyNote}{Note}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c} provides a better and more intuitive alternative for this one. For that reason, we are likely to remove it in the near future.
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000006}{Deprecated}]
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lowerbound} & Minumum value \\
+\hline
+\mbox{\tt in}  & {\em upperbound} & Maximum value \\
+\hline
+\mbox{\tt in}  & {\em rand\-\_\-max} & Upper boundary of the random number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+0\-: no, random number lies outside the boundaries\par
+ 1\-: yes, random number lies inside the boundaries\par
+ $<$0\-: input made no sense. 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{y\_rand\_in\_sliding\_window}(1, 10, 20); \textcolor{comment}{// Returns 1 if the random number rolled is 4,
+       and 0 if the random number was 11.}
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()}, \hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c} 
+\end{DoxySeeAlso}
+\end{DoxyRefDesc}
+\hypertarget{group__loadrunner__utils_gaec8d4aac19ec5f0a24d82f261a300b51}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter@{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter}}
+\index{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter@{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename, }
+\item[{char $\ast$}]{param}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gaec8d4aac19ec5f0a24d82f261a300b51}
+
+
+Read the contents of a file into a single parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & The name of the file to read (relative to script root, or full path) \\
+\hline
+\mbox{\tt in}  & {\em param} & The name of the parameter to store the file contents in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes read from the file, or -\/1 if the file could not be read (but in that case it will also call lr\-\_\-abort().)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The size of the file is stored in a parameter named \char`\"{}y\-\_\-size\-\_\-\{param\}\char`\"{}, where \{param\} is the name of the parameter you passed in.
+\end{DoxyNote}
+This can be used in various situations; For example, situations where you have a template file that you wish to use for various requests. For instance, when all communications are based on a simple X\-M\-L submit with slightly different (parameterised) contents.
+
+\begin{DoxyNote}{Note}
+If the file cannot be opened this will call lr\-\_\-abort().
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\_init}()
+\{
+    \textcolor{comment}{// File contains: <xml><customer\_element>\{customer\_id\}</customer\_element></xml>}
+    \hyperlink{group__loadrunner__utils_gaec8d4aac19ec5f0a24d82f261a300b51}{y\_read\_file\_into\_parameter}(\textcolor{stringliteral}{"template.xml"}, \textcolor{stringliteral}{"template\_content"});
+\}
+
+projectname\_some\_request\_transaction()
+\{
+   \textcolor{comment}{// double evaluation evaluates the customer id, giving you the request body.}
+   lr\_save\_string(lr\_eval\_string(lr\_eval\_string(\textcolor{stringliteral}{"\{template\_content\}"})), \textcolor{stringliteral}{"request\_body"});
+
+   y\_start\_transaction(\textcolor{stringliteral}{"some\_request"});
+   web\_custom\_request(\textcolor{stringliteral}{"some\_request"}, 
+        \textcolor{stringliteral}{"URL=http://\{Host\}/some/request/v1/"}, 
+        \textcolor{stringliteral}{"Method=POST"}, \textcolor{stringliteral}{"Resource=0"}, 
+        \textcolor{stringliteral}{"Body=\{request\_body\}"},
+        \textcolor{stringliteral}{"EncType=text/xml; charset=utf-8"},
+        LAST);   
+   y\_end\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);
+\}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-save\-\_\-attribute@{y\-\_\-save\-\_\-attribute}}
+\index{y\-\_\-save\-\_\-attribute@{y\-\_\-save\-\_\-attribute}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-save\-\_\-attribute}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-save\-\_\-attribute (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{param}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}
+
+
+Fetch attribute from v\-User's command lin and store it in a parameter of the same name. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to \hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter()} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param} & argument name of both the attribute and the parameter the value should be stored in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the attribute exists, -\/1 if it doesn't, in which case no value is stored in the parameter.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}{y\_save\_attribute}(\textcolor{stringliteral}{"server"});
+web\_add\_auto\_filter(\textcolor{stringliteral}{"Action=Include"}, \textcolor{stringliteral}{"HostSuffix=\{server\}"}, LAST );
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter@{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter}}
+\index{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter@{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{attrib, }
+\item[{char $\ast$}]{param}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}
+
+
+Fetch attribute from v\-User's command line and store it in a parameter. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em attrib} & Attribute name. \\
+\hline
+\mbox{\tt out}  & {\em param} & L\-R parameter name in which the argument value is stored. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the attribute exists, -\/1 if it doesn't, in which case no value is stored in the parameter.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\_save\_attribute\_to\_parameter}(\textcolor{stringliteral}{"server"}, \textcolor{stringliteral}{"nice\_server"});
+web\_add\_auto\_filter(\textcolor{stringliteral}{"Action=Include"}, \textcolor{stringliteral}{"HostSuffix=\{nice\_server\}"}, LAST );
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}{y\-\_\-save\-\_\-attribute()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup@{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup}}
+\index{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup@{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup (
+\begin{DoxyParamCaption}
+\item[{const int}]{rampup\-\_\-period, }
+\item[{double}]{T\-P\-S\-\_\-max}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}
+
+
+Ramp up the load by using varying amounts of think time instead of virtual users. For simulating situations with limited amounts of connections on the client side. 
+
+As \hyperlink{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext()}, assuming 1 virtual user and an initial target load of 0.\-1 T\-P\-S (the defaults. \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext()}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rampup\-\_\-period} & How long the rampup should take, in seconds. Default 1800 seconds. \\
+\hline
+\mbox{\tt in}  & {\em T\-P\-S\-\_\-max} & End rampup with this many transactions / sec in total per virtual user. Default 10. This cannot go higher than 1/average response time -\/ when think time reaches zero. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext@{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext}}
+\index{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext@{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext (
+\begin{DoxyParamCaption}
+\item[{int}]{rampup\-\_\-period, }
+\item[{double}]{T\-P\-S\-\_\-initial, }
+\item[{double}]{T\-P\-S\-\_\-max, }
+\item[{int}]{virtual\-\_\-users}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}
+
+
+Ramp up the load by using varying amounts of think time instead of virtual users. 
+
+This can be used for simulating situations with limited amounts of connections on the client side. In such a case we cannot use regular vuser based rampups, so instead we have to gradually lower the thinktime to get a similar effect. This implements a \char`\"{}think time\char`\"{} function that will use responsetime calculations and a T\-P\-S target to simulate such a ramp up.
+
+Base formula\-: T\-T = threads/\-T\-P\-S(target) -\/ response time
+
+This will be increasing T\-P\-S linearly until rampup\-\_\-period has passed, unless either think time reaches zero or T\-P\-S\-\_\-max is reached. Note that \char`\"{}response time\char`\"{} is actually \char`\"{}time passed since the previous call to this function\char`\"{}. This includes wasted time.
+
+For best effect, call this once in vuser\-\_\-init and once for each transaction. The recommended practice is to overload lr\-\_\-think\-\_\-time() with your own version that calls this (or \hyperlink{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup()}) every time, like so\-:
+
+\begin{DoxyNote}{Note}
+This will create a user datapoint called y\-\_\-thinktime that can be used for monitoring the calculations during the test.
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{comment}{// Call this instead of lr\_think\_time(), before each transaction.}
+\textcolor{keywordtype}{void} my\_think\_time()
+\{ 
+    \hyperlink{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}{y\_think\_time\_for\_rampup}(1800, 10); \textcolor{comment}{// delays for a variable amount of time
+       depending on target load.}
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyWarning}{Warning}
+The actual load achieved is highly dependant on what pacing settings, thinktimes, and calls are used. This assumes you only have one transaction after each call to this function, and that each call uses the same parameters.
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+The first 3\% of the rampup period uses think times calculated as if 3\% of the rampup has passed. This is prevents extremely long think times from occurring.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rampup\-\_\-period} & How long the rampup should take, in seconds. Default 1800 seconds. \\
+\hline
+\mbox{\tt in}  & {\em T\-P\-S\-\_\-initial} & Start rampup with this many transactions / sec for this transaction, across all virtual users. Default 0,1 T\-P\-S. \\
+\hline
+\mbox{\tt in}  & {\em T\-P\-S\-\_\-max} & End rampup with this many transactions / sec in total per virtual user. Default 10. This cannot go higher than 1/average response time -\/ when think time reaches zero. \\
+\hline
+\mbox{\tt in}  & {\em virtual\-\_\-users} & How many virtual users the script is using. If you use \char`\"{}1\char`\"{}, you can just use T\-P\-S / virtual user for the initial target T\-P\-S. Default 1.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Do not set T\-P\-S\-\_\-initial lower than 0,1 or the calculated think times may get really large.
+\end{DoxyWarning}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga192a83f87c6d0c63de76432ac985bfcc}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-user\-\_\-data\-\_\-point@{y\-\_\-user\-\_\-data\-\_\-point}}
+\index{y\-\_\-user\-\_\-data\-\_\-point@{y\-\_\-user\-\_\-data\-\_\-point}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-user\-\_\-data\-\_\-point}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-user\-\_\-data\-\_\-point (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{param}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga192a83f87c6d0c63de76432ac985bfcc}
+
+
+Create a user data point for a parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param} & The name of a parameter containing an integer or floating point number.\\
+\hline
+\end{DoxyParams}
+The name of the parameter will be the name of the datapoint that was created.
+
+{\bfseries Example} 
+\begin{DoxyCode}
+lr\_save\_int(1, \textcolor{stringliteral}{"one"});
+\hyperlink{group__loadrunner__utils_ga192a83f87c6d0c63de76432ac985bfcc}{y\_user\_data\_point}(\textcolor{stringliteral}{"one"}); \textcolor{comment}{// Creates a datapoint named "one", containing a value of 1.}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+lr\-\_\-user\-\_\-data\-\_\-point() 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_gafa6f1aa6d2647d9f58308c1864bd9eb6}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-workdays\-\_\-from\-\_\-today@{y\-\_\-workdays\-\_\-from\-\_\-today}}
+\index{y\-\_\-workdays\-\_\-from\-\_\-today@{y\-\_\-workdays\-\_\-from\-\_\-today}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-workdays\-\_\-from\-\_\-today}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-workdays\-\_\-from\-\_\-today (
+\begin{DoxyParamCaption}
+\item[{int}]{workdays}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_gafa6f1aa6d2647d9f58308c1864bd9eb6}
+
+
+Calculate the difference in days between today and X workdays into the future. 
+
+Calculate the difference in days between today and a date X workdays into the future. \begin{DoxyReturn}{Returns}
+How many days into the future X workdays will be.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{comment}{// Reserve a meeting room in 'reservationOffset' days.}
+\textcolor{keywordtype}{int} daysOffSet = \hyperlink{group__loadrunner__utils_gafa6f1aa6d2647d9f58308c1864bd9eb6}{y\_workdays\_from\_today}( \hyperlink{group__string_gac5aa18897f547ff20f10c777c6a58f0a}{atoi}(lr\_eval\_string(\textcolor{stringliteral}{"\{reservationOffset\}"})
+      ) );
+lr\_save\_datetime(\textcolor{stringliteral}{"%d-%m-%Y"}, DATE\_NOW + (daysOffSet*ONE\_DAY), \textcolor{stringliteral}{"ReservationDate"});
+
+lr\_vuser\_status\_message(lr\_eval\_string(\textcolor{stringliteral}{"Running with offset \{reservationOffset\} at day offset %d"}), 
+      daysOffSet);
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file@{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file}}
+\index{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file@{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename, }
+\item[{char $\ast$}]{content\-\_\-parameter}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}
+
+
+Write the content of a parameter to a file. 
+
+Write the content of a parameter to a file. Creates the file if it doesn't exist. Appends to an existing file.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & Name of the file in which the content is saved. \\
+\hline
+\mbox{\tt in}  & {\em content\-\_\-parameter} & The name of the parameter to be saved. No checking is done -\/ if this doesn't exist, it will just write \{content\-\_\-parameter\} or something to your file! \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Negative number in case of an error, zero otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} result;
+y\_save\_string(\textcolor{stringliteral}{"a very long string including newlines, null bytes, what have you"}, \textcolor{stringliteral}{"content\_parameter"});
+result=\hyperlink{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}{y\_write\_parameter\_to\_file}(\textcolor{stringliteral}{"c:\(\backslash\)\(\backslash\)temp.txt"}, \textcolor{stringliteral}{"content\_parameter"});
+\textcolor{keywordflow}{if} (result != 0)
+\{   \textcolor{comment}{// o dear, something went wrong!}
+\}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+André Luyer, Floris Kraak 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}{y\-\_\-write\-\_\-to\-\_\-file()}, y\-\_\-read\-\_\-parameter\-\_\-from\-\_\-file() 
+\end{DoxySeeAlso}
+\hypertarget{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}{\index{Load\-Runner Utils of Ylib@{Load\-Runner Utils of Ylib}!y\-\_\-write\-\_\-to\-\_\-file@{y\-\_\-write\-\_\-to\-\_\-file}}
+\index{y\-\_\-write\-\_\-to\-\_\-file@{y\-\_\-write\-\_\-to\-\_\-file}!LoadRunner Utils of Ylib@{Load\-Runner Utils of Ylib}}
+\subsubsection[{y\-\_\-write\-\_\-to\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-write\-\_\-to\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename, }
+\item[{char $\ast$}]{content}
+\end{DoxyParamCaption}
+)}}\label{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}
+
+
+Write a string to a file. 
+
+Write a string to a file. Creates the file if it doesn't exist. Appends to an existing file.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & Name of the file in which the content is saved. \\
+\hline
+\mbox{\tt in}  & {\em content} & String which is saved into the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Negative number in case of an error, zero otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} result;
+result=\hyperlink{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}{y\_write\_to\_file}(\textcolor{stringliteral}{"c:\(\backslash\)\(\backslash\)temp.txt"}, \textcolor{stringliteral}{"This is a test"});
+\textcolor{keywordflow}{if} (result != 0)
+\{   \textcolor{comment}{// o dear, something went wrong!}
+\}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file()} 
+\end{DoxySeeAlso}

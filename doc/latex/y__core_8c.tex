@@ -1,0 +1,64 @@
+\hypertarget{y__core_8c}{\section{y\-\_\-core.\-c File Reference}
+\label{y__core_8c}\index{y\-\_\-core.\-c@{y\-\_\-core.\-c}}
+}
+
+
+Contains core ylib support functions needed for the functioning of the library.  
+
+
+{\ttfamily \#include \char`\"{}vugen.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__core_ga690f251553b39fd4f31894826141b61a}{R\-A\-N\-D\-\_\-\-M\-A\-X}~32767
+\begin{DoxyCompactList}\small\item\em R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with \hyperlink{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}{rand()} -\/ 15 bits integer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__core_ga16db77ab873c5b767742a51c9613314b}{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X}~1073741823
+\begin{DoxyCompactList}\small\item\em Alternate R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with y\-\_\-rand. \end{DoxyCompactList}\item 
+\hypertarget{group__core_ga2af77582aacd5cada48e9860f67d67e1}{\#define \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init}()~vuser\-\_\-init() \{ \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup}(); return y\-\_\-vuser\-\_\-init(); \} y\-\_\-vuser\-\_\-init()}\label{group__core_ga2af77582aacd5cada48e9860f67d67e1}
+
+\begin{DoxyCompactList}\small\item\em Hook to ensure that \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} is called at start-\/up. This allows many performance improvements in the library. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}{y\-\_\-is\-\_\-vugen\-\_\-run}()~\hyperlink{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}
+\begin{DoxyCompactList}\small\item\em Test if this script is running in vugen (debug mode) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup} ()
+\begin{DoxyCompactList}\small\item\em Ylib setup -\/ determines and stores the identity of the virtual user. \end{DoxyCompactList}\item 
+long \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand} (void)
+\begin{DoxyCompactList}\small\item\em Generate a random (integer) number between 0 and Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X (30 bit maxint). \end{DoxyCompactList}\item 
+double \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand} (void)
+\begin{DoxyCompactList}\small\item\em Generate a random number between 0 $<$= \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand()} $<$ 1. This supersedes \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()}. \par
+Equal to Math.\-random in Java and Java\-Script, Random.\-Next\-Double in C\#, etc. Better distribution of the random numbers over the range than by using \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} with modulo (\%) -- thus no skewed results. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc} (size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Ylib wrapper for \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()} \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga084a530700465b1a7a10d103f2a2e6d4}{y\-\_\-array\-\_\-alloc} (size\-\_\-t length, size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Allocates a character array and initializes all elements to zero As \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()}, but using the '\hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc}' function, rather than '\hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()}'. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga8cba325c05b63bbbdc499702c4f5c6e9}{y\-\_\-strdup} (char $\ast$source)
+\begin{DoxyCompactList}\small\item\em Copy a string into a \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc}'d piece of memory using \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()}, and lr\-\_\-abort() if the allocation fails. See the \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()} C documentation for what it does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gab903d513f84dc0cd3f7af7acf67e2fb2}{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Obtain the string required to fetch the contents of a parameter through lr\-\_\-eval\-\_\-string(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_gac0778c8b8f3da732862ab82176857be8}{y\-\_\-is\-\_\-empty\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$, or return N\-U\-L\-L if it wasn't set. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gac0c6a383cf2934da4acc1451a1cdea21}{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null} (const char $\ast$src\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$ (malloc version) \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{y\-\_\-get\-\_\-parameter\-\_\-ext} (const char $\ast$source\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$ (lr\-\_\-eval\-\_\-string\-\_\-ext() version) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__core_ga312065213820734af47b86c233a26c0d}{y\-\_\-virtual\-\_\-user\-\_\-id} = 0
+\begin{DoxyCompactList}\small\item\em The virtual user id, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga36fcd2d9a92671f11bfebf8b7bfa34ae}{y\-\_\-virtual\-\_\-user\-\_\-group} = N\-U\-L\-L
+\begin{DoxyCompactList}\small\item\em The virtual user group, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_ga1ebd23898db36692c02dd58d9649f4a1}{y\-\_\-scid}
+\begin{DoxyCompactList}\small\item\em The virtual user scid, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool} = 0
+\begin{DoxyCompactList}\small\item\em Boolean, true when running in Vugen. Not able to do this in pre-\/compile phase. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains core ylib support functions needed for the functioning of the library. This file contains two types of functions\-: 1) Functions that are needed to make the rest of y\-\_\-lib work properly. 2) Functions that are deemed important enough that almost all scripts are expected to use them to some extend or other. 

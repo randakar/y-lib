@@ -1,0 +1,729 @@
+\hypertarget{y__param__array_8c}{\section{y\-\_\-param\-\_\-array.\-c File Reference}
+\label{y__param__array_8c}\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}}
+}
+
+
+This file contains loadrunner parameter array helper functions.  
+
+
+{\ttfamily \#include \char`\"{}vugen.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-string.\-c\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-loadrunner\-\_\-utils.\-c\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{y__param__array_8c_a7527bcb8881e6089ef3c1838cab596f3}{y\-\_\-array\-\_\-count}(param\-\_\-array)~lr\-\_\-paramarr\-\_\-len(param\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Determine the number of elements in the target parameter array. \end{DoxyCompactList}\item 
+\#define \hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\-\_\-array\-\_\-get}(source\-\_\-param\-\_\-array, param\-\_\-array\-\_\-index)~lr\-\_\-paramarr\-\_\-idx(source\-\_\-param\-\_\-array, param\-\_\-array\-\_\-index)
+\begin{DoxyCompactList}\small\item\em Fetch the content of a specific element from a parameter list based on index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes} (const char $\ast$source\-\_\-param\-\_\-array, const int param\-\_\-array\-\_\-index)
+\begin{DoxyCompactList}\small\item\em Get the content the nth member of target parameter array, but without embedded zeroes. \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{y\-\_\-array\-\_\-save} (const char $\ast$value, const char $\ast$source\-\_\-param\-\_\-array, const int param\-\_\-array\-\_\-index)
+\begin{DoxyCompactList}\small\item\em Save a string value into an array at a specified position. \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_a90307711b407c8d84f6774d928f9907c}{y\-\_\-array\-\_\-save\-\_\-count} (const int count, const char $\ast$source\-\_\-param\-\_\-array)
+\item 
+void \hyperlink{y__param__array_8c_aa0fe0d3743e4c4577b4e43eb8f1b19c8}{y\-\_\-array\-\_\-add} (const char $\ast$source\-\_\-param\-\_\-array, const char $\ast$value)
+\item 
+void \hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\-\_\-array\-\_\-concat} (const char $\ast$source\-\_\-param\-\_\-array\-\_\-first, const char $\ast$source\-\_\-param\-\_\-array\-\_\-second, const char $\ast$result\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Concatenate two arrays together and save the result into a third array. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{y__param__array_8c_afb0cc8ca2f0a0f64b015d2becd2cbe39}{y\-\_\-array\-\_\-get\-\_\-random} (const char $\ast$source\-\_\-param\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Get a random element from a parameter list. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{y__param__array_8c_a32e2b577deeaac5f09d74785e2cfca55}{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes} (const char $\ast$source\-\_\-param\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Get a random element from a parameter list without embedded zeroes. \end{DoxyCompactList}\item 
+int \hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random} (const char $\ast$source\-\_\-param\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Choose an element at random from a saved parameter list and store it in a parameter with the same name. \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\-\_\-array\-\_\-dump} (const char $\ast$source\-\_\-param\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Dump the contents of a list of saved parameters to standard output (the run log) \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\-\_\-array\-\_\-save\-\_\-param\-\_\-list} (const char $\ast$source\-Param, const char $\ast$L\-B, const char $\ast$R\-B, const char $\ast$result\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Create a parameter list from a single parameter value. \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}{y\-\_\-array\-\_\-grep} (const char $\ast$source\-\_\-param\-\_\-array, const char $\ast$search, const char $\ast$result\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Search a parameter array for a specific text and build a new array containing only parameters containing that text. \end{DoxyCompactList}\item 
+void \hyperlink{y__param__array_8c_ad81f8aaee3cb1632a23f718b62a2a990}{y\-\_\-array\-\_\-filter} (const char $\ast$source\-\_\-param\-\_\-array, const char $\ast$search, const char $\ast$result\-\_\-array)
+\begin{DoxyCompactList}\small\item\em Search a parameter array for a specific string and and build a new result array containing only parameters N\-O\-T containing the string. \end{DoxyCompactList}\item 
+int \hyperlink{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}{y\-\_\-array\-\_\-merge} (const char $\ast$param\-\_\-array\-\_\-left, const char $\ast$param\-\_\-array\-\_\-right, const char $\ast$separator, const char $\ast$result\-\_\-array)
+\item 
+void \hyperlink{y__param__array_8c_a245f5bbf3ad6f1b9c016942e2376f8d4}{y\-\_\-array\-\_\-split} (const char $\ast$source\-\_\-param\-\_\-array, const char $\ast$separator, const char $\ast$param\-\_\-array\-\_\-left, const char $\ast$param\-\_\-array\-\_\-right)
+\item 
+void \hyperlink{y__param__array_8c_af8c3bfe82467b921348c7ac6d4eec89b}{y\-\_\-array\-\_\-shuffle} (char $\ast$source\-\_\-param\-\_\-array, char $\ast$result\-\_\-array)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__param__array_8c_af889acf62df6f4c07940d9c9e658d31f}{int {\bfseries \-\_\-y\-\_\-random\-\_\-array\-\_\-index} = 0}\label{y__param__array_8c_af889acf62df6f4c07940d9c9e658d31f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains loadrunner parameter array helper functions. This file provides functions that make using and manipulating loadrunner parameter arrays easier. A parameter array is a set of loadrunner parameters that is usually created by web\-\_\-reg\-\_\-save\-\_\-param() with the \char`\"{}\-Ord=\-All\char`\"{} argument. These parameters all use the same name, postfixed with a number to indicate the index into the array.
+
+\begin{DoxyNote}{Note}
+Some historical functions now have loadrunner equivalents, starting with Load\-Runner version 9. Those functions have been replaced with macros that will call the correct modern equivalent instead. If Y\-\_\-\-C\-O\-M\-P\-A\-T\-\_\-\-L\-R\-\_\-8 is enabled the old behaviour is restored. If you still use loadrunner versions earlier than 9 you may need to add the line below to your script\-: \#define Y\-\_\-\-C\-O\-M\-P\-A\-T\-\_\-\-L\-R\-\_\-8
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-random(), lr\-\_\-paramarr\-\_\-idx() 
+\end{DoxySeeAlso}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{y__param__array_8c_a7527bcb8881e6089ef3c1838cab596f3}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-count@{y\-\_\-array\-\_\-count}}
+\index{y\-\_\-array\-\_\-count@{y\-\_\-array\-\_\-count}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}\#define y\-\_\-array\-\_\-count(
+\begin{DoxyParamCaption}
+\item[{}]{param\-\_\-array}
+\end{DoxyParamCaption}
+)~lr\-\_\-paramarr\-\_\-len(param\-\_\-array)}}\label{y__param__array_8c_a7527bcb8881e6089ef3c1838cab596f3}
+
+
+Determine the number of elements in the target parameter array. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-array} & The name of the parameter array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of elements in the array.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Superseded by the L\-R 9 function lr\-\_\-paramarr\-\_\-len(). If Y\-\_\-\-C\-O\-M\-P\-A\-T\-\_\-\-L\-R\-\_\-8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+    web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+    web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+    lr\_log\_message(\textcolor{stringliteral}{"RESULT: %d"}, \hyperlink{y__param__array_8c_a7527bcb8881e6089ef3c1838cab596f3}{y\_array\_count}(\textcolor{stringliteral}{"TAG"})); \textcolor{comment}{// Logs the text "RESULT: " followed
+       by how many hyperlinks are found on the www.google.nl index page.}
+\}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-len() 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-get@{y\-\_\-array\-\_\-get}}
+\index{y\-\_\-array\-\_\-get@{y\-\_\-array\-\_\-get}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-get}]{\setlength{\rightskip}{0pt plus 5cm}\#define y\-\_\-array\-\_\-get(
+\begin{DoxyParamCaption}
+\item[{}]{source\-\_\-param\-\_\-array, }
+\item[{}]{param\-\_\-array\-\_\-index}
+\end{DoxyParamCaption}
+)~lr\-\_\-paramarr\-\_\-idx(source\-\_\-param\-\_\-array, param\-\_\-array\-\_\-index)}}\label{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}
+
+
+Fetch the content of a specific element from a parameter list based on index. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the parameter array. \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-index} & The index of the chosen element. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A char$\ast$ pointer pointing to the content of the chosen element, if it exist. Will call lr\-\_\-abort() if it doesn't.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Superseded by the L\-R 9 function lr\-\_\-paramarr\-\_\-idx(). If Y\-\_\-\-C\-O\-M\-P\-A\-T\-\_\-\-L\-R\-\_\-8 is not defined this function is replaced with a simple macro calling the new loadrunner equivalent.
+
+If the data inside the parameter contains embedded null (\textbackslash{}x00) characters you may have an issue processing the return value. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes()}
+\end{DoxySeeAlso}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+    web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+    web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+    lr\_log\_message(\textcolor{stringliteral}{"Fourth tag on www.google.nl: %s"}, \hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\_array\_get}(\textcolor{stringliteral}{"TAG"}, 4));
+\}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-idx() 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{y__param__array_8c_aa0fe0d3743e4c4577b4e43eb8f1b19c8}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-add@{y\-\_\-array\-\_\-add}}
+\index{y\-\_\-array\-\_\-add@{y\-\_\-array\-\_\-add}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-add}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-add (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const char $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_aa0fe0d3743e4c4577b4e43eb8f1b19c8}
+Add a new element to the end of the target parameter array.
+
+\begin{DoxyNote}{Note}
+This will call \hyperlink{y__param__array_8c_a90307711b407c8d84f6774d928f9907c}{y\-\_\-array\-\_\-save\-\_\-count()} each time it is called. For bulk inserts this should not be used -\/ the performance will suck.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The target array to resize. If this array does not exist, a new one will be created. \\
+\hline
+\mbox{\tt in}  & {\em value} & the value to add.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+\hyperlink{y__param__array_8c_aa0fe0d3743e4c4577b4e43eb8f1b19c8}{y\_array\_add}(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"newValue"});        \textcolor{comment}{// the added value (=last one) in \{TAG\} is now
+       "newValue".}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{y\-\_\-array\-\_\-save()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-concat@{y\-\_\-array\-\_\-concat}}
+\index{y\-\_\-array\-\_\-concat@{y\-\_\-array\-\_\-concat}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-concat}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-concat (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array\-\_\-first, }
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array\-\_\-second, }
+\item[{const char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}
+
+
+Concatenate two arrays together and save the result into a third array. 
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG1"}, \textcolor{stringliteral}{"LB=<a h"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);  
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG2"}, \textcolor{stringliteral}{"LB=<A id"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+                                         \textcolor{comment}{// Loadrunner saves parameters:}
+                                         \textcolor{comment}{// TAG1 - "TAG1\_1" to "TAG1\_12", "TAG1\_count" = 12}
+                                         \textcolor{comment}{// TAG2 - "TAG2\_1" to "TAG2\_14", "TAG2\_count" = 14}
+\hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\_array\_concat}(\textcolor{stringliteral}{"TAG1"}, \textcolor{stringliteral}{"TAG2"}, \textcolor{stringliteral}{"TAG"});   \textcolor{comment}{// saves "TAG\_1" to "TAG\_26", "TAG\_count" = 26}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{y\-\_\-array\-\_\-save()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-dump@{y\-\_\-array\-\_\-dump}}
+\index{y\-\_\-array\-\_\-dump@{y\-\_\-array\-\_\-dump}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}
+
+
+Dump the contents of a list of saved parameters to standard output (the run log) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array to log.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"TAG"}); \textcolor{comment}{// Prints the content of the parameter array named "TAG" to the output
+       log.}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_ad81f8aaee3cb1632a23f718b62a2a990}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-filter@{y\-\_\-array\-\_\-filter}}
+\index{y\-\_\-array\-\_\-filter@{y\-\_\-array\-\_\-filter}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-filter}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-filter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_ad81f8aaee3cb1632a23f718b62a2a990}
+
+
+Search a parameter array for a specific string and and build a new result array containing only parameters N\-O\-T containing the string. 
+
+As \hyperlink{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}{y\-\_\-array\-\_\-grep()}, but reversed.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array to be searched. \\
+\hline
+\mbox{\tt in}  & {\em search} & The string to search for. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-array} & The name of the array to hold the resulting values. Can be the same as the original parameter array.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"<apple><balloon><crayon><drum>"}, \textcolor{stringliteral}{"SOURCE"});
+\hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\_array\_save\_param\_list}(\textcolor{stringliteral}{"SOURCE"}, \textcolor{stringliteral}{"<"}, \textcolor{stringliteral}{">"}, \textcolor{stringliteral}{"VALUES"});
+\hyperlink{y__param__array_8c_ad81f8aaee3cb1632a23f718b62a2a990}{y\_array\_filter}(\textcolor{stringliteral}{"VALUES"}, \textcolor{stringliteral}{"r"}, \textcolor{stringliteral}{"VALUES2"});   \textcolor{comment}{// get all elements NOT containing "r" (apple,
+       balloon)}
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"VALUES2"});
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}{y\-\_\-array\-\_\-grep()}, \hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\-\_\-array\-\_\-concat()}, \hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes@{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes}}
+\index{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes@{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-array\-\_\-get\-\_\-no\-\_\-zeroes (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const int}]{param\-\_\-array\-\_\-index}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}
+
+
+Get the content the nth member of target parameter array, but without embedded zeroes. 
+
+As \hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\-\_\-array\-\_\-get()}, but it filters embedded zeroes from the input, replacing them with a single space\-: ' '. It's not ideal, but better than having your script break on this particular type of broken web page.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the parameter array to get an element from. \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-index} & The index number of the element to fetch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The parameter value at index param\-\_\-array\-\_\-index in the target parameter array.
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+the return value of this function needs to be freed using lr\-\_\-eval\-\_\-string\-\_\-ext\-\_\-free().
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+   \textcolor{keywordtype}{char} *result;
+   lr\_save\_string(\textcolor{stringliteral}{"bar"}, \textcolor{stringliteral}{"foo\_1"});
+   lr\_save\_string(\textcolor{stringliteral}{"baz"}, \textcolor{stringliteral}{"foo\_2"});
+   lr\_save\_int(2, \textcolor{stringliteral}{"foo\_count"});
+
+   result = \hyperlink{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{y\_array\_get\_no\_zeroes}(\textcolor{stringliteral}{"foo"}, 1);
+   lr\_log\_message(\textcolor{stringliteral}{"Result: %s"}, result); \textcolor{comment}{// Prints "Result: bar" }
+   \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(result);
+   result = \hyperlink{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{y\_array\_get\_no\_zeroes}(\textcolor{stringliteral}{"foo"}, 2);
+   lr\_log\_message(\textcolor{stringliteral}{"Result: %s"}, result); \textcolor{comment}{// Prints "Result: baz"}
+   \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(result);
+\}
+\{
+   \textcolor{keywordtype}{char} buffer[11] = \{ \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'b'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'r'},\textcolor{charliteral}{'o'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'k'}, \textcolor{charliteral}{'e'}, \textcolor{charliteral}{'n'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'\(\backslash\)0'} \};
+   \textcolor{keywordtype}{char} *tmp;
+   lr\_save\_var(buffer, 11, 0, \textcolor{stringliteral}{"broken\_1"});
+   \hyperlink{y__param__array_8c_a90307711b407c8d84f6774d928f9907c}{y\_array\_save\_count}(1, \textcolor{stringliteral}{"broken"});
+   tmp = \hyperlink{y__param__array_8c_a54ded5171538f6c06ba4b15e3912c277}{y\_array\_get\_no\_zeroes}(\textcolor{stringliteral}{"broken"}, 1);
+   lr\_log\_message(\textcolor{stringliteral}{"Result: '%s'"}, tmp); \textcolor{comment}{// prints "Result: ' b ro ken  '"}
+   \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(tmp);
+\}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\-\_\-array\-\_\-get()}, lr\-\_\-paramarr\-\_\-idx(), y\-\_\-int\-\_\-strlen(), lr\-\_\-eval\-\_\-string\-\_\-ext() 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_afb0cc8ca2f0a0f64b015d2becd2cbe39}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-get\-\_\-random@{y\-\_\-array\-\_\-get\-\_\-random}}
+\index{y\-\_\-array\-\_\-get\-\_\-random@{y\-\_\-array\-\_\-get\-\_\-random}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-get\-\_\-random}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-array\-\_\-get\-\_\-random (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_afb0cc8ca2f0a0f64b015d2becd2cbe39}
+
+
+Get a random element from a parameter list. 
+
+Fetch the contents of a random element in a parameter array. As lr\-\_\-paramarr\-\_\-random(), but stores the rolled index number internally.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the parameter array to fetch a random value from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the randomly chosen parameter.
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000014}{Deprecated}]This doesn't really do anything that lr\-\_\-paramarr\-\_\-random() doesn't already do.\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-random(), \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a32e2b577deeaac5f09d74785e2cfca55}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes@{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes}}
+\index{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes@{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a32e2b577deeaac5f09d74785e2cfca55}
+
+
+Get a random element from a parameter list without embedded zeroes. 
+
+Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes. Stores the rolled index number internally.
+
+\begin{DoxyWarning}{Warning}
+the return value of this function needs to be freed using lr\-\_\-eval\-\_\-string\-\_\-ext\-\_\-free().
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the parameter array to fetch a random value from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the randomly chosen parameter, minus any embedded \textbackslash{}x00 characters.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-random(), \hyperlink{y__param__array_8c_afb0cc8ca2f0a0f64b015d2becd2cbe39}{y\-\_\-array\-\_\-get\-\_\-random()}, \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-grep@{y\-\_\-array\-\_\-grep}}
+\index{y\-\_\-array\-\_\-grep@{y\-\_\-array\-\_\-grep}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-grep}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-grep (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}
+
+
+Search a parameter array for a specific text and build a new array containing only parameters containing that text. 
+
+Let's just call it 'grep'. \-:)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array to be searched. \\
+\hline
+\mbox{\tt in}  & {\em search} & The string to search for. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-array} & The name of the array to hold the resulting values. Can be the same as the original parameter array.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"<apple><balloon><crayon><drum>"}, \textcolor{stringliteral}{"SOURCE"});
+\hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\_array\_save\_param\_list}(\textcolor{stringliteral}{"SOURCE"}, \textcolor{stringliteral}{"<"}, \textcolor{stringliteral}{">"}, \textcolor{stringliteral}{"VALUES"});
+\hyperlink{y__param__array_8c_a3683ad6f8ac7fd907d896e5e4ab1c7df}{y\_array\_grep}(\textcolor{stringliteral}{"VALUES"}, \textcolor{stringliteral}{"r"}, \textcolor{stringliteral}{"VALUES2"});   \textcolor{comment}{// get all elements containing "r" (crayon and drum)}
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"VALUES2"});
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_ad81f8aaee3cb1632a23f718b62a2a990}{y\-\_\-array\-\_\-filter()}, \hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\-\_\-array\-\_\-concat()}, \hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-merge@{y\-\_\-array\-\_\-merge}}
+\index{y\-\_\-array\-\_\-merge@{y\-\_\-array\-\_\-merge}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-merge}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-array\-\_\-merge (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-array\-\_\-left, }
+\item[{const char $\ast$}]{param\-\_\-array\-\_\-right, }
+\item[{const char $\ast$}]{separator, }
+\item[{const char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}
+Merge two parameter arrays into a single array.
+
+\begin{DoxyWarning}{Warning}
+The source parameter arrays have to be of the same length.
+\end{DoxyWarning}
+The resulting list contains each item from the left array appended to the item with the same index in the right array, with an optional glue separator in the middle for convenient re-\/splitting later.
+
+This thing is mostly created to facilitate situations where you have two lists of parameters that contain data that is related to each other. Example\-: Hyperlinks consist of a hyperlink and a title, and each of these is captured seperately. Since the entries in these lists are closely correlated picking one involves correlating entries in the hyperlink list with the entries in the title list.
+
+With this function you can just glue the two lists together based on their index and continue processing from there.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-left} & The parameter array to use for the lefthand side of the concatenations. \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-right} & The parameter array to use for the righthand side of the concatenations. \\
+\hline
+\mbox{\tt in}  & {\em separator} & A fixed string to be used as a seperator between the two values. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-array} & The name of the array to hold the resulting values. Can be the same as either the left or the righthand parameter array.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"<apple><balloon><crayon><drum>"}, \textcolor{stringliteral}{"THING"});
+lr\_save\_string(\textcolor{stringliteral}{"<fruit><toy><art><music>"}, \textcolor{stringliteral}{"CAT"});
+\hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\_array\_save\_param\_list}(\textcolor{stringliteral}{"THING"}, \textcolor{stringliteral}{"<"}, \textcolor{stringliteral}{">"}, \textcolor{stringliteral}{"THING2"});    \textcolor{comment}{//    \{THING2\} contains
+       "balloon" (no quotes)}
+\hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\_array\_save\_param\_list}(\textcolor{stringliteral}{"CAT"}, \textcolor{stringliteral}{"<"}, \textcolor{stringliteral}{">"}, \textcolor{stringliteral}{"CAT2"});        \textcolor{comment}{//    \{CAT2\} contains "toy"}
+\hyperlink{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}{y\_array\_merge}(\textcolor{stringliteral}{"THING2"}, \textcolor{stringliteral}{"CAT2"}, \textcolor{stringliteral}{"=>"}, \textcolor{stringliteral}{"RESULT"});         \textcolor{comment}{//    \{RESULT\_2\} now contains
+       balloon=>toy}
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"RESULT"});
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a245f5bbf3ad6f1b9c016942e2376f8d4}{y\-\_\-array\-\_\-split()}, \hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\-\_\-array\-\_\-concat()}, \hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-pick\-\_\-random@{y\-\_\-array\-\_\-pick\-\_\-random}}
+\index{y\-\_\-array\-\_\-pick\-\_\-random@{y\-\_\-array\-\_\-pick\-\_\-random}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-pick\-\_\-random}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-array\-\_\-pick\-\_\-random (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}
+
+
+Choose an element at random from a saved parameter list and store it in a parameter with the same name. 
+
+Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes, and saves it as a parameter with the same name.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the parameter array to fetch a random value from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index number of the randomly chosen parameter.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+lr\-\_\-paramarr\-\_\-random(), \hyperlink{y__param__array_8c_a32e2b577deeaac5f09d74785e2cfca55}{y\-\_\-array\-\_\-get\-\_\-random\-\_\-no\-\_\-zeroes()}, \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-save@{y\-\_\-array\-\_\-save}}
+\index{y\-\_\-array\-\_\-save@{y\-\_\-array\-\_\-save}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-save}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-save (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{value, }
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const int}]{param\-\_\-array\-\_\-index}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}
+
+
+Save a string value into an array at a specified position. 
+
+This does not update the size of the array.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em value} & The value to store \\
+\hline
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array to store the value in \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-index} & The index of the element to be updated.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+\hyperlink{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{y\_array\_save}(\textcolor{stringliteral}{"newvalue"}, \textcolor{stringliteral}{"TAG"}, 2);                    \textcolor{comment}{// save the sting "newvalue" into
+       \{TAG\_2\}}
+lr\_log\_message(\textcolor{stringliteral}{"Value: %s"}, \hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\_array\_get}(\textcolor{stringliteral}{"TAG"}, 2));    \textcolor{comment}{// print the value of \{TAG\_2\}. (will be
+       "newvalue" in this example)}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_af976fbc26cbf53782e0c79db7028517e}{y\-\_\-array\-\_\-get()}, \hyperlink{y__param__array_8c_a7527bcb8881e6089ef3c1838cab596f3}{y\-\_\-array\-\_\-count()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a90307711b407c8d84f6774d928f9907c}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-save\-\_\-count@{y\-\_\-array\-\_\-save\-\_\-count}}
+\index{y\-\_\-array\-\_\-save\-\_\-count@{y\-\_\-array\-\_\-save\-\_\-count}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-save\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-save\-\_\-count (
+\begin{DoxyParamCaption}
+\item[{const int}]{count, }
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a90307711b407c8d84f6774d928f9907c}
+Change the size of the target parameter array.
+
+Updates the \-\_\-count field of the chosen parameter array, changing the reported size of the array. \begin{DoxyNote}{Note}
+This does not verify if the array in question actually contains that number of elements.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em count} & The new size of the array. \\
+\hline
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The target array to resize.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a5616917c1f83ef8792af24ffc4826a04}{y\-\_\-array\-\_\-save()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-save\-\_\-param\-\_\-list@{y\-\_\-array\-\_\-save\-\_\-param\-\_\-list}}
+\index{y\-\_\-array\-\_\-save\-\_\-param\-\_\-list@{y\-\_\-array\-\_\-save\-\_\-param\-\_\-list}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-save\-\_\-param\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-save\-\_\-param\-\_\-list (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-Param, }
+\item[{const char $\ast$}]{L\-B, }
+\item[{const char $\ast$}]{R\-B, }
+\item[{const char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}
+
+
+Create a parameter list from a single parameter value. 
+
+As if using web\-\_\-reg\-\_\-save\-\_\-param() with \char`\"{}\-Ord=\-All\char`\"{} as an option, but for already saved parameters instead of web requests. This is especially useful when there is a need to save lists of parameters from sections of the application output instead of the entire thing.
+
+For example, H\-T\-M\-L dropdown boxes look like this\-: 
+\begin{DoxyCode}
+<select>
+  <option value=\textcolor{stringliteral}{"volvo"}>Volvo</option>
+  <option value=\textcolor{stringliteral}{"saab"}>Saab</option>
+  <option value=\textcolor{stringliteral}{"mercedes"}>Mercedes</option>
+  <option value=\textcolor{stringliteral}{"audi"}>Audi</option>
+</select>
+\end{DoxyCode}
+
+
+These cannot be correlated using just {\ttfamily $<$option$>$} and {\ttfamily $<$/option$>$} as the left and right boundaries if there is more than one dropdown box on a page. Using this function you can save the H\-T\-M\-L for the entire dropdown box in a parameter instead, then have the options saved as a parameter list afterwards.
+
+\begin{DoxyWarning}{Warning}
+Using this for large lists can be really slow. This is running lr\-\_\-save\-\_\-string() in a loop, and lr\-\_\-save\-\_\-string() will slow down if you use it a few thousand times.
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000003}{Todo}]Write a wrapper around this -\/ let's call it 'y\-\_\-dropdown()' specifically for H\-T\-M\-L dropdown boxes, as that is the most common case.\end{DoxyRefDesc}
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-Param} & The name of a single parameter containing a list of elements. See dropdown example, above. \\
+\hline
+\mbox{\tt in}  & {\em L\-B} & The left boundary of the values you wish to save into a list. Example\-: {\ttfamily $<$option$>$} \\
+\hline
+\mbox{\tt in}  & {\em R\-B} & The right boundary of the values you wish to save into a list. Example\-: {\ttfamily $<$/option$>$} \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-array} & The name of the parameter array to save the values into.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+
+
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"<option value=\(\backslash\)"water\(\backslash\)"><option value=\(\backslash\)"fire\(\backslash\)"><option value=\(\backslash\)"burn\(\backslash\)">"}, \textcolor{stringliteral}{"SOURCE"});
+\hyperlink{y__param__array_8c_a05e37464446a74ba0874eb3f85f4abd4}{y\_array\_save\_param\_list}(\textcolor{stringliteral}{"SOURCE"}, \textcolor{stringliteral}{"value=\(\backslash\)""}, \textcolor{stringliteral}{"\(\backslash\)">"}, \textcolor{stringliteral}{"VALUES"});
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"VALUES"});    \textcolor{comment}{// \{VALUES\_1\} contains "water" (no quotes)    \{VALUES\_2\} contains
+       "fire" (no quotes)    etc...}
+\end{DoxyCode}
+
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_af8c3bfe82467b921348c7ac6d4eec89b}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-shuffle@{y\-\_\-array\-\_\-shuffle}}
+\index{y\-\_\-array\-\_\-shuffle@{y\-\_\-array\-\_\-shuffle}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-shuffle}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-shuffle (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{char $\ast$}]{result\-\_\-array}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_af8c3bfe82467b921348c7ac6d4eec89b}
+Shuffle a parameter array and store the result in a new array of parameters.
+
+\begin{DoxyWarning}{Warning}
+Unlike most of the parameter array functions, the source parameter array C\-A\-N\-N\-O\-T be the same as the result parameter array. 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+\hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()} is usually better and much faster than using this function. Only use it if you cannot allow the code to repeatedly pick the same element.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array holding the values to be shuffled. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-array} & The parameter array holding the shuffled result. This array must N\-O\-T have the same name as the original array.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+web\_reg\_save\_param(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"LB=<a"}, \textcolor{stringliteral}{"RB=>"}, \textcolor{stringliteral}{"ORD=ALL"}, LAST);
+web\_url(\textcolor{stringliteral}{"URL=www.google.nl"}, LAST);
+\hyperlink{y__param__array_8c_af8c3bfe82467b921348c7ac6d4eec89b}{y\_array\_shuffle}(\textcolor{stringliteral}{"TAG"}, \textcolor{stringliteral}{"SHUFFLE\_TAG"});
+\hyperlink{y__param__array_8c_a29953807502dd227ec8ce69a0e51310f}{y\_array\_dump}(\textcolor{stringliteral}{"SHUFFLE\_TAG"});
+\textcolor{comment}{//  Now, suppose \{TAG\_1\}="cow", \{TAG\_2\}="chicken", \{TAG\_3\}="boneless", \{TAG\_4\}="redguy".}
+\textcolor{comment}{//  Then this could be the result: }
+\textcolor{comment}{//         \{SHUFFLE\_TAG\_1\} = "chicken", \{SHUFFLE\_TAG\_2\}="redguy", \{SHUFFLE\_TAG\_3\} = "cow",
+       \{SHUFFLE\_TAG\_4\}="boneless".}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh, Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__param__array_8c_a245f5bbf3ad6f1b9c016942e2376f8d4}{\index{y\-\_\-param\-\_\-array.\-c@{y\-\_\-param\-\_\-array.\-c}!y\-\_\-array\-\_\-split@{y\-\_\-array\-\_\-split}}
+\index{y\-\_\-array\-\_\-split@{y\-\_\-array\-\_\-split}!y_param_array.c@{y\-\_\-param\-\_\-array.\-c}}
+\subsubsection[{y\-\_\-array\-\_\-split}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-array\-\_\-split (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param\-\_\-array, }
+\item[{const char $\ast$}]{separator, }
+\item[{const char $\ast$}]{param\-\_\-array\-\_\-left, }
+\item[{const char $\ast$}]{param\-\_\-array\-\_\-right}
+\end{DoxyParamCaption}
+)}}\label{y__param__array_8c_a245f5bbf3ad6f1b9c016942e2376f8d4}
+Split an input array vertically into two new arrays, based on a search parameter.
+
+This is the reverse of \hyperlink{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}{y\-\_\-array\-\_\-merge()}. It will examine each parameter in turn and save each value into two separate parameter lists.
+
+\begin{DoxyNote}{Note}
+Using the same array for the left and right hand side result arrays will result in one side overwriting the values from the other side.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param\-\_\-array} & The name of the array holding the values to be split. \\
+\hline
+\mbox{\tt in}  & {\em separator} & A fixed string to be used as a seperator between the two values. \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-left} & The parameter array to use for the lefthand side of the concatenations. Can be the same as the input array. \\
+\hline
+\mbox{\tt in}  & {\em param\-\_\-array\-\_\-right} & The parameter array to use for the righthand side of the concatenations. Can also be the same as the input array.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__param__array_8c_a5208b198c4f2f72e37b5c21addda46ca}{y\-\_\-array\-\_\-merge()}, \hyperlink{y__param__array_8c_a8a002613e728f5275aa14b904e937d51}{y\-\_\-array\-\_\-concat()}, \hyperlink{y__param__array_8c_a2a3537ce64003babb7cb8b913c17ebab}{y\-\_\-array\-\_\-pick\-\_\-random()}, \hyperlink{y__string_8c_a18ccd408f76375cb48aceed43aa76bff}{y\-\_\-split\-\_\-str()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}

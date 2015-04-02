@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['_5f_5fy_5fdo_5fnot_5fcall_5fthis_5fis_5fa_5fworkaround_5fthat_5fonly_5fexists_5fto_5fprevent_5fa_5fnull_5fdereference_5ferror_5fin_5fvugen_5fwhen_5frunning',['__y_do_not_call_this_is_a_workaround_that_only_exists_to_prevent_a_null_dereference_error_in_vugen_when_running',['../y__transaction_8c.html#a59572b55f1b7525c926b300ebf8fc13f',1,'y_transaction.c']]]
+];

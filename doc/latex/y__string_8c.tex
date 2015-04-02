@@ -1,0 +1,720 @@
+\hypertarget{y__string_8c}{\section{y\-\_\-string.\-c File Reference}
+\label{y__string_8c}\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}}
+}
+
+
+Y-\/lib string function library.  
+
+
+{\ttfamily \#include \char`\"{}y\-\_\-core.\-c\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{y__string_8c_a7b01815915da19b48aaca1a7a5ba30b2}{y\-\_\-copy\-\_\-param} (char $\ast$source\-\_\-param, char $\ast$dest\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Copy a parameter to a new name. This is a semi-\/efficiënt parameter copy using lr\-\_\-eval\-\_\-string\-\_\-ext(), with appropriate freeing of memory. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a20420f9a082c1e2a89b70409d6008931}{y\-\_\-uppercase\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Convert the content of a parameter to U\-P\-P\-E\-R\-C\-A\-S\-E. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a6c487cce1d850e956bcd5af4c4acac73}{y\-\_\-substr} (const char $\ast$original\-\_\-parameter, const char $\ast$result\-\_\-parameter, const char $\ast$left, const char $\ast$right)
+\begin{DoxyCompactList}\small\item\em Save a substring of a parameter into a new parameter. Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_abced95074b83aebcfb1454f15890c2b5}{y\-\_\-left} (const char $\ast$original\-\_\-parameter, const char $\ast$search, const char $\ast$result\-\_\-parameter)
+\begin{DoxyCompactList}\small\item\em Split a string into 2 parts using the search string. Save the left part into the result parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{y\-\_\-right} (const char $\ast$original\-\_\-parameter, const char $\ast$search, const char $\ast$result\-\_\-parameter)
+\begin{DoxyCompactList}\small\item\em Split a string into 2 parts using the search string. Save the right part into the result parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_ad96e67d8e69e1df570958aa1e1d5e97e}{y\-\_\-last\-\_\-right} (const char $\ast$original\-\_\-parameter, const char $\ast$search, const char $\ast$result\-\_\-parameter)
+\begin{DoxyCompactList}\small\item\em Split a string into 2 parts using the search string. Save the rightmost part into the result parameter. This is almost the same as \hyperlink{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{y\-\_\-right()}, but doesn't stop at the first match -\/ instead, it uses the {\itshape last} match. It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression.. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a18ccd408f76375cb48aceed43aa76bff}{y\-\_\-split\-\_\-str} (const char $\ast$original, const char $\ast$separator, char $\ast$left, char $\ast$right)
+\begin{DoxyCompactList}\small\item\em Split a string into 2 parts based on a search string. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_ae264f7c6576cb429747b914657ff8e92}{y\-\_\-split} (const char $\ast$original\-Parameter, const char $\ast$separator, const char $\ast$left\-Parameter, const char $\ast$right\-Parameter)
+\begin{DoxyCompactList}\small\item\em Split a parameter in two based on a seperating string. If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a27ae9506d1f756e8138c9eb85d098308}{y\-\_\-chop} (const char $\ast$parameter)
+\begin{DoxyCompactList}\small\item\em Remove leading and trailing whitespace from a parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a9ff7d0f5c99aad7760fa9f32d0d21d25}{y\-\_\-replace} (const char $\ast$parameter, const char $\ast$search, const char $\ast$replace)
+\begin{DoxyCompactList}\small\item\em Search and replace inside a parameter. This replaces the content of the originally passed-\/in parameter with the new content when done. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_abdcde34b0a15516dd5b47b29196cf61b}{y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter} (const char $\ast$param\-Name, const char $\ast$remove\-Me)
+\begin{DoxyCompactList}\small\item\em Remove all occurrences of a specified text from a parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a0213fca8c623a194e44b3a846a834729}{y\-\_\-param\-\_\-unique} (char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Create a unique parameter. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core} (const char $\ast$parameter, int minimum\-Length, int maximum\-Length, int min\-Word\-Length, int max\-Word\-Length, char $\ast$character\-Set)
+\begin{DoxyCompactList}\small\item\em Generates a random string with (pseudo) words created from a given string of characters. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_ab751d549b344736ced6cf495d019ebc6}{y\-\_\-random\-\_\-string\-\_\-buffer} (const char $\ast$parameter, int minimum\-Length, int maximum\-Length)
+\begin{DoxyCompactList}\small\item\em Returns a random string with (pseudo) words created from a given string of characters. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a91e3109c43cfdf0f6378b943d39871bd}{y\-\_\-random\-\_\-number\-\_\-buffer} (const char $\ast$parameter, int minimum\-Length, int maximum\-Length)
+\begin{DoxyCompactList}\small\item\em Returns a random string of numbers with a given minimum and maximum length. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_aac658f815d53b5fbda9abe49b34148e1}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses} (const char $\ast$parameter, int minimum\-Length, int maximum\-Length)
+\begin{DoxyCompactList}\small\item\em Returns a string containing only the "shift-\/1...shift 9 characters (on a U\-S-\/keyboard). \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a8cbde93e30abaf3392c172f8f83e5889}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex} (const char $\ast$parameter, int minimum\-Length, int maximum\-Length)
+\begin{DoxyCompactList}\small\item\em Generates a random string with a hexadecimal number, of a given minimum and maximum length. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{y__string_8c_a9fc166c412bf848068685f7c391658bd}{y\-\_\-get\-\_\-cleansed\-\_\-parameter} (const char $\ast$param\-\_\-name, char replacement)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter without embedded null bytes (\textbackslash{}0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded N\-U\-L\-L characters which make further processing harder. This will fetch a parameter but \char`\"{}cleanse\char`\"{} it from such contamination, leaving the rest of the data unaltered before returning it. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}{y\-\_\-cleanse\-\_\-parameter\-\_\-ext} (const char $\ast$param\-\_\-name, char replacement)
+\begin{DoxyCompactList}\small\item\em Clean a parameter by replacing any embedded N\-U\-L\-L (null) characters with a replacement character. \end{DoxyCompactList}\item 
+void \hyperlink{y__string_8c_a2c65e959425f4624e427649ec8c7b22b}{y\-\_\-cleanse\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Clean a parameter by replacing any embedded N\-U\-L\-L (null) characters with a space. This is identical to \hyperlink{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}{y\-\_\-cleanse\-\_\-parameter\-\_\-ext()} with \char`\"{} \char`\"{} (a single space) selected as the replacement character. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Y-\/lib string function library. Contains low level string and memory manipulation functions, insofar not provided by the C standard. The philosophy of ylib is that the script engineer should not be required to worry about C-\/strings and C-\/like memory manipulation when parameters will suffice. Most string manipulation functions in the y-\/lib library take loadrunner parameters as arguments and place their output in one or more of these parameters. This usually makes it easy to correlate a value (capturing it in a parameter), process it, then pass it on to the next request (again as a parameter). 
+
+\subsection{Function Documentation}
+\hypertarget{y__string_8c_a27ae9506d1f756e8138c9eb85d098308}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-chop@{y\-\_\-chop}}
+\index{y\-\_\-chop@{y\-\_\-chop}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-chop}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-chop (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a27ae9506d1f756e8138c9eb85d098308}
+
+
+Remove leading and trailing whitespace from a parameter. 
+
+This does not support unicode, so it may not catch everything. Supported whitespace is\-: \char`\"{} \char`\"{}(=space) \char`\"{}\textbackslash{}r\char`\"{}(=carrige return) \char`\"{}\textbackslash{}n\char`\"{}(=line feed) \char`\"{}\textbackslash{}t\char`\"{}(=tab) The result is stored in the original parameter.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parameter} & The parameter to chop.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"  WackoYackoDot "}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: >\{Test\}<\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}= "  WackoYackoDot "}
+\hyperlink{y__string_8c_a27ae9506d1f756e8138c9eb85d098308}{y\_chop}(\textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: >\{Test\}<\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}= "WackoYackoDot"}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+\-: Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a2c65e959425f4624e427649ec8c7b22b}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-cleanse\-\_\-parameter@{y\-\_\-cleanse\-\_\-parameter}}
+\index{y\-\_\-cleanse\-\_\-parameter@{y\-\_\-cleanse\-\_\-parameter}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-cleanse\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-cleanse\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a2c65e959425f4624e427649ec8c7b22b}
+
+
+Clean a parameter by replacing any embedded N\-U\-L\-L (null) characters with a space. This is identical to \hyperlink{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}{y\-\_\-cleanse\-\_\-parameter\-\_\-ext()} with \char`\"{} \char`\"{} (a single space) selected as the replacement character. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The parameter to cleanse of nulls. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Since this changes existing parameters be careful what types of parameters you use this on.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+   \textcolor{keywordtype}{char} buffer[11] = \{ \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'b'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'r'},\textcolor{charliteral}{'o'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'k'}, \textcolor{charliteral}{'e'}, \textcolor{charliteral}{'n'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'\(\backslash\)0'} \};
+   lr\_save\_var(buffer, 11, 0, \textcolor{stringliteral}{"broken"});
+   \hyperlink{y__string_8c_a2c65e959425f4624e427649ec8c7b22b}{y\_cleanse\_parameter}(\textcolor{stringliteral}{"broken"}); \textcolor{comment}{// will save " b ro ken  " into the "broken"
+       parameter.}
+\}
+\end{DoxyCode}
+ \hypertarget{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-cleanse\-\_\-parameter\-\_\-ext@{y\-\_\-cleanse\-\_\-parameter\-\_\-ext}}
+\index{y\-\_\-cleanse\-\_\-parameter\-\_\-ext@{y\-\_\-cleanse\-\_\-parameter\-\_\-ext}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-cleanse\-\_\-parameter\-\_\-ext}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-cleanse\-\_\-parameter\-\_\-ext (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name, }
+\item[{char}]{replacement}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}
+
+
+Clean a parameter by replacing any embedded N\-U\-L\-L (null) characters with a replacement character. 
+
+This would normally only happen if you have used to web\-\_\-reg\-\_\-save\-\_\-param() and the result contains one or more null-\/character(s). Any such characters are replaced with replacement\-\_\-char and the result is stored in the original parameter. When no null-\/character is found, the result is unaltered.
+
+\begin{DoxyWarning}{Warning}
+Since the return value is allocated with \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()}, it will need to be freed using \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()} at some point.
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The parameter to cleanse of nulls. \\
+\hline
+\mbox{\tt in}  & {\em replacement} & A character that replaces any embedded nulls found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Since this changes existing parameters be careful what types of parameters you use this on.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+   \textcolor{keywordtype}{char} buffer[11] = \{ \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'b'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'r'},\textcolor{charliteral}{'o'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'k'}, \textcolor{charliteral}{'e'}, \textcolor{charliteral}{'n'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'\(\backslash\)0'} \};
+   lr\_save\_var(buffer, 11, 0, \textcolor{stringliteral}{"broken"});
+   \hyperlink{y__string_8c_a36d93cd0fa4942600d58fcb81bf6f106}{y\_cleanse\_parameter\_ext}(\textcolor{stringliteral}{"broken"}, \textcolor{charliteral}{'!'}); \textcolor{comment}{// will save "!b!ro!ken!!" into the
+       "broken" parameter.}
+\}
+\end{DoxyCode}
+ \hypertarget{y__string_8c_a7b01815915da19b48aaca1a7a5ba30b2}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-copy\-\_\-param@{y\-\_\-copy\-\_\-param}}
+\index{y\-\_\-copy\-\_\-param@{y\-\_\-copy\-\_\-param}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-copy\-\_\-param}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-copy\-\_\-param (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{source\-\_\-param, }
+\item[{char $\ast$}]{dest\-\_\-param}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a7b01815915da19b48aaca1a7a5ba30b2}
+
+
+Copy a parameter to a new name. This is a semi-\/efficiënt parameter copy using lr\-\_\-eval\-\_\-string\-\_\-ext(), with appropriate freeing of memory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param} & The parameter to copy. \\
+\hline
+\mbox{\tt in}  & {\em dest\-\_\-param} & The name of the parameter to copy the first parameter to.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"text"}, \textcolor{stringliteral}{"param\_a"});
+\hyperlink{y__string_8c_a7b01815915da19b48aaca1a7a5ba30b2}{y\_copy\_param}(\textcolor{stringliteral}{"param\_a"}, \textcolor{stringliteral}{"param\_b"});   \textcolor{comment}{// Results in an exact copy of the content of param\_a
+       being stored in param\_b.}
+lr\_log\_message(lr\_eval\_string(\textcolor{stringliteral}{"param\_b: \{param\_b\}"})); \textcolor{comment}{// Prints "param\_b: text".}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a9fc166c412bf848068685f7c391658bd}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-get\-\_\-cleansed\-\_\-parameter@{y\-\_\-get\-\_\-cleansed\-\_\-parameter}}
+\index{y\-\_\-get\-\_\-cleansed\-\_\-parameter@{y\-\_\-get\-\_\-cleansed\-\_\-parameter}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-cleansed\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-cleansed\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name, }
+\item[{char}]{replacement}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a9fc166c412bf848068685f7c391658bd}
+
+
+Get the content of a parameter without embedded null bytes (\textbackslash{}0 characters) from the named parameter, if any. In some cases we want to fetch the content of a parameter but the parameter contains embedded N\-U\-L\-L characters which make further processing harder. This will fetch a parameter but \char`\"{}cleanse\char`\"{} it from such contamination, leaving the rest of the data unaltered before returning it. 
+
+\begin{DoxyWarning}{Warning}
+The return value of this function needs to be freed using lr\-\_\-eval\-\_\-string\-\_\-ext\-\_\-free().
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The parameter to cleanse of nulls. \\
+\hline
+\mbox{\tt in}  & {\em replacement} & A character that replaces any embedded nulls found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting parameter content.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\{
+   \textcolor{keywordtype}{char} buffer[11] = \{ \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'b'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'r'},\textcolor{charliteral}{'o'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'k'}, \textcolor{charliteral}{'e'}, \textcolor{charliteral}{'n'}, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{charliteral}{'\(\backslash\)0'} \};
+   \textcolor{keywordtype}{char} *tmp;
+   lr\_save\_var(buffer, 11, 0, \textcolor{stringliteral}{"broken"});
+   tmp = \hyperlink{y__string_8c_a9fc166c412bf848068685f7c391658bd}{y\_get\_cleansed\_parameter}(\textcolor{stringliteral}{"broken"}, \textcolor{charliteral}{'!'});
+   lr\_log\_message(\textcolor{stringliteral}{"Result: %s"}, tmp); \textcolor{comment}{// Prints "Result: !b!ro!ken!!".}
+   \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(tmp);
+\}
+\end{DoxyCode}
+ \hypertarget{y__string_8c_ad96e67d8e69e1df570958aa1e1d5e97e}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-last\-\_\-right@{y\-\_\-last\-\_\-right}}
+\index{y\-\_\-last\-\_\-right@{y\-\_\-last\-\_\-right}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-last\-\_\-right}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-last\-\_\-right (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original\-\_\-parameter, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{result\-\_\-parameter}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_ad96e67d8e69e1df570958aa1e1d5e97e}
+
+
+Split a string into 2 parts using the search string. Save the rightmost part into the result parameter. This is almost the same as \hyperlink{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{y\-\_\-right()}, but doesn't stop at the first match -\/ instead, it uses the {\itshape last} match. It's pretty much the difference between 'greedy' and 'not greedy' in a regular expression.. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original\-\_\-parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em search} & The text preceding the text we're looking for. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-parameter} & The name of the parameter to store the result in.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"AstrixObelixIdefix"}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}=AstrixObelixIdefix}
+\hyperlink{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{y\_right}( \textcolor{stringliteral}{"Test"}, \textcolor{stringliteral}{"Obelix"}, \textcolor{stringliteral}{"Test4"} );
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"New Param: \{Test4\}\(\backslash\)n"}));    \textcolor{comment}{//    \{Test4\}=Idefix}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_abced95074b83aebcfb1454f15890c2b5}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-left@{y\-\_\-left}}
+\index{y\-\_\-left@{y\-\_\-left}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-left}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-left (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original\-\_\-parameter, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{result\-\_\-parameter}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_abced95074b83aebcfb1454f15890c2b5}
+
+
+Split a string into 2 parts using the search string. Save the left part into the result parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original\-\_\-parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em search} & The text after the text we're looking for. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-parameter} & The name of the parameter to store the result in.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"AstrixObelixIdefix"}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}=AstrixObelixIdefix}
+\hyperlink{y__string_8c_abced95074b83aebcfb1454f15890c2b5}{y\_left}( \textcolor{stringliteral}{"Test"}, \textcolor{stringliteral}{"Obelix"}, \textcolor{stringliteral}{"Test2"} );
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"New Param: \{Test2\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test2\}=Astrix}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a0213fca8c623a194e44b3a846a834729}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-param\-\_\-unique@{y\-\_\-param\-\_\-unique}}
+\index{y\-\_\-param\-\_\-unique@{y\-\_\-param\-\_\-unique}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-param\-\_\-unique}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-param\-\_\-unique (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{param}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a0213fca8c623a194e44b3a846a834729}
+
+
+Create a unique parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em param} & The name of a parameter to store the resulting string in. Length is always 22 (base64) characters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak \& André Luyer
+\end{DoxyAuthor}
+Example\-: 
+\begin{DoxyCode}
+\hyperlink{y__string_8c_a0213fca8c623a194e44b3a846a834729}{y\_param\_unique}(\textcolor{stringliteral}{"test"});
+\end{DoxyCode}
+ \hypertarget{y__string_8c_a91e3109c43cfdf0f6378b943d39871bd}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-random\-\_\-number\-\_\-buffer@{y\-\_\-random\-\_\-number\-\_\-buffer}}
+\index{y\-\_\-random\-\_\-number\-\_\-buffer@{y\-\_\-random\-\_\-number\-\_\-buffer}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-random\-\_\-number\-\_\-buffer}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-random\-\_\-number\-\_\-buffer (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{int}]{minimum\-Length, }
+\item[{int}]{maximum\-Length}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a91e3109c43cfdf0f6378b943d39871bd}
+
+
+Returns a random string of numbers with a given minimum and maximum length. 
+
+This function generates a string of numbers with a given minimum and maximum length. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em parameter} & Name of the L\-R-\/parameter in which the result is stored \\
+\hline
+\mbox{\tt in}  & {\em minimum\-Length} & Minumum length of the string \\
+\hline
+\mbox{\tt in}  & {\em maximum\-Length} & Maximum length of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core} 
+\end{DoxySeeAlso}
+\hypertarget{y__string_8c_ab751d549b344736ced6cf495d019ebc6}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-random\-\_\-string\-\_\-buffer@{y\-\_\-random\-\_\-string\-\_\-buffer}}
+\index{y\-\_\-random\-\_\-string\-\_\-buffer@{y\-\_\-random\-\_\-string\-\_\-buffer}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-random\-\_\-string\-\_\-buffer}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-random\-\_\-string\-\_\-buffer (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{int}]{minimum\-Length, }
+\item[{int}]{maximum\-Length}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_ab751d549b344736ced6cf495d019ebc6}
+
+
+Returns a random string with (pseudo) words created from a given string of characters. 
+
+This function uses a given set of characters to create words, separated by spaces. The words are minimal 3 characters long, and maximum 8 characters long. Should you need other word lenghts, use y\-\_\-random\-\_\-number\-\_\-buffer\-\_\-core(). The total length of the line is minimal {\itshape minimum\-Length} and maximum {\itshape maximum\-Length} long.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em parameter} & Name of the L\-R-\/parameter in which the result is stored \\
+\hline
+\mbox{\tt in}  & {\em minimum\-Length} & Minumum length of the string \\
+\hline
+\mbox{\tt in}  & {\em maximum\-Length} & Maximum length of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core} 
+\end{DoxySeeAlso}
+\hypertarget{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core}}
+\index{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{int}]{minimum\-Length, }
+\item[{int}]{maximum\-Length, }
+\item[{int}]{min\-Word\-Length, }
+\item[{int}]{max\-Word\-Length, }
+\item[{char $\ast$}]{character\-Set}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}
+
+
+Generates a random string with (pseudo) words created from a given string of characters. 
+
+This function uses a given set of characters to create words, separated by spaces. The words are minimal {\itshape min\-Word\-Length} characters long, and maximum {\itshape min\-Word\-Length} characters. The total length of the line is minimal {\itshape minimum\-Length} and maimum {\itshape maximum\-Length} long.
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{comment}{// Generates a string of minimal 3 and max 20 characters, }
+\textcolor{comment}{// with words of minimal 1 and maximal 3 charactes.}
+\textcolor{comment}{// Chooses only characters a, c, d or d.}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\_random\_string\_buffer\_core}(\textcolor{stringliteral}{"uitvoer"}, 3,20, 1, 3, \textcolor{stringliteral}{"abcd"});
+
+\textcolor{comment}{// Generates some sort of mock morse-code of exactly 30 characters.}
+\textcolor{comment}{// with words of minimal 1 and maximal 3 charactes.}
+\textcolor{comment}{// Chooses only characters a, c, d or d.}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\_random\_string\_buffer\_core}(\textcolor{stringliteral}{"uitvoer"}, 3,20, 1, 3, \textcolor{stringliteral}{"abcd"}); \textcolor{comment}{// could result in
+       "ccc db dac c"}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em parameter} & Name of the L\-R-\/parameter in which the result is stored \\
+\hline
+\mbox{\tt in}  & {\em minimum\-Length} & Minumum length of the string \\
+\hline
+\mbox{\tt in}  & {\em maximum\-Length} & Maximum length of the string \\
+\hline
+\mbox{\tt in}  & {\em min\-Word\-Length} & Minimum length of the words within the string \\
+\hline
+\mbox{\tt in}  & {\em max\-Word\-Length} & Minimum length of the words within the string \\
+\hline
+\mbox{\tt in}  & {\em character\-Set} & The string is build from this string of characters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak / Raymond de Jongh
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__string_8c_a91e3109c43cfdf0f6378b943d39871bd}{y\-\_\-random\-\_\-number\-\_\-buffer} 
+
+\hyperlink{y__string_8c_aac658f815d53b5fbda9abe49b34148e1}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses} 
+
+\hyperlink{y__string_8c_ab751d549b344736ced6cf495d019ebc6}{y\-\_\-random\-\_\-string\-\_\-buffer} 
+
+\hyperlink{y__string_8c_a8cbde93e30abaf3392c172f8f83e5889}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex} 
+\end{DoxySeeAlso}
+\hypertarget{y__string_8c_aac658f815d53b5fbda9abe49b34148e1}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses}}
+\index{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-curses (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{int}]{minimum\-Length, }
+\item[{int}]{maximum\-Length}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_aac658f815d53b5fbda9abe49b34148e1}
+
+
+Returns a string containing only the "shift-\/1...shift 9 characters (on a U\-S-\/keyboard). 
+
+This function generates a string of non-\/alfa-\/characters with a given minimum and maximum length.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em parameter} & Name of the L\-R-\/parameter in which the result is stored \\
+\hline
+\mbox{\tt in}  & {\em minimum\-Length} & Minumum length of the string \\
+\hline
+\mbox{\tt in}  & {\em maximum\-Length} & Maximum length of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core} 
+\end{DoxySeeAlso}
+\hypertarget{y__string_8c_a8cbde93e30abaf3392c172f8f83e5889}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex}}
+\index{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex@{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-hex (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{int}]{minimum\-Length, }
+\item[{int}]{maximum\-Length}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a8cbde93e30abaf3392c172f8f83e5889}
+
+
+Generates a random string with a hexadecimal number, of a given minimum and maximum length. 
+
+This function generates a string with a hexadecimal number.
+
+Should you need other word lenghts, use y\-\_\-random\-\_\-number\-\_\-buffer\-\_\-core(). The total length of the line is minimal {\itshape minimum\-Length} and maimum {\itshape maximum\-Length} long.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em parameter} & Name of the L\-R-\/parameter in which the result is stored \\
+\hline
+\mbox{\tt in}  & {\em minimum\-Length} & Minumum length of the string \\
+\hline
+\mbox{\tt in}  & {\em maximum\-Length} & Maximum length of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__string_8c_a3e11c4662cca5dd346ad89590d5eef24}{y\-\_\-random\-\_\-string\-\_\-buffer\-\_\-core} 
+\end{DoxySeeAlso}
+\hypertarget{y__string_8c_abdcde34b0a15516dd5b47b29196cf61b}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter@{y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter}}
+\index{y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter@{y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-remove\-\_\-string\-\_\-from\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-Name, }
+\item[{const char $\ast$}]{remove\-Me}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_abdcde34b0a15516dd5b47b29196cf61b}
+
+
+Remove all occurrences of a specified text from a parameter. 
+
+This is a lighter weight alternative to the \hyperlink{y__string_8c_a9ff7d0f5c99aad7760fa9f32d0d21d25}{y\-\_\-replace()} function in cases where just want to remove text, rather than replace it with something else. Stores the result in the original parameter.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-Name} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em remove\-Me} & The text to remove.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"par1"});
+\hyperlink{y__string_8c_abdcde34b0a15516dd5b47b29196cf61b}{y\_remove\_string\_from\_parameter}(\textcolor{stringliteral}{"par1"}, \textcolor{stringliteral}{"1"});   \textcolor{comment}{// \{par1\} now has the value
+       test23}
+\end{DoxyCode}
+ \hypertarget{y__string_8c_a9ff7d0f5c99aad7760fa9f32d0d21d25}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-replace@{y\-\_\-replace}}
+\index{y\-\_\-replace@{y\-\_\-replace}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-replace}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-replace (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{parameter, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{replace}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a9ff7d0f5c99aad7760fa9f32d0d21d25}
+
+
+Search and replace inside a parameter. This replaces the content of the originally passed-\/in parameter with the new content when done. 
+
+\begin{DoxyNote}{Note}
+This one has a built-\/in search/y\-\_\-replace limit. After 1000 replacements it will stop. If 1000 replacements in a single parameter does not suffice consider using other methods.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em search} & What to search for. \\
+\hline
+\mbox{\tt in}  & {\em replace} & What to replace it with.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"par1"});
+\hyperlink{y__string_8c_a9ff7d0f5c99aad7760fa9f32d0d21d25}{y\_replace}(\textcolor{stringliteral}{"par1"}, \textcolor{stringliteral}{"1"}, \textcolor{stringliteral}{"ing1"});        \textcolor{comment}{// \{par1\} now has the value testing123}
+\end{DoxyCode}
+ \hypertarget{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-right@{y\-\_\-right}}
+\index{y\-\_\-right@{y\-\_\-right}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-right}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-right (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original\-\_\-parameter, }
+\item[{const char $\ast$}]{search, }
+\item[{const char $\ast$}]{result\-\_\-parameter}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}
+
+
+Split a string into 2 parts using the search string. Save the right part into the result parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original\-\_\-parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em search} & The text preceding the text we're looking for. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-parameter} & The name of the parameter to store the result in.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"AstrixObelixIdefix"}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}=AstrixObelixIdefix}
+\hyperlink{y__string_8c_a8fa8cb819a971b562b07cf9ab9c84bba}{y\_right}( \textcolor{stringliteral}{"Test"}, \textcolor{stringliteral}{"Obelix"}, \textcolor{stringliteral}{"Test4"} );
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"New Param: \{Test4\}\(\backslash\)n"}));    \textcolor{comment}{//    \{Test4\}=Idefix}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_ae264f7c6576cb429747b914657ff8e92}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-split@{y\-\_\-split}}
+\index{y\-\_\-split@{y\-\_\-split}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-split}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-split (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original\-Parameter, }
+\item[{const char $\ast$}]{separator, }
+\item[{const char $\ast$}]{left\-Parameter, }
+\item[{const char $\ast$}]{right\-Parameter}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_ae264f7c6576cb429747b914657ff8e92}
+
+
+Split a parameter in two based on a seperating string. If the seperator is not found in the original parameter the original parameter will be stored in it's entirety in the left hand parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original\-Parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em separator} & The string to use as a seperation marker between the two parts. \\
+\hline
+\mbox{\tt in}  & {\em left\-Parameter} & The parameter that will hold the left hand side of the split result. \\
+\hline
+\mbox{\tt in}  & {\em right\-Parameter} & The parameter that will hold the right hand side of the split result.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"WackoYackoDotWarner"}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}    = WackoYackoDotWarner}
+\hyperlink{y__string_8c_ae264f7c6576cb429747b914657ff8e92}{y\_split}(\textcolor{stringliteral}{"Test"}, \textcolor{stringliteral}{"Yacko"}, \textcolor{stringliteral}{"Left"}, \textcolor{stringliteral}{"Right"});           \textcolor{comment}{// Use "Yacko" as the separator}
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));    \textcolor{comment}{// \{Test\}    = WackoYackoDotWarner}
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Left    : \{Left\}\(\backslash\)n"}));    \textcolor{comment}{// \{Left\}    = Wacko}
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Right   : \{Right\}\(\backslash\)n"}));   \textcolor{comment}{// \{Right\}   = DotWarner}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a18ccd408f76375cb48aceed43aa76bff}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-split\-\_\-str@{y\-\_\-split\-\_\-str}}
+\index{y\-\_\-split\-\_\-str@{y\-\_\-split\-\_\-str}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-split\-\_\-str}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-split\-\_\-str (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original, }
+\item[{const char $\ast$}]{separator, }
+\item[{char $\ast$}]{left, }
+\item[{char $\ast$}]{right}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a18ccd408f76375cb48aceed43aa76bff}
+
+
+Split a string into 2 parts based on a search string. 
+
+\begin{DoxyWarning}{Warning}
+Unlike the others this one does not use parameter, but raw char pointers instead. This mostly to accomodate \hyperlink{y__param__array_8c_a245f5bbf3ad6f1b9c016942e2376f8d4}{y\-\_\-array\-\_\-split()}. For the parameter version use \hyperlink{y__string_8c_ae264f7c6576cb429747b914657ff8e92}{y\-\_\-split()}.
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original} & The string to search. \\
+\hline
+\mbox{\tt in}  & {\em separator} & The string to use as a seperation marker between the two parts. \\
+\hline
+\mbox{\tt in}  & {\em left} & A preallocated char$\ast$ buffer to hold the left hand side of the result. \\
+\hline
+\mbox{\tt in}  & {\em right} & A preallocated char$\ast$ buffer to hold the right hand side of the result. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a6c487cce1d850e956bcd5af4c4acac73}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-substr@{y\-\_\-substr}}
+\index{y\-\_\-substr@{y\-\_\-substr}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-substr}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-substr (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{original\-\_\-parameter, }
+\item[{const char $\ast$}]{result\-\_\-parameter, }
+\item[{const char $\ast$}]{left, }
+\item[{const char $\ast$}]{right}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a6c487cce1d850e956bcd5af4c4acac73}
+
+
+Save a substring of a parameter into a new parameter. Search for a specific substring inside a parameter using left and right boundaries and save that into a new parameter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em original\-\_\-parameter} & The parameter to search. \\
+\hline
+\mbox{\tt in}  & {\em result\-\_\-parameter} & The name of the parameter to store the result in. \\
+\hline
+\mbox{\tt in}  & {\em left} & The left boundary -\/ the text immediately preceding the substring in question. \\
+\hline
+\mbox{\tt in}  & {\em right} & The right boundary.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char}* str = \textcolor{stringliteral}{"LorumIpsumLipsum"};
+lr\_save\_string(str, \textcolor{stringliteral}{"param"});
+\hyperlink{y__string_8c_a6c487cce1d850e956bcd5af4c4acac73}{y\_substr}(\textcolor{stringliteral}{"param"}, \textcolor{stringliteral}{"param"}, \textcolor{stringliteral}{"Lorum"}, \textcolor{stringliteral}{"Lipsum"});
+lr\_log\_message(lr\_eval\_string(\textcolor{stringliteral}{"\{param\}"})); \textcolor{comment}{// Prints "Ipsum".}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+André Luyer, Marcel Jepma \& Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__string_8c_a20420f9a082c1e2a89b70409d6008931}{\index{y\-\_\-string.\-c@{y\-\_\-string.\-c}!y\-\_\-uppercase\-\_\-parameter@{y\-\_\-uppercase\-\_\-parameter}}
+\index{y\-\_\-uppercase\-\_\-parameter@{y\-\_\-uppercase\-\_\-parameter}!y_string.c@{y\-\_\-string.\-c}}
+\subsubsection[{y\-\_\-uppercase\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-uppercase\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{y__string_8c_a20420f9a082c1e2a89b70409d6008931}
+
+
+Convert the content of a parameter to U\-P\-P\-E\-R\-C\-A\-S\-E. 
+
+This will replace the content of the paramenter named in 'param\-\_\-name' with the uppercased version. Does not affect non-\/alphabetic characters.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The parameter to convert to uppercase.\\
+\hline
+\end{DoxyParams}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_save\_string(\textcolor{stringliteral}{"aBcDeFgHiJ &*45#$@#)!(\{\}"}, \textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Original: \{Test\}\(\backslash\)n"}));
+\hyperlink{y__string_8c_a20420f9a082c1e2a89b70409d6008931}{y\_uppercase\_parameter}(\textcolor{stringliteral}{"Test"});
+lr\_message(lr\_eval\_string(\textcolor{stringliteral}{"Altered: \{Test\}\(\backslash\)n"})); \textcolor{comment}{// prints "Altered: ABCDEFGHIJ &*45#$@#)!(\{\}".}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}

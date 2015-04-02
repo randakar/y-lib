@@ -1,0 +1,103 @@
+\hypertarget{y__vts_8c}{\section{y\-\_\-vts.\-c File Reference}
+\label{y__vts_8c}\index{y\-\_\-vts.\-c@{y\-\_\-vts.\-c}}
+}
+
+
+V\-T\-S functions for L\-R 11.\-5 and above.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__vts_8c_a8bd182aa7660107f9f0ea013f003556e}{void {\bfseries y\-\_\-vts\-\_\-report\-\_\-error} (char $\ast$message)}\label{y__vts_8c_a8bd182aa7660107f9f0ea013f003556e}
+
+\item 
+int \hyperlink{y__vts_8c_aaae18a7b8d23a91712fe6eb9a8f7bf96}{y\-\_\-vts\-\_\-process\-\_\-returncode} (int returncode)
+\begin{DoxyCompactList}\small\item\em Error translation and reporting facility for V\-T\-S return codes. This will emit V\-T\-S errors using lr\-\_\-error\-\_\-message() in human readable form, if the code represents a V\-T\-S error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+V\-T\-S functions for L\-R 11.\-5 and above. Library wrapperrs for talking to a V\-T\-S-\/server. This is part of L\-R 11.\-5 and needs to be installed seperately. For L\-R versions older than 11.\-5, see the old \hyperlink{y__vts_8c}{y\-\_\-vts.\-c}.
+
+\begin{DoxyWarning}{Warning}
+This \hyperlink{y__vts_8c}{y\-\_\-vts.\-c} is N\-O\-T compatible with the vts version that was shipped before L\-R 11.\-5, and the older \hyperlink{y__vts_8c}{y\-\_\-vts.\-c} is N\-O\-T compatible with the version in L\-R 11.\-5 either. 
+\end{DoxyWarning}
+
+
+\subsection{Function Documentation}
+\hypertarget{y__vts_8c_aaae18a7b8d23a91712fe6eb9a8f7bf96}{\index{y\-\_\-vts.\-c@{y\-\_\-vts.\-c}!y\-\_\-vts\-\_\-process\-\_\-returncode@{y\-\_\-vts\-\_\-process\-\_\-returncode}}
+\index{y\-\_\-vts\-\_\-process\-\_\-returncode@{y\-\_\-vts\-\_\-process\-\_\-returncode}!y_vts.c@{y\-\_\-vts.\-c}}
+\subsubsection[{y\-\_\-vts\-\_\-process\-\_\-returncode}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-vts\-\_\-process\-\_\-returncode (
+\begin{DoxyParamCaption}
+\item[{int}]{returncode}
+\end{DoxyParamCaption}
+)}}\label{y__vts_8c_aaae18a7b8d23a91712fe6eb9a8f7bf96}
+
+
+Error translation and reporting facility for V\-T\-S return codes. This will emit V\-T\-S errors using lr\-\_\-error\-\_\-message() in human readable form, if the code represents a V\-T\-S error. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em returncode} & An error code as returned by V\-T\-S \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the returncode
+\end{DoxyReturn}
+This is what the header file vts2.\-h tells us about error codes\-:
+
+
+\begin{DoxyCode}
+\textcolor{comment}{//VTS Error Codes}
+\textcolor{preprocessor}{#define  VTCERR\_OK                            0}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_INVALID\_CONNECTION\_INFO  -10000}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_FAILED\_TO\_RESOLVE\_ADDR   -10001}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_FAILED\_TO\_CREATE\_SOCKET  -10002}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_FAILED\_TO\_CONNECT        -10003}
+\textcolor{preprocessor}{}
+\textcolor{preprocessor}{#define  VTCERR\_INCOMPLETE\_REQUEST       -10100}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_FAILED\_TO\_RECV\_RESPONSE  -10101}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_INCOMPLETE\_RESPONSE      -10102}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_RESPONSE\_ARGS\_UNMATCH    -10103}
+\textcolor{preprocessor}{}
+\textcolor{comment}{// --- Operation Error Base}
+\textcolor{preprocessor}{#define  VTCERR\_OPERATION\_ERROR\_BASE     -11000}
+\textcolor{preprocessor}{}\textcolor{preprocessor}{#define  VTCERR\_SERVER\_IS\_BUSY           (VTCERR\_OPERATION\_ERROR\_BASE - 0xFF)}
+\textcolor{preprocessor}{#define  VTCERR\_CLIENT\_REQUEST\_ERROR     (VTCERR\_OPERATION\_ERROR\_BASE - 0xFE)}
+\end{DoxyCode}
+
+
+Loadrunner 11.\-52 expanded that a little, to the following definition in the help files\-:
+
+
+\begin{DoxyCode}
+VTCERR\_OK 0 Success 
+VTCERR\_INVALID\_CONNECTION\_INFO -10000 The corresponding handle does not exist or the connection information
+       is corrupted. Disconnect and reconnect. 
+VTCERR\_FAILED\_TO\_RESOLVE\_ADDR -10001 Failed to find server. 
+VTCERR\_FAILED\_TO\_CREATE\_SOCKET -10002 Failed to create socket. 
+VTCERR\_FAILED\_TO\_CONNECT -10003 Failed to connect. Check the server name, port number, network connectivity
+      , and whether server is on line. 
+VTCERR\_INVALID\_API\_CALL -10004 Failed to \textcolor{keyword}{get} the API entry.  <-- NEW
+
+VTCERR\_INCOMPLETE\_REQUEST -10100 Communications packet from client is invalid. 
+VTCERR\_FAILED\_TO\_RECV\_RESPONSE -10101 No response received from server. 
+VTCERR\_INCOMPLETE\_RESPONSE -10102 Communications packet from server is invalid. 
+VTCERR\_RESPONSE\_ARGS\_UNMATCH -10103 Unexpected count of arguments in server response. 
+VTCERR\_INVALID\_ARGUMENT -10104 Invalid argument.  <-- NEW
+VTCERR\_HANDLE\_NOT\_EXIST -10105 Connection handle does not exist. <-- NEW
+VTCERR\_INNER\_JSON\_CONVERT -10106 Cannot parse server response. <-- NEW
+VTCERR\_INNER\_UTF8\_CONVERT -10107 Cannot convert between UTF8 and Locale.  <-- NEW
+VTCERR\_COL\_FORMAT\_ERROR -10108 Invalid or empty column name.  <-- NEW
+VTCERR\_COL\_VALUE\_NO\_MATCH -10109 Column names list and messages list \textcolor{keywordflow}{do} not have the same number of values.
+       Check delimiters.  <-- NEW
+VTCERR\_EVAL\_STRING -10110 Error evaluating parameter value.  <-- NEW
+VTCERR\_DATA\_NOT\_EXIST -10111 There is no data at the specified column and row.  <-- NEW
+\end{DoxyCode}
+
+
+.. note however that the \char`\"{}\-Operation Error Base\char`\"{} codes are gone.
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}

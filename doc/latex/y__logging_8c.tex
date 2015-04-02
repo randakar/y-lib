@@ -1,0 +1,460 @@
+\hypertarget{y__logging_8c}{\section{y\-\_\-logging.\-c File Reference}
+\label{y__logging_8c}\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}}
+}
+
+
+Logging-\/related y-\/lib functions.  
+
+
+{\ttfamily \#include \char`\"{}y\-\_\-core.\-c\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-loadrunner\-\_\-utils.\-c\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{y__logging_8c_af5f7233cc156519f399367ba558adba8}{y\-\_\-make\-\_\-datetimestamp} (\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} \hyperlink{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{time}, unsigned short millitm)
+\begin{DoxyCompactList}\small\item\em Convert a unixtime style timestamp to a date and time represented as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{y__logging_8c_a9b402b9377251d1b78db7507c76fd886}{y\-\_\-get\-\_\-datetimestamp} ()
+\begin{DoxyCompactList}\small\item\em Returns the current time converted represented as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\-\_\-setup\-\_\-logging} ()
+\begin{DoxyCompactList}\small\item\em Turn on 'extra logging', when available. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report} (char $\ast$message)
+\begin{DoxyCompactList}\small\item\em If extra logging was enabled force a line to be logged to the logfile -\/ even if regular logging was turned off. Enable extra logging by calling \hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\-\_\-setup\-\_\-logging()} \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a9699f5d59ff8a52ff94352d41b033ea5}{y\-\_\-log\-\_\-error} (char $\ast$message)
+\begin{DoxyCompactList}\small\item\em Log an error message, with a timestamp, if extra logging is enabled. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_ace528d55b1ad1149709aaaadb00730ae}{y\-\_\-log\-\_\-warning} (char $\ast$message)
+\begin{DoxyCompactList}\small\item\em Log a warning, with a timestamp, if extra logging is enabled. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}{y\-\_\-log\-\_\-save} ()
+\begin{DoxyCompactList}\small\item\em Save the loglevel for later restoration through \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()}. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_afc385840588ec59b6d002d755b0e0415}{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving} ()
+\begin{DoxyCompactList}\small\item\em Force all logging off unconditionally, without saving the old state. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\-\_\-log\-\_\-turn\-\_\-off} ()
+\begin{DoxyCompactList}\small\item\em Save the current loglevel and turn off logging. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_ae92fd3a1d985c02c4d630dd1af17580b}{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently} ()
+\begin{DoxyCompactList}\small\item\em Turn all logging off and make sure it stays that way. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_ac5edd02a051826b8871ddacb48fa3bb7}{y\-\_\-log\-\_\-set\-\_\-brief} ()
+\begin{DoxyCompactList}\small\item\em Set the log level to \char`\"{}brief\char`\"{} messages only. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a7cca27937c3caa6dbcfa8d5c5b3894cc}{y\-\_\-log\-\_\-set\-\_\-extended} ()
+\begin{DoxyCompactList}\small\item\em Set the log level to show all messages, including extended result data, parameters, and tracing information. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore} ()
+\begin{DoxyCompactList}\small\item\em Restore the loglevel to previous state. To be exact, it will restore it to the state it was in before the last call to y\-\_\-log\-\_\-set\-\_\-\{off$\vert$on$\vert$brief$\vert$extended\}() or \hyperlink{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}{y\-\_\-log\-\_\-save()}. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a945fff57d0f423529adf29ec8efc1e6a}{y\-\_\-log\-\_\-turn\-\_\-on} ()
+\begin{DoxyCompactList}\small\item\em Turn logging on. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_ad9d19e56f169b8181a349e5219264731}{y\-\_\-log\-\_\-force\-\_\-message} (char $\ast$message)
+\begin{DoxyCompactList}\small\item\em Log a message forcefully, bypassing the current log settings. \end{DoxyCompactList}\item 
+int \hyperlink{y__logging_8c_acd38a10a5e25caf792c6c6c5be68ab5e}{y\-\_\-write\-\_\-to\-\_\-log} (char $\ast$filename, char $\ast$content)
+\begin{DoxyCompactList}\small\item\em Write a string prepended with date and time to the specified (log)file. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_adfccbf59127c2e9106022bb3b4dc8329}{y\-\_\-disk\-\_\-space\-\_\-guard} (double max\-\_\-free\-\_\-percentage)
+\begin{DoxyCompactList}\small\item\em Detect low disk space situations on the generator and turn all logging off if not enough space is left. \end{DoxyCompactList}\item 
+void \hyperlink{y__logging_8c_a516cb215f2125635444363eeb2eb8803}{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard} (double limit\-\_\-mebibytes\-\_\-used)
+\begin{DoxyCompactList}\small\item\em Detect excessive disk usage by the test and turn all further logging off if more than a specific limit number of mebibytes has been used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Logging-\/related y-\/lib functions. Note that some of these are a bit marginal -\/ the disk space guards for instance are logging related in the sense that they will turn all logging off when too much disk space has been used, but they aren't exactly log manipulation functions in the low-\/level sense. 
+
+\subsection{Function Documentation}
+\hypertarget{y__logging_8c_adfccbf59127c2e9106022bb3b4dc8329}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-disk\-\_\-space\-\_\-guard@{y\-\_\-disk\-\_\-space\-\_\-guard}}
+\index{y\-\_\-disk\-\_\-space\-\_\-guard@{y\-\_\-disk\-\_\-space\-\_\-guard}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-disk\-\_\-space\-\_\-guard}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-disk\-\_\-space\-\_\-guard (
+\begin{DoxyParamCaption}
+\item[{double}]{max\-\_\-free\-\_\-percentage}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_adfccbf59127c2e9106022bb3b4dc8329}
+
+
+Detect low disk space situations on the generator and turn all logging off if not enough space is left. 
+
+When called, this function will check the amount of space left on the generator's \char`\"{}output\char`\"{} device / directory. If the percentage of free space is lower than the treshold percentage, it will generate an error transaction \char`\"{}-\/-\/-\/\-D\-I\-S\-K S\-P\-A\-C\-E L\-O\-W I\-N L\-O\-G F\-O\-L\-D\-E\-R F\-O\-R \{y\-\_\-hostname\-\_\-generator\}-\/-\/-\/\char`\"{} and turn all further logging off until the end of the test, using \hyperlink{y__logging_8c_ae92fd3a1d985c02c4d630dd1af17580b}{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently()}.
+
+\begin{DoxyNote}{Note}
+Scripts that call lr\-\_\-debug\-\_\-message() or the various y\-\_\-lib() toggle functions to turn the loglevel back up may ignore this restriction.
+\end{DoxyNote}
+Loadrunner does not protect the generators' disks from overflowing, even if the test is writing out a lot of information to the logs really quickly. If a disk fills up on the generator or the disk the controller uses for results collation overflows there is no graceful recovery. Collation will fail and test results may be hard or impossible to recover. This kind of situation can occur when temporary service disruptions happen (triggering a flood of 'log on error' messages), but also if runtime settings are incorrect and the test was configured to log {\itshape everything}.
+
+In order to prevent this from happening scripts should regularly call to both \hyperlink{y__logging_8c_adfccbf59127c2e9106022bb3b4dc8329}{y\-\_\-disk\-\_\-space\-\_\-guard()} and \hyperlink{y__logging_8c_a516cb215f2125635444363eeb2eb8803}{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard()} with some reasonable limits.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\-\_\-free\-\_\-percentage} & The amount of free diskspace as a percentage of total space that will cause the logging to turn off.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a516cb215f2125635444363eeb2eb8803}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard@{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard}}
+\index{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard@{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard (
+\begin{DoxyParamCaption}
+\item[{double}]{limit\-\_\-mebibytes\-\_\-used}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a516cb215f2125635444363eeb2eb8803}
+
+
+Detect excessive disk usage by the test and turn all further logging off if more than a specific limit number of mebibytes has been used. 
+
+When called, this function will check the amount of space used on the generator's \char`\"{}output\char`\"{} device / directory since the first call to this function. If the amount of used space exceeds the treshold it will generate an error transaction \char`\"{}-\/-\/-\/\-D\-I\-S\-K S\-P\-A\-C\-E L\-O\-W I\-N L\-O\-G F\-O\-L\-D\-E\-R F\-O\-R \{y\-\_\-hostname\-\_\-generator\}-\/-\/-\/\char`\"{} and turn all further logging off until the end of the test, using \hyperlink{y__logging_8c_ae92fd3a1d985c02c4d630dd1af17580b}{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently()}.
+
+\begin{DoxyNote}{Note}
+Scripts that call lr\-\_\-debug\-\_\-message() or the various y\-\_\-lib() toggle functions to turn the loglevel back up may ignore this restriction.
+\end{DoxyNote}
+Loadrunner does not protect the generators' disks from overflowing, even if the test is writing out a lot of information to the logs really quickly. If a disk fills up on the generator or the disk the controller uses for results collation overflows there is no graceful recovery. Collation will fail and test results may be hard or impossible to recover. This kind of situation can occur when temporary service disruptions happen (triggering a flood of 'log on error' messages), but also if runtime settings are incorrect and the test was configured to log {\itshape everything}.
+
+\begin{DoxyNote}{Note}
+Because of the way this measurement is done, it may also trigger if some other process on the same machine starts writing large amounts of data to the same device.
+\end{DoxyNote}
+In order to prevent this from happening scripts should regularly call to both \hyperlink{y__logging_8c_adfccbf59127c2e9106022bb3b4dc8329}{y\-\_\-disk\-\_\-space\-\_\-guard()} and \hyperlink{y__logging_8c_a516cb215f2125635444363eeb2eb8803}{y\-\_\-disk\-\_\-space\-\_\-usage\-\_\-guard()} with some reasonable limits.
+
+\begin{DoxyNote}{Note}
+The contents of the generator's output folder will be transferred to the controller during collation. If the sum of the output directories for the generators exceed the size of that filesystem collation will fail, even if there is enough space on the generators. Therefore, set this low enough to make sure that if all generators output folders get filled to the limit the controller will still have enough space for it's collation process.
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em limit\-\_\-mebibytes\-\_\-used} & The amount of mebibytes the test is allowed to used on the generator's target directory.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a9b402b9377251d1b78db7507c76fd886}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-get\-\_\-datetimestamp@{y\-\_\-get\-\_\-datetimestamp}}
+\index{y\-\_\-get\-\_\-datetimestamp@{y\-\_\-get\-\_\-datetimestamp}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-datetimestamp}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-datetimestamp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a9b402b9377251d1b78db7507c76fd886}
+
+
+Returns the current time converted represented as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm. 
+
+\begin{DoxyReturn}{Returns}
+The string represation of the current time, formatted as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm.
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000009}{Deprecated}]Use lr\-\_\-save\-\_\-datetime() or direct \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime()} calls instead.\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_af5f7233cc156519f399367ba558adba8}{y\-\_\-make\-\_\-datetimestamp()}, \hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time()} 
+\end{DoxySeeAlso}
+\hypertarget{y__logging_8c_a9699f5d59ff8a52ff94352d41b033ea5}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-error@{y\-\_\-log\-\_\-error}}
+\index{y\-\_\-log\-\_\-error@{y\-\_\-log\-\_\-error}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-error (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a9699f5d59ff8a52ff94352d41b033ea5}
+
+
+Log an error message, with a timestamp, if extra logging is enabled. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & The error message to be logged.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000012}{Deprecated}]Forcing your error messages to get logged may not be the best idea there is. And I don't know of anyone using this, either. \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report()} 
+\end{DoxySeeAlso}
+\end{DoxyRefDesc}
+\hypertarget{y__logging_8c_ad9d19e56f169b8181a349e5219264731}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-force\-\_\-message@{y\-\_\-log\-\_\-force\-\_\-message}}
+\index{y\-\_\-log\-\_\-force\-\_\-message@{y\-\_\-log\-\_\-force\-\_\-message}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-force\-\_\-message}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-force\-\_\-message (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_ad9d19e56f169b8181a349e5219264731}
+
+
+Log a message forcefully, bypassing the current log settings. 
+
+Typically used for generating datafiles within scripts with the loglevel set to O\-F\-F, or things of that sort.
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+lr\_set\_debug\_message(LR\_MSG\_CLASS\_DISABLE\_LOG, LR\_SWITCH\_ON);
+lr\_set\_debug\_message(LR\_MSG\_CLASS\_AUTO\_LOG, LR\_SWITCH\_OFF);
+lr\_log\_message(\textcolor{stringliteral}{"Before"});              \textcolor{comment}{// Nothing gets logged here.}
+\hyperlink{y__logging_8c_ad9d19e56f169b8181a349e5219264731}{y\_log\_force\_message}(\textcolor{stringliteral}{"Forced message"}); \textcolor{comment}{// "Forced message" appears in the logs.}
+lr\_log\_message(\textcolor{stringliteral}{"After"});               \textcolor{comment}{// No output again.}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-restore@{y\-\_\-log\-\_\-restore}}
+\index{y\-\_\-log\-\_\-restore@{y\-\_\-log\-\_\-restore}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-restore}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-restore (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a9704bca5562196d581411d31fcc690f0}
+
+
+Restore the loglevel to previous state. To be exact, it will restore it to the state it was in before the last call to y\-\_\-log\-\_\-set\-\_\-\{off$\vert$on$\vert$brief$\vert$extended\}() or \hyperlink{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}{y\-\_\-log\-\_\-save()}. 
+
+\begin{DoxyNote}{Note}
+Multiple calls to y\-\_\-log\-\_\-set\-\_\-$\ast$ functions in a row will overwrite the previous saved state, making the first state potentially unrecoverable.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-save@{y\-\_\-log\-\_\-save}}
+\index{y\-\_\-log\-\_\-save@{y\-\_\-log\-\_\-save}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-save}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-save (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}
+
+
+Save the loglevel for later restoration through \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()}. 
+
+This is called by the various y\-\_\-log\-\_\-$\ast$ functions to make sure the loglevel can be put back the way it was.
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_ac5edd02a051826b8871ddacb48fa3bb7}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-set\-\_\-brief@{y\-\_\-log\-\_\-set\-\_\-brief}}
+\index{y\-\_\-log\-\_\-set\-\_\-brief@{y\-\_\-log\-\_\-set\-\_\-brief}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-set\-\_\-brief}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-set\-\_\-brief (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_ac5edd02a051826b8871ddacb48fa3bb7}
+
+
+Set the log level to \char`\"{}brief\char`\"{} messages only. 
+
+\begin{DoxyNote}{Note}
+Calling \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()} will restore the loglevel to the state it was in before this call.
+\end{DoxyNote}
+Useful when you want to, say, not see that big P\-D\-F you are downloading somewhere in your logs but {\itshape do} want to see the rest of the logging. \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a7cca27937c3caa6dbcfa8d5c5b3894cc}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-set\-\_\-extended@{y\-\_\-log\-\_\-set\-\_\-extended}}
+\index{y\-\_\-log\-\_\-set\-\_\-extended@{y\-\_\-log\-\_\-set\-\_\-extended}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-set\-\_\-extended}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-set\-\_\-extended (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a7cca27937c3caa6dbcfa8d5c5b3894cc}
+
+
+Set the log level to show all messages, including extended result data, parameters, and tracing information. 
+
+\begin{DoxyNote}{Note}
+Calling \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()} will restore the loglevel to the state it was in before this call.
+\end{DoxyNote}
+Useful when you want to debug a particular step in the script.
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-to\-\_\-report@{y\-\_\-log\-\_\-to\-\_\-report}}
+\index{y\-\_\-log\-\_\-to\-\_\-report@{y\-\_\-log\-\_\-to\-\_\-report}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-to\-\_\-report}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-to\-\_\-report (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a440898bcda285688344b7147e26ff5b7}
+
+
+If extra logging was enabled force a line to be logged to the logfile -\/ even if regular logging was turned off. Enable extra logging by calling \hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\-\_\-setup\-\_\-logging()} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & The message to be logged.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000011}{Deprecated}]Logging with a timestamp sounds useful, but I don't think it should be called \char`\"{}y\-\_\-log\-\_\-to\-\_\-report()\char`\"{}, and it is rather customer specific, too. Also, forced logging really should be it's own thing.\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\-\_\-setup\-\_\-logging()}, \hyperlink{y__logging_8c_ad9d19e56f169b8181a349e5219264731}{y\-\_\-log\-\_\-force\-\_\-message()} 
+\end{DoxySeeAlso}
+\hypertarget{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-turn\-\_\-off@{y\-\_\-log\-\_\-turn\-\_\-off}}
+\index{y\-\_\-log\-\_\-turn\-\_\-off@{y\-\_\-log\-\_\-turn\-\_\-off}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-turn\-\_\-off}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-turn\-\_\-off (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}
+
+
+Save the current loglevel and turn off logging. 
+
+\begin{DoxyNote}{Note}
+Calling \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()} will restore the loglevel to the state it was in before this call.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_ae92fd3a1d985c02c4d630dd1af17580b}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently@{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently}}
+\index{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently@{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-turn\-\_\-off\-\_\-permanently (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_ae92fd3a1d985c02c4d630dd1af17580b}
+
+
+Turn all logging off and make sure it stays that way. 
+
+This will overwrite the state saved by \hyperlink{y__logging_8c_a168c850ea18a4c7201ea9816337729aa}{y\-\_\-log\-\_\-save()} with \char`\"{}\-No logging at all, please.\char`\"{}, so that \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()} can't turn things back on.
+
+\begin{DoxyNote}{Note}
+Direct calls to lr\-\_\-set\-\_\-debug\-\_\-message() will still be able to turn things back on. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Mixing calls to y\-\_\-log\-\_\-$\ast$ functions with calls to lr\-\_\-debug\-\_\-message() is not wise and may yield unpredictable results.
+\end{DoxyWarning}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_afc385840588ec59b6d002d755b0e0415}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving@{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving}}
+\index{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving@{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-turn\-\_\-off\-\_\-without\-\_\-saving (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_afc385840588ec59b6d002d755b0e0415}
+
+
+Force all logging off unconditionally, without saving the old state. 
+
+This is used by various y\-\_\-log\-\_\-$\ast$ functions to get the loglevel to a known state.
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_a945fff57d0f423529adf29ec8efc1e6a}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-turn\-\_\-on@{y\-\_\-log\-\_\-turn\-\_\-on}}
+\index{y\-\_\-log\-\_\-turn\-\_\-on@{y\-\_\-log\-\_\-turn\-\_\-on}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-turn\-\_\-on}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-turn\-\_\-on (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_a945fff57d0f423529adf29ec8efc1e6a}
+
+
+Turn logging on. 
+
+What this function does depends on the saved loglevel.
+\begin{DoxyItemize}
+\item If the saved loglevel was \char`\"{}no logging\char`\"{}, \hyperlink{y__logging_8c_a7cca27937c3caa6dbcfa8d5c5b3894cc}{y\-\_\-log\-\_\-set\-\_\-extended()} is called, turning all logging on.
+\item Otherwise, \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()} is called to undo the previous loglevel change.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+If the previous loglevel was \char`\"{}brief\char`\"{} while the current level is \char`\"{}extended\char`\"{}, this may result in {\itshape less} logging. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000002}{Todo}]Either fix that, or remove this function.\end{DoxyRefDesc}
+
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__logging_8c_ace528d55b1ad1149709aaaadb00730ae}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-log\-\_\-warning@{y\-\_\-log\-\_\-warning}}
+\index{y\-\_\-log\-\_\-warning@{y\-\_\-log\-\_\-warning}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-warning}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-warning (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_ace528d55b1ad1149709aaaadb00730ae}
+
+
+Log a warning, with a timestamp, if extra logging is enabled. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & The error message to be logged.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000013}{Deprecated}]Unused, and forcibly logging things even if logging is turned off is rather impolite to begin with ;-\/) \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report()} 
+\end{DoxySeeAlso}
+\end{DoxyRefDesc}
+\hypertarget{y__logging_8c_af5f7233cc156519f399367ba558adba8}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-make\-\_\-datetimestamp@{y\-\_\-make\-\_\-datetimestamp}}
+\index{y\-\_\-make\-\_\-datetimestamp@{y\-\_\-make\-\_\-datetimestamp}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-make\-\_\-datetimestamp}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-make\-\_\-datetimestamp (
+\begin{DoxyParamCaption}
+\item[{{\bf time\-\_\-t}}]{time, }
+\item[{unsigned short}]{millitm}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_af5f7233cc156519f399367ba558adba8}
+
+
+Convert a unixtime style timestamp to a date and time represented as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em time} & -\/ the unix time stamp, as reported by \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime()} \\
+\hline
+ & {\em millitm} & -\/ the milliseconds belonging to the time stamp\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The string represation of the timestamp, formatted as Y\-Y\-Y\-Y-\/\-M\-M-\/\-D\-D H\-H\-:\-M\-M\-:S\-S.\-mmm.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a9b402b9377251d1b78db7507c76fd886}{y\-\_\-get\-\_\-datetimestamp()}, \hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time()}
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000008}{Deprecated}]lr\-\_\-save\-\_\-datetime() really should be used for this kind of thing. \end{DoxyRefDesc}
+\hypertarget{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-setup\-\_\-logging@{y\-\_\-setup\-\_\-logging}}
+\index{y\-\_\-setup\-\_\-logging@{y\-\_\-setup\-\_\-logging}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-setup\-\_\-logging}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-setup\-\_\-logging (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}
+
+
+Turn on 'extra logging', when available. 
+
+This is one of the remnants of a bit of old code that would log every transaction stop/start with a timestamp, so that post-\/test-\/analysis of responstimes could be done with custom tools. Unless you are running a very old y-\/lib based script there is no reason why you should use this, as y\-\_\-set\-\_\-start\-\_\-transaction\-\_\-impl() and y\-\_\-set\-\_\-end\-\_\-transaction\-\_\-impl() should give you the tools you need to do something like that without polluting y-\/lib with it ;-\/)
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000010}{Deprecated}]This will probably be removed in favor of y\-\_\-set\-\_\-transaction\-\_\-implementation(), which is really how this kind of extra transaction logging should be done. Note that \hyperlink{y__transaction_8c}{y\-\_\-transaction.\-c} hasn't used the extra logging stuff in some time ..\end{DoxyRefDesc}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report()} 
+\end{DoxySeeAlso}
+\hypertarget{y__logging_8c_acd38a10a5e25caf792c6c6c5be68ab5e}{\index{y\-\_\-logging.\-c@{y\-\_\-logging.\-c}!y\-\_\-write\-\_\-to\-\_\-log@{y\-\_\-write\-\_\-to\-\_\-log}}
+\index{y\-\_\-write\-\_\-to\-\_\-log@{y\-\_\-write\-\_\-to\-\_\-log}!y_logging.c@{y\-\_\-logging.\-c}}
+\subsubsection[{y\-\_\-write\-\_\-to\-\_\-log}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-write\-\_\-to\-\_\-log (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename, }
+\item[{char $\ast$}]{content}
+\end{DoxyParamCaption}
+)}}\label{y__logging_8c_acd38a10a5e25caf792c6c6c5be68ab5e}
+
+
+Write a string prepended with date and time to the specified (log)file. 
+
+The logged line will have the following format\-: Y\-Y\-Y\-Y\-M\-M,D\-D\-H\-Hmmss,\{y\-\_\-virtual\-\_\-user\-\_\-group\},\{y\-\_\-virtual\-\_\-user\-\_\-id\},\{y\-\_\-scid\},\{content\}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & The file name of the target file. \\
+\hline
+\mbox{\tt in}  & {\em content} & The logmessage to be written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Negative number in case of an error, zero otherwise.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{y__logging_8c_acd38a10a5e25caf792c6c6c5be68ab5e}{y\_write\_to\_log}(\textcolor{stringliteral}{"c:\(\backslash\)\(\backslash\)logfile.txt"}, \textcolor{stringliteral}{"Everything went great"});
+\end{DoxyCode}
+
+
+{\bfseries Example} {\bfseries output\-:} 20091126,215212,Some\-Group,3,4,Everything went great
+
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh 
+\end{DoxyAuthor}

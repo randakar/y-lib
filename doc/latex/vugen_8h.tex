@@ -1,0 +1,434 @@
+\hypertarget{vugen_8h}{\section{vugen.\-h File Reference}
+\label{vugen_8h}\index{vugen.\-h@{vugen.\-h}}
+}
+
+
+Standard C function headers.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtm}{tm}
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/tm/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/tm/}. \par
+Values outside of valid ranges can be used to calculate a new date/time using \hyperlink{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{mktime}. E.\-g. tm\-\_\-mday = 0 means last day of previous month. \end{DoxyCompactList}\item 
+struct \hyperlink{struct__timeb}{\-\_\-timeb}
+\begin{DoxyCompactList}\small\item\em Used by \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime}. Defined as \hyperlink{struct__timeb}{\-\_\-timeb} (instead of timeb) just as in the on-\/line Help. \end{DoxyCompactList}\item 
+struct \hyperlink{structlconv}{lconv}
+\begin{DoxyCompactList}\small\item\em Returned by \hyperlink{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{localeconv}. Documented at \href{http://www.cplusplus.com/reference/clocale/lconv/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/lconv/}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat}(to, from)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcat\-\_\-\-T\-H\-E\-R\-E\-\_\-\-I\-S\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-A\-\_\-\-B\-E\-T\-T\-E\-R\-\_\-\-S\-O\-L\-U\-T\-I\-O\-N
+\begin{DoxyCompactList}\small\item\em Force a compile time error when \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is used. \par
+ Because the use of \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is a {\bfseries very strong} indicator for poorly written code being compiled -- there is always a better solution! \end{DoxyCompactList}\item 
+\#define \hyperlink{group__string_ga706d50b003f763278d0cc4a14202a3fc}{strcpy}(dest, source)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcpy\-\_\-\-D\-U\-P\-L\-I\-C\-A\-T\-I\-O\-N\-\_\-\-I\-S\-\_\-\-N\-O\-T\-\_\-\-R\-E\-Q\-U\-I\-R\-E\-D
+\begin{DoxyCompactList}\small\item\em Force a compile time error when \hyperlink{group__string_ga706d50b003f763278d0cc4a14202a3fc}{strcpy()} is used. \par
+ The use of strcpy is banned because in practice strcpy is only used by novice coders doing unnecessary duplicating. (Typically when trying to avoid using pointers when actually using pointers.) \par
+ Evaluate your coding solution and avoid duplication. If you must, use the safer \hyperlink{group__string_gac25b4990403370b02ac7f8403a6b3230}{strncpy} or \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaada6f64b4a36eb39c9b4cfd44eef7b36}{\#define {\bfseries F\-I\-L\-E\-N\-A\-M\-E\-\_\-\-M\-A\-X}~1024}\label{group__file_gaada6f64b4a36eb39c9b4cfd44eef7b36}
+
+\item 
+\hypertarget{group__file_gad2560a07a7528c4975660f391320faca}{\#define {\bfseries L\-\_\-tmpnam}~F\-I\-L\-E\-N\-A\-M\-E\-\_\-\-M\-A\-X}\label{group__file_gad2560a07a7528c4975660f391320faca}
+
+\item 
+\hypertarget{group__file_ga0d112bae8fd35be772185b6ec6bcbe64}{\#define \hyperlink{group__file_ga0d112bae8fd35be772185b6ec6bcbe64}{S\-E\-E\-K\-\_\-\-S\-E\-T}~0}\label{group__file_ga0d112bae8fd35be772185b6ec6bcbe64}
+
+\begin{DoxyCompactList}\small\item\em set file offset to offset \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga4c8d0b76b470ba65a43ca46a88320f39}{\#define \hyperlink{group__file_ga4c8d0b76b470ba65a43ca46a88320f39}{S\-E\-E\-K\-\_\-\-C\-U\-R}~1}\label{group__file_ga4c8d0b76b470ba65a43ca46a88320f39}
+
+\begin{DoxyCompactList}\small\item\em set file offset to current plus offset \end{DoxyCompactList}\item 
+\hypertarget{group__file_gad2a2e6c114780c3071efd24f16c7f7d8}{\#define \hyperlink{group__file_gad2a2e6c114780c3071efd24f16c7f7d8}{S\-E\-E\-K\-\_\-\-E\-N\-D}~2}\label{group__file_gad2a2e6c114780c3071efd24f16c7f7d8}
+
+\begin{DoxyCompactList}\small\item\em set file offset to E\-O\-F {\bfseries plus} offset \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaf7475971eb93ce0184379e71fe7626e9}{\#define \hyperlink{group__file_gaf7475971eb93ce0184379e71fe7626e9}{\-\_\-\-I\-O\-F\-B\-F}~0}\label{group__file_gaf7475971eb93ce0184379e71fe7626e9}
+
+\begin{DoxyCompactList}\small\item\em setvbuf should set fully buffered \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaca9e52813bd224e4519e0b1289abbce9}{\#define \hyperlink{group__file_gaca9e52813bd224e4519e0b1289abbce9}{\-\_\-\-I\-O\-L\-B\-F}~1}\label{group__file_gaca9e52813bd224e4519e0b1289abbce9}
+
+\begin{DoxyCompactList}\small\item\em setvbuf should set line buffered \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga8661edb6b53e3104bef089bef02d0508}{\#define \hyperlink{group__file_ga8661edb6b53e3104bef089bef02d0508}{\-\_\-\-I\-O\-N\-B\-F}~2}\label{group__file_ga8661edb6b53e3104bef089bef02d0508}
+
+\begin{DoxyCompactList}\small\item\em setvbuf should set unbuffered \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga59adc4c82490d23754cd39c2fb99b0da}{\#define \hyperlink{group__file_ga59adc4c82490d23754cd39c2fb99b0da}{E\-O\-F}~(-\/1)}\label{group__file_ga59adc4c82490d23754cd39c2fb99b0da}
+
+\begin{DoxyCompactList}\small\item\em the End-\/\-Of-\/\-File constant \end{DoxyCompactList}\item 
+\hypertarget{group__locale_ga9cc5213b5dca4f8e48e64586ee444c33}{\#define {\bfseries L\-C\-\_\-\-A\-L\-L}~0}\label{group__locale_ga9cc5213b5dca4f8e48e64586ee444c33}
+
+\item 
+\hypertarget{group__locale_gaab9cf7b1a206fb75e5884934c8d676db}{\#define {\bfseries L\-C\-\_\-\-C\-O\-L\-L\-A\-T\-E}~1}\label{group__locale_gaab9cf7b1a206fb75e5884934c8d676db}
+
+\item 
+\hypertarget{group__locale_ga07c66689961056725d7f50231d740ba9}{\#define {\bfseries L\-C\-\_\-\-C\-T\-Y\-P\-E}~2}\label{group__locale_ga07c66689961056725d7f50231d740ba9}
+
+\item 
+\hypertarget{group__locale_ga6d033a83772ef6e6c10dbf13a6a58fb7}{\#define {\bfseries L\-C\-\_\-\-M\-O\-N\-E\-T\-A\-R\-Y}~3}\label{group__locale_ga6d033a83772ef6e6c10dbf13a6a58fb7}
+
+\item 
+\hypertarget{group__locale_ga158abb82c565096465ade138c98970d0}{\#define {\bfseries L\-C\-\_\-\-N\-U\-M\-E\-R\-I\-C}~4}\label{group__locale_ga158abb82c565096465ade138c98970d0}
+
+\item 
+\hypertarget{group__locale_gaa652c62b53b6bf728d592bfbdc7d5852}{\#define {\bfseries L\-C\-\_\-\-T\-I\-M\-E}~5}\label{group__locale_gaa652c62b53b6bf728d592bfbdc7d5852}
+
+\item 
+\hypertarget{group__locale_ga7195d6f0a8d1b9d164a3988a1b8249e8}{\#define {\bfseries L\-C\-\_\-\-M\-E\-S\-S\-A\-G\-E\-S}~6}\label{group__locale_ga7195d6f0a8d1b9d164a3988a1b8249e8}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__time_ga824afaa48b313f905546cf45822800fc}{typedef long \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t}}\label{group__time_ga824afaa48b313f905546cf45822800fc}
+
+\begin{DoxyCompactList}\small\item\em Type time\-\_\-t can hold a Unix timestamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__string_gac9626ce5468b43d954c3598c1ffe9725}{int \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf} (char $\ast$buffer, size\-\_\-t n, const char $\ast$format\-\_\-string,...)}\label{group__string_gac9626ce5468b43d954c3598c1ffe9725}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/snprintf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/snprintf/}. \par
+This function was introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}{int \hyperlink{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}{sprintf} (char $\ast$buffer, const char $\ast$format\-\_\-string,...)}\label{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/sprintf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/sprintf/}. \par
+ You should prefer \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf} over sprintf. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga2f4d081856ea28297723b2da1e271a6e}{int \hyperlink{group__string_ga2f4d081856ea28297723b2da1e271a6e}{sscanf} (const char $\ast$buffer, const char $\ast$format\-\_\-string,...)}\label{group__string_ga2f4d081856ea28297723b2da1e271a6e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/sscanf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/sscanf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga723821951547df8b58d7ddd93fc95306}{char $\ast$ \hyperlink{group__string_ga723821951547df8b58d7ddd93fc95306}{strchr} (const char $\ast$string, int c)}\label{group__string_ga723821951547df8b58d7ddd93fc95306}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strchr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strchr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}{int \hyperlink{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}{strcmp} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strcmp/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strcmp/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga86e0df1bf9e434074f958434e0af7581}{char $\ast$ \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup} (const char $\ast$string)}\label{group__string_ga86e0df1bf9e434074f958434e0af7581}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html}{\tt http\-://pubs.\-opengroup.\-org/onlinepubs/007904975/functions/strdup.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga156d6d978e1b69f06ca817323ab7751d}{int \hyperlink{group__string_ga156d6d978e1b69f06ca817323ab7751d}{stricmp} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_ga156d6d978e1b69f06ca817323ab7751d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/stricmp.htm}{\tt http\-://pic.\-dhe.\-ibm.\-com/infocenter/iseries/v7r1m0/topic/rtref/stricmp.\-htm} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga2869404e70f06f4477271f26ce8c4920}{size\-\_\-t \hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen} (const char $\ast$string)}\label{group__string_ga2869404e70f06f4477271f26ce8c4920}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strlen/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strlen/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga8405a432a671b51cc350ba62d5525c5a}{char $\ast$ \hyperlink{group__string_ga8405a432a671b51cc350ba62d5525c5a}{strlwr} (char $\ast$string)}\label{group__string_ga8405a432a671b51cc350ba62d5525c5a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strlwr.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strlwr.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga4b19a5035b747785f6f97caebd893fc8}{char $\ast$ \hyperlink{group__string_ga4b19a5035b747785f6f97caebd893fc8}{strncat} (char $\ast$to\-\_\-string, const char $\ast$from\-\_\-string, size\-\_\-t n)}\label{group__string_ga4b19a5035b747785f6f97caebd893fc8}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncat/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncat/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga9df1bbeeede6e085028295bdce89835e}{int \hyperlink{group__string_ga9df1bbeeede6e085028295bdce89835e}{strncmp} (const char $\ast$string1, const char $\ast$string2, size\-\_\-t n)}\label{group__string_ga9df1bbeeede6e085028295bdce89835e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncmp/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncmp/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga82046863ea74c18140c90748426a2a57}{int \hyperlink{group__string_ga82046863ea74c18140c90748426a2a57}{strnicmp} (const char $\ast$string1, const char $\ast$string2, size\-\_\-t num)}\label{group__string_ga82046863ea74c18140c90748426a2a57}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.htm}{\tt http\-://pic.\-dhe.\-ibm.\-com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.\-htm}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac25b4990403370b02ac7f8403a6b3230}{char $\ast$ \hyperlink{group__string_gac25b4990403370b02ac7f8403a6b3230}{strncpy} (char $\ast$destination, const char $\ast$source, size\-\_\-t num)}\label{group__string_gac25b4990403370b02ac7f8403a6b3230}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncpy/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncpy/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga41e787a98ff302e5107f24454762aa3f}{char $\ast$ \hyperlink{group__string_ga41e787a98ff302e5107f24454762aa3f}{strrchr} (const char $\ast$string, int c)}\label{group__string_ga41e787a98ff302e5107f24454762aa3f}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strrchr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strrchr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga61401bc1cda92c2f169f900dd62c5d87}{char $\ast$ \hyperlink{group__string_ga61401bc1cda92c2f169f900dd62c5d87}{strset} (char $\ast$string1, int character)}\label{group__string_ga61401bc1cda92c2f169f900dd62c5d87}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strset.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strset.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}{size\-\_\-t $\ast$ \hyperlink{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}{strspn} (const char $\ast$string, const char $\ast$skipset)}\label{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strspn/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strspn/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaedc7fca209acba7af0ad9e91573e89a6}{char $\ast$ \hyperlink{group__string_gaedc7fca209acba7af0ad9e91573e89a6}{strstr} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_gaedc7fca209acba7af0ad9e91573e89a6}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strstr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strstr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac611854fcb6575e80b790175acfb509a}{char $\ast$ \hyperlink{group__string_gac611854fcb6575e80b790175acfb509a}{strtok} (char $\ast$string, const char $\ast$delimiters)}\label{group__string_gac611854fcb6575e80b790175acfb509a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strtok/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strtok/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga3b3a432051b3200971d320bae89dbf2d}{char $\ast$ \hyperlink{group__string_ga3b3a432051b3200971d320bae89dbf2d}{strupr} (char $\ast$string)}\label{group__string_ga3b3a432051b3200971d320bae89dbf2d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strupr.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strupr.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga11747b633c46b24cb3e76042cba33ba0}{double \hyperlink{group__string_ga11747b633c46b24cb3e76042cba33ba0}{atof} (const char $\ast$string)}\label{group__string_ga11747b633c46b24cb3e76042cba33ba0}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atof/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atof/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac5aa18897f547ff20f10c777c6a58f0a}{int \hyperlink{group__string_gac5aa18897f547ff20f10c777c6a58f0a}{atoi} (const char $\ast$string)}\label{group__string_gac5aa18897f547ff20f10c777c6a58f0a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atoi/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atoi/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga41345248d4ac38a48238dbd288332180}{long \hyperlink{group__string_ga41345248d4ac38a48238dbd288332180}{atol} (const char $\ast$string)}\label{group__string_ga41345248d4ac38a48238dbd288332180}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atol/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atol/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga3e686aed704cb7a136cd69dc1f214368}{int \hyperlink{group__string_ga3e686aed704cb7a136cd69dc1f214368}{itoa} (int value, char $\ast$str, int radix)}\label{group__string_ga3e686aed704cb7a136cd69dc1f214368}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/itoa/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/itoa/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}{long \hyperlink{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}{strtol} (const char $\ast$string, char $\ast$$\ast$endptr, int radix)}\label{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtol/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtol/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaa7d767d03ce3929978c28f64e3a4b222}{unsigned long int \hyperlink{group__string_gaa7d767d03ce3929978c28f64e3a4b222}{strtoul} (const char $\ast$str, char $\ast$$\ast$endptr, int base)}\label{group__string_gaa7d767d03ce3929978c28f64e3a4b222}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtoul/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtoul/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gab017280f95ea769b9422688105f02653}{double \hyperlink{group__string_gab017280f95ea769b9422688105f02653}{strtod} (const char $\ast$str, char $\ast$$\ast$endptr)}\label{group__string_gab017280f95ea769b9422688105f02653}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtod/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtod/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gabe92a0aebef4717d08c64655ac44c9af}{int \hyperlink{group__char_gabe92a0aebef4717d08c64655ac44c9af}{isalnum} (int character)}\label{group__char_gabe92a0aebef4717d08c64655ac44c9af}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isalnum/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isalnum/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gaf947cbf1ae303e5297c9d68c68a6b9cb}{int \hyperlink{group__char_gaf947cbf1ae303e5297c9d68c68a6b9cb}{isalpha} (int character)}\label{group__char_gaf947cbf1ae303e5297c9d68c68a6b9cb}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isalpha/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isalpha/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gafdc5670ea66750c628cba1a0ce50f1d7}{int \hyperlink{group__char_gafdc5670ea66750c628cba1a0ce50f1d7}{iscntrl} (int character)}\label{group__char_gafdc5670ea66750c628cba1a0ce50f1d7}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/iscntrl/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/iscntrl/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga2bba38ef78f7131817546eaab9b5a416}{int \hyperlink{group__char_ga2bba38ef78f7131817546eaab9b5a416}{isdigit} (int character)}\label{group__char_ga2bba38ef78f7131817546eaab9b5a416}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isdigit/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isdigit/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga1039b6c101d508772749b7215b384b79}{int \hyperlink{group__char_ga1039b6c101d508772749b7215b384b79}{isgraph} (int character)}\label{group__char_ga1039b6c101d508772749b7215b384b79}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isgraph/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isgraph/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gab25707223aa5f16874de9e01f03f2991}{int \hyperlink{group__char_gab25707223aa5f16874de9e01f03f2991}{islower} (int character)}\label{group__char_gab25707223aa5f16874de9e01f03f2991}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/islower/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/islower/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga654407156e7999d80962c790909f9b22}{int \hyperlink{group__char_ga654407156e7999d80962c790909f9b22}{isprint} (int character)}\label{group__char_ga654407156e7999d80962c790909f9b22}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isprint/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isprint/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gaa1b926a76401d6d0f8df0d5c1abfbeea}{int \hyperlink{group__char_gaa1b926a76401d6d0f8df0d5c1abfbeea}{ispunct} (int character)}\label{group__char_gaa1b926a76401d6d0f8df0d5c1abfbeea}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/ispunct/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/ispunct/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga316ae9ebc4383bf1a2a5bfb9c980ce3e}{int \hyperlink{group__char_ga316ae9ebc4383bf1a2a5bfb9c980ce3e}{isspace} (int character)}\label{group__char_ga316ae9ebc4383bf1a2a5bfb9c980ce3e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isspace/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isspace/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga2807a08f90553cbde84781a34c969ae7}{int \hyperlink{group__char_ga2807a08f90553cbde84781a34c969ae7}{isupper} (int character)}\label{group__char_ga2807a08f90553cbde84781a34c969ae7}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isupper/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isupper/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga8be82624f8bf94fcd76029ab0cea6cea}{int \hyperlink{group__char_ga8be82624f8bf94fcd76029ab0cea6cea}{isxdigit} (int character)}\label{group__char_ga8be82624f8bf94fcd76029ab0cea6cea}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/isxdigit/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/isxdigit/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_ga637983fdb689bb08991bb3984826d0b8}{int \hyperlink{group__char_ga637983fdb689bb08991bb3984826d0b8}{tolower} (int character)}\label{group__char_ga637983fdb689bb08991bb3984826d0b8}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/tolower/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/tolower/}. \end{DoxyCompactList}\item 
+\hypertarget{group__char_gafb31888b7421a495b93aa91bdecd51c9}{int \hyperlink{group__char_gafb31888b7421a495b93aa91bdecd51c9}{toupper} (int character)}\label{group__char_gafb31888b7421a495b93aa91bdecd51c9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cctype/toupper/}{\tt http\-://www.\-cplusplus.\-com/reference/cctype/toupper/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga16d6b0bd660cc3f9910924c6b6f4af8e}{void $\ast$ \hyperlink{group__memory_ga16d6b0bd660cc3f9910924c6b6f4af8e}{memchr} (const void $\ast$s, int c, size\-\_\-t n)}\label{group__memory_ga16d6b0bd660cc3f9910924c6b6f4af8e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/memchr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/memchr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga9e6df54ee04e18a3772335580e2ed872}{int \hyperlink{group__memory_ga9e6df54ee04e18a3772335580e2ed872}{memcmp} (const void $\ast$s1, const void $\ast$s2, size\-\_\-t n)}\label{group__memory_ga9e6df54ee04e18a3772335580e2ed872}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/memcmp/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/memcmp/}. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{group__memory_ga14938524dcbeb59d7117ba5e151ad1b1}{memcpy} (void $\ast$dest, const void $\ast$src, size\-\_\-t n)
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/memcpy/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/memcpy/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga802c986820d3866639922b6bc9484f90}{void $\ast$ \hyperlink{group__memory_ga802c986820d3866639922b6bc9484f90}{memmove} (void $\ast$dest, const void $\ast$src, size\-\_\-t n)}\label{group__memory_ga802c986820d3866639922b6bc9484f90}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/memmove/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/memmove/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga484916591c59d130107eea6380337b69}{void $\ast$ \hyperlink{group__memory_ga484916591c59d130107eea6380337b69}{memset} (void $\ast$buffer, int c, size\-\_\-t n)}\label{group__memory_ga484916591c59d130107eea6380337b69}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/memset/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/memset/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{void $\ast$ \hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc} (size\-\_\-t num\-\_\-elems, size\-\_\-t elem\-\_\-size)}\label{group__memory_gae201ae1031fe85000b4e22abb3a824b2}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/calloc/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/calloc/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga557a44efb227bec48c165bf5e016b675}{void \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free} (void $\ast$mem\-\_\-address)}\label{group__memory_ga557a44efb227bec48c165bf5e016b675}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/free/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/free/}. \end{DoxyCompactList}\item 
+\hypertarget{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{void $\ast$ \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc} (size\-\_\-t num\-\_\-bytes)}\label{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/malloc/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/malloc/}. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{group__memory_ga51227fbfcbdfb8a8452db918cb9e6f30}{realloc} (void $\ast$mem\-\_\-address, size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/realloc/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/realloc/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} \hyperlink{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{time} (\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$timeptr)}\label{group__time_ga8038cf2bfae47bdf6942741c58a2c530}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/time/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/time/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}{char $\ast$ \hyperlink{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}{ctime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$cal\-Time)}\label{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/ctime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/ctime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gad8edabcf1742ba5c171533f0ebd8284e}{struct \hyperlink{structtm}{tm} $\ast$ \hyperlink{group__time_gad8edabcf1742ba5c171533f0ebd8284e}{gmtime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$cal\-Time)}\label{group__time_gad8edabcf1742ba5c171533f0ebd8284e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/gmtime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/gmtime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_ga77ffc012f51d8c41356e76628da706c9}{char $\ast$ \hyperlink{group__time_ga77ffc012f51d8c41356e76628da706c9}{asctime} (const struct \hyperlink{structtm}{tm} $\ast$tm\-Time)}\label{group__time_ga77ffc012f51d8c41356e76628da706c9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/asctime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/asctime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gab385910b876ee7c39c938b181e83db42}{size\-\_\-t $\ast$ \hyperlink{group__time_gab385910b876ee7c39c938b181e83db42}{strftime} (char $\ast$string, size\-\_\-t maxlen, const char $\ast$format, const struct \hyperlink{structtm}{tm} $\ast$timestruct)}\label{group__time_gab385910b876ee7c39c938b181e83db42}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/strftime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/strftime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} \hyperlink{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{mktime} (struct \hyperlink{structtm}{tm} $\ast$timeptr)}\label{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/mktime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/mktime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}{struct \hyperlink{structtm}{tm} $\ast$ \hyperlink{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}{localtime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$timer)}\label{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/localtime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/localtime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_ga7089a565743ec7206aa9de50705b2041}{void \hyperlink{group__time_ga7089a565743ec7206aa9de50705b2041}{tzset} (void)}\label{group__time_ga7089a565743ec7206aa9de50705b2041}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/tzset/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/tzset/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gafc0d3a1676a915f3cedcad79759f6802}{void \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime} (struct \hyperlink{struct__timeb}{\-\_\-timeb} $\ast$\hyperlink{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{time})}\label{group__time_gafc0d3a1676a915f3cedcad79759f6802}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/f/ftime.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/f/ftime.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga9f376cee93d3084b7b951034ba8e0dbf}{int \hyperlink{group__file_ga9f376cee93d3084b7b951034ba8e0dbf}{fclose} (long file\-\_\-pointer)}\label{group__file_ga9f376cee93d3084b7b951034ba8e0dbf}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fclose/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fclose/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gac8d8490cf277f4aeb35d2f907be6c9df}{int \hyperlink{group__file_gac8d8490cf277f4aeb35d2f907be6c9df}{feof} (long file\-\_\-pointer)}\label{group__file_gac8d8490cf277f4aeb35d2f907be6c9df}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/feof/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/feof/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga716c31e8dd4fad8e5111da39446fa5ba}{int \hyperlink{group__file_ga716c31e8dd4fad8e5111da39446fa5ba}{ferror} (long file\-\_\-pointer)}\label{group__file_ga716c31e8dd4fad8e5111da39446fa5ba}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/ferror/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/ferror/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaf91145648fcc4e34d1e696fa7433616a}{int \hyperlink{group__file_gaf91145648fcc4e34d1e696fa7433616a}{fgetc} (long file\-\_\-pointer)}\label{group__file_gaf91145648fcc4e34d1e696fa7433616a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fgetc/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fgetc/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga0e7328e0c0e9a8eaac30b7211b309ae3}{char $\ast$ \hyperlink{group__file_ga0e7328e0c0e9a8eaac30b7211b309ae3}{fgets} (char $\ast$string, int maxchar, long file\-\_\-pointer)}\label{group__file_ga0e7328e0c0e9a8eaac30b7211b309ae3}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fgets/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fgets/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaf7529a4ebfea114f18c84860c6e9e04c}{int \hyperlink{group__file_gaf7529a4ebfea114f18c84860c6e9e04c}{fputs} (const char $\ast$str, long file\-\_\-pointer)}\label{group__file_gaf7529a4ebfea114f18c84860c6e9e04c}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fputs/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fputs/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gacb39e7f103a086acfd6add72c1b362c0}{long \hyperlink{group__file_gacb39e7f103a086acfd6add72c1b362c0}{fopen} (const char $\ast$filename, const char $\ast$access\-\_\-mode)}\label{group__file_gacb39e7f103a086acfd6add72c1b362c0}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fopen/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fopen/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaee12141810555c53258443f8ff929b1f}{int \hyperlink{group__file_gaee12141810555c53258443f8ff929b1f}{fprintf} (long file\-\_\-pointer, const char $\ast$format\-\_\-string,...)}\label{group__file_gaee12141810555c53258443f8ff929b1f}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fprintf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fprintf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga78f482be08e44554b059b574c4b63d0d}{int \hyperlink{group__file_ga78f482be08e44554b059b574c4b63d0d}{fputc} (int c, long file\-\_\-pointer)}\label{group__file_ga78f482be08e44554b059b574c4b63d0d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fputc/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fputc/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga3b86a6bb8423253b0089888caafb13b8}{size\-\_\-t \hyperlink{group__file_ga3b86a6bb8423253b0089888caafb13b8}{fread} (void $\ast$buffer, size\-\_\-t size, size\-\_\-t count, long file\-\_\-pointer)}\label{group__file_ga3b86a6bb8423253b0089888caafb13b8}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fread/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fread/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gafcf45ec2dfbe6d412cbe8bf9e358f94a}{int \hyperlink{group__file_gafcf45ec2dfbe6d412cbe8bf9e358f94a}{fscanf} (long file\-\_\-pointer, const char $\ast$format\-\_\-string,...)}\label{group__file_gafcf45ec2dfbe6d412cbe8bf9e358f94a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fscanf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fscanf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaf1a19cac0fb61afd6beea6b05c4ffb67}{int \hyperlink{group__file_gaf1a19cac0fb61afd6beea6b05c4ffb67}{fseek} (long file\-\_\-pointer, long offset, int origin)}\label{group__file_gaf1a19cac0fb61afd6beea6b05c4ffb67}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fseek/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fseek/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gaad594160bcd06764f62585293162e44d}{long \hyperlink{group__file_gaad594160bcd06764f62585293162e44d}{ftell} (long file\-\_\-pointer)}\label{group__file_gaad594160bcd06764f62585293162e44d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/ftell/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/ftell/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga9ec52e116d0313bd32502741aa77267d}{size\-\_\-t \hyperlink{group__file_ga9ec52e116d0313bd32502741aa77267d}{fwrite} (const void $\ast$buffer, size\-\_\-t size, size\-\_\-t count, long file\-\_\-pointer)}\label{group__file_ga9ec52e116d0313bd32502741aa77267d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/fwrite/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/fwrite/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga7976044cb9a7657ba3e94883e65a2774}{void \hyperlink{group__file_ga7976044cb9a7657ba3e94883e65a2774}{rewind} (long file\-\_\-pointer)}\label{group__file_ga7976044cb9a7657ba3e94883e65a2774}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/rewind/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/rewind/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_gad888d1014ab55f0d19bd2ceb0fb4faa9}{long \hyperlink{group__file_gad888d1014ab55f0d19bd2ceb0fb4faa9}{tmpfile} (void)}\label{group__file_gad888d1014ab55f0d19bd2ceb0fb4faa9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/tmpfile/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/tmpfile/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga6152bfd9e570310dc1a0b23cbe04c975}{char $\ast$ \hyperlink{group__file_ga6152bfd9e570310dc1a0b23cbe04c975}{tmpnam} (char $\ast$str)}\label{group__file_ga6152bfd9e570310dc1a0b23cbe04c975}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/tmpnam/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/tmpnam/}. \end{DoxyCompactList}\item 
+\hypertarget{group__file_ga290a37f3ed2896917c6d45573d340248}{int \hyperlink{group__file_ga290a37f3ed2896917c6d45573d340248}{setvbuf} (long file\-\_\-pointer, char $\ast$buffer, int mode, size\-\_\-t size)}\label{group__file_ga290a37f3ed2896917c6d45573d340248}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/setvbuf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/setvbuf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga43498c4ca6e30d29db45d768a87e6b6e}{int \hyperlink{group__process_ga43498c4ca6e30d29db45d768a87e6b6e}{getw} (long file\-\_\-pointer)}\label{group__process_ga43498c4ca6e30d29db45d768a87e6b6e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://man7.org/linux/man-pages/man3/getw.3.html}{\tt http\-://man7.\-org/linux/man-\/pages/man3/getw.\-3.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga4f16a59d682aab6b050b69aab05113f4}{int \hyperlink{group__process_ga4f16a59d682aab6b050b69aab05113f4}{pclose} (long file\-\_\-pointer)}\label{group__process_ga4f16a59d682aab6b050b69aab05113f4}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://man7.org/linux/man-pages/man3/pclose.3.html}{\tt http\-://man7.\-org/linux/man-\/pages/man3/pclose.\-3.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga977bb639528d6aab8d0ce9afd57ec289}{long \hyperlink{group__process_ga977bb639528d6aab8d0ce9afd57ec289}{popen} (const char $\ast$command, const char $\ast$access\-\_\-mode)}\label{group__process_ga977bb639528d6aab8d0ce9afd57ec289}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://man7.org/linux/man-pages/man3/popen.3.html}{\tt http\-://man7.\-org/linux/man-\/pages/man3/popen.\-3.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga2700ec93bb976995aac3741ed33589b4}{int \hyperlink{group__process_ga2700ec93bb976995aac3741ed33589b4}{putw} (int word, long file\-\_\-pointer)}\label{group__process_ga2700ec93bb976995aac3741ed33589b4}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://man7.org/linux/man-pages/man3/putw.3.html}{\tt http\-://man7.\-org/linux/man-\/pages/man3/putw.\-3.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__process_gafb7a8c40cb25ca269dce667a8e2a7668}{char $\ast$ \hyperlink{group__process_gafb7a8c40cb25ca269dce667a8e2a7668}{getenv} (const char $\ast$varname)}\label{group__process_gafb7a8c40cb25ca269dce667a8e2a7668}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/getenv/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/getenv/}. \end{DoxyCompactList}\item 
+\hypertarget{group__process_gaebed10bce76fcc4adf43ada5a3e21300}{int \hyperlink{group__process_gaebed10bce76fcc4adf43ada5a3e21300}{putenv} (const char $\ast$envstring)}\label{group__process_gaebed10bce76fcc4adf43ada5a3e21300}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/putenv/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/putenv/}. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga8b0abd498c08f782b325e8532254e962}{int \hyperlink{group__process_ga8b0abd498c08f782b325e8532254e962}{system} (const char $\ast$string)}\label{group__process_ga8b0abd498c08f782b325e8532254e962}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/system/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/system/}. \par
+ The \hyperlink{group__process_ga977bb639528d6aab8d0ce9afd57ec289}{popen} function is more useful in L\-R scripts. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga03af571dfb595681bfa203c83385c07b}{int \hyperlink{group__process_ga03af571dfb595681bfa203c83385c07b}{chdir} (const char $\ast$path)}\label{group__process_ga03af571dfb595681bfa203c83385c07b}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://man7.org/linux/man-pages/man2/chdir.2.html}{\tt http\-://man7.\-org/linux/man-\/pages/man2/chdir.\-2.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__process_gafb9b67085ccc81981d853faca68f821c}{int \hyperlink{group__process_gafb9b67085ccc81981d853faca68f821c}{chdrive} (int drive)}\label{group__process_gafb9b67085ccc81981d853faca68f821c}
+
+\begin{DoxyCompactList}\small\item\em See on-\/line help. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga169aa64ffbd2fb36997ab67e03a95dfb}{char $\ast$ \hyperlink{group__process_ga169aa64ffbd2fb36997ab67e03a95dfb}{getcwd} (char $\ast$path, int numchars)}\label{group__process_ga169aa64ffbd2fb36997ab67e03a95dfb}
+
+\begin{DoxyCompactList}\small\item\em See on-\/line help. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga5e4a8d72a7f09af71e98f4735c2cbc9b}{int \hyperlink{group__process_ga5e4a8d72a7f09af71e98f4735c2cbc9b}{getdrive} (void)}\label{group__process_ga5e4a8d72a7f09af71e98f4735c2cbc9b}
+
+\begin{DoxyCompactList}\small\item\em See on-\/line help. \end{DoxyCompactList}\item 
+\hypertarget{group__process_ga32e4cef9beb0262cea4bdafb5b998276}{int \hyperlink{group__process_ga32e4cef9beb0262cea4bdafb5b998276}{remove} (const char $\ast$path)}\label{group__process_ga32e4cef9beb0262cea4bdafb5b998276}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/remove/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/remove/}. \end{DoxyCompactList}\item 
+\hypertarget{group__process_gaffd46c92931ef1c646e1a78ab880a00e}{int \hyperlink{group__process_gaffd46c92931ef1c646e1a78ab880a00e}{rename} (const char $\ast$oldname, const char $\ast$newname)}\label{group__process_gaffd46c92931ef1c646e1a78ab880a00e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/rename/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/rename/}. \end{DoxyCompactList}\item 
+\hypertarget{group__process_gab2df76f2c62ae012c2e417813b5fe8ce}{int \hyperlink{group__process_gab2df76f2c62ae012c2e417813b5fe8ce}{rmdir} (const char $\ast$path)}\label{group__process_gab2df76f2c62ae012c2e417813b5fe8ce}
+
+\begin{DoxyCompactList}\small\item\em See on-\/line help. \end{DoxyCompactList}\item 
+\hypertarget{group__locale_gafe784c4f5d12b74272740c5211c960c5}{char $\ast$ \hyperlink{group__locale_gafe784c4f5d12b74272740c5211c960c5}{setlocale} (int category, const char $\ast$locale)}\label{group__locale_gafe784c4f5d12b74272740c5211c960c5}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/clocale/setlocale/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/setlocale/}. \end{DoxyCompactList}\item 
+\hypertarget{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{struct \hyperlink{structlconv}{lconv} $\ast$ \hyperlink{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{localeconv} (void)}\label{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/clocale/localeconv/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/localeconv/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gafd4f329c8efb45c0dfff44525047a0fa}{int \hyperlink{group__math_gafd4f329c8efb45c0dfff44525047a0fa}{abs} (int n)}\label{group__math_gafd4f329c8efb45c0dfff44525047a0fa}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/abs/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/abs/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga8fb5c0b9b43a108724b355136d29d2f9}{double \hyperlink{group__math_ga8fb5c0b9b43a108724b355136d29d2f9}{fabs} (double x)}\label{group__math_ga8fb5c0b9b43a108724b355136d29d2f9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/fabs/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/fabs/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga1ea6d7b591132268abc2e843ababd084}{double \hyperlink{group__math_ga1ea6d7b591132268abc2e843ababd084}{ceil} (double x)}\label{group__math_ga1ea6d7b591132268abc2e843ababd084}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/ceil/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/ceil/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga6de60a3e907dcf0bfe3ea8d64f1e8873}{double \hyperlink{group__math_ga6de60a3e907dcf0bfe3ea8d64f1e8873}{floor} (double x)}\label{group__math_ga6de60a3e907dcf0bfe3ea8d64f1e8873}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/floor/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/floor/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga48fbbea0b24950f2622743b9f5fa6bb9}{double \hyperlink{group__math_ga48fbbea0b24950f2622743b9f5fa6bb9}{fmod} (double numerator, double denominator)}\label{group__math_ga48fbbea0b24950f2622743b9f5fa6bb9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/fmod/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/fmod/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gaf52b45ed86b2720073966f0d7bb8d36b}{double \hyperlink{group__math_gaf52b45ed86b2720073966f0d7bb8d36b}{modf} (double x, double $\ast$intpart)}\label{group__math_gaf52b45ed86b2720073966f0d7bb8d36b}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/modf/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/modf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gae09128febbbe6372cde4fa0c65608a42}{double \hyperlink{group__math_gae09128febbbe6372cde4fa0c65608a42}{exp} (double x)}\label{group__math_gae09128febbbe6372cde4fa0c65608a42}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/exp/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/exp/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gab87521a75ef827a85807f89a6c10629a}{double \hyperlink{group__math_gab87521a75ef827a85807f89a6c10629a}{sqrt} (double x)}\label{group__math_gab87521a75ef827a85807f89a6c10629a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/sqrt/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/sqrt/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga27382c762927551c5849a43cbd0d0e71}{double \hyperlink{group__math_ga27382c762927551c5849a43cbd0d0e71}{pow} (double base, double exponent)}\label{group__math_ga27382c762927551c5849a43cbd0d0e71}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/pow/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/pow/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gadb302c9aafbaa5e180d9f60ee954bb82}{double \hyperlink{group__math_gadb302c9aafbaa5e180d9f60ee954bb82}{log} (double x)}\label{group__math_gadb302c9aafbaa5e180d9f60ee954bb82}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/log/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/log/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga6572e82a4891917a9ba7fb2a964f8182}{double \hyperlink{group__math_ga6572e82a4891917a9ba7fb2a964f8182}{log10} (double x)}\label{group__math_ga6572e82a4891917a9ba7fb2a964f8182}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/log10/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/log10/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga38bd88274dc5594b4826fd60c8054c8e}{double \hyperlink{group__math_ga38bd88274dc5594b4826fd60c8054c8e}{log2} (double x)}\label{group__math_ga38bd88274dc5594b4826fd60c8054c8e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/log2/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/log2/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_gaad4af25633b071b0e2cdb8ebd87eca77}{double \hyperlink{group__math_gaad4af25633b071b0e2cdb8ebd87eca77}{sin} (double x)}\label{group__math_gaad4af25633b071b0e2cdb8ebd87eca77}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/sin/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/sin/}. \end{DoxyCompactList}\item 
+\hypertarget{group__math_ga5e7b53a694b3cf0f2d7debd444140fbd}{double \hyperlink{group__math_ga5e7b53a694b3cf0f2d7debd444140fbd}{cos} (double x)}\label{group__math_ga5e7b53a694b3cf0f2d7debd444140fbd}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cmath/cos/}{\tt http\-://www.\-cplusplus.\-com/reference/cmath/cos/}. \end{DoxyCompactList}\item 
+\hypertarget{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}{int \hyperlink{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}{rand} (void)}\label{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/rand/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/rand/}. \end{DoxyCompactList}\item 
+\hypertarget{vugen_8h_a2cd7242befd15ed58919f8abc0f065c5}{int \hyperlink{vugen_8h_a2cd7242befd15ed58919f8abc0f065c5}{srand} (unsigned int seed)}\label{vugen_8h_a2cd7242befd15ed58919f8abc0f065c5}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/srand/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/srand/}. \end{DoxyCompactList}\item 
+\hypertarget{vugen_8h_a186deeca99cb29182b6ee359e1893d8e}{void \hyperlink{vugen_8h_a186deeca99cb29182b6ee359e1893d8e}{sleep} (D\-W\-O\-R\-D dw\-Milliseconds)}\label{vugen_8h_a186deeca99cb29182b6ee359e1893d8e}
+
+\begin{DoxyCompactList}\small\item\em Windows A\-P\-I uninterruptable sleep in L\-R, better to use {\bfseries lr\-\_\-force\-\_\-think\-\_\-time()} or {\bfseries lr\-\_\-usleep()} instead. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Standard C function headers. This header file contains the most used 'standard C functions' in Vugen scripts. \par
+By declaring these functions properly the compiler can check if these functions are used correctly and apply implicit conversions when necessary. \par
+This header file 'de-\/strips' the compiler in Vugen. \par
+It contains all functions mentioned in the H\-P Load\-Runner Online Function Reference. \begin{DoxyNote}{Note}
+Sites like \href{http://www.cplusplus.com/reference/clibrary/}{\tt http\-://www.\-cplusplus.\-com/reference/clibrary/} explain the standard C functions better than the H\-P Load\-Runner Online Function Reference and more.
+\end{DoxyNote}
+{\bfseries Usage\-:} Automatically included as part of y-\/lib. To use this stand-\/alone add \hyperlink{vugen_8h}{vugen.\-h} to the script and add the following to globals.\-h or vuser\-\_\-init.\-c\-: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include "\hyperlink{vugen_8h}{vugen.h}"} 
+\end{DoxyCode}
+ Or\-: add to include-\/directory and add the \#include to lhrun.\-h on all Vugen machines and load generators. \par
+Initial version 2012-\/03-\/27, last update 2014-\/01-\/09 \begin{DoxyAuthor}{Author}
+A.\-U. Luyer 
+\end{DoxyAuthor}
+\begin{DoxyWarning}{Warning}
+lrun.\-h contains\-:
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define size\_t int }
+\end{DoxyCode}
+ causing size\-\_\-t to be defined as {\bfseries signed} integer, which is incorrect. 
+\end{DoxyWarning}

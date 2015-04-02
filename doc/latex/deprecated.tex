@@ -1,0 +1,81 @@
+
+\begin{DoxyRefList}
+\item[\label{deprecated__deprecated000014}%
+\hypertarget{deprecated__deprecated000014}{}%
+Member \hyperlink{y__param__array_8c_afb0cc8ca2f0a0f64b015d2becd2cbe39}{y\-\_\-array\-\_\-get\-\_\-random} (const char $\ast$source\-\_\-param\-\_\-array)]This doesn't really do anything that lr\-\_\-paramarr\-\_\-random() doesn't already do. 
+\item[\label{deprecated__deprecated000007}%
+\hypertarget{deprecated__deprecated000007}{}%
+Member \hyperlink{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{y\-\_\-datetime} ()]\begin{DoxyNote}{Note}
+This doesn't add much. People should be able to call lr\-\_\-save\-\_\-datetime() themselves, right? Putting it on the deprecation list for that reason. 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{y\_datetime}();
+lr\_message(\textcolor{stringliteral}{"Current date/time: %s"}, lr\_eval\_string(\textcolor{stringliteral}{"\{DATE\_TIME\_STRING\}"}));
+\end{DoxyCode}
+ 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Raymond de Jongh  
+\end{DoxyAuthor}
+
+\item[\label{deprecated__deprecated000009}%
+\hypertarget{deprecated__deprecated000009}{}%
+Member \hyperlink{y__logging_8c_a9b402b9377251d1b78db7507c76fd886}{y\-\_\-get\-\_\-datetimestamp} ()]Use lr\-\_\-save\-\_\-datetime() or direct \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime()} calls instead. 
+\item[\label{deprecated__deprecated000012}%
+\hypertarget{deprecated__deprecated000012}{}%
+Member \hyperlink{y__logging_8c_a9699f5d59ff8a52ff94352d41b033ea5}{y\-\_\-log\-\_\-error} (char $\ast$message)]Forcing your error messages to get logged may not be the best idea there is. And I don't know of anyone using this, either. \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report()}  
+\end{DoxySeeAlso}
+
+\item[\label{deprecated__deprecated000011}%
+\hypertarget{deprecated__deprecated000011}{}%
+Member \hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report} (char $\ast$message)]Logging with a timestamp sounds useful, but I don't think it should be called \char`\"{}y\-\_\-log\-\_\-to\-\_\-report()\char`\"{}, and it is rather customer specific, too. Also, forced logging really should be it's own thing. 
+\item[\label{deprecated__deprecated000013}%
+\hypertarget{deprecated__deprecated000013}{}%
+Member \hyperlink{y__logging_8c_ace528d55b1ad1149709aaaadb00730ae}{y\-\_\-log\-\_\-warning} (char $\ast$message)]Unused, and forcibly logging things even if logging is turned off is rather impolite to begin with ;-\/) \begin{DoxySeeAlso}{See Also}
+\hyperlink{y__logging_8c_a440898bcda285688344b7147e26ff5b7}{y\-\_\-log\-\_\-to\-\_\-report()}  
+\end{DoxySeeAlso}
+
+\item[\label{deprecated__deprecated000008}%
+\hypertarget{deprecated__deprecated000008}{}%
+Member \hyperlink{y__logging_8c_af5f7233cc156519f399367ba558adba8}{y\-\_\-make\-\_\-datetimestamp} (time\-\_\-t time, unsigned short millitm)]lr\-\_\-save\-\_\-datetime() really should be used for this kind of thing.  
+\item[\label{deprecated__deprecated000015}%
+\hypertarget{deprecated__deprecated000015}{}%
+Member \hyperlink{y__transaction_8c_a4ce1cf19821f9eabdc90e247270c99bc}{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr} ()]-\/ \hyperlink{y__transaction_8c_a7672d883aaf18287c950c985ce4d3f95}{y\-\_\-increment\-\_\-transaction\-\_\-nr()} does the same thing. 
+\item[\label{deprecated__deprecated000001}%
+\hypertarget{deprecated__deprecated000001}{}%
+Member \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand} (void)]Superseded by \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand}  
+\item[\label{deprecated__deprecated000006}%
+\hypertarget{deprecated__deprecated000006}{}%
+Member \hyperlink{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window} (int lowerbound, int upperbound, int rand\-\_\-max)]
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lowerbound} & Minumum value \\
+\hline
+\mbox{\tt in}  & {\em upperbound} & Maximum value \\
+\hline
+\mbox{\tt in}  & {\em rand\-\_\-max} & Upper boundary of the random number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+0\-: no, random number lies outside the boundaries\par
+ 1\-: yes, random number lies inside the boundaries\par
+ $<$0\-: input made no sense. 
+\begin{DoxyCode}
+\hyperlink{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{y\_rand\_in\_sliding\_window}(1, 10, 20); \textcolor{comment}{// Returns 1 if the random number rolled is 4,
+       and 0 if the random number was 11.}
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()}, \hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}  
+\end{DoxySeeAlso}
+
+\item[\label{deprecated__deprecated000010}%
+\hypertarget{deprecated__deprecated000010}{}%
+Member \hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\-\_\-setup\-\_\-logging} ()]This will probably be removed in favor of y\-\_\-set\-\_\-transaction\-\_\-implementation(), which is really how this kind of extra transaction logging should be done. Note that \hyperlink{y__transaction_8c}{y\-\_\-transaction.\-c} hasn't used the extra logging stuff in some time ..
+\end{DoxyRefList}

@@ -1,0 +1,56 @@
+\hypertarget{group__time}{\section{Standard C time structures and functions}
+\label{group__time}\index{Standard C time structures and functions@{Standard C time structures and functions}}
+}
+
+
+Standard C structures and functions to handle date and time (defined in ctime.\-h)  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtm}{tm}
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/tm/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/tm/}. \par
+Values outside of valid ranges can be used to calculate a new date/time using \hyperlink{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{mktime}. E.\-g. tm\-\_\-mday = 0 means last day of previous month. \end{DoxyCompactList}\item 
+struct \hyperlink{struct__timeb}{\-\_\-timeb}
+\begin{DoxyCompactList}\small\item\em Used by \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime}. Defined as \hyperlink{struct__timeb}{\-\_\-timeb} (instead of timeb) just as in the on-\/line Help. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__time_ga824afaa48b313f905546cf45822800fc}{typedef long \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t}}\label{group__time_ga824afaa48b313f905546cf45822800fc}
+
+\begin{DoxyCompactList}\small\item\em Type time\-\_\-t can hold a Unix timestamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} \hyperlink{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{time} (\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$timeptr)}\label{group__time_ga8038cf2bfae47bdf6942741c58a2c530}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/time/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/time/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}{char $\ast$ \hyperlink{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}{ctime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$cal\-Time)}\label{group__time_gab184b6fffe668a5a8ea553b9c7b6a12e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/ctime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/ctime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gad8edabcf1742ba5c171533f0ebd8284e}{struct \hyperlink{structtm}{tm} $\ast$ \hyperlink{group__time_gad8edabcf1742ba5c171533f0ebd8284e}{gmtime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$cal\-Time)}\label{group__time_gad8edabcf1742ba5c171533f0ebd8284e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/gmtime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/gmtime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_ga77ffc012f51d8c41356e76628da706c9}{char $\ast$ \hyperlink{group__time_ga77ffc012f51d8c41356e76628da706c9}{asctime} (const struct \hyperlink{structtm}{tm} $\ast$tm\-Time)}\label{group__time_ga77ffc012f51d8c41356e76628da706c9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/asctime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/asctime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gab385910b876ee7c39c938b181e83db42}{size\-\_\-t $\ast$ \hyperlink{group__time_gab385910b876ee7c39c938b181e83db42}{strftime} (char $\ast$string, size\-\_\-t maxlen, const char $\ast$format, const struct \hyperlink{structtm}{tm} $\ast$timestruct)}\label{group__time_gab385910b876ee7c39c938b181e83db42}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/strftime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/strftime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{\hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} \hyperlink{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}{mktime} (struct \hyperlink{structtm}{tm} $\ast$timeptr)}\label{group__time_gae114b9ba0fce4e2d6297e0e66768bb75}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/mktime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/mktime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}{struct \hyperlink{structtm}{tm} $\ast$ \hyperlink{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}{localtime} (const \hyperlink{group__time_ga824afaa48b313f905546cf45822800fc}{time\-\_\-t} $\ast$timer)}\label{group__time_gaa9336f97d394e8e02d97b9ff4fb0aca2}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/localtime/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/localtime/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_ga7089a565743ec7206aa9de50705b2041}{void \hyperlink{group__time_ga7089a565743ec7206aa9de50705b2041}{tzset} (void)}\label{group__time_ga7089a565743ec7206aa9de50705b2041}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/ctime/tzset/}{\tt http\-://www.\-cplusplus.\-com/reference/ctime/tzset/}. \end{DoxyCompactList}\item 
+\hypertarget{group__time_gafc0d3a1676a915f3cedcad79759f6802}{void \hyperlink{group__time_gafc0d3a1676a915f3cedcad79759f6802}{ftime} (struct \hyperlink{struct__timeb}{\-\_\-timeb} $\ast$\hyperlink{group__time_ga8038cf2bfae47bdf6942741c58a2c530}{time})}\label{group__time_gafc0d3a1676a915f3cedcad79759f6802}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/f/ftime.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/f/ftime.\-html} . \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Standard C structures and functions to handle date and time (defined in ctime.\-h) 

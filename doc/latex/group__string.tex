@@ -1,0 +1,140 @@
+\hypertarget{group__string}{\section{Standard C string functions}
+\label{group__string}\index{Standard C string functions@{Standard C string functions}}
+}
+
+
+Standard C functions using null terminated C strings (defined in stdio.\-h, cstring.\-h)  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat}(to, from)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcat\-\_\-\-T\-H\-E\-R\-E\-\_\-\-I\-S\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-A\-\_\-\-B\-E\-T\-T\-E\-R\-\_\-\-S\-O\-L\-U\-T\-I\-O\-N
+\begin{DoxyCompactList}\small\item\em Force a compile time error when \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is used. \par
+ Because the use of \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is a {\bfseries very strong} indicator for poorly written code being compiled -- there is always a better solution! \end{DoxyCompactList}\item 
+\#define \hyperlink{group__string_ga706d50b003f763278d0cc4a14202a3fc}{strcpy}(dest, source)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcpy\-\_\-\-D\-U\-P\-L\-I\-C\-A\-T\-I\-O\-N\-\_\-\-I\-S\-\_\-\-N\-O\-T\-\_\-\-R\-E\-Q\-U\-I\-R\-E\-D
+\begin{DoxyCompactList}\small\item\em Force a compile time error when \hyperlink{group__string_ga706d50b003f763278d0cc4a14202a3fc}{strcpy()} is used. \par
+ The use of strcpy is banned because in practice strcpy is only used by novice coders doing unnecessary duplicating. (Typically when trying to avoid using pointers when actually using pointers.) \par
+ Evaluate your coding solution and avoid duplication. If you must, use the safer \hyperlink{group__string_gac25b4990403370b02ac7f8403a6b3230}{strncpy} or \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__string_gac9626ce5468b43d954c3598c1ffe9725}{int \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf} (char $\ast$buffer, size\-\_\-t n, const char $\ast$format\-\_\-string,...)}\label{group__string_gac9626ce5468b43d954c3598c1ffe9725}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/snprintf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/snprintf/}. \par
+This function was introduced by the latest revision of the C++ standard (2011). Older compilers may not support it. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}{int \hyperlink{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}{sprintf} (char $\ast$buffer, const char $\ast$format\-\_\-string,...)}\label{group__string_ga29bf81ae8cf71b6743fec5bcfbe8afcd}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/sprintf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/sprintf/}. \par
+ You should prefer \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf} over sprintf. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga2f4d081856ea28297723b2da1e271a6e}{int \hyperlink{group__string_ga2f4d081856ea28297723b2da1e271a6e}{sscanf} (const char $\ast$buffer, const char $\ast$format\-\_\-string,...)}\label{group__string_ga2f4d081856ea28297723b2da1e271a6e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdio/sscanf/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdio/sscanf/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga723821951547df8b58d7ddd93fc95306}{char $\ast$ \hyperlink{group__string_ga723821951547df8b58d7ddd93fc95306}{strchr} (const char $\ast$string, int c)}\label{group__string_ga723821951547df8b58d7ddd93fc95306}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strchr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strchr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}{int \hyperlink{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}{strcmp} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_ga04ee58caa7e5071bb02f298a1921a5f4}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strcmp/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strcmp/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga86e0df1bf9e434074f958434e0af7581}{char $\ast$ \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup} (const char $\ast$string)}\label{group__string_ga86e0df1bf9e434074f958434e0af7581}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pubs.opengroup.org/onlinepubs/007904975/functions/strdup.html}{\tt http\-://pubs.\-opengroup.\-org/onlinepubs/007904975/functions/strdup.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga156d6d978e1b69f06ca817323ab7751d}{int \hyperlink{group__string_ga156d6d978e1b69f06ca817323ab7751d}{stricmp} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_ga156d6d978e1b69f06ca817323ab7751d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/stricmp.htm}{\tt http\-://pic.\-dhe.\-ibm.\-com/infocenter/iseries/v7r1m0/topic/rtref/stricmp.\-htm} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga2869404e70f06f4477271f26ce8c4920}{size\-\_\-t \hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen} (const char $\ast$string)}\label{group__string_ga2869404e70f06f4477271f26ce8c4920}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strlen/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strlen/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga8405a432a671b51cc350ba62d5525c5a}{char $\ast$ \hyperlink{group__string_ga8405a432a671b51cc350ba62d5525c5a}{strlwr} (char $\ast$string)}\label{group__string_ga8405a432a671b51cc350ba62d5525c5a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strlwr.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strlwr.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga4b19a5035b747785f6f97caebd893fc8}{char $\ast$ \hyperlink{group__string_ga4b19a5035b747785f6f97caebd893fc8}{strncat} (char $\ast$to\-\_\-string, const char $\ast$from\-\_\-string, size\-\_\-t n)}\label{group__string_ga4b19a5035b747785f6f97caebd893fc8}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncat/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncat/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga9df1bbeeede6e085028295bdce89835e}{int \hyperlink{group__string_ga9df1bbeeede6e085028295bdce89835e}{strncmp} (const char $\ast$string1, const char $\ast$string2, size\-\_\-t n)}\label{group__string_ga9df1bbeeede6e085028295bdce89835e}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncmp/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncmp/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga82046863ea74c18140c90748426a2a57}{int \hyperlink{group__string_ga82046863ea74c18140c90748426a2a57}{strnicmp} (const char $\ast$string1, const char $\ast$string2, size\-\_\-t num)}\label{group__string_ga82046863ea74c18140c90748426a2a57}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://pic.dhe.ibm.com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.htm}{\tt http\-://pic.\-dhe.\-ibm.\-com/infocenter/iseries/v7r1m0/topic/rtref/strnicmp.\-htm}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac25b4990403370b02ac7f8403a6b3230}{char $\ast$ \hyperlink{group__string_gac25b4990403370b02ac7f8403a6b3230}{strncpy} (char $\ast$destination, const char $\ast$source, size\-\_\-t num)}\label{group__string_gac25b4990403370b02ac7f8403a6b3230}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strncpy/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strncpy/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga41e787a98ff302e5107f24454762aa3f}{char $\ast$ \hyperlink{group__string_ga41e787a98ff302e5107f24454762aa3f}{strrchr} (const char $\ast$string, int c)}\label{group__string_ga41e787a98ff302e5107f24454762aa3f}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strrchr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strrchr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga61401bc1cda92c2f169f900dd62c5d87}{char $\ast$ \hyperlink{group__string_ga61401bc1cda92c2f169f900dd62c5d87}{strset} (char $\ast$string1, int character)}\label{group__string_ga61401bc1cda92c2f169f900dd62c5d87}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strset.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strset.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}{size\-\_\-t $\ast$ \hyperlink{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}{strspn} (const char $\ast$string, const char $\ast$skipset)}\label{group__string_ga8cf0610c2c873843994e6e6a55aeee6f}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strspn/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strspn/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaedc7fca209acba7af0ad9e91573e89a6}{char $\ast$ \hyperlink{group__string_gaedc7fca209acba7af0ad9e91573e89a6}{strstr} (const char $\ast$string1, const char $\ast$string2)}\label{group__string_gaedc7fca209acba7af0ad9e91573e89a6}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strstr/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strstr/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac611854fcb6575e80b790175acfb509a}{char $\ast$ \hyperlink{group__string_gac611854fcb6575e80b790175acfb509a}{strtok} (char $\ast$string, const char $\ast$delimiters)}\label{group__string_gac611854fcb6575e80b790175acfb509a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstring/strtok/}{\tt http\-://www.\-cplusplus.\-com/reference/cstring/strtok/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga3b3a432051b3200971d320bae89dbf2d}{char $\ast$ \hyperlink{group__string_ga3b3a432051b3200971d320bae89dbf2d}{strupr} (char $\ast$string)}\label{group__string_ga3b3a432051b3200971d320bae89dbf2d}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.qnx.com/developers/docs/6.5.0/topic/com.qnx.doc.neutrino_lib_ref/s/strupr.html}{\tt http\-://www.\-qnx.\-com/developers/docs/6.\-5.\-0/topic/com.\-qnx.\-doc.\-neutrino\-\_\-lib\-\_\-ref/s/strupr.\-html} . \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga11747b633c46b24cb3e76042cba33ba0}{double \hyperlink{group__string_ga11747b633c46b24cb3e76042cba33ba0}{atof} (const char $\ast$string)}\label{group__string_ga11747b633c46b24cb3e76042cba33ba0}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atof/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atof/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gac5aa18897f547ff20f10c777c6a58f0a}{int \hyperlink{group__string_gac5aa18897f547ff20f10c777c6a58f0a}{atoi} (const char $\ast$string)}\label{group__string_gac5aa18897f547ff20f10c777c6a58f0a}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atoi/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atoi/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga41345248d4ac38a48238dbd288332180}{long \hyperlink{group__string_ga41345248d4ac38a48238dbd288332180}{atol} (const char $\ast$string)}\label{group__string_ga41345248d4ac38a48238dbd288332180}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/atol/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/atol/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_ga3e686aed704cb7a136cd69dc1f214368}{int \hyperlink{group__string_ga3e686aed704cb7a136cd69dc1f214368}{itoa} (int value, char $\ast$str, int radix)}\label{group__string_ga3e686aed704cb7a136cd69dc1f214368}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/itoa/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/itoa/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}{long \hyperlink{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}{strtol} (const char $\ast$string, char $\ast$$\ast$endptr, int radix)}\label{group__string_gaf7662e0df4f2b9a0abd9276eccc9f6aa}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtol/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtol/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gaa7d767d03ce3929978c28f64e3a4b222}{unsigned long int \hyperlink{group__string_gaa7d767d03ce3929978c28f64e3a4b222}{strtoul} (const char $\ast$str, char $\ast$$\ast$endptr, int base)}\label{group__string_gaa7d767d03ce3929978c28f64e3a4b222}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtoul/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtoul/}. \end{DoxyCompactList}\item 
+\hypertarget{group__string_gab017280f95ea769b9422688105f02653}{double \hyperlink{group__string_gab017280f95ea769b9422688105f02653}{strtod} (const char $\ast$str, char $\ast$$\ast$endptr)}\label{group__string_gab017280f95ea769b9422688105f02653}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/cstdlib/strtod/}{\tt http\-://www.\-cplusplus.\-com/reference/cstdlib/strtod/}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Standard C functions using null terminated C strings (defined in stdio.\-h, cstring.\-h) 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{\index{Standard C string functions@{Standard C string functions}!strcat@{strcat}}
+\index{strcat@{strcat}!Standard C string functions@{Standard C string functions}}
+\subsubsection[{strcat}]{\setlength{\rightskip}{0pt plus 5cm}\#define strcat(
+\begin{DoxyParamCaption}
+\item[{}]{to, }
+\item[{}]{from}
+\end{DoxyParamCaption}
+)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcat\-\_\-\-T\-H\-E\-R\-E\-\_\-\-I\-S\-\_\-\-A\-L\-W\-A\-Y\-S\-\_\-\-A\-\_\-\-B\-E\-T\-T\-E\-R\-\_\-\-S\-O\-L\-U\-T\-I\-O\-N}}\label{group__string_ga581a58e8b46f29e43d10a1fe668341b6}
+
+
+Force a compile time error when \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is used. \par
+ Because the use of \hyperlink{group__string_ga581a58e8b46f29e43d10a1fe668341b6}{strcat()} is a {\bfseries very strong} indicator for poorly written code being compiled -- there is always a better solution! 
+
+Unfortunately the use of \#error is not possible here. \begin{DoxyNote}{Note}
+Original declaration\-: char $\ast$strcat(char $\ast$to, const char $\ast$from); ! 
+\end{DoxyNote}
+\hypertarget{group__string_ga706d50b003f763278d0cc4a14202a3fc}{\index{Standard C string functions@{Standard C string functions}!strcpy@{strcpy}}
+\index{strcpy@{strcpy}!Standard C string functions@{Standard C string functions}}
+\subsubsection[{strcpy}]{\setlength{\rightskip}{0pt plus 5cm}\#define strcpy(
+\begin{DoxyParamCaption}
+\item[{}]{dest, }
+\item[{}]{source}
+\end{DoxyParamCaption}
+)~0\-\_\-\-D\-O\-\_\-\-N\-O\-T\-\_\-\-U\-S\-E\-\_\-strcpy\-\_\-\-D\-U\-P\-L\-I\-C\-A\-T\-I\-O\-N\-\_\-\-I\-S\-\_\-\-N\-O\-T\-\_\-\-R\-E\-Q\-U\-I\-R\-E\-D}}\label{group__string_ga706d50b003f763278d0cc4a14202a3fc}
+
+
+Force a compile time error when \hyperlink{group__string_ga706d50b003f763278d0cc4a14202a3fc}{strcpy()} is used. \par
+ The use of strcpy is banned because in practice strcpy is only used by novice coders doing unnecessary duplicating. (Typically when trying to avoid using pointers when actually using pointers.) \par
+ Evaluate your coding solution and avoid duplication. If you must, use the safer \hyperlink{group__string_gac25b4990403370b02ac7f8403a6b3230}{strncpy} or \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf}. 
+
+\begin{DoxyNote}{Note}
+Original declaration\-: char $\ast$strcpy(char $\ast$dest, const char $\ast$source); ! 
+\end{DoxyNote}

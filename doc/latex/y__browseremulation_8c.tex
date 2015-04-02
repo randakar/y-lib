@@ -1,0 +1,470 @@
+\hypertarget{y__browseremulation_8c}{\section{y\-\_\-browseremulation.\-c File Reference}
+\label{y__browseremulation_8c}\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}}
+}
+
+
+Code for supporting (more) realistic browser emulation.  
+
+
+{\ttfamily \#include \char`\"{}y\-\_\-core.\-c\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-string.\-c\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structy__struct__browser}{y\-\_\-struct\-\_\-browser}
+\begin{DoxyCompactList}\small\item\em Internal browser structure, describing a browser as an entity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__browseremulation_8c_a2ffc26d6962f700ab0215ff485116d39}{\#define \hyperlink{y__browseremulation_8c_a2ffc26d6962f700ab0215ff485116d39}{M\-A\-X\-\_\-\-B\-R\-O\-W\-S\-E\-R\-\_\-\-L\-I\-S\-T\-\_\-\-L\-E\-N\-G\-T\-H}~1000}\label{y__browseremulation_8c_a2ffc26d6962f700ab0215ff485116d39}
+
+\begin{DoxyCompactList}\small\item\em Limit the browser list to 1000 browsers, as a failsafe in case of wrong parameter settings (which may cause endless loops otherwise) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structy__struct__browser}{y\-\_\-struct\-\_\-browser} \hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser}
+\begin{DoxyCompactList}\small\item\em Internal browser structure, describing a browser as an entity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{y__browseremulation_8c_a203e1535a0424f47fd044816fed2234b}{y\-\_\-log\-\_\-browser} (const \hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$browser)
+\begin{DoxyCompactList}\small\item\em Log the content of a browser object. \end{DoxyCompactList}\item 
+void \hyperlink{y__browseremulation_8c_ac26c6e8c89f6857da3f8cb8d1a828329}{y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters} (const \hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$browser)
+\begin{DoxyCompactList}\small\item\em Save the contents of a browser struct as a series of \char`\"{}browser\-\_\-$\ast$\char`\"{} loadrunner parameters. \end{DoxyCompactList}\item 
+int \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters} (const char $\ast$browser\-\_\-name\-\_\-param, const char $\ast$browser\-\_\-chance\-\_\-param, const char $\ast$browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host\-\_\-param, const char $\ast$browser\-\_\-max\-\_\-connections\-\_\-param, const char $\ast$browser\-\_\-user\-\_\-agent\-\_\-string\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Initialize the browser list based on a set of prepared parameters. \end{DoxyCompactList}\item 
+int \hyperlink{y__browseremulation_8c_aa639505ee3cfd56b36ac1b46fc7a4b44}{y\-\_\-setup\-\_\-browser\-\_\-emulation} ()
+\begin{DoxyCompactList}\small\item\em Initialize the browser list, using the default values for the parameter names\-: \end{DoxyCompactList}\item 
+int \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file} (char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Initialize the browser list based on a tab-\/seperated C\-S\-V file. \end{DoxyCompactList}\item 
+\hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$ \hyperlink{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list} (\hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$browser\-\_\-list\-\_\-head, int browser\-\_\-list\-\_\-chance\-\_\-total)
+\begin{DoxyCompactList}\small\item\em Choose a browser profile from a browser list at random using the defined weights in that list. \end{DoxyCompactList}\item 
+\hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$ \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\-\_\-choose\-\_\-browser} ()
+\begin{DoxyCompactList}\small\item\em Choose a browser profile from the browser list at random using the defined weights. \end{DoxyCompactList}\item 
+int \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\-\_\-emulate\-\_\-browser} (const \hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$browser)
+\begin{DoxyCompactList}\small\item\em Emulate a specific browser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{\hyperlink{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{y\-\_\-browser} $\ast$ \hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\-\_\-browser\-\_\-list\-\_\-head} = N\-U\-L\-L}\label{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}
+
+\begin{DoxyCompactList}\small\item\em The first element in the browser list. \end{DoxyCompactList}\item 
+\hypertarget{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}{int \hyperlink{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}{y\-\_\-browser\-\_\-list\-\_\-chance\-\_\-total} = 0}\label{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}
+
+\begin{DoxyCompactList}\small\item\em The total of all the browser weights added together. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Code for supporting (more) realistic browser emulation. Basic concept\-: The tester defines a list of browsers that contains\-:
+\begin{DoxyEnumerate}
+\item browser name
+\item browser chance -\/ A weight determining the odds that said browser will be chosen. Can be a percentage, or a count from a production access log.
+\item max connections -\/ How many connections said browser uses (See\-: www.\-browserscope.\-org for what this value should be for your browser)
+\item max connections per host -\/ Same as above, but this setting limits the number of connections to a single hostname.
+\item User agent string -\/ A user agent string used by said browser.
+\end{DoxyEnumerate}
+
+This list is read in during \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init()} to construct a list of browsers, which can then be used during the loadtest to dynamically choose a browser from the list.
+
+{\bfseries Usage\-:} 
+\begin{DoxyEnumerate}
+\item Set up the appropriate parameters
+\item Add this file to your script, plus any supporting ylib files.
+\item Add an include statement\-: '\#include "\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}' to the top of \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init()}
+\item Call \hyperlink{y__browseremulation_8c_aa639505ee3cfd56b36ac1b46fc7a4b44}{y\-\_\-setup\-\_\-browser\-\_\-emulation()} (or one of the alternative variants) in \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init()}
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\_init}()
+\{
+    \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\_log\_turn\_off}(); \textcolor{comment}{// Suppress the logging - the setup code can create a fair amount of
+       (harmless) log messages.}
+    \hyperlink{y__browseremulation_8c_aa639505ee3cfd56b36ac1b46fc7a4b44}{y\_setup\_browser\_emulation}();
+    \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\_log\_restore}();  \textcolor{comment}{// Resume logging.}
+\}
+\end{DoxyCode}
+
+\item Call \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\-\_\-choose\-\_\-browser()} and \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\-\_\-emulate\-\_\-browser()} at the start of each iteration.
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+Action()
+\{
+    \textcolor{comment}{// This will set up some connection options for emulating different browser versions in a realistic
+       fashion}
+    \{
+        \textcolor{comment}{// Note: This will blow up if the setup code hasn't been called beforehand.}
+        \hyperlink{structy__struct__browser}{y\_browser}* browser = \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\_choose\_browser}();
+        \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\_emulate\_browser}(browser);
+    \}
+
+    \textcolor{comment}{// .. more code ..}
+\}
+\end{DoxyCode}
+
+\end{DoxyEnumerate}
+
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-browser@{y\-\_\-browser}}
+\index{y\-\_\-browser@{y\-\_\-browser}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-browser}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf y\-\_\-struct\-\_\-browser} {\bf y\-\_\-browser}}}\label{y__browseremulation_8c_a40b27e4aae665802fecdfc7eace03c6e}
+
+
+Internal browser structure, describing a browser as an entity. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c} 
+\end{DoxySeeAlso}
+
+
+\subsection{Function Documentation}
+\hypertarget{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-choose\-\_\-browser@{y\-\_\-choose\-\_\-browser}}
+\index{y\-\_\-choose\-\_\-browser@{y\-\_\-choose\-\_\-browser}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-choose\-\_\-browser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-browser}$\ast$ y\-\_\-choose\-\_\-browser (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}
+
+
+Choose a browser profile from the browser list at random using the defined weights. 
+
+This wrapper around \hyperlink{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list()} uses the list pointed to by y\-\_\-browser\-\_\-list\-\_\-head to choose from.
+
+\begin{DoxyReturn}{Returns}
+a pointer to a randomly chosen struct browser, or N\-U\-L\-L in case of errors.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// This will set up some connection options for emulating different browser versions in a realistic fashion}
+\{
+    \textcolor{comment}{// Note: This will blow up if the setup code hasn't been called beforehand.}
+    \hyperlink{structy__struct__browser}{y\_browser}* browser = \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\_choose\_browser}();
+    \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\_emulate\_browser}(browser);
+\}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list()}, \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file()}, \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters()}, \hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}, \hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\-\_\-browser\-\_\-list\-\_\-head} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list@{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list}}
+\index{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list@{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-browser}$\ast$ y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list (
+\begin{DoxyParamCaption}
+\item[{{\bf y\-\_\-browser} $\ast$}]{browser\-\_\-list\-\_\-head, }
+\item[{int}]{browser\-\_\-list\-\_\-chance\-\_\-total}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}
+
+
+Choose a browser profile from a browser list at random using the defined weights in that list. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em browser\-\_\-list\-\_\-head} & The first entry of a previously constructed single-\/linked browser list. \\
+\hline
+\mbox{\tt in}  & {\em browser\-\_\-list\-\_\-chance\-\_\-total} & The total of the browser weights in the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to a randomly chosen struct browser, or N\-U\-L\-L in case of errors.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// This will set up some connection options for emulating different browser versions in a realistic fashion}
+\{
+    \textcolor{comment}{// Note: This will blow up if the setup code hasn't been called beforehand.}
+    \hyperlink{structy__struct__browser}{y\_browser}* browser = \hyperlink{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{y\_choose\_browser\_from\_list}(
+      \hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\_browser\_list\_head}, \hyperlink{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}{y\_browser\_list\_chance\_total});
+    \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\_emulate\_browser}(browser);
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+In most cases a call to the \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\-\_\-choose\-\_\-browser()} wrapper should suffice, instead.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\-\_\-choose\-\_\-browser()}, \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file()}, \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters()}, \hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}, \hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\-\_\-browser\-\_\-list\-\_\-head} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-emulate\-\_\-browser@{y\-\_\-emulate\-\_\-browser}}
+\index{y\-\_\-emulate\-\_\-browser@{y\-\_\-emulate\-\_\-browser}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-emulate\-\_\-browser}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-emulate\-\_\-browser (
+\begin{DoxyParamCaption}
+\item[{const {\bf y\-\_\-browser} $\ast$}]{browser}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}
+
+
+Emulate a specific browser. 
+
+This will set up the M\-A\-X\-\_\-\-T\-O\-T\-A\-L\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S, M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S\-\_\-\-P\-E\-R\-\_\-\-H\-O\-S\-T socket options and user\-\_\-agent\-\_\-string settings for the browser listed.
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{comment}{// This will set up some connection options for emulating different browser versions in a realistic fashion}
+\{
+    \textcolor{comment}{// Note: This will blow up if the setup code hasn't been called beforehand.}
+    \hyperlink{structy__struct__browser}{y\_browser}* browser = \hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\_choose\_browser}();
+    \hyperlink{y__browseremulation_8c_a673ca5f966149455097c6eb431045e9c}{y\_emulate\_browser}(browser);
+\}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a36becef864ca44ac63421b9a40060d18}{y\-\_\-choose\-\_\-browser}, \hyperlink{y__browseremulation_8c_a671539a946ce4dde8dfd0854b8550a8b}{y\-\_\-choose\-\_\-browser\-\_\-from\-\_\-list}, y\-\_\-browser\-\_\-emulation.\-c, web\-\_\-set\-\_\-sockets\-\_\-option(), web\-\_\-add\-\_\-auto\-\_\-header()
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em browser} & Pointer to a browser struct for the browser to be emulated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if no errors occurred, -\/1 in case of an error. 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_a203e1535a0424f47fd044816fed2234b}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-log\-\_\-browser@{y\-\_\-log\-\_\-browser}}
+\index{y\-\_\-log\-\_\-browser@{y\-\_\-log\-\_\-browser}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-log\-\_\-browser}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-log\-\_\-browser (
+\begin{DoxyParamCaption}
+\item[{const {\bf y\-\_\-browser} $\ast$}]{browser}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a203e1535a0424f47fd044816fed2234b}
+
+
+Log the content of a browser object. 
+
+Given a pointer to a browser struct, log what said browser struct contains. This is useful for debugging.
+
+\begin{DoxyNote}{Note}
+Passing in N\-U\-L\-L will result in a call to lr\-\_\-abort().
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em browser} & A pointer to the browser struct to log. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_ac26c6e8c89f6857da3f8cb8d1a828329}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters@{y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters}}
+\index{y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters@{y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-save\-\_\-browser\-\_\-to\-\_\-parameters (
+\begin{DoxyParamCaption}
+\item[{const {\bf y\-\_\-browser} $\ast$}]{browser}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_ac26c6e8c89f6857da3f8cb8d1a828329}
+
+
+Save the contents of a browser struct as a series of \char`\"{}browser\-\_\-$\ast$\char`\"{} loadrunner parameters. 
+
+This will create the following set of parameters from the browser object\-:
+\begin{DoxyItemize}
+\item browser\-\_\-name
+\item browser\-\_\-chance
+\item browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host
+\item browser\-\_\-max\-\_\-connections
+\item browser\-\_\-user\-\_\-agent\-\_\-string
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em browser} & A pointer to the browser to create parameters for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+y\-\_\-emulate\-\_\-browser will use this, so these parameters will contain details about what browser the script is currently emulating after that call.
+
+Passing in N\-U\-L\-L will result in a call to lr\-\_\-abort(). 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_aa639505ee3cfd56b36ac1b46fc7a4b44}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-setup\-\_\-browser\-\_\-emulation@{y\-\_\-setup\-\_\-browser\-\_\-emulation}}
+\index{y\-\_\-setup\-\_\-browser\-\_\-emulation@{y\-\_\-setup\-\_\-browser\-\_\-emulation}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-setup\-\_\-browser\-\_\-emulation}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-setup\-\_\-browser\-\_\-emulation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_aa639505ee3cfd56b36ac1b46fc7a4b44}
+
+
+Initialize the browser list, using the default values for the parameter names\-: 
+
+
+\begin{DoxyItemize}
+\item browser\-\_\-name\-\_\-param = browser\-\_\-name
+\item browser\-\_\-chance\-\_\-param = browser\-\_\-chance
+\item browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host\-\_\-param = browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host
+\item browser\-\_\-max\-\_\-connections\-\_\-param = browser\-\_\-max\-\_\-connections
+\item browser\-\_\-user\-\_\-agent\-\_\-string\-\_\-param = browser\-\_\-user\-\_\-agent\-\_\-string
+\end{DoxyItemize}
+
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\_init}()
+\{
+    \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\_log\_turn\_off}(); \textcolor{comment}{// Suppress the logging - the setup code can create a fair amount of
+       (harmless) log messages.}
+    \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\_setup\_browser\_emulation\_from\_parameters}(\textcolor{stringliteral}{"browser\_name"}, \textcolor{stringliteral}{"
+      browser\_chance"}, \textcolor{stringliteral}{"browser\_max\_connections\_per\_host"}, \textcolor{stringliteral}{"browser\_max\_connections"}, \textcolor{stringliteral}{"browser\_user\_agent\_string"});
+    \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\_log\_restore}();  \textcolor{comment}{// Resume logging.}
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+We may remove this in favor of a call to \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file()} at some point.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters()}, \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file()}, \hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file@{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file}}
+\index{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file@{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}
+
+
+Initialize the browser list based on a tab-\/seperated C\-S\-V file. 
+
+This will initialize the single-\/linked list of browsers, using a text file containing on each line one browser with the following fields, seperated by tabs\-:
+\begin{DoxyEnumerate}
+\item browser name
+\item chance (weight)
+\item max\-\_\-connections
+\item max\-\_\-connections\-\_\-per\-\_\-host
+\item user\-\_\-agent
+\end{DoxyEnumerate}
+
+The order of the fields is important; They should be listed on each line in the above order.
+
+\begin{DoxyNote}{Note}
+The file should not contain headers of any kind, nor the string \char`\"{}\-E\-N\-D\char`\"{} as \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters()} requires.
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\_init}()
+\{
+    \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\_log\_turn\_off}(); \textcolor{comment}{// Suppress the logging - the setup code can create a fair amount of
+       (harmless) log messages.}
+    \hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\_setup\_browser\_emulation\_from\_file}(\textcolor{stringliteral}{"browser.dat"});
+    \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\_log\_restore}();  \textcolor{comment}{// Resume logging.}
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Empty lines and comments (text starting with \char`\"{}\#\char`\"{}) will be ignored.
+\end{DoxyNote}
+Call this during \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init()}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & The name of the file to read. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if setup was successful, -\/1 in case of an error.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters()} 
+
+\hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\-\_\-browser\-\_\-list\-\_\-head} 
+
+\hyperlink{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}{y\-\_\-browser\-\_\-list\-\_\-chance\-\_\-total} 
+
+\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+You may wish to temporarily disable logging for this call using \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\-\_\-log\-\_\-turn\-\_\-off()} and \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()}. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{\index{y\-\_\-browseremulation.\-c@{y\-\_\-browseremulation.\-c}!y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters@{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters}}
+\index{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters@{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters}!y_browseremulation.c@{y\-\_\-browseremulation.\-c}}
+\subsubsection[{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-parameters (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{browser\-\_\-name\-\_\-param, }
+\item[{const char $\ast$}]{browser\-\_\-chance\-\_\-param, }
+\item[{const char $\ast$}]{browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host\-\_\-param, }
+\item[{const char $\ast$}]{browser\-\_\-max\-\_\-connections\-\_\-param, }
+\item[{const char $\ast$}]{browser\-\_\-user\-\_\-agent\-\_\-string\-\_\-param}
+\end{DoxyParamCaption}
+)}}\label{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}
+
+
+Initialize the browser list based on a set of prepared parameters. 
+
+This will initialize the single-\/linked list of browsers, using the given set of parameters. The 'browser\-\_\-name' parameter named here is expected to be set to \char`\"{}\-Select Next Row\-: Sequential\char`\"{}, and \char`\"{}\-Update value on\-: Each iteration\char`\"{}. The -\/last-\/ browser name in the list has to contain the value \char`\"{}\-E\-N\-D\char`\"{} to mark the end of the list. All other parameters should be set to \char`\"{}\-Select Next Row\-: Same line as \{browser\-\_\-name\-\_\-param\}\char`\"{}.
+
+Call this during \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init()}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em browser\-\_\-name\-\_\-param} & Browser name. Set this parameter to \char`\"{}\-Select Next Row\-: Sequential\char`\"{}, and \char`\"{}\-Update value on\-: Each iteration\char`\"{}. The last browser name should be \char`\"{}\-E\-N\-D\char`\"{}.\\
+\hline
+\mbox{\tt in}  & {\em browser\-\_\-chance\-\_\-param} & Browser weight. Can be any number as long as the total of chances does not exceed Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X. Set this parameter to \char`\"{}\-Select Next Row\-: Same line as \{browser\-\_\-name\-\_\-param\}\char`\"{}.\\
+\hline
+\mbox{\tt in}  & {\em browser\-\_\-max\-\_\-connections\-\_\-per\-\_\-host\-\_\-param} & Maximum number of connections this browser allows per host. See www.\-browserscope.\-org for possible values. Set this parameter to \char`\"{}\-Select Next Row\-: Same line as \{browser\-\_\-name\-\_\-param\}\char`\"{}.\\
+\hline
+\mbox{\tt in}  & {\em browser\-\_\-max\-\_\-connections\-\_\-param} & Maximum number of connections this browser allows. See www.\-browserscope.\-org for possible values. Set this parameter to \char`\"{}\-Select Next Row\-: Same line as \{browser\-\_\-name\-\_\-param\}\char`\"{}.\\
+\hline
+\mbox{\tt in}  & {\em browser\-\_\-user\-\_\-agent\-\_\-string\-\_\-param} & The user agent string this browser reports to the server. See your production H\-T\-T\-P access logs for examples. Set this parameter to \char`\"{}\-Select Next Row\-: Same line as \{browser\-\_\-name\-\_\-param\}\char`\"{}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful, -\/1 if errors occurred during setup.
+\end{DoxyReturn}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\_init}()
+\{
+    \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\_log\_turn\_off}(); \textcolor{comment}{// Suppress the logging - the setup code can create a fair amount of
+       (harmless) log messages.}
+    \hyperlink{y__browseremulation_8c_a00dd5481644afd50232ee3626de161c4}{y\_setup\_browser\_emulation\_from\_parameters}(\textcolor{stringliteral}{"browser\_name"}, \textcolor{stringliteral}{"
+      browser\_chance"}, \textcolor{stringliteral}{"browser\_max\_connections\_per\_host"}, \textcolor{stringliteral}{"browser\_max\_connections"}, \textcolor{stringliteral}{"browser\_user\_agent\_string"});
+    \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\_log\_restore}();  \textcolor{comment}{// Resume logging.}
+\}
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c_a720f749da2d75510c8134048f226b0c5}{y\-\_\-setup\-\_\-browser\-\_\-emulation\-\_\-from\-\_\-file()} 
+
+\hyperlink{y__browseremulation_8c_a9eb177cdb387264c27bfd8534c5b8b2a}{y\-\_\-browser\-\_\-list\-\_\-head} 
+
+\hyperlink{y__browseremulation_8c_a958cd8cf55393f27fa5b69f240308fc3}{y\-\_\-browser\-\_\-list\-\_\-chance\-\_\-total} 
+
+\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+You may wish to temporarily disable logging here using \hyperlink{y__logging_8c_a0fdf23d9bb8acc2375d3680976336e3a}{y\-\_\-log\-\_\-turn\-\_\-off()} and \hyperlink{y__logging_8c_a9704bca5562196d581411d31fcc690f0}{y\-\_\-log\-\_\-restore()}. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}

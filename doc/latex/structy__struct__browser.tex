@@ -1,0 +1,63 @@
+\hypertarget{structy__struct__browser}{\section{y\-\_\-struct\-\_\-browser Struct Reference}
+\label{structy__struct__browser}\index{y\-\_\-struct\-\_\-browser@{y\-\_\-struct\-\_\-browser}}
+}
+
+
+Internal browser structure, describing a browser as an entity.  
+
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structy__struct__browser_a6b647f8ab7aa5df89ce78206f1381df7}{char $\ast$ \hyperlink{structy__struct__browser_a6b647f8ab7aa5df89ce78206f1381df7}{name}}\label{structy__struct__browser_a6b647f8ab7aa5df89ce78206f1381df7}
+
+\begin{DoxyCompactList}\small\item\em The name of the browser, as you wish to refer to it. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__browser_ad202f290807b9edc15b5af071e0c3314}{int \hyperlink{structy__struct__browser_ad202f290807b9edc15b5af071e0c3314}{chance}}\label{structy__struct__browser_ad202f290807b9edc15b5af071e0c3314}
+
+\begin{DoxyCompactList}\small\item\em The odds that said browser will be chosen. This is actually a weight, meaning you could use anything you want, including percentages. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__browser_afd29e8bc06a45377428abe3cb1f25056}{void $\ast$ \hyperlink{structy__struct__browser_afd29e8bc06a45377428abe3cb1f25056}{next}}\label{structy__struct__browser_afd29e8bc06a45377428abe3cb1f25056}
+
+\begin{DoxyCompactList}\small\item\em Pointer to the next element in the single-\/linked list of browsers. \end{DoxyCompactList}\item 
+int \hyperlink{structy__struct__browser_a0cf9edfc677c4e9e69b9dea4f78b5bdc}{max\-\_\-connections\-\_\-per\-\_\-host}
+\begin{DoxyCompactList}\small\item\em The maximum number of connections per host to emulate for this browser. \end{DoxyCompactList}\item 
+int \hyperlink{structy__struct__browser_a9c64bfa81ef64854552dc880b7a765b0}{max\-\_\-connections}
+\begin{DoxyCompactList}\small\item\em The maximum number of connections to emulate for this browser. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__browser_a3af12a9867d2948b582dc79028725701}{char $\ast$ \hyperlink{structy__struct__browser_a3af12a9867d2948b582dc79028725701}{user\-\_\-agent\-\_\-string}}\label{structy__struct__browser_a3af12a9867d2948b582dc79028725701}
+
+\begin{DoxyCompactList}\small\item\em The browser's user agent string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Internal browser structure, describing a browser as an entity. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c} 
+\end{DoxySeeAlso}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structy__struct__browser_a9c64bfa81ef64854552dc880b7a765b0}{\index{y\-\_\-struct\-\_\-browser@{y\-\_\-struct\-\_\-browser}!max\-\_\-connections@{max\-\_\-connections}}
+\index{max\-\_\-connections@{max\-\_\-connections}!y_struct_browser@{y\-\_\-struct\-\_\-browser}}
+\subsubsection[{max\-\_\-connections}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-struct\-\_\-browser\-::max\-\_\-connections}}\label{structy__struct__browser_a9c64bfa81ef64854552dc880b7a765b0}
+
+
+The maximum number of connections to emulate for this browser. 
+
+\begin{DoxySeeAlso}{See Also}
+web\-\_\-set\-\_\-sockets\-\_\-option() 
+\end{DoxySeeAlso}
+\hypertarget{structy__struct__browser_a0cf9edfc677c4e9e69b9dea4f78b5bdc}{\index{y\-\_\-struct\-\_\-browser@{y\-\_\-struct\-\_\-browser}!max\-\_\-connections\-\_\-per\-\_\-host@{max\-\_\-connections\-\_\-per\-\_\-host}}
+\index{max\-\_\-connections\-\_\-per\-\_\-host@{max\-\_\-connections\-\_\-per\-\_\-host}!y_struct_browser@{y\-\_\-struct\-\_\-browser}}
+\subsubsection[{max\-\_\-connections\-\_\-per\-\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-struct\-\_\-browser\-::max\-\_\-connections\-\_\-per\-\_\-host}}\label{structy__struct__browser_a0cf9edfc677c4e9e69b9dea4f78b5bdc}
+
+
+The maximum number of connections per host to emulate for this browser. 
+
+\begin{DoxySeeAlso}{See Also}
+web\-\_\-set\-\_\-sockets\-\_\-option() 
+\end{DoxySeeAlso}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{y__browseremulation_8c}{y\-\_\-browseremulation.\-c}\end{DoxyCompactItemize}

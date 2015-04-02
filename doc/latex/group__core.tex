@@ -1,0 +1,533 @@
+\hypertarget{group__core}{\section{Core of Ylib}
+\label{group__core}\index{Core of Ylib@{Core of Ylib}}
+}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__core_ga690f251553b39fd4f31894826141b61a}{R\-A\-N\-D\-\_\-\-M\-A\-X}~32767
+\begin{DoxyCompactList}\small\item\em R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with \hyperlink{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}{rand()} -\/ 15 bits integer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__core_ga16db77ab873c5b767742a51c9613314b}{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X}~1073741823
+\begin{DoxyCompactList}\small\item\em Alternate R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with y\-\_\-rand. \end{DoxyCompactList}\item 
+\hypertarget{group__core_ga2af77582aacd5cada48e9860f67d67e1}{\#define \hyperlink{group__core_ga2af77582aacd5cada48e9860f67d67e1}{vuser\-\_\-init}()~vuser\-\_\-init() \{ \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup}(); return y\-\_\-vuser\-\_\-init(); \} y\-\_\-vuser\-\_\-init()}\label{group__core_ga2af77582aacd5cada48e9860f67d67e1}
+
+\begin{DoxyCompactList}\small\item\em Hook to ensure that \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} is called at start-\/up. This allows many performance improvements in the library. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}{y\-\_\-is\-\_\-vugen\-\_\-run}()~\hyperlink{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}
+\begin{DoxyCompactList}\small\item\em Test if this script is running in vugen (debug mode) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup} ()
+\begin{DoxyCompactList}\small\item\em Ylib setup -\/ determines and stores the identity of the virtual user. \end{DoxyCompactList}\item 
+long \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand} (void)
+\begin{DoxyCompactList}\small\item\em Generate a random (integer) number between 0 and Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X (30 bit maxint). \end{DoxyCompactList}\item 
+double \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand} (void)
+\begin{DoxyCompactList}\small\item\em Generate a random number between 0 $<$= \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand()} $<$ 1. This supersedes \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()}. \par
+Equal to Math.\-random in Java and Java\-Script, Random.\-Next\-Double in C\#, etc. Better distribution of the random numbers over the range than by using \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} with modulo (\%) -- thus no skewed results. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc} (size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Ylib wrapper for \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()} \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga084a530700465b1a7a10d103f2a2e6d4}{y\-\_\-array\-\_\-alloc} (size\-\_\-t length, size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Allocates a character array and initializes all elements to zero As \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()}, but using the '\hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc}' function, rather than '\hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()}'. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga8cba325c05b63bbbdc499702c4f5c6e9}{y\-\_\-strdup} (char $\ast$source)
+\begin{DoxyCompactList}\small\item\em Copy a string into a \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc}'d piece of memory using \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()}, and lr\-\_\-abort() if the allocation fails. See the \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()} C documentation for what it does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gab903d513f84dc0cd3f7af7acf67e2fb2}{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Obtain the string required to fetch the contents of a parameter through lr\-\_\-eval\-\_\-string(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_gac0778c8b8f3da732862ab82176857be8}{y\-\_\-is\-\_\-empty\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null} (const char $\ast$param\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$, or return N\-U\-L\-L if it wasn't set. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gac0c6a383cf2934da4acc1451a1cdea21}{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null} (const char $\ast$src\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$ (malloc version) \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{y\-\_\-get\-\_\-parameter\-\_\-ext} (const char $\ast$source\-\_\-param)
+\begin{DoxyCompactList}\small\item\em Get the content of a parameter and return it as a char $\ast$ (lr\-\_\-eval\-\_\-string\-\_\-ext() version) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__core_ga312065213820734af47b86c233a26c0d}{y\-\_\-virtual\-\_\-user\-\_\-id} = 0
+\begin{DoxyCompactList}\small\item\em The virtual user id, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group__core_ga36fcd2d9a92671f11bfebf8b7bfa34ae}{y\-\_\-virtual\-\_\-user\-\_\-group} = N\-U\-L\-L
+\begin{DoxyCompactList}\small\item\em The virtual user group, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_ga1ebd23898db36692c02dd58d9649f4a1}{y\-\_\-scid}
+\begin{DoxyCompactList}\small\item\em The virtual user scid, as reported by lr\-\_\-whoami(). \end{DoxyCompactList}\item 
+int \hyperlink{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool} = 0
+\begin{DoxyCompactList}\small\item\em Boolean, true when running in Vugen. Not able to do this in pre-\/compile phase. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__core_ga690f251553b39fd4f31894826141b61a}{\index{Core of Ylib@{Core of Ylib}!R\-A\-N\-D\-\_\-\-M\-A\-X@{R\-A\-N\-D\-\_\-\-M\-A\-X}}
+\index{R\-A\-N\-D\-\_\-\-M\-A\-X@{R\-A\-N\-D\-\_\-\-M\-A\-X}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{R\-A\-N\-D\-\_\-\-M\-A\-X}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\-A\-N\-D\-\_\-\-M\-A\-X~32767}}\label{group__core_ga690f251553b39fd4f31894826141b61a}
+
+
+R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with \hyperlink{vugen_8h_ae23144bcbb8e3742b00eb687c36654d1}{rand()} -\/ 15 bits integer. 
+
+Loadrunner does not give you full C headers, so the 'R\-A\-N\-D\-\_\-\-M\-A\-X' \#define from $<$stdlib.\-h$>$ is missing. We define it here mostly for documentation, as we do not have access to the header files themselves and therefore cannot change this. \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-is\-\_\-vugen\-\_\-run@{y\-\_\-is\-\_\-vugen\-\_\-run}}
+\index{y\-\_\-is\-\_\-vugen\-\_\-run@{y\-\_\-is\-\_\-vugen\-\_\-run}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-is\-\_\-vugen\-\_\-run}]{\setlength{\rightskip}{0pt plus 5cm}\#define y\-\_\-is\-\_\-vugen\-\_\-run(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}}}\label{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}
+
+
+Test if this script is running in vugen (debug mode) 
+
+\begin{DoxyReturn}{Returns}
+1 (true) if running in vugen, zero (false) otherwise.
+\end{DoxyReturn}
+Recommended practice\-: Use this to create script debugging code that will hit all of the functional code inside the script when run in Vugen, but the full (semi-\/randomized) realistic scenario when it runs as part of a load test.
+
+\begin{DoxyNote}{Note}
+This relies on the y\-\_\-virtual\-\_\-user\-\_\-id\-\_\-bool variable as an indication of where the script is running. Inside Vugen that variable should be -\/1; Otherwise, it contains a non-\/negative number. This can be manipulated to your advantage, but may break if H\-P ever changes that convention.
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+debug\_clickflow()
+\{
+  do\_stuff();
+\}
+
+loadtest\_clickflow()
+\{
+   do\_more\_complicated\_stuff();
+\}
+
+Action()
+\{
+   \textcolor{keywordflow}{if}( \hyperlink{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}{y\_is\_vugen\_run}() )
+      debug\_clickflow();
+   \textcolor{keywordflow}{else}
+      loadtest\_clickflow();
+\}
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga16db77ab873c5b767742a51c9613314b}{\index{Core of Ylib@{Core of Ylib}!Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X@{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X}}
+\index{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X@{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X}]{\setlength{\rightskip}{0pt plus 5cm}\#define Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X~1073741823}}\label{group__core_ga16db77ab873c5b767742a51c9613314b}
+
+
+Alternate R\-A\-N\-D\-\_\-\-M\-A\-X constant for use with y\-\_\-rand. 
+
+\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} provides for a far bigger ceiling to the random number generator\-: 31 bits on Windows and 30 bits otherwise, instead of 15. \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__core_ga084a530700465b1a7a10d103f2a2e6d4}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-array\-\_\-alloc@{y\-\_\-array\-\_\-alloc}}
+\index{y\-\_\-array\-\_\-alloc@{y\-\_\-array\-\_\-alloc}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-array\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-array\-\_\-alloc (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{length, }
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga084a530700465b1a7a10d103f2a2e6d4}
+
+
+Allocates a character array and initializes all elements to zero As \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()}, but using the '\hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc}' function, rather than '\hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()}'. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em length} & Expected number of characters. \\
+\hline
+\mbox{\tt in}  & {\em size} & How much space a single character requires. Usually this should contain \char`\"{}sizeof char\char`\"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pre-\/zeroed block of memory of the requisite size allocated using \hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc()}. 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+The memory resulting from this call will need to be freed using \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()}. 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()}, \hyperlink{group__memory_gae201ae1031fe85000b4e22abb3a824b2}{calloc()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga319710d6642f34a8ea51a1a9898869fc}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-drand@{y\-\_\-drand}}
+\index{y\-\_\-drand@{y\-\_\-drand}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-drand}]{\setlength{\rightskip}{0pt plus 5cm}double y\-\_\-drand (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga319710d6642f34a8ea51a1a9898869fc}
+
+
+Generate a random number between 0 $<$= \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand()} $<$ 1. This supersedes \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()}. \par
+Equal to Math.\-random in Java and Java\-Script, Random.\-Next\-Double in C\#, etc. Better distribution of the random numbers over the range than by using \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} with modulo (\%) -- thus no skewed results. 
+
+\begin{DoxyReturn}{Returns}
+Random number between 0 and 1 (exclusive). Accuracy\-: 9.\-4 digits (32 bits) thus increments of approx. 2.\-3e-\/10.
+\end{DoxyReturn}
+{\bfseries Examples\-:} 
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (\hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\_drand}() < 0.123) ... -> change 12.3% \textcolor{keyword}{true}
+\textcolor{keywordtype}{double} value = min + \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\_drand}() * (max - min); \textcolor{comment}{// to range example}
+\textcolor{keywordtype}{int} value = min + \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\_drand}() * (max - min + 1); \textcolor{comment}{// for min <= value <= max}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+A.\-U. Luyer 
+\end{DoxyAuthor}
+\hypertarget{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-get\-\_\-parameter@{y\-\_\-get\-\_\-parameter}}
+\index{y\-\_\-get\-\_\-parameter@{y\-\_\-get\-\_\-parameter}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga8252a459f15c52a8680fff9ddbd7356c}
+
+
+Get the content of a parameter and return it as a char $\ast$. 
+
+This is useful mostly for code that wants to manipulate parameter contents but not care about the name of the parameter itself. (Something which applies to most of ylib ..)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The name of the parameter to fetch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A char$\ast$ buffer containing the contents of the parameter, allocated by lr\-\_\-eval\-\_\-string(). 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+This returns memory allocated by lr\-\_\-eval\-\_\-string(). It is freed at the end of the iteration.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *test;
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"TestParam"});        \textcolor{comment}{// save the string "test123" into parameter \{TestParam\}}
+test=\hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\_get\_parameter}(\textcolor{stringliteral}{"TestParam"});
+lr\_message(\textcolor{stringliteral}{"Test: %s"}, test);
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_gac0778c8b8f3da732862ab82176857be8}{y\-\_\-is\-\_\-empty\-\_\-parameter()}, \hyperlink{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{y\-\_\-get\-\_\-parameter\-\_\-ext()}, \hyperlink{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_gab903d513f84dc0cd3f7af7acf67e2fb2}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string@{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string}}
+\index{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string@{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__core_gab903d513f84dc0cd3f7af7acf67e2fb2}
+
+
+Obtain the string required to fetch the contents of a parameter through lr\-\_\-eval\-\_\-string(). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The parameter name to construct the eval text for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a char$\ast$ allocated with \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()} 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+The return argument will need to be freed via a call to \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()} 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter()}, \hyperlink{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{y\-\_\-get\-\_\-parameter\-\_\-ext()}, \hyperlink{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-get\-\_\-parameter\-\_\-ext@{y\-\_\-get\-\_\-parameter\-\_\-ext}}
+\index{y\-\_\-get\-\_\-parameter\-\_\-ext@{y\-\_\-get\-\_\-parameter\-\_\-ext}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-parameter\-\_\-ext}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-parameter\-\_\-ext (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-\_\-param}
+\end{DoxyParamCaption}
+)}}\label{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}
+
+
+Get the content of a parameter and return it as a char $\ast$ (lr\-\_\-eval\-\_\-string\-\_\-ext() version) 
+
+Like y\-\_\-get\-\_\-parameter, but the result will use lr\-\_\-eval\-\_\-string\-\_\-ext() to acquire it's memory, rather than getting it from lr\-\_\-eval\-\_\-string. This can be useful when you want your data to remain in memory instead of getting freed at the end of each iteration. An example is the browser emulation code in y\-\_\-emulate\-\_\-browser.\-c, which sets up a linked list that has to stay allocated throughout the duration of the test. (And therefore never needs to be freed. But I digress.)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\-\_\-param} & The name of the parameter to fetch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A char$\ast$ buffer containing the contents of the parameter, allocated with lr\-\_\-eval\-\_\-string\-\_\-ext() 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Memory allocated in this manner must be freed using lr\-\_\-eval\-\_\-string\-\_\-ext\-\_\-free() or it will linger.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *test;
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"TestParam"});        \textcolor{comment}{// save the string "test123" into parameter \{TestParam\}}
+test=\hyperlink{group__core_gaa80c4db4c75cdc0c03aad6f69b3dff3c}{y\_get\_parameter\_ext}(\textcolor{stringliteral}{"TestParam"});
+lr\_message(\textcolor{stringliteral}{"Test: %s"}, test);
+lr\_eval\_string\_ext\_free(test);
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter()}, lr\-\_\-eval\-\_\-string\-\_\-ext() 
+\end{DoxySeeAlso}
+\hypertarget{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null@{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null}}
+\index{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null@{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-parameter\-\_\-or\-\_\-null (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__core_gaf81efb56d5afc4806cdc79f64ba3d675}
+
+
+Get the content of a parameter and return it as a char $\ast$, or return N\-U\-L\-L if it wasn't set. 
+
+This will return null in the most typical case\-: A parameter saved with web\-\_\-reg\-\_\-save\-\_\-param(), but never filled. The actual check employed here is a test that looks if the parameter content matches the parameter name surrounded by brackets.
+
+If the parameter was never filled, lr\-\_\-eval\-\_\-string() will return that. However, in many more elaborate cases we really need to know if it was never filled to begin with. This function mimics the behaviour we really want to see in L\-R, but don't have. (At least, not in L\-R 11.\-05, the version I'm working with.)
+
+It would be really nice if there was a loadrunner built-\/in that did this.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The name of the parameter to fetch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A char$\ast$ buffer containing the contents of the parameter, allocated by lr\-\_\-eval\-\_\-string(), or N\-U\-L\-L. 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+This returns memory allocated by lr\-\_\-eval\-\_\-string(). It is likely to disappear (get freed) at the end of the iteration. 
+
+If the content of the parameter matches the name of the parameter surrounded by brackets this function will return N\-U\-L\-L even if it's not empty.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *test;
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"TestParam"});        \textcolor{comment}{// save the string "test123" into parameter \{TestParam\}}
+test=\hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\_get\_parameter}(\textcolor{stringliteral}{"TestParam"});
+lr\_message(\textcolor{stringliteral}{"Test: %s"}, test);
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter()}, \hyperlink{group__core_gac0778c8b8f3da732862ab82176857be8}{y\-\_\-is\-\_\-empty\-\_\-parameter()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_gac0c6a383cf2934da4acc1451a1cdea21}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null@{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null}}
+\index{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null@{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-parameter\-\_\-with\-\_\-malloc\-\_\-or\-\_\-null (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{src\-\_\-param}
+\end{DoxyParamCaption}
+)}}\label{group__core_gac0c6a383cf2934da4acc1451a1cdea21}
+
+
+Get the content of a parameter and return it as a char $\ast$ (malloc version) 
+
+This is like \hyperlink{group__core_ga8252a459f15c52a8680fff9ddbd7356c}{y\-\_\-get\-\_\-parameter()}, but the result will use memory allocated with \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()}, instead of acquired from lr\-\_\-eval\-\_\-string().
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em src\-\_\-param} & The name of the parameter to fetch. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A char$\ast$ buffer containing the contents of the parameter, allocated with \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\-\_\-mem\-\_\-alloc()} 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Memory allocated in this manner must be freed using \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()} or it will linger.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *test;
+lr\_save\_string(\textcolor{stringliteral}{"test123"}, \textcolor{stringliteral}{"TestParam"});        \textcolor{comment}{// save the string "test123" into parameter \{TestParam\}}
+test=y\_get\_parameter\_in\_malloc\_string(\textcolor{stringliteral}{"TestParam"});
+lr\_message(\textcolor{stringliteral}{"Test: %s"}, test);
+\hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(test);
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_gac0778c8b8f3da732862ab82176857be8}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-is\-\_\-empty\-\_\-parameter@{y\-\_\-is\-\_\-empty\-\_\-parameter}}
+\index{y\-\_\-is\-\_\-empty\-\_\-parameter@{y\-\_\-is\-\_\-empty\-\_\-parameter}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-is\-\_\-empty\-\_\-parameter}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-is\-\_\-empty\-\_\-parameter (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{param\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{group__core_gac0778c8b8f3da732862ab82176857be8}
+
+
+Test if the given parameter is empty or not yet set. (These are two different things..) It would be nice if loadrunner had a builtin for this. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em param\-\_\-name} & The name of the parameter to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+non-\/zero (true) if the parameter is empty, zero (false) otherwise. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_gab903d513f84dc0cd3f7af7acf67e2fb2}{y\-\_\-get\-\_\-parameter\-\_\-eval\-\_\-string()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_ga71b54880fd4fe004b3cb8141255c6474}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-mem\-\_\-alloc@{y\-\_\-mem\-\_\-alloc}}
+\index{y\-\_\-mem\-\_\-alloc@{y\-\_\-mem\-\_\-alloc}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-mem\-\_\-alloc}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-mem\-\_\-alloc (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga71b54880fd4fe004b3cb8141255c6474}
+
+
+Ylib wrapper for \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()} 
+
+Allocates a block of memory, but aborts the Vuser if that fails.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Number of bytes required. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The memory resulting from this call will need to be freed using \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()}.
+\end{DoxyWarning}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *example\_string = \textcolor{stringliteral}{"some\_text"};
+\textcolor{keywordtype}{int} size = \hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen}(example\_string)+1;
+\textcolor{keywordtype}{char} *example\_string\_copy = \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\_mem\_alloc}(size);
+\hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{snprintf}(example\_string\_copy, size, \textcolor{stringliteral}{"%s"}, example\_string);
+lr\_log\_message(\textcolor{stringliteral}{"Copy of example string contains: %s"}, example\_string\_copy);
+\hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free}(example\_string\_copy);
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga084a530700465b1a7a10d103f2a2e6d4}{y\-\_\-array\-\_\-alloc()}, \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga0419985b32761cce3f5d75e6aad36f05}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-rand@{y\-\_\-rand}}
+\index{y\-\_\-rand@{y\-\_\-rand}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-rand}]{\setlength{\rightskip}{0pt plus 5cm}long y\-\_\-rand (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga0419985b32761cce3f5d75e6aad36f05}
+
+
+Generate a random (integer) number between 0 and Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X (30 bit maxint). 
+
+\begin{DoxyReturn}{Returns}
+Random number (integer) between 0 and Y\-\_\-\-R\-A\-N\-D\-\_\-\-M\-A\-X\-: 30-\/bit maxint -\/ slightly over 1 billion. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Superseded by \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand}
+\end{DoxyNote}
+{\bfseries Example\-:} 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} random\_number;
+random\_number=\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\_rand}();
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]Superseded by \hyperlink{group__core_ga319710d6642f34a8ea51a1a9898869fc}{y\-\_\-drand} \end{DoxyRefDesc}
+\hypertarget{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-setup@{y\-\_\-setup}}
+\index{y\-\_\-setup@{y\-\_\-setup}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-setup}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-setup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}
+
+
+Ylib setup -\/ determines and stores the identity of the virtual user. 
+
+This runs lr\-\_\-whoami and sets y\-\_\-virtual\-\_\-user\-\_\-id and y\-\_\-virtual\-\_\-user\-\_\-group as global variables. Called \hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} (for it's seed), \hyperlink{group__core_gaed34897cb0a5fb0ae18cf0d6facc35b5}{y\-\_\-is\-\_\-vugen\-\_\-run()} and others dynamically.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Only call this if you need the y\-\_\-virtual\-\_\-user\-\_\-id and y\-\_\-virtual\-\_\-group variables to be set. Ylib functions that need this will call it when required. 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga0419985b32761cce3f5d75e6aad36f05}{y\-\_\-rand()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+\hypertarget{group__core_ga8cba325c05b63bbbdc499702c4f5c6e9}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-strdup@{y\-\_\-strdup}}
+\index{y\-\_\-strdup@{y\-\_\-strdup}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-strdup}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-strdup (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{source}
+\end{DoxyParamCaption}
+)}}\label{group__core_ga8cba325c05b63bbbdc499702c4f5c6e9}
+
+
+Copy a string into a \hyperlink{group__memory_ga5f1a5df9b8c50bd259b8c34c0056e304}{malloc}'d piece of memory using \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()}, and lr\-\_\-abort() if the allocation fails. See the \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()} C documentation for what it does. This is just a simple wrapper around it that catches the strdup return value and handles any errors by aborting the script. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source} & The string to copy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A copy of the string, allocated via \hyperlink{group__string_ga86e0df1bf9e434074f958434e0af7581}{strdup()}. 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Floris Kraak 
+\end{DoxyAuthor}
+
+
+\subsection{Variable Documentation}
+\hypertarget{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool@{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}}
+\index{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool@{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-is\-\_\-vugen\-\_\-run\-\_\-bool = 0}}\label{group__core_ga6946e1e353167a7a711e3ddcb8a39b6d}
+
+
+Boolean, true when running in Vugen. Not able to do this in pre-\/compile phase. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga1ebd23898db36692c02dd58d9649f4a1}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-scid@{y\-\_\-scid}}
+\index{y\-\_\-scid@{y\-\_\-scid}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-scid}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-scid}}\label{group__core_ga1ebd23898db36692c02dd58d9649f4a1}
+
+
+The virtual user scid, as reported by lr\-\_\-whoami(). 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga36fcd2d9a92671f11bfebf8b7bfa34ae}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-virtual\-\_\-user\-\_\-group@{y\-\_\-virtual\-\_\-user\-\_\-group}}
+\index{y\-\_\-virtual\-\_\-user\-\_\-group@{y\-\_\-virtual\-\_\-user\-\_\-group}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-virtual\-\_\-user\-\_\-group}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-virtual\-\_\-user\-\_\-group = N\-U\-L\-L}}\label{group__core_ga36fcd2d9a92671f11bfebf8b7bfa34ae}
+
+
+The virtual user group, as reported by lr\-\_\-whoami(). 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} 
+\end{DoxySeeAlso}
+\hypertarget{group__core_ga312065213820734af47b86c233a26c0d}{\index{Core of Ylib@{Core of Ylib}!y\-\_\-virtual\-\_\-user\-\_\-id@{y\-\_\-virtual\-\_\-user\-\_\-id}}
+\index{y\-\_\-virtual\-\_\-user\-\_\-id@{y\-\_\-virtual\-\_\-user\-\_\-id}!Core of Ylib@{Core of Ylib}}
+\subsubsection[{y\-\_\-virtual\-\_\-user\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-virtual\-\_\-user\-\_\-id = 0}}\label{group__core_ga312065213820734af47b86c233a26c0d}
+
+
+The virtual user id, as reported by lr\-\_\-whoami(). 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__core_ga7350ca6bb0383b2169ef4eaae3b091e7}{y\-\_\-setup()} 
+\end{DoxySeeAlso}

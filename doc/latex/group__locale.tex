@@ -1,0 +1,54 @@
+\hypertarget{group__locale}{\section{Standard C locale structures and functions}
+\label{group__locale}\index{Standard C locale structures and functions@{Standard C locale structures and functions}}
+}
+
+
+Standard C structures and functions to handle the locale (defined in locale.\-h)  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structlconv}{lconv}
+\begin{DoxyCompactList}\small\item\em Returned by \hyperlink{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{localeconv}. Documented at \href{http://www.cplusplus.com/reference/clocale/lconv/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/lconv/}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__locale_ga9cc5213b5dca4f8e48e64586ee444c33}{\#define {\bfseries L\-C\-\_\-\-A\-L\-L}~0}\label{group__locale_ga9cc5213b5dca4f8e48e64586ee444c33}
+
+\item 
+\hypertarget{group__locale_gaab9cf7b1a206fb75e5884934c8d676db}{\#define {\bfseries L\-C\-\_\-\-C\-O\-L\-L\-A\-T\-E}~1}\label{group__locale_gaab9cf7b1a206fb75e5884934c8d676db}
+
+\item 
+\hypertarget{group__locale_ga07c66689961056725d7f50231d740ba9}{\#define {\bfseries L\-C\-\_\-\-C\-T\-Y\-P\-E}~2}\label{group__locale_ga07c66689961056725d7f50231d740ba9}
+
+\item 
+\hypertarget{group__locale_ga6d033a83772ef6e6c10dbf13a6a58fb7}{\#define {\bfseries L\-C\-\_\-\-M\-O\-N\-E\-T\-A\-R\-Y}~3}\label{group__locale_ga6d033a83772ef6e6c10dbf13a6a58fb7}
+
+\item 
+\hypertarget{group__locale_ga158abb82c565096465ade138c98970d0}{\#define {\bfseries L\-C\-\_\-\-N\-U\-M\-E\-R\-I\-C}~4}\label{group__locale_ga158abb82c565096465ade138c98970d0}
+
+\item 
+\hypertarget{group__locale_gaa652c62b53b6bf728d592bfbdc7d5852}{\#define {\bfseries L\-C\-\_\-\-T\-I\-M\-E}~5}\label{group__locale_gaa652c62b53b6bf728d592bfbdc7d5852}
+
+\item 
+\hypertarget{group__locale_ga7195d6f0a8d1b9d164a3988a1b8249e8}{\#define {\bfseries L\-C\-\_\-\-M\-E\-S\-S\-A\-G\-E\-S}~6}\label{group__locale_ga7195d6f0a8d1b9d164a3988a1b8249e8}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__locale_gafe784c4f5d12b74272740c5211c960c5}{char $\ast$ \hyperlink{group__locale_gafe784c4f5d12b74272740c5211c960c5}{setlocale} (int category, const char $\ast$locale)}\label{group__locale_gafe784c4f5d12b74272740c5211c960c5}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/clocale/setlocale/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/setlocale/}. \end{DoxyCompactList}\item 
+\hypertarget{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{struct \hyperlink{structlconv}{lconv} $\ast$ \hyperlink{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}{localeconv} (void)}\label{group__locale_ga69b40f71a20a7c8bd67b9eeeae7f40c9}
+
+\begin{DoxyCompactList}\small\item\em Documented at \href{http://www.cplusplus.com/reference/clocale/localeconv/}{\tt http\-://www.\-cplusplus.\-com/reference/clocale/localeconv/}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Standard C structures and functions to handle the locale (defined in locale.\-h) \begin{DoxyWarning}{Warning}
+Vugen executes a setlocale(L\-C\-\_\-\-A\-L\-L, \char`\"{}\char`\"{}) before the start -- so the system's default locale is active instead of the minimal locale and the default for all C compilers\-: setlocale(L\-C\-\_\-\-A\-L\-L, \char`\"{}\-C\char`\"{}). \par
+This may cause functions like sscanf to behave unexpectedly, for instance when the decimal point is a comma (as in many European languages) sscanf(buf , \char`\"{}\%lf\char`\"{}, \&double\-\_\-var) will not yield the correct number. \par
+To print the currently active locale use\-: lr\-\_\-log\-\_\-message(\char`\"{}\%s\char`\"{}, setlocale(\-L\-C\-\_\-\-A\-L\-L, N\-U\-L\-L)); 
+\end{DoxyWarning}

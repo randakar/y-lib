@@ -1,0 +1,65 @@
+\hypertarget{y__loadrunner__utils_8c}{\section{y\-\_\-loadrunner\-\_\-utils.\-c File Reference}
+\label{y__loadrunner__utils_8c}\index{y\-\_\-loadrunner\-\_\-utils.\-c@{y\-\_\-loadrunner\-\_\-utils.\-c}}
+}
+
+
+Collection of miscellaneous support functions.  
+
+
+{\ttfamily \#include \char`\"{}y\-\_\-core.\-c\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__loadrunner__utils_ga5d8d307cc6497d0ae26051c7b5272adf}{y\-\_\-breadcrumb\-\_\-reset}()~lr\-\_\-save\-\_\-string(\char`\"{}\char`\"{}, \char`\"{}breadcrumb\char`\"{})
+\begin{DoxyCompactList}\small\item\em Resets the breadcrumb Use this macro to start a new breadcrumb or to reset an existing one. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__loadrunner__utils_ga8aa00bc42e12484cc21af8bb58158ab5}{y\-\_\-delay\-\_\-once}(delay\-\_\-in\-\_\-seconds)
+\begin{DoxyCompactList}\small\item\em Delay for delay\-\_\-in\-\_\-seconds seconds, once. This macro will put the code to sleep for the specified amount of seconds, but only the first time the current position in the code is reached. If you use this in more than one place each of the calls will sleep exactly once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__loadrunner__utils_gae983b9ef76c2dac577cd9bb17920b6ea}{y\-\_\-rand\-\_\-in\-\_\-sliding\-\_\-window} (int lowerbound, int upperbound, int rand\-\_\-max)
+\begin{DoxyCompactList}\small\item\em Generate random number and test if it lies between 2 given boundaries. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gaa50b7745f6d186a97d1dc21eebf52bb3}{y\-\_\-rand\-\_\-between} (int lowerbound, int upperbound)
+\begin{DoxyCompactList}\small\item\em Create a random number between two boundaries. (the boundaries are included!) \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter} (char $\ast$attrib, char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Fetch attribute from v\-User's command line and store it in a parameter. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings as additional attributes) and stores it in the given parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gac6a1eabced0bcf489cb9afc93a881852}{y\-\_\-save\-\_\-attribute} (char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Fetch attribute from v\-User's command lin and store it in a parameter of the same name. This will fetch an attribute from the v\-User's command line (as set in the scenario or in runtime settings (addition attributes)) and stores it in a parameter of the same name. This function is a shortcut to \hyperlink{group__loadrunner__utils_ga14010a877f5f12712afd4bfa0a713b3e}{y\-\_\-save\-\_\-attribute\-\_\-to\-\_\-parameter()} \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_gab3671570eefb1129ab15401916c07b05}{y\-\_\-log\-\_\-rendezvous\-\_\-result} (int result)
+\begin{DoxyCompactList}\small\item\em Process the result code of lr\-\_\-rendezvous() call to log human readable errors. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga2c0e016c236c66f5ce29ec6cf26c258f}{y\-\_\-breadcrumb} (char $\ast$breadcrumb)
+\begin{DoxyCompactList}\small\item\em Keep track of the steps in the script. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga1975c6dcb009fd4ebc670efa3805bf3c}{y\-\_\-write\-\_\-to\-\_\-file} (char $\ast$filename, char $\ast$content)
+\begin{DoxyCompactList}\small\item\em Write a string to a file. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_ga09a5167c980ec4de95cf198c320c179e}{y\-\_\-write\-\_\-parameter\-\_\-to\-\_\-file} (char $\ast$filename, char $\ast$content\-\_\-parameter)
+\begin{DoxyCompactList}\small\item\em Write the content of a parameter to a file. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga7841e4b695b3dbae20f9d9276eecc07a}{y\-\_\-datetime} ()
+\begin{DoxyCompactList}\small\item\em Saves the current date/time into a L\-R-\/parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gafa6f1aa6d2647d9f58308c1864bd9eb6}{y\-\_\-workdays\-\_\-from\-\_\-today} (int workdays)
+\begin{DoxyCompactList}\small\item\em Calculate the difference in days between today and X workdays into the future. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_gaded70e9c2f8fff3e8015e5f54cbc1c30}{y\-\_\-get\-\_\-disk\-\_\-space} (const char $\ast$folder\-\_\-name, double $\ast$available, double $\ast$total)
+\begin{DoxyCompactList}\small\item\em Get the free disk space on the target folder on the load generator. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_gae654a05e25d0f5477caa15301a4e278c}{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-in\-\_\-mebibytes} (const char $\ast$folder\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the amount of free disk space in the target folder in mebibytes (S\-I unit) \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_gab41dd2018d6f14f318dfae6b75d5a7a2}{y\-\_\-get\-\_\-free\-\_\-disk\-\_\-space\-\_\-percentage} (const char $\ast$folder\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Get the free disk space percentage on the target folder on the load generator. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gaec8d4aac19ec5f0a24d82f261a300b51}{y\-\_\-read\-\_\-file\-\_\-into\-\_\-parameter} (char $\ast$filename, char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Read the contents of a file into a single parameter. \end{DoxyCompactList}\item 
+void \hyperlink{group__loadrunner__utils_ga192a83f87c6d0c63de76432ac985bfcc}{y\-\_\-user\-\_\-data\-\_\-point} (char $\ast$param)
+\begin{DoxyCompactList}\small\item\em Create a user data point for a parameter. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga17b08587d9d4bead3865b4778bda878b}{y\-\_\-get\-\_\-current\-\_\-time} ()
+\begin{DoxyCompactList}\small\item\em Get the current time in seconds since 1970, as a double. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga5064e6f0187a332841c80df8aa79bbdc}{y\-\_\-delay\-\_\-until} (double timestamp)
+\begin{DoxyCompactList}\small\item\em Delay until a certain time. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga3625eb1e8e509e2cf64132ed4b17d4d5}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup\-\_\-ext} (int rampup\-\_\-period, double T\-P\-S\-\_\-initial, double T\-P\-S\-\_\-max, int virtual\-\_\-users)
+\begin{DoxyCompactList}\small\item\em Ramp up the load by using varying amounts of think time instead of virtual users. \end{DoxyCompactList}\item 
+double \hyperlink{group__loadrunner__utils_ga123bd2be5b33b914a321e11a7122dba6}{y\-\_\-think\-\_\-time\-\_\-for\-\_\-rampup} (const int rampup\-\_\-period, double T\-P\-S\-\_\-max)
+\begin{DoxyCompactList}\small\item\em Ramp up the load by using varying amounts of think time instead of virtual users. For simulating situations with limited amounts of connections on the client side. \end{DoxyCompactList}\item 
+\hyperlink{group__loadrunner__utils_gaa6724943ea9deafd1a035fd2957774bf}{y\-\_\-execute\-\_\-shell\-\_\-command} (char $\ast$command, int debug)
+\begin{DoxyCompactList}\small\item\em Execute a windows shell command Implements proper error checking. \end{DoxyCompactList}\item 
+int \hyperlink{group__loadrunner__utils_gabe608ed84cb017342f34c8d76aee5e77}{y\-\_\-errorcheck} (int ok)
+\begin{DoxyCompactList}\small\item\em Errorflood guard. Also known as \char`\"{}the error check\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Collection of miscellaneous support functions. This file contains loadrunner specific helper functions. If we don't have somewhere else to put some piece of code, this is where it will probably end up. 

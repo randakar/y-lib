@@ -1,0 +1,656 @@
+\hypertarget{y__transaction_8c}{\section{y\-\_\-transaction.\-c File Reference}
+\label{y__transaction_8c}\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}}
+}
+
+
+ylib transaction library.  
+
+
+{\ttfamily \#include \char`\"{}web\-\_\-api.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}vugen.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-logging.\-c\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-string.\-c\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}y\-\_\-loadrunner\-\_\-utils.\-c\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__transaction_8c_a3cd413fda78838a298f3a20d3c9abca1}{\#define \hyperlink{y__transaction_8c_a3cd413fda78838a298f3a20d3c9abca1}{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-O\-N\-E}~0}\label{y__transaction_8c_a3cd413fda78838a298f3a20d3c9abca1}
+
+\begin{DoxyCompactList}\small\item\em Transaction status tracking. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_a1d92bb711f1339755401fc2bd888e7bb}{\#define \hyperlink{y__transaction_8c_a1d92bb711f1339755401fc2bd888e7bb}{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-T\-A\-R\-T\-E\-D}~1}\label{y__transaction_8c_a1d92bb711f1339755401fc2bd888e7bb}
+
+\begin{DoxyCompactList}\small\item\em Transaction status tracking. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_a9bd62e667d911b26ebd5e4474512dea8}{\#define \hyperlink{y__transaction_8c_a9bd62e667d911b26ebd5e4474512dea8}{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-A\-U\-T\-O\-\_\-\-S\-T\-A\-R\-T\-E\-D}~2}\label{y__transaction_8c_a9bd62e667d911b26ebd5e4474512dea8}
+
+\begin{DoxyCompactList}\small\item\em Transaction status tracking. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_ac360a0a941ef8451dc585cda2d8f8995}{\#define {\bfseries y\-\_\-set\-\_\-transaction\-\_\-nr}~0y\-\_\-set\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-set\-\_\-next\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_ac360a0a941ef8451dc585cda2d8f8995}
+
+\item 
+\hypertarget{y__transaction_8c_a04c8d7185823215e70822cf142363851}{\#define {\bfseries y\-\_\-get\-\_\-transaction\-\_\-nr}~0y\-\_\-get\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_a04c8d7185823215e70822cf142363851}
+
+\item 
+\hypertarget{y__transaction_8c_a894c88b68795406a06db81036b93126b}{\#define {\bfseries y\-\_\-get\-\_\-and\-\_\-increment\-\_\-transaction\-\_\-nr}~0y\-\_\-get\-\_\-and\-\_\-increment\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-increment\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_a894c88b68795406a06db81036b93126b}
+
+\item 
+\hypertarget{y__transaction_8c_adee4fb0981ee45aeb6fa79b67cc442be}{\#define {\bfseries y\-\_\-get\-\_\-sub\-\_\-transaction\-\_\-nr}~0y\-\_\-get\-\_\-sub\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-get\-\_\-next\-\_\-sub\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_adee4fb0981ee45aeb6fa79b67cc442be}
+
+\item 
+\hypertarget{y__transaction_8c_adab1c7cf7e6720fc3bf29f43a42c730b}{\#define {\bfseries y\-\_\-get\-\_\-and\-\_\-increment\-\_\-sub\-\_\-transaction\-\_\-nr}~0y\-\_\-get\-\_\-and\-\_\-increment\-\_\-sub\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-increment\-\_\-sub\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_adab1c7cf7e6720fc3bf29f43a42c730b}
+
+\item 
+\hypertarget{y__transaction_8c_ad7b5ab25bdfab4741b6d8f883592843d}{\#define {\bfseries y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-nr}~0y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-nr\-\_\-no\-\_\-longer\-\_\-exists\-\_\-please\-\_\-use\-\_\-y\-\_\-set\-\_\-next\-\_\-sub\-\_\-transaction\-\_\-nr}\label{y__transaction_8c_ad7b5ab25bdfab4741b6d8f883592843d}
+
+\item 
+\hypertarget{y__transaction_8c_a0554426190faaaec5dd8c474707ad2bb}{\#define {\bfseries Y\-\_\-\-N\-O\-\_\-\-P\-A\-U\-S\-E}~0}\label{y__transaction_8c_a0554426190faaaec5dd8c474707ad2bb}
+
+\item 
+\hypertarget{y__transaction_8c_aa03c7dc74f50885577a32bfc1308bd46}{\#define {\bfseries Y\-\_\-\-F\-O\-R\-C\-E\-\_\-\-P\-A\-U\-S\-E}~1}\label{y__transaction_8c_aa03c7dc74f50885577a32bfc1308bd46}
+
+\item 
+\#define {\bfseries Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K}(T\-R\-A\-N\-S\-A\-C\-T\-I\-O\-N, L\-I\-N\-K\-N\-A\-M\-E)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{typedef int( \hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} )()}\label{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}
+
+\begin{DoxyCompactList}\small\item\em Transaction trigger support typedef. \end{DoxyCompactList}\item 
+typedef int( \hyperlink{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func} )(char $\ast$trans\-\_\-name)
+\item 
+typedef int( \hyperlink{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func} )(char $\ast$trans\-\_\-name, int status)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{y__transaction_8c_a59572b55f1b7525c926b300ebf8fc13f}{\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running} ()
+\begin{DoxyCompactList}\small\item\em Workaround for a bug in L\-R 11. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{y__transaction_8c_a54ae1b999707ab201d3bdeec607bfb4c}{y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name} ()
+\item 
+void \hyperlink{y__transaction_8c_a073e480cfd3ff2a01c708bb3870717d6}{y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name} (char $\ast$trans\-\_\-name)
+\item 
+char $\ast$ \hyperlink{y__transaction_8c_aaac937467885091d9e77d63cb872d316}{y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name} ()
+\item 
+void \hyperlink{y__transaction_8c_ad085c39c1a2b342a84a47ce611655314}{y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name} (char $\ast$trans\-\_\-name)
+\item 
+void \hyperlink{y__transaction_8c_ac2618772922e0b5e0cf811024f8d7acf}{y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction} (int add\-\_\-group\-\_\-to\-\_\-trans)
+\item 
+void \hyperlink{y__transaction_8c_a305472b429df2bc9da417c23014abf95}{y\-\_\-set\-\_\-transaction\-\_\-prefix} (char $\ast$transaction\-\_\-prefix)
+\item 
+char $\ast$ \hyperlink{y__transaction_8c_a197f317d1196cb1dcc469b2d02a7b439}{y\-\_\-get\-\_\-transaction\-\_\-prefix} ()
+\item 
+int \hyperlink{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr} ()
+\item 
+int \hyperlink{y__transaction_8c_a4ce1cf19821f9eabdc90e247270c99bc}{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr} ()
+\item 
+int \hyperlink{y__transaction_8c_a7672d883aaf18287c950c985ce4d3f95}{y\-\_\-increment\-\_\-transaction\-\_\-nr} ()
+\item 
+\hypertarget{y__transaction_8c_aea78b7733c9178465ac4bf900de34ad9}{void {\bfseries y\-\_\-set\-\_\-next\-\_\-transaction\-\_\-nr} (int trans\-\_\-nr)}\label{y__transaction_8c_aea78b7733c9178465ac4bf900de34ad9}
+
+\item 
+\hypertarget{y__transaction_8c_a925fce08fef42ba94c23a5ece5616f4e}{int {\bfseries y\-\_\-get\-\_\-next\-\_\-sub\-\_\-transaction\-\_\-nr} ()}\label{y__transaction_8c_a925fce08fef42ba94c23a5ece5616f4e}
+
+\item 
+\hypertarget{y__transaction_8c_af7f464ac229672aa21f63ce0f9cd8ab7}{int {\bfseries y\-\_\-post\-\_\-increment\-\_\-sub\-\_\-transaction\-\_\-nr} ()}\label{y__transaction_8c_af7f464ac229672aa21f63ce0f9cd8ab7}
+
+\item 
+\hypertarget{y__transaction_8c_ab4a939d93aed97410a4c90e52e2d42e5}{int {\bfseries y\-\_\-increment\-\_\-sub\-\_\-transaction\-\_\-nr} ()}\label{y__transaction_8c_ab4a939d93aed97410a4c90e52e2d42e5}
+
+\item 
+\hypertarget{y__transaction_8c_a72067ca228122a6a699adbbb9aae9c4d}{void {\bfseries y\-\_\-set\-\_\-next\-\_\-sub\-\_\-transaction\-\_\-nr} (int trans\-\_\-nr)}\label{y__transaction_8c_a72067ca228122a6a699adbbb9aae9c4d}
+
+\item 
+\hypertarget{y__transaction_8c_a54743ed5ec3b435a34da45cfa501eafa}{int {\bfseries y\-\_\-get\-\_\-transaction\-\_\-running} ()}\label{y__transaction_8c_a54743ed5ec3b435a34da45cfa501eafa}
+
+\item 
+\hypertarget{y__transaction_8c_ab5e31480bbce381a34940670036f2d08}{void {\bfseries y\-\_\-set\-\_\-transaction\-\_\-start\-\_\-trigger} (\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$trigger\-\_\-function)}\label{y__transaction_8c_ab5e31480bbce381a34940670036f2d08}
+
+\item 
+\hypertarget{y__transaction_8c_a2347eac00c9f2e6e08920180c722f1a9}{void {\bfseries y\-\_\-set\-\_\-transaction\-\_\-end\-\_\-trigger} (\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$trigger\-\_\-function)}\label{y__transaction_8c_a2347eac00c9f2e6e08920180c722f1a9}
+
+\item 
+\hypertarget{y__transaction_8c_a0016a9d5caae6fddbbfc76b772625eb6}{void {\bfseries y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-start\-\_\-trigger} (\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$trigger\-\_\-function)}\label{y__transaction_8c_a0016a9d5caae6fddbbfc76b772625eb6}
+
+\item 
+\hypertarget{y__transaction_8c_ae922d63ada471e7cf215efccf48f9f43}{void {\bfseries y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-end\-\_\-trigger} (\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$trigger\-\_\-function)}\label{y__transaction_8c_ae922d63ada471e7cf215efccf48f9f43}
+
+\item 
+\hypertarget{y__transaction_8c_af162a70445ef1b47634dd433ca5f3732}{void {\bfseries y\-\_\-set\-\_\-transaction\-\_\-start\-\_\-implementation} (\hyperlink{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func} $\ast$trans\-\_\-start\-\_\-func)}\label{y__transaction_8c_af162a70445ef1b47634dd433ca5f3732}
+
+\item 
+\hypertarget{y__transaction_8c_a857d6cb3306c0cd09e628d0630efc231}{void {\bfseries y\-\_\-set\-\_\-transaction\-\_\-end\-\_\-implementation} (\hyperlink{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func} $\ast$trans\-\_\-end\-\_\-func)}\label{y__transaction_8c_a857d6cb3306c0cd09e628d0630efc231}
+
+\item 
+\hypertarget{y__transaction_8c_ab8c060f09f4bb3041bd5200eb834bd64}{\hyperlink{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func} $\ast$ {\bfseries y\-\_\-get\-\_\-transaction\-\_\-start\-\_\-implementation} ()}\label{y__transaction_8c_ab8c060f09f4bb3041bd5200eb834bd64}
+
+\item 
+\hypertarget{y__transaction_8c_a24993dac17320f290997ce51bf524c5c}{\hyperlink{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func} $\ast$ {\bfseries y\-\_\-get\-\_\-transaction\-\_\-end\-\_\-implementation} ()}\label{y__transaction_8c_a24993dac17320f290997ce51bf524c5c}
+
+\item 
+\hypertarget{y__transaction_8c_ae3e3953c8681acf880664e4b6d3966c8}{int {\bfseries y\-\_\-run\-\_\-transaction\-\_\-start\-\_\-trigger} ()}\label{y__transaction_8c_ae3e3953c8681acf880664e4b6d3966c8}
+
+\item 
+\hypertarget{y__transaction_8c_a2a9e679fe1e0cf121121a146b9d5bcf5}{int {\bfseries y\-\_\-run\-\_\-transaction\-\_\-end\-\_\-trigger} ()}\label{y__transaction_8c_a2a9e679fe1e0cf121121a146b9d5bcf5}
+
+\item 
+\hypertarget{y__transaction_8c_a11ebc626d2d019fc2dee68c7ffc4410e}{int {\bfseries y\-\_\-run\-\_\-sub\-\_\-transaction\-\_\-start\-\_\-trigger} ()}\label{y__transaction_8c_a11ebc626d2d019fc2dee68c7ffc4410e}
+
+\item 
+\hypertarget{y__transaction_8c_af5746396fe605a388a6ad1fd741e3150}{int {\bfseries y\-\_\-run\-\_\-sub\-\_\-transaction\-\_\-end\-\_\-trigger} ()}\label{y__transaction_8c_af5746396fe605a388a6ad1fd741e3150}
+
+\item 
+\hypertarget{y__transaction_8c_adf52dbc0beeae4f4ab24365dfcc22411}{void {\bfseries y\-\_\-save\-\_\-transaction\-\_\-end\-\_\-status} (char $\ast$transaction\-\_\-name, const char $\ast$saveparam, int status)}\label{y__transaction_8c_adf52dbc0beeae4f4ab24365dfcc22411}
+
+\item 
+\hypertarget{y__transaction_8c_a686bda9dd04c2bf7b16c93ed802981ab}{int {\bfseries y\-\_\-session\-\_\-transaction\-\_\-count\-\_\-increment} ()}\label{y__transaction_8c_a686bda9dd04c2bf7b16c93ed802981ab}
+
+\item 
+\hypertarget{y__transaction_8c_a6a554d8a8739567405d3bbb722221816}{void {\bfseries y\-\_\-session\-\_\-transaction\-\_\-count\-\_\-report} (char $\ast$session\-\_\-name)}\label{y__transaction_8c_a6a554d8a8739567405d3bbb722221816}
+
+\item 
+\hypertarget{y__transaction_8c_ad9ef1b16e19fe8718acb2f25d1ddf218}{void {\bfseries y\-\_\-session\-\_\-transaction\-\_\-count\-\_\-reset} ()}\label{y__transaction_8c_ad9ef1b16e19fe8718acb2f25d1ddf218}
+
+\item 
+\hypertarget{y__transaction_8c_ada7352d93a852b8d1182fe52668a1d7d}{void {\bfseries y\-\_\-start\-\_\-transaction\-\_\-block} (char $\ast$transaction\-\_\-prefix)}\label{y__transaction_8c_ada7352d93a852b8d1182fe52668a1d7d}
+
+\item 
+\hypertarget{y__transaction_8c_a4bc5e0dbcdd96e9377a0d8911158144b}{void {\bfseries y\-\_\-end\-\_\-transaction\-\_\-block} ()}\label{y__transaction_8c_a4bc5e0dbcdd96e9377a0d8911158144b}
+
+\item 
+\hypertarget{y__transaction_8c_af06c62517da4536d9b79a5f67b12c96a}{void {\bfseries y\-\_\-pause\-\_\-transaction\-\_\-block} ()}\label{y__transaction_8c_af06c62517da4536d9b79a5f67b12c96a}
+
+\item 
+\hypertarget{y__transaction_8c_abc896ea288cecfc338bcf0d2450cbff3}{void {\bfseries y\-\_\-resume\-\_\-transaction\-\_\-block} (char $\ast$transaction\-\_\-prefix)}\label{y__transaction_8c_abc896ea288cecfc338bcf0d2450cbff3}
+
+\item 
+\hypertarget{y__transaction_8c_aae650c30d550e670f811d3cf83b1ea2d}{void {\bfseries y\-\_\-start\-\_\-action\-\_\-block} (char $\ast$transaction\-\_\-prefix)}\label{y__transaction_8c_aae650c30d550e670f811d3cf83b1ea2d}
+
+\item 
+\hypertarget{y__transaction_8c_a28468dfca4fd956b1ba9b9c84fdb0af0}{void {\bfseries y\-\_\-end\-\_\-action\-\_\-block} ()}\label{y__transaction_8c_a28468dfca4fd956b1ba9b9c84fdb0af0}
+
+\item 
+char $\ast$ \hyperlink{y__transaction_8c_a2c39978bd241c358b487436f454dc4ec}{y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix} (const char $\ast$transaction\-\_\-prefix)
+\begin{DoxyCompactList}\small\item\em Transaction name factory helper. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_aa282308c5f5218e451b60a7c355b60a7}{void {\bfseries y\-\_\-create\-\_\-new\-\_\-transaction\-\_\-name} (const char $\ast$transaction\-\_\-name, const char $\ast$transaction\-\_\-prefix, int transaction\-\_\-nr)}\label{y__transaction_8c_aa282308c5f5218e451b60a7c355b60a7}
+
+\item 
+\hypertarget{y__transaction_8c_ab54f6ac8de380b61c6bc3567a9bd17f6}{void {\bfseries y\-\_\-create\-\_\-next\-\_\-transaction\-\_\-name} (const char $\ast$transaction\-\_\-name)}\label{y__transaction_8c_ab54f6ac8de380b61c6bc3567a9bd17f6}
+
+\item 
+\hypertarget{y__transaction_8c_addb3bf81422985ec5ec9a1b38722ec20}{void {\bfseries y\-\_\-create\-\_\-new\-\_\-sub\-\_\-transaction\-\_\-name} (const char $\ast$transaction\-\_\-name, const char $\ast$transaction\-\_\-prefix, const int transaction\-\_\-nr, const int sub\-\_\-transaction\-\_\-nr)}\label{y__transaction_8c_addb3bf81422985ec5ec9a1b38722ec20}
+
+\item 
+\hypertarget{y__transaction_8c_a77be4added1355e9ae2414d1f4494b71}{void {\bfseries y\-\_\-create\-\_\-next\-\_\-sub\-\_\-transaction\-\_\-name} (const char $\ast$transaction\-\_\-name)}\label{y__transaction_8c_a77be4added1355e9ae2414d1f4494b71}
+
+\item 
+\hypertarget{y__transaction_8c_a280ea9c983a11b5286c0458fb923c0ec}{int {\bfseries y\-\_\-start\-\_\-transaction} (char $\ast$transaction\-\_\-name)}\label{y__transaction_8c_a280ea9c983a11b5286c0458fb923c0ec}
+
+\item 
+\hypertarget{y__transaction_8c_a7d227ad4eda69681af69a26838a344ba}{int {\bfseries y\-\_\-start\-\_\-transaction\-\_\-with\-\_\-number} (char $\ast$transaction\-\_\-name, int transaction\-\_\-number)}\label{y__transaction_8c_a7d227ad4eda69681af69a26838a344ba}
+
+\item 
+\hypertarget{y__transaction_8c_aeda63958441fd6618f31857cdaed40cc}{int {\bfseries y\-\_\-end\-\_\-transaction} (char $\ast$transaction\-\_\-name, int status)}\label{y__transaction_8c_aeda63958441fd6618f31857cdaed40cc}
+
+\item 
+\hypertarget{y__transaction_8c_a544da91832d6266b76cb9dd1185a0501}{int {\bfseries y\-\_\-start\-\_\-sub\-\_\-transaction} (char $\ast$transaction\-\_\-name)}\label{y__transaction_8c_a544da91832d6266b76cb9dd1185a0501}
+
+\item 
+\hypertarget{y__transaction_8c_acd1d99fbda8b2086161c55415f68657c}{int {\bfseries y\-\_\-start\-\_\-sub\-\_\-transaction\-\_\-with\-\_\-number} (char $\ast$transaction\-\_\-name, int transaction\-\_\-number)}\label{y__transaction_8c_acd1d99fbda8b2086161c55415f68657c}
+
+\item 
+\hypertarget{y__transaction_8c_a659dfc22ea5f64d11f7f262a3c99d5cc}{int {\bfseries y\-\_\-end\-\_\-sub\-\_\-transaction} (char $\ast$transaction\-\_\-name, int status)}\label{y__transaction_8c_a659dfc22ea5f64d11f7f262a3c99d5cc}
+
+\item 
+\hypertarget{y__transaction_8c_a52108dd8853a8bd14a6632b320e14d9d}{int {\bfseries y\-\_\-get\-\_\-last\-\_\-transaction\-\_\-status} ()}\label{y__transaction_8c_a52108dd8853a8bd14a6632b320e14d9d}
+
+\item 
+\hypertarget{y__transaction_8c_abd287dfea8faf750b4d920143c52382a}{void {\bfseries y\-\_\-session\-\_\-timer\-\_\-start} (char $\ast$session\-\_\-name)}\label{y__transaction_8c_abd287dfea8faf750b4d920143c52382a}
+
+\item 
+\hypertarget{y__transaction_8c_ac289d4eaf281d5e75ca629f602625ad7}{void {\bfseries y\-\_\-session\-\_\-timer\-\_\-end} (int required\-\_\-session\-\_\-duration, int force\-\_\-pause)}\label{y__transaction_8c_ac289d4eaf281d5e75ca629f602625ad7}
+
+\item 
+\hypertarget{y__transaction_8c_a7e6757e8923016916ff2ed54c462dc28}{void {\bfseries y\-\_\-trans\-\_\-web\-\_\-link} (char $\ast$transaction, char $\ast$linkname)}\label{y__transaction_8c_a7e6757e8923016916ff2ed54c462dc28}
+
+\item 
+\hypertarget{y__transaction_8c_a7ae2323bba194d1c302c2b99f2f2fc8c}{void {\bfseries y\-\_\-setup\-\_\-step\-\_\-waterfall} ()}\label{y__transaction_8c_a7ae2323bba194d1c302c2b99f2f2fc8c}
+
+\item 
+\hypertarget{y__transaction_8c_a882f93c4823bcf37acfdc030e89d1e37}{void {\bfseries y\-\_\-waterfall\-\_\-random\-\_\-weighted\-\_\-continue} (char $\ast$stepname)}\label{y__transaction_8c_a882f93c4823bcf37acfdc030e89d1e37}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{y__transaction_8c_afb976a7de1869efe42486f8b764a4fa0}{int \hyperlink{y__transaction_8c_afb976a7de1869efe42486f8b764a4fa0}{\-\_\-y\-\_\-add\-\_\-group\-\_\-to\-\_\-trans} = 0}\label{y__transaction_8c_afb976a7de1869efe42486f8b764a4fa0}
+
+\begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-N\-A\-L\-: Whether to add the name of the vuser group to the transaction names. 1 = on, 0 = off. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_a325dd6ae8f5f42d039791757012a2f0c}{int \hyperlink{y__transaction_8c_a325dd6ae8f5f42d039791757012a2f0c}{\-\_\-y\-\_\-wasted\-\_\-time\-\_\-graph} = 0}\label{y__transaction_8c_a325dd6ae8f5f42d039791757012a2f0c}
+
+\begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-N\-A\-L\-: Whether to create a graph detailing wasted time. Debugging option. \end{DoxyCompactList}\item 
+int \hyperlink{y__transaction_8c_a6be2f70e550b1a24e6e54a66d9ba693b}{\-\_\-y\-\_\-transaction\-\_\-nr} = 1
+\begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-N\-A\-L\-: Transaction counting for transaction blocks\-: \end{DoxyCompactList}\item 
+int \hyperlink{y__transaction_8c_ae19a2245288efe07813d327f8d96ea35}{\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr} = 1
+\begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-N\-A\-L\-: Transaction counting for sub transactions\-: \end{DoxyCompactList}\item 
+int \hyperlink{y__transaction_8c_a92d3b35e19c7a2e901b67538474c3686}{y\-\_\-session\-\_\-transaction\-\_\-count} = -\/1
+\begin{DoxyCompactList}\small\item\em Transaction counting support for sessions. \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_afe32d0eb996d429adf3ee3d79d014e6c}{int \hyperlink{y__transaction_8c_afe32d0eb996d429adf3ee3d79d014e6c}{\-\_\-y\-\_\-trans\-\_\-status} = \hyperlink{y__transaction_8c_a3cd413fda78838a298f3a20d3c9abca1}{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-O\-N\-E}}\label{y__transaction_8c_afe32d0eb996d429adf3ee3d79d014e6c}
+
+\begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-N\-A\-L\-: Transaction status tracking. \end{DoxyCompactList}\item 
+\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a3cf739fca44b3ff513cdccd178b38221}{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans} = N\-U\-L\-L
+\item 
+\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a6080765857b538d37feca241be9ad8be}{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans} = N\-U\-L\-L
+\item 
+\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a806e5fbc5d61fb9a2db6a05ecf54f898}{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans} = N\-U\-L\-L
+\item 
+\hyperlink{y__transaction_8c_a1d68e4dcb0ab1e22daf3046673f4629f}{y\-\_\-trigger\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a08675f19b8a85c8524a47c0848c0a5c4}{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans} = N\-U\-L\-L
+\item 
+\hyperlink{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a27c3b8bf824f836bfc7bbc70a56ddb1f}{\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl} = \&lr\-\_\-start\-\_\-transaction
+\begin{DoxyCompactList}\small\item\em Start transaction implementation pointer. Default lr\-\_\-start\-\_\-transaction(). \end{DoxyCompactList}\item 
+\hyperlink{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func} $\ast$ \hyperlink{y__transaction_8c_a92475ecaccb91644c60cc5d1e4244c9e}{\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl} = \&lr\-\_\-end\-\_\-transaction
+\begin{DoxyCompactList}\small\item\em End transaction implementation pointer. Default lr\-\_\-end\-\_\-transaction(). \end{DoxyCompactList}\item 
+\hypertarget{y__transaction_8c_a1bbe091d6896743a9f04b1466ffeb6aa}{merc\-\_\-timer\-\_\-handle\-\_\-t \hyperlink{y__transaction_8c_a1bbe091d6896743a9f04b1466ffeb6aa}{y\-\_\-session\-\_\-timer} = N\-U\-L\-L}\label{y__transaction_8c_a1bbe091d6896743a9f04b1466ffeb6aa}
+
+\begin{DoxyCompactList}\small\item\em Session timer variable for session timer support. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+ylib transaction library. Allows you to extend your script with the following features\-:
+\begin{DoxyItemize}
+\item Automatic transaction naming and numbering.
+\item Transaction triggers\-: Code to be run when a transaction starts or stops.
+\item Custom transaction implementations -\/ Adding your own logging or time measurements to transactions.
+\end{DoxyItemize}
+
+\subsubsection*{Usage }
+
+Include this file (or \hyperlink{y__lib_8c}{y\-\_\-lib.\-c}) in your script, call y\-\_\-start\-\_\-transaction() and y\-\_\-end\-\_\-transaction() everywhere you normally call the loadrunner variants. Use search-\/and-\/replace to convert existing scripts. Add calls to y\-\_\-start\-\_\-transaction\-\_\-block() and y\-\_\-end\-\_\-transaction\-\_\-block() to set a transaction prefix.
+
+\subsubsection*{Transaction naming }
+
+Y-\/lib transaction names take the form\-: '\{transaction\-\_\-prefix\}\-\_\-\{transaction\-\_\-nr\}\-\_\-\{step\-\_\-name\}'. Sub transaction names take the form\-: '\{transaction\-\_\-prefix\}\-\_\-\{transaction\-\_\-nr\}\-\_\-\{sub\-\_\-transaction\-\_\-nr\}\-\_\-\{step\-\_\-name\}'. Calling y\-\_\-start\-\_\-transaction\-\_\-block() starts a block of transactions that all use the name of the block as the transaction prefix.
+
+Optionally the vuser group name can be added to the transaction names as well. This allows differentiation between different types of users that are all running the same script otherwise.
+
+\subsubsection*{Triggers }
+
+A trigger is a function that will execute every time an ylib transaction starts or stops. You can define seperate triggers for transaction start, stop, and the sub transaction start and stop. The return value of the trigger is used to determine whether the transaction should pass or fail, in the case of end transaction triggers.
+
+\subsubsection*{Custom transaction implementations }
+
+Ylib can be configured to run your own custom transaction start/stop implementation instead of the usual loadrunner functions whenever a transaction starts or stops. This can be used for a variety of things; For example, calculating the 99th percentile responstime for a specific group of transactions can be done by starting a seperate transaction on top of the normal one for the transactions in question. A different example would be having all transactions log a timestamp with the transaction name whenever a transaction starts or stops.
+
+\subsubsection*{Testcase }
+
+
+\begin{DoxyCode}
+\hyperlink{y__logging_8c_ad22b9fb4ae6f4a47b69cd37b9f33ceff}{y\_setup\_logging}();                   \textcolor{comment}{// Initialisation. May be omitted. (testcase?)}
+
+y\_start\_sub\_transaction(\textcolor{stringliteral}{"alpha"});    \textcolor{comment}{// starts trans '01 alpha' and subtrans '01\_01 alpha'.}
+y\_end\_sub\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);  \textcolor{comment}{// ends both.}
+
+y\_start\_action\_block(\textcolor{stringliteral}{"one"});         \textcolor{comment}{// starts action block "one".}
+y\_start\_sub\_transaction(\textcolor{stringliteral}{"beta"});     \textcolor{comment}{// starts trans 'one\_01 beta' and subtrans 'one\_01\_01 beta'.}
+y\_end\_sub\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);  \textcolor{comment}{// ends both.}
+y\_end\_action\_block();                \textcolor{comment}{// ends action block "one".}
+
+\hyperlink{y__transaction_8c_ac2618772922e0b5e0cf811024f8d7acf}{y\_set\_add\_group\_to\_transaction}(1);   \textcolor{comment}{// start adding the groupname - 'None',
+       when running inside vugen.}
+
+y\_start\_sub\_transaction(\textcolor{stringliteral}{"gamma"});    \textcolor{comment}{// starts trans 'None\_02 gamma' and subtrans 'None\_02\_01 gamma'.}
+y\_end\_sub\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);  \textcolor{comment}{// ends both.}
+
+y\_start\_action\_block(\textcolor{stringliteral}{"two"});         \textcolor{comment}{// starts action block "two".}
+y\_start\_sub\_transaction(\textcolor{stringliteral}{"delta"});    \textcolor{comment}{// starts trans 'None\_two\_01 delta' and subtrans 'None\_two\_01\_01
+       delta'.}
+y\_end\_sub\_transaction(\textcolor{stringliteral}{""}, LR\_AUTO);  \textcolor{comment}{// ends both.}
+y\_end\_action\_block();                \textcolor{comment}{// ends action block "two".}
+lr\_abort();                          \textcolor{comment}{// end testcase ;-)}
+\textcolor{keywordflow}{return};
+\end{DoxyCode}
+ 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{y__transaction_8c_a4967a9e9cfcee3a09564b52394bb3b14}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K@{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K}}
+\index{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K@{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define Y\-\_\-\-T\-R\-A\-N\-S\-\_\-\-W\-E\-B\-\_\-\-L\-I\-N\-K(
+\begin{DoxyParamCaption}
+\item[{}]{T\-R\-A\-N\-S\-A\-C\-T\-I\-O\-N, }
+\item[{}]{L\-I\-N\-K\-N\-A\-M\-E}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a4967a9e9cfcee3a09564b52394bb3b14}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{                                                                      \(\backslash\)
+    char *link = lr\_eval\_string(LINKNAME);                                \(\backslash\)
+    char *tmp, *trans;                                                    \(\backslash\)
+    size\_t size;                                                          \(\backslash\)
+                                                                          \(\backslash\)
+    if( !(\hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen}(link) > 0) )                                             \(\backslash\)
+    \{                                                                     \(\backslash\)
+        lr\_error\_message(\textcolor{stringliteral}{"Zero-length link name - correlation error?"});   \(\backslash\)
+        lr\_exit(LR\_EXIT\_ITERATION\_AND\_CONTINUE, LR\_AUTO);                 \(\backslash\)
+        return;                                                           \(\backslash\)
+    \}                                                                     \(\backslash\)
+                                                                          \(\backslash\)
+    size = \hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen}(link) + \hyperlink{group__string_ga2869404e70f06f4477271f26ce8c4920}{strlen}(\textcolor{stringliteral}{"Text="}) +1;                             \(\backslash\)
+    tmp = \hyperlink{group__core_ga71b54880fd4fe004b3cb8141255c6474}{y\_mem\_alloc}(size);                                              
+      \hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{\(\backslash\)}
+\hyperlink{group__string_gac9626ce5468b43d954c3598c1ffe9725}{    snprintf}(tmp, size, \textcolor{stringliteral}{"Text=%s"}, link);                                 \(\backslash\)
+                                                                          \(\backslash\)
+    trans = lr\_eval\_string(TRANSACTION);                                  \(\backslash\)
+    y\_start\_transaction(trans);                                           \(\backslash\)
+    web\_link(link, tmp, LAST);                                            \(\backslash\)
+    y\_end\_transaction(trans, LR\_AUTO);                                    \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{\(\backslash\)}
+\hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{                                                                          \(\backslash\)}
+\hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{    free}(tmp);                                                            \(\backslash\)
+\} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func@{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func}}
+\index{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func@{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}typedef int( y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func)(char $\ast$trans\-\_\-name, int status)}}\label{y__transaction_8c_ab6d57d01e7d0e230bda54b5fe59f7383}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-end\-\_\-implementation() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func@{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func}}
+\index{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func@{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}typedef int( y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func)(char $\ast$trans\-\_\-name)}}\label{y__transaction_8c_a3f0bc57d7369919725da9f18a3bab925}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-start\-\_\-implementation() 
+\end{DoxySeeAlso}
+
+
+\subsection{Function Documentation}
+\hypertarget{y__transaction_8c_a59572b55f1b7525c926b300ebf8fc13f}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running@{\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running}}
+\index{\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running@{\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running}]{\setlength{\rightskip}{0pt plus 5cm}void \-\_\-\-\_\-y\-\_\-do\-\_\-not\-\_\-call\-\_\-this\-\_\-is\-\_\-a\-\_\-workaround\-\_\-that\-\_\-only\-\_\-exists\-\_\-to\-\_\-prevent\-\_\-a\-\_\-null\-\_\-dereference\-\_\-error\-\_\-in\-\_\-vugen\-\_\-when\-\_\-running (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a59572b55f1b7525c926b300ebf8fc13f}
+
+
+Workaround for a bug in L\-R 11. 
+
+If you have a script that does not contain any regular loadrunner transactions but leans exclusively on ylib instead a very interesting error occurs when running. Adding calls to lr\-\_\-start\-\_\-transaction() and lr\-\_\-end\-\_\-transaction() that are never actually used is enough to stop that from occurring. Alternatively, the \char`\"{}y\-\_\-start\-\_\-trans\-\_\-impl\-\_\-func\char`\"{} and \char`\"{}y\-\_\-end\-\_\-trans\-\_\-impl\-\_\-func\char`\"{} pointers could be initialized to N\-U\-L\-L. But that would stop y\-\_\-start/y\-\_\-end\-\_\-transaction() from actually recording transactions.. so we're not going to do that. \-:) \hypertarget{y__transaction_8c_a2c39978bd241c358b487436f454dc4ec}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix@{y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix}}
+\index{y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix@{y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-calculate\-\_\-actual\-\_\-transaction\-\_\-prefix (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{transaction\-\_\-prefix}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a2c39978bd241c358b487436f454dc4ec}
+
+
+Transaction name factory helper. 
+
+Add together the transaction prefix, vuser group name (if applicable), and transaction number, seperated by \char`\"{}\-\_\-\char`\"{}, and return the result in a newly allocated piece of memory on the heap. Automatically called by y\-\_\-start\-\_\-transaction() and friends as needed.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em transaction\-\_\-prefix} & The current transaction prefix as given to y\-\_\-start\-\_\-transaction\-\_\-block() \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A newly allocated piece of memory on the heap containing the complete prefix, ready for concatenation with the actual transaction name.
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+the return value of this function needs to be freed using \hyperlink{group__memory_ga557a44efb227bec48c165bf5e016b675}{free()}.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction(), y\-\_\-create\-\_\-transaction\-\_\-name() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_aaac937467885091d9e77d63cb872d316}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name@{y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}}
+\index{y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name@{y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_aaac937467885091d9e77d63cb872d316}
+Get the most recent subtransaction name as set by y\-\_\-start\-\_\-sub\-\_\-transaction(). \begin{DoxyReturn}{Returns}
+The current full subtransaction name as set by y\-\_\-start\-\_\-sub\-\_\-transaction() 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returned pointer points to memory allocated by lr\-\_\-eval\-\_\-string().
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-sub\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a54ae1b999707ab201d3bdeec607bfb4c}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name@{y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name}}
+\index{y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name@{y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-current\-\_\-transaction\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a54ae1b999707ab201d3bdeec607bfb4c}
+Get the most recent transaction name as set by y\-\_\-start\-\_\-transaction(). \begin{DoxyReturn}{Returns}
+The current full transaction name as set by y\-\_\-start\-\_\-transaction() 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returned pointer points to memory allocated by lr\-\_\-eval\-\_\-string().
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr@{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr}}
+\index{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr@{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}
+Get the transaction number used for the next transaction started by y\-\_\-start\-\_\-transaction()
+
+Useful for complicated flows where a little bit of handcrafted helper code is needed to keep the count correct.
+
+\begin{DoxyReturn}{Returns}
+The transaction number used for the next transaction started by y\-\_\-start\-\_\-transaction() 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction(), \hyperlink{y__transaction_8c_a4ce1cf19821f9eabdc90e247270c99bc}{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr()} 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a197f317d1196cb1dcc469b2d02a7b439}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-get\-\_\-transaction\-\_\-prefix@{y\-\_\-get\-\_\-transaction\-\_\-prefix}}
+\index{y\-\_\-get\-\_\-transaction\-\_\-prefix@{y\-\_\-get\-\_\-transaction\-\_\-prefix}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-get\-\_\-transaction\-\_\-prefix}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ y\-\_\-get\-\_\-transaction\-\_\-prefix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a197f317d1196cb1dcc469b2d02a7b439}
+Get the currently used transaction prefix.
+
+In some cases you may wish to make decisions based on what kind of clickflow is currently executing. The transaction prefix may provide exactly what you need to determine that, if you use different transaction blocks for different clickflows.
+
+\begin{DoxyReturn}{Returns}
+the current transaction\-\_\-prefix. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The returned pointer points to memory allocated by lr\-\_\-eval\-\_\-string()
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction\-\_\-block(), \hyperlink{y__transaction_8c_a305472b429df2bc9da417c23014abf95}{y\-\_\-set\-\_\-transaction\-\_\-prefix()} 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a7672d883aaf18287c950c985ce4d3f95}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-increment\-\_\-transaction\-\_\-nr@{y\-\_\-increment\-\_\-transaction\-\_\-nr}}
+\index{y\-\_\-increment\-\_\-transaction\-\_\-nr@{y\-\_\-increment\-\_\-transaction\-\_\-nr}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-increment\-\_\-transaction\-\_\-nr}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-increment\-\_\-transaction\-\_\-nr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a7672d883aaf18287c950c985ce4d3f95}
+Increment the transaction number used by the transaction naming code.
+
+Used internally.
+
+\begin{DoxyReturn}{Returns}
+The transaction number used for the next transaction started by y\-\_\-start\-\_\-transaction() 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction(), \hyperlink{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr()} 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a4ce1cf19821f9eabdc90e247270c99bc}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr@{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr}}
+\index{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr@{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-post\-\_\-increment\-\_\-transaction\-\_\-nr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a4ce1cf19821f9eabdc90e247270c99bc}
+Increment the transaction number used by the transaction naming code.
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000015}{Deprecated}]
+\begin{DoxyItemize}
+\item \hyperlink{y__transaction_8c_a7672d883aaf18287c950c985ce4d3f95}{y\-\_\-increment\-\_\-transaction\-\_\-nr()} does the same thing.
+\end{DoxyItemize}\end{DoxyRefDesc}
+
+
+\begin{DoxyReturn}{Returns}
+The transaction number used for the next transaction started by y\-\_\-start\-\_\-transaction() 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction(), \hyperlink{y__transaction_8c_ae7e6210279f7f1adeaea07b7725575d5}{y\-\_\-get\-\_\-next\-\_\-transaction\-\_\-nr()} 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_ac2618772922e0b5e0cf811024f8d7acf}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction@{y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction}}
+\index{y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction@{y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-set\-\_\-add\-\_\-group\-\_\-to\-\_\-transaction (
+\begin{DoxyParamCaption}
+\item[{int}]{add\-\_\-group\-\_\-to\-\_\-trans}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_ac2618772922e0b5e0cf811024f8d7acf}
+Toggle using the vuser group name in ylib transaction names Useful if you wish to set up two virtual user groups executing the exact same script with some kind of subtle different that makes it necessary to differentiate between the transactions from each group. Default is off.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em add\-\_\-group\-\_\-to\-\_\-trans} & Value determining if the group name is added to transaction name. Set to 1 it will be added, if set to 0 it will not be.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_ad085c39c1a2b342a84a47ce611655314}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name@{y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}}
+\index{y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name@{y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-set\-\_\-current\-\_\-sub\-\_\-transaction\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{trans\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_ad085c39c1a2b342a84a47ce611655314}
+Store the name of the current subtransaction.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em trans\-\_\-name} & The full name of the subtransaction. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-sub\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a073e480cfd3ff2a01c708bb3870717d6}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name@{y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name}}
+\index{y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name@{y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-set\-\_\-current\-\_\-transaction\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{trans\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a073e480cfd3ff2a01c708bb3870717d6}
+Store the name of the current transaction.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em trans\-\_\-name} & The full name of the transaction. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a305472b429df2bc9da417c23014abf95}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-set\-\_\-transaction\-\_\-prefix@{y\-\_\-set\-\_\-transaction\-\_\-prefix}}
+\index{y\-\_\-set\-\_\-transaction\-\_\-prefix@{y\-\_\-set\-\_\-transaction\-\_\-prefix}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-set\-\_\-transaction\-\_\-prefix}]{\setlength{\rightskip}{0pt plus 5cm}void y\-\_\-set\-\_\-transaction\-\_\-prefix (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{transaction\-\_\-prefix}
+\end{DoxyParamCaption}
+)}}\label{y__transaction_8c_a305472b429df2bc9da417c23014abf95}
+Set the common transaction prefix for all subsequent transactions.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em transaction\-\_\-prefix} & The transaction prefix to store. Used automatically by y\-\_\-start\-\_\-transaction\-\_\-block() and friends.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction\-\_\-block() 
+\end{DoxySeeAlso}
+
+
+\subsection{Variable Documentation}
+\hypertarget{y__transaction_8c_ae19a2245288efe07813d327f8d96ea35}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr@{\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr}}
+\index{\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr@{\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr}]{\setlength{\rightskip}{0pt plus 5cm}int \-\_\-y\-\_\-sub\-\_\-transaction\-\_\-nr = 1}}\label{y__transaction_8c_ae19a2245288efe07813d327f8d96ea35}
+
+
+I\-N\-T\-E\-R\-N\-A\-L\-: Transaction counting for sub transactions\-: 
+
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-sub\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a92475ecaccb91644c60cc5d1e4244c9e}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl@{\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl}}
+\index{\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl@{\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trans\-\_\-end\-\_\-impl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trans\-\_\-end\-\_\-impl\-\_\-func}$\ast$ \-\_\-y\-\_\-trans\-\_\-end\-\_\-impl = \&lr\-\_\-end\-\_\-transaction}}\label{y__transaction_8c_a92475ecaccb91644c60cc5d1e4244c9e}
+
+
+End transaction implementation pointer. Default lr\-\_\-end\-\_\-transaction(). 
+
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-end\-\_\-implementation() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a27c3b8bf824f836bfc7bbc70a56ddb1f}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl@{\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl}}
+\index{\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl@{\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trans\-\_\-start\-\_\-impl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trans\-\_\-start\-\_\-impl\-\_\-func}$\ast$ \-\_\-y\-\_\-trans\-\_\-start\-\_\-impl = \&lr\-\_\-start\-\_\-transaction}}\label{y__transaction_8c_a27c3b8bf824f836bfc7bbc70a56ddb1f}
+
+
+Start transaction implementation pointer. Default lr\-\_\-start\-\_\-transaction(). 
+
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-start\-\_\-implementation() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a6be2f70e550b1a24e6e54a66d9ba693b}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-transaction\-\_\-nr@{\-\_\-y\-\_\-transaction\-\_\-nr}}
+\index{\-\_\-y\-\_\-transaction\-\_\-nr@{\-\_\-y\-\_\-transaction\-\_\-nr}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-transaction\-\_\-nr}]{\setlength{\rightskip}{0pt plus 5cm}int \-\_\-y\-\_\-transaction\-\_\-nr = 1}}\label{y__transaction_8c_a6be2f70e550b1a24e6e54a66d9ba693b}
+
+
+I\-N\-T\-E\-R\-N\-A\-L\-: Transaction counting for transaction blocks\-: 
+
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-start\-\_\-transaction\-\_\-block() and y\-\_\-start\-\_\-transaction() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a08675f19b8a85c8524a47c0848c0a5c4}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans}}
+\index{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trigger\-\_\-func}$\ast$ \-\_\-y\-\_\-trigger\-\_\-end\-\_\-sub\-\_\-trans = N\-U\-L\-L}}\label{y__transaction_8c_a08675f19b8a85c8524a47c0848c0a5c4}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-end\-\_\-trigger() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a6080765857b538d37feca241be9ad8be}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans}}
+\index{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trigger\-\_\-func}$\ast$ \-\_\-y\-\_\-trigger\-\_\-end\-\_\-trans = N\-U\-L\-L}}\label{y__transaction_8c_a6080765857b538d37feca241be9ad8be}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-end\-\_\-trigger() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a806e5fbc5d61fb9a2db6a05ecf54f898}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans}}
+\index{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trigger\-\_\-func}$\ast$ \-\_\-y\-\_\-trigger\-\_\-start\-\_\-sub\-\_\-trans = N\-U\-L\-L}}\label{y__transaction_8c_a806e5fbc5d61fb9a2db6a05ecf54f898}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-sub\-\_\-transaction\-\_\-start\-\_\-trigger() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a3cf739fca44b3ff513cdccd178b38221}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans}}
+\index{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans@{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{\-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans}]{\setlength{\rightskip}{0pt plus 5cm}{\bf y\-\_\-trigger\-\_\-func}$\ast$ \-\_\-y\-\_\-trigger\-\_\-start\-\_\-trans = N\-U\-L\-L}}\label{y__transaction_8c_a3cf739fca44b3ff513cdccd178b38221}
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-set\-\_\-transaction\-\_\-start\-\_\-trigger() 
+\end{DoxySeeAlso}
+\hypertarget{y__transaction_8c_a92d3b35e19c7a2e901b67538474c3686}{\index{y\-\_\-transaction.\-c@{y\-\_\-transaction.\-c}!y\-\_\-session\-\_\-transaction\-\_\-count@{y\-\_\-session\-\_\-transaction\-\_\-count}}
+\index{y\-\_\-session\-\_\-transaction\-\_\-count@{y\-\_\-session\-\_\-transaction\-\_\-count}!y_transaction.c@{y\-\_\-transaction.\-c}}
+\subsubsection[{y\-\_\-session\-\_\-transaction\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}int y\-\_\-session\-\_\-transaction\-\_\-count = -\/1}}\label{y__transaction_8c_a92d3b35e19c7a2e901b67538474c3686}
+
+
+Transaction counting support for sessions. 
+
+\begin{DoxySeeAlso}{See Also}
+y\-\_\-session\-\_\-timer\-\_\-start() and y\-\_\-session\-\_\-timer\-\_\-end() 
+\end{DoxySeeAlso}

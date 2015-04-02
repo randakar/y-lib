@@ -1,0 +1,38 @@
+\hypertarget{structy__struct__flow}{\section{y\-\_\-struct\-\_\-flow Struct Reference}
+\label{structy__struct__flow}\index{y\-\_\-struct\-\_\-flow@{y\-\_\-struct\-\_\-flow}}
+}
+
+
+Descriptor for one single flow in a flow list.  
+
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structy__struct__flow_ae41d27d59268dd262885785904ee47ab}{int \hyperlink{structy__struct__flow_ae41d27d59268dd262885785904ee47ab}{number}}\label{structy__struct__flow_ae41d27d59268dd262885785904ee47ab}
+
+\begin{DoxyCompactList}\small\item\em A number. Not used by ylib itself, use it however you want. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__flow_a71ebba116c39d3a04968c4e4982cdee9}{char $\ast$ \hyperlink{structy__struct__flow_a71ebba116c39d3a04968c4e4982cdee9}{name}}\label{structy__struct__flow_a71ebba116c39d3a04968c4e4982cdee9}
+
+\begin{DoxyCompactList}\small\item\em The name of the flow. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__flow_a76183e110229c34cd1e52803b34e192c}{\hyperlink{y__flow__list_8c_a01580762036bdc8332d4dcf0df9dffc4}{y\-\_\-flow\-\_\-func} $\ast$ \hyperlink{structy__struct__flow_a76183e110229c34cd1e52803b34e192c}{function}}\label{structy__struct__flow_a76183e110229c34cd1e52803b34e192c}
+
+\begin{DoxyCompactList}\small\item\em A function pointer to the code to execute. \end{DoxyCompactList}\item 
+\hypertarget{structy__struct__flow_aaba3104385529e46107d8b37448281bd}{int \hyperlink{structy__struct__flow_aaba3104385529e46107d8b37448281bd}{weight}}\label{structy__struct__flow_aaba3104385529e46107d8b37448281bd}
+
+\begin{DoxyCompactList}\small\item\em The weight assigned to this piece of code, determining how likely it is to be executed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Descriptor for one single flow in a flow list. 
+
+This wraps the y\-\_\-flow\-\_\-func function pointer in a structure that gives the flow a name and a weight, as well as an (arbitrary) number. The chance of a specific flow getting executed is 1 in the total of the weights in the list of flows.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c} 
+\end{DoxySeeAlso}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{y__flow__list_8c}{y\-\_\-flow\-\_\-list.\-c}\end{DoxyCompactItemize}
