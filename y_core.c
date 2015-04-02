@@ -61,11 +61,14 @@ We define it here mostly for documentation, as we do not have access to the head
 \def Y_RAND_MAX 
 \brief Alternate RAND_MAX constant for use with y_rand.
 
-y_rand() provides for a far bigger ceiling to the random number generator: 30 bits, instead of 15.
+y_rand() provides for a far bigger ceiling to the random number generator: 31 bits on Windows and 30 bits otherwise, instead of 15.
 \author Floris Kraak
 */
-#define Y_RAND_MAX 1073741823
-
+#ifdef WINNT
+    #define Y_RAND_MAX 2147483647
+#else
+    #define Y_RAND_MAX 1073741823
+#endif
 
 /*!   
 \brief Ylib setup - determines and stores the identity of the virtual user.
@@ -95,6 +98,7 @@ void y_setup()
     lr_whoami(&y_virtual_user_id, &y_virtual_user_group, &y_scid);
 	y_is_vugen_run_bool = y_virtual_user_id == -1;
 	
+	// srand() no longer required on Windows but rand() may still be used in user code so we leave it in.
 	srand(time(NULL) + y_virtual_user_id + ((int)y_virtual_user_group) & 1023);
 }
 
@@ -103,7 +107,7 @@ void y_setup()
 
 /*!
 \brief Test if this script is running in vugen (debug mode)
-\return 1 if running in vugen, zero otherwise.
+\return 1 (true) if running in vugen, zero (false) otherwise.
 
 Recommended practice:
 Use this to create script debugging code that will hit all of the functional code inside the script when run in Vugen, 
@@ -155,29 +159,43 @@ long y_rand(void)
    // of randomness that a long affords us we are going to roll multiple numbers and basically 
    // concatenate them together using bit shifts.
    // 
-   // ( If we were to go to 32 bits this function would return negative numbers, which would be undesirable
+   // (If we were to go to 32 bits this function would return negative numbers, which would be undesirable
    // because it will break people's expectations of what rand() does.)
-   return rand() << 15 | rand();
+#ifdef WINNT
+    // On Windows we can use rand_s which returns a truly 32 bit random number. But we strip off the sign bit. 
+    unsigned int randomValue;
+    rand_s(&randomValue);
+    return randomValue & Y_RAND_MAX;
+#else
+    return rand() << 15 | rand();
+#endif
 }
 
 /*! \brief Generate a random number between 0 <= y_drand() < 1. This supersedes y_rand(). \n
-Better distribution of the random numbers over the range than by using y_rand() with modulo (%) -- thus no skewed results.
 Equal to Math.random in Java and JavaScript, Random.NextDouble in C#, etc.
+Better distribution of the random numbers over the range than by using y_rand() with modulo (%) -- thus no skewed results.
 
 \return Random number between 0 and 1 (exclusive).
-Accuracy: 9 digits (30 bits).
+Accuracy: 9.4 digits (32 bits) thus increments of approx. 2.3e-10.
 
 \b Examples:
 \code
 if (y_drand() < 0.123) ... -> change 12.3% true
-double value = min + y_drand() * (max - min); // to range example, unless max < min
+double value = min + y_drand() * (max - min); // to range example
 int value = min + y_drand() * (max - min + 1); // for min <= value <= max
 \endcode
 \author A.U. Luyer
 */
 double y_drand(void)
 {
-   return (rand() << 15 | rand())/1073741824.;
+#ifdef WINNT
+    // On Windows we can use rand_s which returns a truly 32 bit random number. 
+    unsigned int randomValue;
+    rand_s(&randomValue);
+    return (double)randomValue / 4294967296.;
+#else
+    return (rand() << 15 | rand())/1073741824.;
+#endif
 }
 
 
