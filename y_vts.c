@@ -108,8 +108,8 @@ int y_vts_process_returncode(int returncode)
     switch(returncode)
     {
         case VTCERR_OK:
-            errortext = "INFO: VTS command succeeded.";
-            lr_message(errortext);
+            //errortext = "INFO: VTS command succeeded.";
+            //lr_log_message(errortext);
             return returncode;
             break; // <-- never reached, but kept for readability.
 
