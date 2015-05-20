@@ -140,6 +140,8 @@ char *y_array_get( const char *source_param_array, const int param_array_index )
 As y_array_get(), but it filters embedded zeroes from the input, replacing them with a single space: ' '.
 It's not ideal, but better than having your script break on this particular type of broken web page.
 
+\warning the return value of this function needs to be freed using lr_eval_string_ext_free().
+
 \param [in] source_param_array The name of the parameter array to get an element from.
 \param [in] param_array_index The index number of the element to fetch.
 \returns The parameter value at index param_array_index in the target parameter array.
