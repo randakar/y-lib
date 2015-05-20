@@ -2,7 +2,7 @@
  * Ylib Loadrunner function library.
  * Copyright (C) 2005-2014 Floris Kraak <randakar@gmail.com> | <fkraak@ymor.nl>
  * Copyright (C) 2009 Raymond de Jongh <ferretproof@gmail.com> | <rdjongh@ymor.nl>
- * Copyright (C) 2013 AndrÃƒÂ© Luyer
+ * Copyright (C) 2013-2014 André Luyer
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,12 @@
 
 This file contains loadrunner specific helper functions.
 If we don't have somewhere else to put some piece of code, this is where it will probably end up.
+
+\defgroup loadrunner_utils LoadRunner Utils of Ylib
+\brief Collection of miscellaneous support functions.
+\{
 */
+
 #ifndef _LOADRUNNER_UTILS_C
 //! \cond include_protection
 #define _LOADRUNNER_UTILS_C
@@ -127,15 +132,12 @@ random = y_rand_between(0, 10);        // generate a random number between 0 and
 */
 int y_rand_between(int lowerbound, int upperbound)
 {
-    int roll;
-
-    if( (lowerbound < 0) || (lowerbound > upperbound) || ((upperbound - lowerbound) == 0) )
+    if (lowerbound > upperbound)
     {
-        lr_error_message("y_rand() called with negative or nonsensical arguments. Lowerbound should be less than upperbound!");
+        lr_error_message("y_rand_between(): lowerbound should be less than upperbound!");
         return -1;    // Note to self: This is a classic case for standard error codes.
     }
-    roll = y_rand() % ((upperbound + 1 - lowerbound)) + lowerbound;
-    return roll;
+	return lowerbound + y_drand() * (upperbound - lowerbound + 1);
 }
 
 
@@ -284,7 +286,7 @@ void y_breadcrumb(char *breadcrumb)
     }
     else
     {
-        lr_param_sprintf("breadcrumb", lr_eval_string("{breadcrumb};%s"), breadcrumb);
+        lr_param_sprintf("breadcrumb", "%s;%s", lr_eval_string("{breadcrumb}"), breadcrumb);
     }
 }
 
@@ -335,12 +337,13 @@ int y_write_to_file(char *filename, char *content)
    } 
    if (result = fprintf(file, "%s\n", content) <0)
    {
+       fclose(file);
        return result;        // failed to write to file...
    }
 
-   if (result = fclose(file)!=0)
+   if (fclose(file)!=0)
    {
-       return result;        // failed to close file...
+       return -1;        // failed to close file...
    }
 
    return 0;                // everything worked great!
@@ -361,13 +364,13 @@ if (result != 0)
 {   // o dear, something went wrong!
 }
 \endcode
-\author AndrÃƒÂ© Luyer, Floris Kraak
+\author André Luyer, Floris Kraak
 \sa y_write_to_file(), y_read_parameter_from_file()
 */
 int y_write_parameter_to_file(char *filename, char *content_parameter)
 {
     long fp;
-    char *szBuf;
+    char *szBuf, *param;
     unsigned long nLength;
     int result = 0;
     int tmp = 0;
@@ -375,8 +378,9 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     lr_log_message("y_write_parameter_to_file(\"%s\", \"%s\")", filename, content_parameter);
     
     // Get the parameter content. Tricky because of the possibility of embedded null bytes in there.
-    //    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), 8+12,&szBuf, &nLength, 0, 0, -1);
-    lr_eval_string_ext(y_get_parameter_eval_string(content_parameter), strlen(content_parameter)+2,&szBuf, &nLength, 0, 0, -1);
+	param = y_get_parameter_eval_string(content_parameter);
+    lr_eval_string_ext(param, strlen(param), &szBuf, &nLength, 0, 0, -1);
+	free(param);
 
     // Open the file.
     if( !(fp = fopen(filename, "wb")) ) 
@@ -388,7 +392,7 @@ int y_write_parameter_to_file(char *filename, char *content_parameter)
     }
     
     // Write the file.
-    if( (fwrite(szBuf, nLength, 1, fp)) < 0 )
+    if( (result = fwrite(szBuf, 1, nLength, fp)) < nLength )
     {
         lr_error_message("Error while writing %d bytes to file: %s ; Only %d bytes were written.", nLength, filename, result);
         result = -2;
@@ -514,102 +518,113 @@ int y_workdays_from_today(int workdays)
     return result;
 }
 
-/*!
-\brief Load the kernel32.dll file if not already loaded.
-
-Internal function, loads kernel32.dll if not already loaded to query windows for disk space usage.
-Calls lr_abort() if loading the dll fails.
-
-\return Negative return value if loading the dll fails, but with that call to lr_abort() it may not even get there.
-\author Floris Kraak
-\sa y_disk_space_guard(), y_disk_space_usage_guard(), lr_abort()
-*/
-int y_load_kernel_dll()
-{
-    static int kernel_dll_loaded = 0;
-    int load_dll_result;
-
-    if( kernel_dll_loaded > 0)
-    {
-        // Nothing to do.
-        return 0;
-    }
-
-    // Try to load the dll.
-    if((load_dll_result = lr_load_dll("kernel32.dll")) != 0 )
-    {
-        lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report disk space usage.", load_dll_result);
-        lr_abort();
-        return -1;
-    }
-    else
-    {
-        kernel_dll_loaded = 1;
-    }
-    return load_dll_result;
-}
-
-/*! \brief Get the free diskspace percentage on the target folder on the load generator.
+/*! \brief Get the free disk space on the target folder on the load generator.
 
 In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has.
-This function provides that number, relative to the total disk space size.
+This function retrieves information about the amount of space that is available on a disk volume, 
+which is the total amount of space and the total amount of free space available to the vuser.
 
-\param [in] folder_name The name of the folder to report on.
-\return The percentage of free space, as a double.
+\param [in]  folder_name The name of the folder to report on. If this parameter is NULL, the function uses the root of the current disk.
+\param [out] available The total number of free bytes on a disk that are available to the vuser
+\param [out] total The total number of bytes on a disk that are available to the vuser
 
-\note This is not capable of handling disk sizes > 16 TB.
-The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
-Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
-\sa y_get_free_disk_space_in_mebibytes()
-\author Floris Kraak
+Both parameters available and total may by NULL when not required. If per-user quotas are being used, the value(s) may be less than the total number of (free) bytes on a disk.
+The value of 0 is returned on error (e.g. no access to disk).
+
+\remark Completely rewritten. The 16 TiB limit is lifted.
+
+\author André Luyer
 */
-double y_get_free_disk_space_percentage(char* folder_name)
+void y_get_disk_space(const char *folder_name, double *available, double *total)
 {
-    size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
-    double free_space_percentage;
+	// returned double precision = 53 bit, thus up to 8 EiB (exa byte) it is accurate to the byte.
+	int ret;
+	// struct because were are lacking 64 bit support...
+	struct {
+		unsigned low;
+		unsigned high;
+	} FreeBytesAvailable = {0,0}, TotalNumberOfBytes = {0,0};
 
-    y_load_kernel_dll(); // This will abort the script if it fails to load.
-    GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
+	// require once...
+	static int kernel_dll_loaded = 0;
+	if (!kernel_dll_loaded) {
+		const int le = 0x01020304;
+		// No support for int64_t and __LITTLE_ENDIAN__ in Vugen scripts, so check it here (once):
+		if (sizeof(int) != 4 || *(short*)&le != 0x304) {
+			lr_error_message("This system is not supported, expected 32bit little endian (%d %x)", sizeof(int), *(short*)&le);
+			lr_abort();
+		}
+		ret = lr_load_dll("kernel32.dll");
+		if (ret) {
+			lr_log_error("Unable to load kernel32.dll. Error number %d. Unable to report disk space usage.", ret);
+			lr_abort();
+		}
+		kernel_dll_loaded = 1;
+	}
 
-    lr_log_message("GetDiskFreeSpaceA reports: SectorsPerCluster: %.lu, BytesPerSector: %.lu, NumberOfFreeClusters: %.lu, TotalNumberOfClusters: %.lu", 
-                                               SectorsPerCluster,       BytesPerSector,       NumberOfFreeClusters,       TotalNumberOfClusters);
+	// DiskFreeSpaceEx function http://msdn.microsoft.com/en-us/library/windows/desktop/aa364937(v=vs.85).aspx
+	// The &&GetLastError trick allows to capture the last error before it is erased in the debugger.
+	if (GetDiskFreeSpaceExA(folder_name,
+	                        available ? &FreeBytesAvailable: NULL,
+	                        total ? &TotalNumberOfBytes : NULL,
+	                        NULL) == 0
+			&& ((ret = GetLastError())|1)) {
+		char *lpMsgBuf;
+		FormatMessageA(0x1300, NULL, ret, 0, &lpMsgBuf, 0, NULL);
+		lr_error_message("GetDiskFreeSpaceEx returned Windows Error: (%d) %s", ret, lpMsgBuf);
+		LocalFree(lpMsgBuf);
+		// System Error Codes http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381(v=vs.85).aspx
+		// continue to return value of 0.
+	}
 
-    free_space_percentage = 100. * NumberOfFreeClusters / TotalNumberOfClusters;
-    lr_log_message("Free disk space percentage for folder %s: %.2lf%%", folder_name, free_space_percentage);
-
-    return free_space_percentage;
+	if (available) {
+		// the total number of free bytes on a disk that are available to the vuser
+		*available = 4294967296. * FreeBytesAvailable.high + FreeBytesAvailable.low;
+	}
+	
+	if (total) {
+		// the total number of free bytes on a disk that are available to the vuser
+		*total = 4294967296. * TotalNumberOfBytes.high + TotalNumberOfBytes.low;
+	}
 }
 
-/*! \brief get the amount of free disk space in the target folder in mebibytes (SI unit)
-
-In order to prevent loadrunner logs from filling up disks on the generator beyond capacity we need to know how much free space the log file system has.
-This function provides that number, in absolute terms.
+/*! \brief Get the amount of free disk space in the target folder in mebibytes (SI unit)
 
 \param [in] folder_name The name of the folder to report on.
 \return The amount of mebibytes free, as a double.
 
-\note This is not capable of handling disk sizes > 16 TB.
-The only way to get bigger sizes reported involves 64-bit integer variables in a 32-bit compiler that has no support for it at all.
-Fixing that is a definite TODO item, but it won't happen today, and may not happen until we get a 64-bit vugen ..
-\sa y_get_free_disk_space_percentage()
-\author Floris Kraak
+\note This function is a wrapper around ::y_get_disk_space for backwards compatibility
+\sa y_get_disk_space()
+\author André Luyer
 */
-double y_get_free_disk_space_in_mebibytes(char* folder_name)
+double y_get_free_disk_space_in_mebibytes(const char* folder_name)
 {
-    size_t SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters;
-    double free_mebibytes;
-
-
-    y_load_kernel_dll(); // This will abort the script if it fails to load.
-    GetDiskFreeSpaceA(folder_name, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters);
-
-    lr_log_message("GetDiskFreeSpaceA reports: SectorsPerCluster: %.lu, BytesPerSector: %.lu, NumberOfFreeClusters: %.lu, TotalNumberOfClusters: %.lu", 
-                                               SectorsPerCluster,       BytesPerSector,       NumberOfFreeClusters,       TotalNumberOfClusters);
-
-    free_mebibytes = (double)NumberOfFreeClusters / 1048576. * SectorsPerCluster * BytesPerSector; // Beware for overflows when changing this.
-    lr_log_message("Free disk space for folder %s : %f MebiBytes)", folder_name, free_mebibytes);
-    return free_mebibytes;
+	double free_mebibytes;
+	y_get_disk_space(folder_name, &free_mebibytes, NULL);
+	free_mebibytes /= 1048576.;
+	lr_log_message("Free disk space for folder \"%s\": %.0lf MiB)", folder_name, free_mebibytes);
+	return free_mebibytes;
 }
+
+/*! \brief Get the free disk space percentage on the target folder on the load generator.
+
+\param [in] folder_name The name of the folder to report on.
+
+\return The percentage of free space, as a double.
+
+\note This function is a wrapper around ::y_get_disk_space for backwards compatibility
+\sa y_get_disk_space()
+\author André Luyer
+*/
+double y_get_free_disk_space_percentage(const char* folder_name)
+{
+	double available, total;
+	y_get_disk_space(folder_name, &available, &total);
+	available = total ? available / total * 100. : 0.;
+    lr_log_message("Free disk space percentage for folder \"%s\": %.2lf%%", folder_name, available);
+	return available;	
+}
+
 
 /*! \brief Read the contents of a file into a single parameter.
 \param [in] filename The name of the file to read (relative to script root, or full path)
@@ -701,7 +716,7 @@ void y_user_data_point(char* param)
 }
 
 /*! \brief Get the current time in seconds since 1970, as a double.
-\returns The current time in seconds since 1970-01-01 00:00
+\returns The current time in seconds since 1970-01-01 00:00 UTC
 \author Floris Kraak
 */
 double y_get_current_time()
@@ -798,7 +813,7 @@ This assumes you only have one transaction after each call to this function, and
 
 \author Floris Kraak
 */
-double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, double TPS_max, const int virtual_users)
+double y_think_time_for_rampup_ext(int rampup_period, double TPS_initial, double TPS_max, int virtual_users)
 {
     static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
     static double previous_time = 0;                 // Timestamp of the last call to this, after think time.
@@ -847,7 +862,7 @@ double y_think_time_for_rampup_ext(const int rampup_period, double TPS_initial, 
         //previous_time = current_time; 
         // Do a new time measurement..
         //ftime(&ts);
-        //current_time = ts.time + (ts.millitm / 1000);
+        //current_time = ts.time + (ts.millitm / 1000.);
 
         // We measure the response time by comparing previous_time to a new measurement later, but that measurement 
         // will have to be schewed a tad to account for rounding in the windows sleep() call used by lr_think_time().
@@ -964,75 +979,106 @@ y_execute_shell_command(char* command, int debug)
     return 0;
 }
 
-
 /*! \brief Errorflood guard.
 Also known as "the error check".
 
-Prevent error floods by inserting forced thinktime at the start of the iteration if too many iterations fail.
+Prevent error floods by inserting forced thinktime at the start of the iteration if too many successive iterations fail.
 
 Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups.
 In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. 
-Keeping the load 'stable' at that stage may also prevent the backend from coming back up normaly after the original disruption has ended.
+Keeping the load 'stable' at that stage may also prevent the back-end from coming back up normally after the original disruption has ended.
 Plus, if the system *stays* down keeping the full load on it will only cause the generator's log storage to overflow.
 
 Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
 
 \b Usage:
 \code
-y_errorcheck(0);  // Marks the start of the iteration, will insert forced delay if this spot is reached too many times in a row without reaching the end.
-y_errorcheck(1);  // Marks the end of the iteration. Resets the error counter.
+y_errorcheck(0);  // Marks the start of the iteration, this will insert a forced delay or an abort at this point if too many failed successive iterations occurred.
+y_errorcheck(1);  // Marks the end of the iteration as successful. Resets the error counter.
 \endcode
 
-Three virtual user attributes are used to control this functionality:
-- errorcheck_enabled: 0 or 1; If set to 1, error flood checking is performed. Otherwise, it isn't. Default 0 (off).
-- errorcheck_limit: How many iteration failures are tolerated before forcibly pausing the virtual user. Default 10 iterations.
-- errorcheck_pause_time_seconds: The amount of time to pause if the floodguard fires, in seconds. Default 900 (15 minutes).
+Three virtual user command line attributes are used to control this functionality:
+- -errorcheck_enabled: 0 or 1; If set to 1 or used as a flag, error flood checking is performed. Otherwise, it is disabled. Default off (0).
+- -errorcheck_limit x[/y]: How many iteration failures are allowed before intervening. \n
+    x is the amount of failed iterations before forcibly pausing the virtual user. Default 10 iterations. \n
+    y (optional) is the amount of failed iterations before aborting. Default off (-1).
+- -errorcheck_pause_time [mm:]ss: The amount of time to pause if the floodguard fires. Default 15:00 or 900 (15 minutes).
+
+Use this in the command line setting in a test scenario.
+The 'Additional attributes' in the Run-Time settings allows you the set your own defaults in the script.
+
+For example:
+\code
+-errorcheck_enabled -errorcheck_limit 10/20 -errorcheck_pause_time 5:00
+\endcode
+This will force an extra pacing of 5 minutes after 10 successive failed iterations and aborts after 20 successive failed iterations.
 
 \warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
 
 \note The forced pause ignores runtime thinktime settings.
 
-\param [in] ok Start/end iteration marker. Should be set to 0 at the start of the iteration, and 1 at the end of the iteration.
-\author AndrÃ© Luyer, Floris Kraak
+\param [in] ok Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration.
+\author André Luyer, Floris Kraak
 */
 int y_errorcheck(int ok)
 {
-    static int errorcount = 0; // Static means this value will not be reset to zero when a new iteration starts.
+    static int enabled = -1;
+    static int pause_time = 900; // in seconds
+    static unsigned pacing_limit = 10, abort_limit = -1; // == MAX_INT
+    static unsigned errorcount = 0; // static means this value will not be reset to zero when a new iteration starts.
 
-    // Configuration from virtual user group command line or runtime attribute settings.
-    long enabled_attrib     = lr_get_attrib_long("errorcheck_enabled");
-    long error_limit_attrib = lr_get_attrib_long("errorcheck_limit");
-    long pause_time_attrib  = lr_get_attrib_long("errorcheck_pause_time_seconds");
+    if (enabled < 0) {
+    	// initialize
+    	long tmp, tmp2, nr; char *str;
+    	str = lr_get_attrib_string("errorcheck_enabled");
+    	enabled = str ? // errorcheck_enabled used?
+    				*str ? // and not empty
+    				atoi(str) > 0 // use it's value
+    				: 1 // else errorcheck_enabled used as flag
+    			  : 0; // else not set
 
-    // Defaults
-    int enabled     = enabled_attrib     >= 0 ? enabled_attrib     :   0; // default off (Should not be used for breaktesting, should be ON for peakload or endurance testing.)
-    int error_limit = error_limit_attrib >= 0 ? error_limit_attrib :  10; // number of failed iterations before firing
-    int pause_time  = pause_time_attrib  >= 0 ? pause_time_attrib  : 900; // how much time to wait (in seconds) when this fires.
+		str = lr_get_attrib_string("errorcheck_pause_time");
+		if (!str) str = lr_get_attrib_string("errorcheck_pause_time_seconds"); // old name
+		if (str && (nr = sscanf(str, "%d:%d", &tmp, &tmp2)) > 0) {
+			// treat as mm:ss or just seconds
+			pause_time = nr == 1 ? tmp: tmp * 60 + tmp2;
+		}
 
-    //lr_log_message("y_errorcheck() enabled: %d (%d), error_limit: %d (%d), pause_time: %d (%d)", enabled, enabled_attrib, error_limit, error_limit_attrib, pause_time, pause_time_attrib );
+		str = lr_get_attrib_string("errorcheck_limit");
+		if (str && (nr = sscanf(str, "%u/%u", &tmp, &tmp2)) > 0) {
+			pacing_limit = tmp;
+			if (nr == 2) abort_limit = tmp2; // abort_limit is optional
+		}
 
-    if( !enabled )
-        return 0;
-    if (ok) 
-    {
-        errorcount = 0;
+		lr_log_message("y_errorcheck() settings: -errorcheck_enabled%s -errorcheck_limit %d/%d -errorcheck_pause_time %u:%02d",
+		               enabled ? "": " 0", pacing_limit, abort_limit, pause_time / 60, pause_time % 60);
     }
+    
+    if (!enabled) return 0;
+    
+    if (ok) errorcount = 0;
     else 
     {
-        if (errorcount >= error_limit) 
+        if (errorcount >= abort_limit) 
+        {
+            lr_error_message("y_errorcheck(): Too many errors occurred. Aborting.");
+            lr_set_transaction("---TOO MANY ERRORS - ABORTING---", 0, LR_FAIL);
+            lr_abort();
+        } 
+
+        if (errorcount >= pacing_limit)
         {
             lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
-            lr_set_transaction(lr_eval_string("---TOO MANY ERRORS - THROTTLING LOAD---"), 0, LR_FAIL);
-            lr_force_think_time(pause_time); // alternative would be calling lr_abort();
+            lr_set_transaction("---TOO MANY ERRORS - THROTTLING LOAD---", 0, LR_FAIL);
+            lr_force_think_time(pause_time);
         }
-        if (errorcount) 
-            lr_log_message("Number of failed iterations: %d", errorcount);
-
-        lr_user_data_point( "y_errorcheck_errorcount", errorcount++);
+        if (errorcount) lr_log_message("Number of failed iterations: %d", errorcount);
+        lr_user_data_point( "y_errorcheck_errorcount", errorcount);
+        errorcount++;
     }
 
     return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
 }
 
-
+//! \}
 #endif // _LOADRUNNER_UTILS_C
