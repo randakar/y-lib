@@ -188,9 +188,9 @@ struct tm {
     int tm_mon;
 	//! \brief years since 1900
     int tm_year;
- 	//! \brief days since Sunday - [0,6]
+ 	//! \brief days since Sunday - [0,6] (ignored by mktime)
     int tm_wday;
-	//! \brief days since January 1 - [0,365]
+	//! \brief days since January 1 - [0,365] (ignored by mktime)
     int tm_yday;
 	//! \brief daylight savings time flag (>0 in effect, 0 not in effect, <0 unknown)
     int tm_isdst;
@@ -451,6 +451,8 @@ double pow(double base, double exponent);
 double log(double x);
 //! \brief Documented at http://www.cplusplus.com/reference/cmath/log10/.
 double log10(double x);
+//! \brief Documented at http://www.cplusplus.com/reference/cmath/log2/.
+double log2(double x);
 //! \brief Documented at http://www.cplusplus.com/reference/cmath/sin/.
 double sin(double x);
 //! \brief Documented at http://www.cplusplus.com/reference/cmath/cos/.
@@ -461,6 +463,10 @@ double cos(double x);
 int rand(void);
 //! \brief Documented at http://www.cplusplus.com/reference/cstdlib/srand/.
 int srand(unsigned int seed);
+#ifdef WINNT
+//! \brief Documented at https://msdn.microsoft.com/en-us/library/sxtz2fa8.aspx
+int rand_s(unsigned int *randomValue); 
+#endif
 
 /***** Windows API Functions *****/
 //! \brief Windows API uninterruptable sleep in LR, better to use \b lr_force_think_time() or \b lr_usleep() instead.
