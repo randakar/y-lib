@@ -580,16 +580,30 @@ This will set up the MAX_TOTAL_CONNECTIONS, MAX_CONNECTIONS_PER_HOST socket opti
 \returns 0 if no errors occurred, -1 in case of an error.
 \author Floris Kraak
 */
-int y_emulate_browser(const y_browser* browser)
+int y_emulate_browser(y_browser* new_browser)
 {
     char str_max_connections[12];
     char str_max_connections_per_host[12];
     int max_connections;
+    static y_browser* previous_browser;
+    y_browser* browser;
 
-    if( browser == NULL )
+    if( new_browser == NULL )
     {
-        lr_error_message("y_browser_emulation.c: Attempt to emulate the NULL browser: Ignored.");
-        return -1;
+    	if( previous_browser == NULL )
+    	{
+	        lr_error_message("y_browser_emulation.c: Attempt to emulate the NULL browser: Ignored.");
+	        return -1;
+    	}
+    	else
+    	{
+    		browser = previous_browser;
+    	}
+    }
+    else
+    {
+    	browser = new_browser;
+    	previous_browser = browser;
     }
 
     lr_log_message("Emulating browser:");
