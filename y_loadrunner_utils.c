@@ -58,6 +58,10 @@ static unsigned long y_hash_sdbm(char* str)
 {
     unsigned long hash = 0;
     int c;
+	
+	if( str == NULL )
+		return NULL;
+
     while (c = *str++)
         hash = c + (hash << 6) + (hash << 16) - hash;
     return hash;
