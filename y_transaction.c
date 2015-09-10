@@ -507,7 +507,7 @@ int y_session_transaction_count_increment()
 
 void y_session_transaction_count_report(char* session_name)
 {
-    lr_message( lr_eval_string("Transaction count for %s: %d"), session_name, y_session_transaction_count);
+    lr_log_message( lr_eval_string("Transaction count for %s: %d"), session_name, y_session_transaction_count);
     lr_user_data_point( session_name, y_session_transaction_count);
 }
 
