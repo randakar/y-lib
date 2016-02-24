@@ -1130,9 +1130,16 @@ with each other.
 
 \b Example:
 \code
-// Call this at the *beginning* of each iteration. See the documentation as for why.
-double pacing_time_in_seconds = 0.4;
-y_pace(pacing_time_in_seconds);
+Action()
+{
+	y_pace(5); // Call this at the *beginning* of each iteration. See the documentation as for why.
+	if( y_rand() % 10 < 3 )
+	{
+		lr_log_message("Haha!");
+		lr_force_think_time(10);
+	}
+	return;
+}
 \endcode
 
 \param [in] pacing_time_in_seconds - average pacing time. It is recommended this number is kept constant unless you know exactly what you're doing.
