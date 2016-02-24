@@ -1084,5 +1084,91 @@ int y_errorcheck(int ok)
     return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
 }
 
+
+
+/*! \brief Improved implementation of loadrunner pacing.
+
+Normal loadrunner pacing (as set by runtime settings) does not really deal with situations in which increases in 
+response time cause the iteration to exceed it's normal pacing settings. If you set a pacing of 60 seconds, and 
+the script takes 180 seconds to execute one iteration, the next iteration will still be 60 seconds - meaning the 
+script will have executed at best 2 iterations in 240 seconds - putting only half the load on the target system,
+quite probably not something that was intended.
+
+In order to mitigate this we can do two things:
+- Measure how much time iterations take, and produce warnings (error transactions) when this time is exceeded 
+(which is what y_session_timer_start() and y_session_timer_end() in y_transaction.c do; or
+- Do the pacing ourselves, by taking into account how much time has passed since the script started and compensating
+for overruns by reducing pacing accordingly.
+
+This function implements the latter method. 
+
+The way that this works is simple: 
+First, it measures how much time passed since the first time it was called.
+Then it compares that to a running total of how much time *should* have passed since that time.
+If this more time should have passed than has actually passed, it will force a thinktime equal to the gap.
+Finally, it takes the pacing time argument that was passed in (in seconds, as a double, so fractions of a second
+are allowed) as an argument, and adds that to the running total of how much time should have passed - to be used
+the next time around.
+
+\warning This was designed to be put this at the *beginning* of each iteration. *Not* the end.
+If you put this function anywhere in the iteration after requests started being performed any errors will cause 
+the iteration to abort and the running total to get schewed - it will be as if there was no iteration at all.
+The next time around it will seem that the iteration took even longer ..
+
+\note One thing other tools do to deal with this (notably gatling) is ramping up more users. This works as well ..
+but it's not the panacea certain proponents of this method claim it is. Notably, these users will have to start fresh
+at the beginning of their clickflow (/path) resulting in more load in the steps leading up to the slower steps.
+Real users may just hit F5, though ..
+
+\warning y_think_time_for_rampup(), y_errorcheck(), y_session_timer_start(), and y_session_timer_end() all 
+implement closely related functionality. If you use this please think carefully about how these functions interact
+with each other.
+
+\note This will create a user datapoint called y_pacing_time that can be used for monitoring the calculations during the test.
+
+\b Example:
+\code
+// Call this at the *beginning* of each iteration. See the documentation as for why.
+double pacing_time_in_seconds = 0.4;
+y_pace(pacing_time_in_seconds);
+\endcode
+
+\param [in] pacing_time_in_seconds - average pacing time. It is recommended this number is kept constant unless you know exactly what you're doing.
+
+\author Floris Kraak
+*/
+double y_pace(double pacing_time_in_seconds)
+{
+    static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
+    static double total_pacing_time = 0;             // Running total of requested pacing time.
+    double current_time = y_get_current_time();      // Current time, in seconds since 1 jan 1970.
+
+    // Initialisation.
+    // On the first call we store the current time as the test start time and the end time of the previous call.
+    if( test_start_time < 1 )
+    {
+        test_start_time = current_time;
+    }
+
+    // Debugging
+    lr_log_message("Pacing calculation: starttime %f, current time %f, total pacing %d",
+                   test_start_time, current_time, total_pacing_time );
+
+    {
+	    double time_passed = current_time - test_start_time;   // Elapsed time since test start, in seconds. 
+    	double pacing_delta = total_pacing_time - time_passed; // How much time still needs to pass to get to the full pacing so far.
+
+        lr_user_data_point("y_pace", pacing_delta);
+        if( pacing_delta > 0 )
+            lr_force_think_time(pacing_delta);
+
+	    // Now we finally add the pacing time for the *next* iteration to the total.
+	    total_pacing_time += pacing_time_in_seconds;
+
+	    return pacing_delta;
+    }
+}
+
+
 //! \}
 #endif // _LOADRUNNER_UTILS_C
