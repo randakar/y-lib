@@ -576,7 +576,7 @@ This will set up the MAX_TOTAL_CONNECTIONS, MAX_CONNECTIONS_PER_HOST socket opti
 
 \see y_choose_browser, y_choose_browser_from_list, y_browser_emulation.c, web_set_sockets_option(), web_add_auto_header()
 
-\param [in] browser Pointer to a browser struct for the browser to be emulated.
+\param [in] new_browser Pointer to a browser struct for the browser to be emulated.
 \returns 0 if no errors occurred, -1 in case of an error.
 \author Floris Kraak
 */
