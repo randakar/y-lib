@@ -1020,6 +1020,7 @@ This will force an extra pacing of 5 minutes after 10 successive failed iteratio
 \warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
 
 \note The forced pause ignores runtime thinktime settings.
+\note This will call y_pace() using the enforced pausing time to make sure it's internal administration doesn't get confused.
 
 \param [in] ok Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration.
 \author André Luyer, Floris Kraak
@@ -1074,6 +1075,7 @@ int y_errorcheck(int ok)
         {
             lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
             lr_set_transaction("---TOO MANY ERRORS - THROTTLING LOAD---", 0, LR_FAIL);
+			y_pace(pause_time); // Prevents overload in case y_pace() is used in this script.
             lr_force_think_time(pause_time);
         }
         if (errorcount) lr_log_message("Number of failed iterations: %d", errorcount);
