@@ -47,6 +47,7 @@ group__process.html
 group__locale.html
 group__math.html
 group__core.html
+group__loadrunner__utils.html
 struct__timeb.html
 structlconv.html
 structtm.html
@@ -105,16 +106,3 @@ open.png
 bdwn.png
 sync_on.png
 sync_off.png
-ftv2blank.png
-ftv2doc.png
-ftv2folderclosed.png
-ftv2folderopen.png
-ftv2lastnode.png
-ftv2link.png
-ftv2mlastnode.png
-ftv2mnode.png
-ftv2node.png
-ftv2plastnode.png
-ftv2pnode.png
-ftv2vertline.png
-ftv2splitbar.png
