@@ -1168,6 +1168,20 @@ double y_pace(double pacing_time_in_seconds)
 	    return pacing_delta;
     }
 }
+/*! \brief Improved implementation of loadrunner pacing - with semirandomized pacing
+\param [in] pacing_time_in_seconds - minimum pacing time. 
+\param [in] pacing_time_in_seconds - maximum pacing time.
+
+A random value between these minimum and maximum is chosen using y_drand() and used to call y_pace().
+
+\see y_pace()
+
+\author Floris Kraak
+*/
+double y_pace_rnd(double min_pacing_time_in_seconds, double max_pacing_time_in_seconds)
+{
+	return y_pace(min_pacing_time_in_seconds + y_drand() * (max_pacing_time_in_seconds - min_pacing_time_in_seconds);
+}
 
 
 //! \}
