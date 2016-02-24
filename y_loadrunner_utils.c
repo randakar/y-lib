@@ -1148,34 +1148,33 @@ Action()
 */
 double y_pace(double pacing_time_in_seconds)
 {
-    static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
-    static double total_pacing_time = 0;             // Running total of requested pacing time.
-    double current_time = y_get_current_time();      // Current time, in seconds since 1 jan 1970.
+	static double test_start_time = 0;               // Test starttime in seconds since 1 jan 1970.
+	static double total_pacing_time = 0;             // Running total of requested pacing time.
+	double current_time = y_get_current_time();      // Current time, in seconds since 1 jan 1970.
 
-    // Initialisation.
-    // On the first call we store the current time as the test start time and the end time of the previous call.
-    if( test_start_time < 1 )
-    {
-        test_start_time = current_time;
-    }
+	// Initialisation.
+	// On the first call we store the current time as the test start time and the end time of the previous call.
+	if( test_start_time < 1 )
+	{
+		test_start_time = current_time;
+	}
 
     // Debugging
-    lr_log_message("Pacing calculation: starttime %f, current time %f, total pacing %d",
-                   test_start_time, current_time, total_pacing_time );
+    lr_log_message("Pacing calculation: starttime %f, current time %f, total pacing %d", test_start_time, current_time, total_pacing_time );
 
-    {
-	    double time_passed = current_time - test_start_time;   // Elapsed time since test start, in seconds. 
-    	double pacing_delta = total_pacing_time - time_passed; // How much time still needs to pass to get to the full pacing so far.
+	{
+		double time_passed = current_time - test_start_time;   // Elapsed time since test start, in seconds. 
+		double pacing_delta = total_pacing_time - time_passed; // How much time still needs to pass to get to the full pacing so far.
 
-        lr_user_data_point("y_pace", pacing_delta);
-        if( pacing_delta > 0 )
-            lr_force_think_time(pacing_delta);
+		lr_user_data_point("y_pace", pacing_delta);
+		if( pacing_delta > 0 )
+			lr_force_think_time(pacing_delta);
 
-	    // Now we finally add the pacing time for the *next* iteration to the total.
-	    total_pacing_time += pacing_time_in_seconds;
+		// Now we finally add the pacing time for the *next* iteration to the total.
+		total_pacing_time += pacing_time_in_seconds;
 
-	    return pacing_delta;
-    }
+		return pacing_delta;
+	}
 }
 /*! \brief Improved implementation of loadrunner pacing - with semirandomized pacing
 \param [in] min_pacing_time_in_seconds - minimum pacing time. 
