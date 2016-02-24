@@ -1178,8 +1178,8 @@ double y_pace(double pacing_time_in_seconds)
     }
 }
 /*! \brief Improved implementation of loadrunner pacing - with semirandomized pacing
-\param [in] pacing_time_in_seconds - minimum pacing time. 
-\param [in] pacing_time_in_seconds - maximum pacing time.
+\param [in] min_pacing_time_in_seconds - minimum pacing time. 
+\param [in] max_pacing_time_in_seconds - maximum pacing time.
 
 A random value between these minimum and maximum is chosen using y_drand() and used to call y_pace().
 
