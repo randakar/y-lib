@@ -983,111 +983,6 @@ y_execute_shell_command(char* command, int debug)
     return 0;
 }
 
-/*! \brief Errorflood guard.
-Also known as "the error check".
-
-Prevent error floods by inserting forced thinktime at the start of the iteration if too many successive iterations fail.
-
-Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups.
-In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. 
-Keeping the load 'stable' at that stage may also prevent the back-end from coming back up normally after the original disruption has ended.
-Plus, if the system *stays* down keeping the full load on it will only cause the generator's log storage to overflow.
-
-Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
-
-\b Usage:
-\code
-y_errorcheck(0);  // Marks the start of the iteration, this will insert a forced delay or an abort at this point if too many failed successive iterations occurred.
-y_errorcheck(1);  // Marks the end of the iteration as successful. Resets the error counter.
-\endcode
-
-Three virtual user command line attributes are used to control this functionality:
-- -errorcheck_enabled: 0 or 1; If set to 1 or used as a flag, error flood checking is performed. Otherwise, it is disabled. Default off (0).
-- -errorcheck_limit x[/y]: How many iteration failures are allowed before intervening. \n
-    x is the amount of failed iterations before forcibly pausing the virtual user. Default 10 iterations. \n
-    y (optional) is the amount of failed iterations before aborting. Default off (-1).
-- -errorcheck_pause_time [mm:]ss: The amount of time to pause if the floodguard fires. Default 15:00 or 900 (15 minutes).
-
-Use this in the command line setting in a test scenario.
-The 'Additional attributes' in the Run-Time settings allows you the set your own defaults in the script.
-
-For example:
-\code
--errorcheck_enabled -errorcheck_limit 10/20 -errorcheck_pause_time 5:00
-\endcode
-This will force an extra pacing of 5 minutes after 10 successive failed iterations and aborts after 20 successive failed iterations.
-
-\warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
-
-\note The forced pause ignores runtime thinktime settings.
-\note This will call y_pace() using the enforced pausing time to make sure it's internal administration doesn't get confused.
-
-\param [in] ok Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration.
-\author André Luyer, Floris Kraak
-*/
-int y_errorcheck(int ok)
-{
-    static int enabled = -1;
-    static int pause_time = 900; // in seconds
-    static unsigned pacing_limit = 10, abort_limit = -1; // == MAX_INT
-    static unsigned errorcount = 0; // static means this value will not be reset to zero when a new iteration starts.
-
-    if (enabled < 0) {
-    	// initialize
-    	long tmp, tmp2, nr; char *str;
-    	str = lr_get_attrib_string("errorcheck_enabled");
-    	enabled = str ? // errorcheck_enabled used?
-    				*str ? // and not empty
-    				atoi(str) > 0 // use it's value
-    				: 1 // else errorcheck_enabled used as flag
-    			  : 0; // else not set
-
-		str = lr_get_attrib_string("errorcheck_pause_time");
-		if (!str) str = lr_get_attrib_string("errorcheck_pause_time_seconds"); // old name
-		if (str && (nr = sscanf(str, "%d:%d", &tmp, &tmp2)) > 0) {
-			// treat as mm:ss or just seconds
-			pause_time = nr == 1 ? tmp: tmp * 60 + tmp2;
-		}
-
-		str = lr_get_attrib_string("errorcheck_limit");
-		if (str && (nr = sscanf(str, "%u/%u", &tmp, &tmp2)) > 0) {
-			pacing_limit = tmp;
-			if (nr == 2) abort_limit = tmp2; // abort_limit is optional
-		}
-
-		lr_log_message("y_errorcheck() settings: -errorcheck_enabled%s -errorcheck_limit %d/%d -errorcheck_pause_time %u:%02d",
-		               enabled ? "": " 0", pacing_limit, abort_limit, pause_time / 60, pause_time % 60);
-    }
-    
-    if (!enabled) return 0;
-    
-    if (ok) errorcount = 0;
-    else 
-    {
-        if (errorcount >= abort_limit) 
-        {
-            lr_error_message("y_errorcheck(): Too many errors occurred. Aborting.");
-            lr_set_transaction("---TOO MANY ERRORS - ABORTING---", 0, LR_FAIL);
-            lr_abort();
-        } 
-
-        if (errorcount >= pacing_limit)
-        {
-            lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
-            lr_set_transaction("---TOO MANY ERRORS - THROTTLING LOAD---", 0, LR_FAIL);
-			y_pace(pause_time); // Prevents overload in case y_pace() is used in this script.
-            lr_force_think_time(pause_time);
-        }
-        if (errorcount) lr_log_message("Number of failed iterations: %d", errorcount);
-        lr_user_data_point( "y_errorcheck_errorcount", errorcount);
-        errorcount++;
-    }
-
-    return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
-}
-
-
-
 /*! \brief Improved implementation of loadrunner pacing.
 
 Normal loadrunner pacing (as set by runtime settings) does not really deal with situations in which increases in 
@@ -1191,6 +1086,108 @@ double y_pace_rnd(double min_pacing_time_in_seconds, double max_pacing_time_in_s
 	return y_pace(min_pacing_time_in_seconds + y_drand() * (max_pacing_time_in_seconds - min_pacing_time_in_seconds);
 }
 
+/*! \brief Errorflood guard.
+Also known as "the error check".
+
+Prevent error floods by inserting forced thinktime at the start of the iteration if too many successive iterations fail.
+
+Sometimes very long running tests suffer from disruptions halfway through, caused by silly things like backups.
+In such a situation all users will temporarily fail, causing a sudden flood of log messages on the generator. 
+Keeping the load 'stable' at that stage may also prevent the back-end from coming back up normally after the original disruption has ended.
+Plus, if the system *stays* down keeping the full load on it will only cause the generator's log storage to overflow.
+
+Hence this piece of guarding code that will detect such problems inside the virtual user and temporarily lower the load on the system under test until the situation returns to normal (or the test stops).
+
+\b Usage:
+\code
+y_errorcheck(0);  // Marks the start of the iteration, this will insert a forced delay or an abort at this point if too many failed successive iterations occurred.
+y_errorcheck(1);  // Marks the end of the iteration as successful. Resets the error counter.
+\endcode
+
+Three virtual user command line attributes are used to control this functionality:
+- -errorcheck_enabled: 0 or 1; If set to 1 or used as a flag, error flood checking is performed. Otherwise, it is disabled. Default off (0).
+- -errorcheck_limit x[/y]: How many iteration failures are allowed before intervening. \n
+    x is the amount of failed iterations before forcibly pausing the virtual user. Default 10 iterations. \n
+    y (optional) is the amount of failed iterations before aborting. Default off (-1).
+- -errorcheck_pause_time [mm:]ss: The amount of time to pause if the floodguard fires. Default 15:00 or 900 (15 minutes).
+
+Use this in the command line setting in a test scenario.
+The 'Additional attributes' in the Run-Time settings allows you the set your own defaults in the script.
+
+For example:
+\code
+-errorcheck_enabled -errorcheck_limit 10/20 -errorcheck_pause_time 5:00
+\endcode
+This will force an extra pacing of 5 minutes after 10 successive failed iterations and aborts after 20 successive failed iterations.
+
+\warning the "errorcheck_enabled" attribute must be set to a positive integer number for this code to do anything!
+
+\note The forced pause ignores runtime thinktime settings.
+\note This will call y_pace() using the enforced pausing time to make sure it's internal administration doesn't get confused.
+
+\param [in] ok Start/end iteration marker. Must be set to 0 at the start of the iteration, and 1 at the end of the iteration.
+\author André Luyer, Floris Kraak
+*/
+int y_errorcheck(int ok)
+{
+    static int enabled = -1;
+    static int pause_time = 900; // in seconds
+    static unsigned pacing_limit = 10, abort_limit = -1; // == MAX_INT
+    static unsigned errorcount = 0; // static means this value will not be reset to zero when a new iteration starts.
+
+    if (enabled < 0) {
+    	// initialize
+    	long tmp, tmp2, nr; char *str;
+    	str = lr_get_attrib_string("errorcheck_enabled");
+    	enabled = str ? // errorcheck_enabled used?
+    				*str ? // and not empty
+    				atoi(str) > 0 // use it's value
+    				: 1 // else errorcheck_enabled used as flag
+    			  : 0; // else not set
+
+		str = lr_get_attrib_string("errorcheck_pause_time");
+		if (!str) str = lr_get_attrib_string("errorcheck_pause_time_seconds"); // old name
+		if (str && (nr = sscanf(str, "%d:%d", &tmp, &tmp2)) > 0) {
+			// treat as mm:ss or just seconds
+			pause_time = nr == 1 ? tmp: tmp * 60 + tmp2;
+		}
+
+		str = lr_get_attrib_string("errorcheck_limit");
+		if (str && (nr = sscanf(str, "%u/%u", &tmp, &tmp2)) > 0) {
+			pacing_limit = tmp;
+			if (nr == 2) abort_limit = tmp2; // abort_limit is optional
+		}
+
+		lr_log_message("y_errorcheck() settings: -errorcheck_enabled%s -errorcheck_limit %d/%d -errorcheck_pause_time %u:%02d",
+		               enabled ? "": " 0", pacing_limit, abort_limit, pause_time / 60, pause_time % 60);
+    }
+    
+    if (!enabled) return 0;
+    
+    if (ok) errorcount = 0;
+    else 
+    {
+        if (errorcount >= abort_limit) 
+        {
+            lr_error_message("y_errorcheck(): Too many errors occurred. Aborting.");
+            lr_set_transaction("---TOO MANY ERRORS - ABORTING---", 0, LR_FAIL);
+            lr_abort();
+        } 
+
+        if (errorcount >= pacing_limit)
+        {
+            lr_error_message("y_errorcheck(): Too many errors occurred. Pausing %d seconds.", pause_time);
+            lr_set_transaction("---TOO MANY ERRORS - THROTTLING LOAD---", 0, LR_FAIL);
+			y_pace(pause_time); // Prevents overload in case y_pace() is used in this script.
+            lr_force_think_time(pause_time);
+        }
+        if (errorcount) lr_log_message("Number of failed iterations: %d", errorcount);
+        lr_user_data_point( "y_errorcheck_errorcount", errorcount);
+        errorcount++;
+    }
+
+    return 0; // Adding this function to the run logic has the same effect as y_errorcheck(0); 
+}
 
 //! \}
 #endif // _LOADRUNNER_UTILS_C
