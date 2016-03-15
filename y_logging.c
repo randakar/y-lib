@@ -31,6 +31,8 @@ but they aren't exactly log manipulation functions in the low-level sense.
 
 //! \cond function_removal
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
+#define y_log_error 0_y_log_error_no_longer_exists_please_use_lr_error_message
+#define y_log_warning 0_y_log_warning_no_longer_exists_please_use_lr_error_message
 //! \endcond
 
 #include "y_core.c"
@@ -144,35 +146,6 @@ void y_log_to_report(char *message)
         lr_set_debug_message(log_level, LR_SWITCH_ON);
         //lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
     }
-}
-
-/*! \brief Log an error message, with a timestamp, if extra logging is enabled.
- * \param [in] message The error message to be logged.
- * 
- * \deprecated Forcing your error messages to get logged may not be the best idea there is. And I don't know of anyone using this, either.
- * \see y_log_to_report()
- */
-void y_log_error(char *message)
-{
-    char *msg = lr_eval_string(message);
-    y_log_to_report(msg);
-    //lr_error_message(msg); 
-    lr_fail_trans_with_error(msg);
-}
-
-/*! \brief Log a warning, with a timestamp, if extra logging is enabled.
- * \param [in] message The error message to be logged.
- *
- * \deprecated Unused, and forcibly logging things even if logging is turned off is rather impolite to begin with ;-)
- * \see y_log_to_report()
- */
-void y_log_warning(char *message)
-{
-    char *msg;
-    lr_save_string(lr_eval_string(message), "_log_msg");
-    msg = lr_eval_string("Warning: {_log_msg}");
-
-    y_log_to_report(msg);
 }
 
 /*! \brief Save the loglevel for later restoration through y_log_restore().

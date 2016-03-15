@@ -678,7 +678,7 @@ void y_create_new_transaction_name(const char *transaction_name, const char *tra
 
     if( transaction_nr >= 100 )
     {
-        y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+        lr_error_message("Transaction count too high (100+). Are you using y_start_action_block()?");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
@@ -709,7 +709,7 @@ void y_create_new_sub_transaction_name(const char *transaction_name, const char 
 
     if( transaction_nr >= 100 )
     {
-        y_log_error("Transaction count too high (100+). Are you using y_start_action_block()?");
+        lr_error_message("Transaction count too high (100+). Are you using y_start_action_block()?");
         lr_exit(LR_EXIT_VUSER, LR_FAIL);
     }
 
