@@ -42,6 +42,10 @@ If you still use loadrunner versions earlier than 9 you may need to add the line
 #include "y_string.c"
 #include "y_loadrunner_utils.c"
 
+
+//! \cond function_removal
+#define y_array_get_random 0_y_array_get_random_no_longer_exists_please_use_lr_paramarr_random
+
 int _y_random_array_index = 0;
 
 
@@ -335,33 +339,6 @@ void y_array_concat(const char *source_param_array_first, const char *source_par
 }
 
 
-/*! \brief Get a random element from a parameter list
-
-Fetch the contents of a random element in a parameter array.
-As lr_paramarr_random(), but stores the rolled index number internally.
-
-\param [in] source_param_array The name of the parameter array to fetch a random value from.
-\return The value of the randomly chosen parameter.
-
-\deprecated This doesn't really do anything that lr_paramarr_random() doesn't already do.
-
-\sa lr_paramarr_random(), y_rand()
-\author Floris Kraak
-*/
-char *y_array_get_random( const char *source_param_array )
-{
-    int count = y_array_count( source_param_array );
-    if( count < 1 )
-    {
-        lr_log_message("No elements found in parameter array!");
-        return NULL;
-    }
-
-    _y_random_array_index= (y_rand() % count) +1;
-    return y_array_get(source_param_array, _y_random_array_index);
-}
-
-
 /*! \brief Get a random element from a parameter list without embedded zeroes.
 
 Fetch the contents of a random element in a parameter array, filtering out any embedded zeroes.
@@ -372,7 +349,7 @@ Stores the rolled index number internally.
 \param [in] source_param_array The name of the parameter array to fetch a random value from.
 \return The value of the randomly chosen parameter, minus any embedded \\x00 characters.
 
-\sa lr_paramarr_random(), y_array_get_random(), y_rand()
+\sa lr_paramarr_random(), y_rand(), y_srand()
 \author Floris Kraak
 */
 char *y_array_get_random_no_zeroes( const char *source_param_array )
