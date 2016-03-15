@@ -83,6 +83,9 @@ Testcase
 \endcode
 */
 
+//! \cond function_removal
+#define y_setup_step_waterfall 0_y_setup_step_waterfall_no_longer_exists_please_use_flow_lists
+#define y_waterfall_random_weighted_continue 0_y_waterfall_random_weighted_continue_please_use_flow_lists
 
 
 // Needed to compile this - the definition of LAST is missing if it's not included.
@@ -946,9 +949,6 @@ void y_session_timer_end(int required_session_duration, int force_pause)
     y_session_transaction_count_report(lr_eval_string("y_transaction_count_{y_session_name}"));
 }
 
-// Handy shortcuts //
-
-
 
 //
 // Shorthand for 
@@ -1021,93 +1021,6 @@ do {                                                                      \
                                                                           \
     free(tmp);                                                            \
 } while(0)
-
-
-//
-// Deprecated - The below needs to be done in some other way that doesn't
-// confuse the heck out of people ;-)
-//
-
-
-
-// Set up a series of chances that certain named steps will happen.
-//
-// The idea is that there is a .dat file listing names of steps and
-// for each of those the chance that that step should be executed.
-// The values in this .dat file are accessed 'on each occurrance' by the
-// "step" and "stepchance" parameters.
-//
-// This function will iterate over the step parameter until it contains "END",
-// and save each step chance to a seperate parameter with a name starting with
-// 'step_chance_'.
-//
-// Before each step is executed a call is made to y_waterfall_random_weighted_continue()
-// with the name of the step added. If the corresponding parameter was set up the
-// value it contained is used as the weighted chance that the next part of the script
-// will be executed.
-//
-// @author: Floris Kraak
-//
-void y_setup_step_waterfall()
-{
-    char *step = lr_eval_string("{step}");
-    char *stepchance = lr_eval_string("{stepchance}");
-    char *head = "step_chance_";
-    char *tmp;
-
-    while ( step && (strcmp(step, "END") != 0) )
-    {
-        size_t size = strlen(head) + strlen(step) +1;
-        tmp = y_mem_alloc(size);
-
-        snprintf(tmp, size, "%s%s", head, step);
-
-        lr_save_string(stepchance, tmp);
-        free(tmp);
-
-        // We're hiding a for() loop here ;-)
-        step = lr_eval_string("{step}");
-        stepchance = lr_eval_string("{stepchance}");
-   }
-}
-
-//
-// for full documentation see y_setup_step_waterfall()
-//
-// @see y_setup_step_waterfall 
-// @author: Floris Kraak
-//
-void y_waterfall_random_weighted_continue(char * stepname)
-{
-    char *head = "step_chance_";
-    size_t size = strlen(head) + strlen(stepname) +3;
-    char *paramname = y_mem_alloc(size);
-    char *chancestr;
-    int chance = 100; // Default
-    int rnum = (y_rand() % 100); // random number between 0 and 99
-
-    lr_log_message("Weighted stop chance evaluation for %s", stepname);
-
-    snprintf( paramname, size, "%s%s%s%s", "{", head, stepname, "}" );
-    chancestr = lr_eval_string(paramname);
-
-    if( (strlen(chancestr) > 0) && (strcmp(chancestr, paramname) != 0) )
-    {
-        chance = atoi(chancestr);
-    }
-    free(paramname);
-
-    //lr_log_message("rnum = %d, chance = %d", rnum, chance);
-
-    if( rnum >= chance )
-    {
-        lr_log_message("Stop!");
-        lr_exit(LR_EXIT_ACTION_AND_CONTINUE, LR_AUTO);
-    }
-    else {
-        lr_log_message("No stop!");
-    }
-}
 
 
 #endif // _Y_TRANSACTION_C_
