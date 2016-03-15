@@ -33,6 +33,7 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
 #define y_log_error 0_y_log_error_no_longer_exists_please_use_lr_error_message
 #define y_log_warning 0_y_log_warning_no_longer_exists_please_use_lr_error_message
+#define y_make_datetimestamp 0_y_make_datetimestamp_no_longer_exists_please_use_lr_save_datetime
 #define y_get_datetimestamp 0_y_get_datetimestamp_no_longer_exists_please_use_lr_save_datetime
 #define y_setup_logging 0_y_setup_logging_no_longer_exists_please_use_transaction_triggers
 #define y_log_to_report 0_y_log_to_report_no_longer_exists_please_use_transaction_triggers
@@ -49,35 +50,6 @@ but they aren't exactly log manipulation functions in the low-level sense.
 unsigned int _y_log_level = LR_MSG_CLASS_DISABLE_LOG; 
 //! \endcond
 
-/*! \brief Convert a unixtime style timestamp to a date and time represented as YYYY-MM-DD HH:MM:SS.mmm.
- * 
- * \param [in] time - the unix time stamp, as reported by ftime()
- * \param millitm - the milliseconds belonging to the time stamp
- *
- * \return The string represation of the timestamp, formatted as YYYY-MM-DD HH:MM:SS.mmm.
- *
- * \see y_get_datetimestamp(), y_get_current_time()
- *
- * \deprecated lr_save_datetime() really should be used for this kind of thing.
- */
-char* y_make_datetimestamp(time_t time, unsigned short millitm)
-{
-    struct tm *resulttime;
-    static char YMDHMSm[24]; // moet static zijn om te gebruiken als returnwaarde
-
-    // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
-    resulttime = (struct tm *)localtime(&time);
-
-    snprintf(YMDHMSm, sizeof YMDHMSm, "%04u-%02u-%02u %02u:%02u:%02u.%03u", 
-        resulttime->tm_year + 1900,
-        resulttime->tm_mon + 1,
-        resulttime->tm_mday,
-        resulttime->tm_hour,
-        resulttime->tm_min,
-        resulttime->tm_sec,
-        millitm);
-    return YMDHMSm;
-}
 
 /*! \brief Save the loglevel for later restoration through y_log_restore().
  *
