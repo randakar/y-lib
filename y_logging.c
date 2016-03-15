@@ -33,6 +33,7 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
 #define y_log_error 0_y_log_error_no_longer_exists_please_use_lr_error_message
 #define y_log_warning 0_y_log_warning_no_longer_exists_please_use_lr_error_message
+#define y_write_to_log 0_y_write_to_log_no_longer_exists_sorry
 //! \endcond
 
 #include "y_core.c"
@@ -304,54 +305,6 @@ void y_log_force_message(char *message)
     y_log_restore();
 }
 
-/*! \brief Write a string prepended with date and time to the specified (log)file.
-
-The logged line will have the following format:
-YYYYMM,DDHHmmss,{y_virtual_user_group},{y_virtual_user_id},{y_scid},{content}
-
-\param [in] filename The file name of the target file.
-\param [in] content The logmessage to be written.
-\return Negative number in case of an error, zero otherwise.
-
-\b Example:
-\code
-   y_write_to_log("c:\\logfile.txt", "Everything went great");
-\endcode
-
-\b Example \b output:
-20091126,215212,SomeGroup,3,4,Everything went great
-
-\author Raymond de Jongh
-*/
-int y_write_to_log(char *filename, char *content)
-{
-    size_t string_length;
-    char* log;
-    int result;
-
-    y_setup();
-
-    string_length = strlen(content)
-      + 15  // y_datetime() is altijd 15 chars lang.
-      + strlen(y_virtual_user_group) 
-      + 9   // y_virtual_user_id
-      + 6   // scid
-      + 1;  // null byte (end of line)
-
-    log = y_mem_alloc(string_length);
-    y_datetime();
-    snprintf(log, string_length, "%.15s,%s,%d,%d,%s", 
-       lr_eval_string("{DATE_TIME_STRING}"), 
-       y_virtual_user_group, 
-       abs(y_virtual_user_id) % 1000000000, 
-       abs(y_scid) % 1000000, 
-       content);
-
-    result = y_write_to_file(filename, log);
-    free(log);
-
-    return result;
-}
 
 /*! \brief Detect low disk space situations on the generator and turn all logging off if not enough space is left.
 
