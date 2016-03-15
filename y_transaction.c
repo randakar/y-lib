@@ -86,7 +86,7 @@ Testcase
 //! \cond function_removal
 #define y_setup_step_waterfall 0_y_setup_step_waterfall_no_longer_exists_please_use_flow_lists
 #define y_waterfall_random_weighted_continue 0_y_waterfall_random_weighted_continue_please_use_flow_lists
-
+//! \endcond
 
 // Needed to compile this - the definition of LAST is missing if it's not included.
 #include "web_api.h"
