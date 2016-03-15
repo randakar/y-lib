@@ -42,9 +42,9 @@ If you still use loadrunner versions earlier than 9 you may need to add the line
 #include "y_string.c"
 #include "y_loadrunner_utils.c"
 
-
 //! \cond function_removal
 #define y_array_get_random 0_y_array_get_random_no_longer_exists_please_use_lr_paramarr_random
+//! \endcond
 
 int _y_random_array_index = 0;
 
