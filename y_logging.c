@@ -38,9 +38,6 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #include "y_core.c"
 #include "y_loadrunner_utils.c"
 
-// Todo: Figure out whether we want to keep this one.
-// const unsigned int Y_ALL_LOG_FLAGS = LR_MSG_CLASS_BRIEF_LOG | LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE | LR_MSG_CLASS_JIT_LOG_ON_ERROR | LR_MSG_CLASS_AUTO_LOG;
-
 //! \cond internal_global
 int _y_extra_logging = 0;  // client specific logging code on/off switch; 0 = off, 1 = on
 //! \endcond
