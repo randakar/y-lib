@@ -29,6 +29,10 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #define _Y_LOGGING_C_
 //! \endcond
 
+//! \cond function_removal
+#define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
+//! \endcond
+
 #include "y_core.c"
 #include "y_loadrunner_utils.c"
 
@@ -92,9 +96,7 @@ char* y_get_datetimestamp()
     return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
 }
 
-//! \cond function_removal
-#define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
-//! \endcond
+
 
 
 /*! \brief Turn on 'extra logging', when available.
