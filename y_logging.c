@@ -33,15 +33,13 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
 #define y_log_error 0_y_log_error_no_longer_exists_please_use_lr_error_message
 #define y_log_warning 0_y_log_warning_no_longer_exists_please_use_lr_error_message
+#define y_setup_logging 0_y_setup_logging_no_longer_exists_please_use_transaction_triggers
+#define y_log_to_report 0_y_log_to_report_no_longer_exists_please_use_transaction_triggers
 #define y_write_to_log 0_y_write_to_log_no_longer_exists_sorry
 //! \endcond
 
 #include "y_core.c"
 #include "y_loadrunner_utils.c"
-
-//! \cond internal_global
-int _y_extra_logging = 0;  // client specific logging code on/off switch; 0 = off, 1 = on
-//! \endcond
 
 // Previous loglevel, saved with and restored by log toggle functions.
 // Not documented because people really should not be using this directly.
@@ -97,54 +95,6 @@ char* y_get_datetimestamp()
 }
 
 
-
-
-/*! \brief Turn on 'extra logging', when available.
- *
- * This is one of the remnants of a bit of old code that would log every transaction stop/start with a timestamp, so that post-test-analysis of responstimes could be done with custom tools.
- * Unless you are running a very old y-lib based script there is no reason why you should use this, as y_set_start_transaction_impl() and y_set_end_transaction_impl() should give you the tools you need to do something like that without polluting y-lib with it ;-)
- *
- * \deprecated This will probably be removed in favor of y_set_transaction_implementation(), which is really how this kind of extra transaction logging should be done.
- * Note that y_transaction.c hasn't used the extra logging stuff in some time ..
- *
- * \see y_log_to_report()
- */
-void y_setup_logging()
-{
-    y_setup();
-
-    // Make the extra logging facility available to the user.
-    _y_extra_logging = 1;
-}
-
-/*! \brief If extra logging was enabled force a line to be logged to the logfile - even if regular logging was turned off.
- * Enable extra logging by calling y_setup_logging()
- * 
- * \param [in] message The message to be logged.
- * 
- * \deprecated Logging with a timestamp sounds useful, but I don't think it should be called "y_log_to_report()", and it is rather customer specific, too.
- * Also, forced logging really should be it's own thing.
- * 
- * \see y_setup_logging(), y_log_force_message()
- */
-void y_log_to_report(char *message)
-{
-    char *logLine = "%s: VUserId: %d, Host: %s, %s";
-
-    // Only add extra logging if it has been turned on.
-    if( _y_extra_logging ) 
-    {
-        int log_level = lr_get_debug_message();
-
-        lr_set_debug_message(LR_MSG_CLASS_DISABLE_LOG | LR_MSG_CLASS_AUTO_LOG, LR_SWITCH_OFF);
-        lr_set_debug_message(
-            LR_MSG_CLASS_EXTENDED_LOG | LR_MSG_CLASS_RESULT_DATA | LR_MSG_CLASS_PARAMETERS | LR_MSG_CLASS_FULL_TRACE,
-            LR_SWITCH_ON);
-        lr_log_message(logLine, y_get_datetimestamp(), y_virtual_user_id, lr_get_host_name(), lr_eval_string(message));
-        lr_set_debug_message(log_level, LR_SWITCH_ON);
-        //lr_set_debug_message((log_level ^ -1), LR_SWITCH_OFF);
-    }
-}
 
 /*! \brief Save the loglevel for later restoration through y_log_restore().
  *
