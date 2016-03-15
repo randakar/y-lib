@@ -33,6 +33,7 @@ but they aren't exactly log manipulation functions in the low-level sense.
 #define y_timestamp 0_y_timestamp_no_longer_exists_please_use_y_get_current_time
 #define y_log_error 0_y_log_error_no_longer_exists_please_use_lr_error_message
 #define y_log_warning 0_y_log_warning_no_longer_exists_please_use_lr_error_message
+#define y_get_datetimestamp 0_y_get_datetimestamp_no_longer_exists_please_use_lr_save_datetime
 #define y_setup_logging 0_y_setup_logging_no_longer_exists_please_use_transaction_triggers
 #define y_log_to_report 0_y_log_to_report_no_longer_exists_please_use_transaction_triggers
 #define y_write_to_log 0_y_write_to_log_no_longer_exists_sorry
@@ -77,24 +78,6 @@ char* y_make_datetimestamp(time_t time, unsigned short millitm)
         millitm);
     return YMDHMSm;
 }
-
-/*! \brief Returns the current time converted represented as YYYY-MM-DD HH:MM:SS.mmm.
- *
- * \return The string represation of the current time, formatted as YYYY-MM-DD HH:MM:SS.mmm.
- *
- * \deprecated Use lr_save_datetime() or direct ftime() calls instead.
- *
- * \see y_make_datetimestamp(), y_get_current_time()
- */
-char* y_get_datetimestamp()
-{
-    struct _timeb timebuffer;
-    // _tzset();  // The tzset function initializes the tzname variable from the value of the TZ environment variable. It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
-    ftime( &timebuffer );
-    return y_make_datetimestamp( timebuffer.time, timebuffer.millitm);
-}
-
-
 
 /*! \brief Save the loglevel for later restoration through y_log_restore().
  *
