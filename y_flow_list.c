@@ -224,4 +224,13 @@ y_flow* y_get_flow_by_name(char *flow_name, y_flow flow_list[], int flow_count)
     return NULL;
 }
 
+/*! \brief Function implementing the "do nothing" flow.
+\return Always zero.
+\see y_flow_list.c, y_choose_flow(), y_exec_flow()
+*/
+int y_do_nothing_flow()
+{
+    return 0;
+}
+
 #endif // _Y_FLOW_C_
