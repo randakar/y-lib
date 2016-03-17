@@ -1023,4 +1023,81 @@ do {                                                                      \
 } while(0)
 
 
+/*! \brief Add the dynatrace header required for instrumenting transactions with dynatrace.
+\param [in] transaction_name Loadrunner transaction name - value the "NA" part of the header should take.
+\param [in] additional_headers Any additional parts of the header spec you wish to add.
+
+This function will fill in the "VU" (virtual user id) and "ID" parts of the header itself using the current
+virtual user id and a generated unique id based on the current time as reported by web_save_timestamp().
+
+\see https://community.dynatrace.com/community/display/DOCDT63/Integration+with+Web+Load+Testing+and+Monitoring+Tools
+
+
+
+\b Usage:
+\code
+int customer_start_transaction_trigger()
+{
+	// Add the dynatrace header if -dynatrace_enabled was set to 1 as a script argument
+	y_add_dynatrace_header("{y_current_transaction}", "PC={y_current_transaction}");
+	return 0;
+}
+
+vuser_init()
+{
+	// This will add the dynatrace header to the next transaction if -dynatrace_enabled was 
+	// set to a non-zero value in the attributes.
+	y_set_transaction_start_trigger( &customer_start_transaction_trigger );
+}
+\endcode
+
+\author Floris Kraak
+*/
+void y_add_dynatrace_header(char* transaction_name, char* additional_headers)
+{
+	{
+		char* arg;
+		if( ((arg = lr_get_attrib_string("dynatrace_enabled")) == NULL) || (atoi(arg) < 1) )
+		{
+			lr_log_message("Dynatrace headers disabled.");
+			return;
+		}
+		else
+			lr_log_message("Dynatrace headers enabled!");
+	}
+	web_remove_auto_header("X-dynaTrace", "ImplicitGen=No", LAST);
+	
+	if( transaction_name == NULL)
+	{
+		lr_error_message("y_add_dynatrace_header(): transaction_name argument is NULL.");
+		return;
+	}
+	else if ( additional_headers == NULL )
+	{
+		lr_error_message("y_add_dynatrace_header(): additional_arguments argument is NULL.");
+		return;
+	}
+	else
+	{
+		char vuserstring[10];
+
+		{
+			int vuserid, scid;
+			char *groupid;
+			lr_whoami(&vuserid, &groupid, &scid);
+			itoa(vuserid,vuserstring,10);
+		}
+		web_save_timestamp_param("y_dynatrace_timestamp", LAST);
+		
+		{
+			char* timestamp = lr_eval_string("{y_dynatrace_timestamp}");
+			int header_length = strlen(transaction_name)+4 + strlen(vuserstring)+4 + strlen(timestamp)+4 + strlen(additional_headers)+1;
+			char* header = (char*) y_mem_alloc(sizeof(char) * header_length);
+			snprintf(header, header_length, "NA=%s;VU=%s;%ID=%s;%s", transaction_name, vuserstring, timestamp, additional_headers);		
+			web_add_auto_header("X-dynaTrace", header);
+			free(header);
+		}
+	}
+}
+
 #endif // _Y_TRANSACTION_C_
