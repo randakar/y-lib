@@ -19,7 +19,7 @@
  * script and add the following to globals.h or vuser_init.c:
  * \code #include "vugen.h" \endcode
  * Or: add to include-directory and add the \#include to lhrun.h on all Vugen machines and load generators. \n
- * Initial version 2012-03-27, last update 2014-01-09
+ * Initial version 2012-03-27, last update 2016-03-29
  * \author A.U. Luyer
  * \warning lrun.h contains: \code #define size_t int \endcode causing size_t to be defined as \b signed integer, which is incorrect.
  */
@@ -211,12 +211,17 @@ time_t time(time_t *timeptr);
 char *ctime(const time_t *calTime);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/gmtime/.
 struct tm *gmtime(const time_t *calTime);
+//! \brief Documented at http://man7.org/linux/man-pages/man3/timegm.3.html
+time_t timegm(struct tm *timeptr);
+#ifdef WINNT
+#define timegm _mkgmtime32
+#endif
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/asctime/.
 char *asctime(const struct tm *tmTime);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/strftime/.
 size_t *strftime(char *string, size_t maxlen, const char *format, const struct tm *timestruct);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/mktime/.
-time_t mktime(struct tm * timeptr);
+time_t mktime(struct tm *timeptr);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/localtime/.
 struct tm *localtime(const time_t *timer);
 //! \brief Documented at http://www.cplusplus.com/reference/ctime/tzset/.
