@@ -916,78 +916,60 @@ Implements proper error checking.
 \todo Fix the memory allocation to provide for commands that result in more than 10Kb of output.
 
 \param [in] command A windows shell command, as passed to CMD.exe
-\param [in] debug If zero, log the first line; Otherwise, log full command output.
-\author Sander van Wanrooij, Floris Kraak
+\param [in] debug If zero, log the first line; >0, log full command output, <0: save binary  
+
+\author Sander van Wanrooij, Floris Kraak, André Luyer
 */
 y_execute_shell_command(char* command, int debug)
 {
-    const int buffer_size = 10240; // 10 KB;
-    char buffer[10240];            // allocate memory for the output of the command.
-                                   // Has to be hardcoded because this compiler is stupid about const keywords and I do not want to use #define because of potential side effects. -- FBK
-    long fp;           // file/stream pointer
-    int count;         // number of characters that have been read from the stream.
-    char *token;
-    char *command_evaluated = lr_eval_string(command);
+	char buffer[20 * 1024];	// allocate memory for the output of the command.
+	long fp;		   // file/stream pointer
+	int count, arr = 0;		   // number of characters that have been read from the stream.
+	char param_buf[10];			// buffer to hold the parameter name.
+	char *command_evaluated = lr_eval_string(command);
 
-    lr_save_string("-- command not yet executed --", "command_result");
-    lr_log_message("Executing command: %s", command_evaluated);
+	lr_save_string("-- command not yet executed --", "command_result");
+	lr_log_message("Executing command: %s", command_evaluated);
 
-    fp = popen(command_evaluated, "r");
-    if (fp == NULL) {
-        lr_error_message("Error opening stream.");
-        return -1;
-    }
+	fp = popen(command_evaluated, debug < 0 ? "rb": "r");
+	if (fp == NULL) {
+		lr_error_message("Error opening stream.");
+		return -1;
+	}
 
-    buffer[0] = '\0';  // Clear the buffer before we try to fill it - Prevents the previous command output from showing up in here. -- FBK
-    count = fread(buffer, sizeof(char), buffer_size, fp); // read up to 10KB
-    if (feof(fp) == 0) 
-    {
-        lr_error_message("Did not reach the end of the input stream when reading. Try increasing buffer_size.");
-        pclose(fp);
-        return -1;
-    }
-    if (ferror(fp)) 
-    {
-        lr_error_message ("I/O error during read."); 
-        pclose(fp);
-        return -1;
-    }
-    count = fread(buffer, sizeof(char), (sizeof buffer) - 1, fp);
-    lr_save_var(buffer, count, 0, "command_output");
+	if (debug < 0) {
+		// binary
+		count = fread(buffer, sizeof (char), sizeof buffer, fp); // read up to 20 KiB
+		lr_save_var(buffer, count, 0, "command_output");
+		if (feof(fp) == 0) 
+		{
+			lr_error_message("Did not reach the end of the input stream when reading. Try increasing buffer_size.");
+			pclose(fp);
+			return -2;
+		}
+		
+	} else {
+		// if the line size is greater than sizeof buffer then it is split over multiple LR parameters
+		while (fgets(buffer, sizeof buffer, fp)) {
+			if (arr == 0) lr_save_string(buffer, "command_result");
+			sprintf(param_buf, "output_%d", ++arr);
+			lr_save_string(buffer, param_buf);
+			if (debug == 0) break;
+		}
+		lr_save_int(arr, "output_count");	
+	}
 
-    // Split the stream at each newline character, and save them to a parameter array.
-    token = (char*) strtok(buffer, "\n"); // Get the first token
- 
-    if (token == NULL) {
-        lr_save_string("", "command_result");        
-    }
-    else 
-    {
-        lr_save_string(token, "command_result"); // First token saved
+	if (ferror(fp)) 
+	{
+		lr_error_message ("I/O error during read."); 
+		pclose(fp);
+		return -1;
+	}
 
-        if(debug)
-        {
-            char param_buf[10];         // buffer to hold the parameter name.
-            int i = 1;
-    
-            while (token != NULL) { // While valid tokens are returned 
-                sprintf(param_buf, "output_%d", i);
-                lr_save_string(token, param_buf);
-                i++;
-                token = (char*) strtok(NULL, "\n");
-             }
-            lr_save_int(i-1, "output_count");
-            
-            // Print all values of the parameter array.
-            for (i=1; i<=lr_paramarr_len("output"); i++) {
-                lr_output_message("Parameter value: %s", lr_paramarr_idx("output", i));
-            } 
-        }
-    }
-    
-    pclose(fp);
-    return 0;
+	pclose(fp);
+	return 0;
 }
+
 
 /*! \brief Improved implementation of loadrunner pacing.
 
