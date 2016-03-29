@@ -19,10 +19,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/*
+ * Documentation generated from this source code can be found here: http://randakar.github.io/y-lib/
+ * Main git repitory can be found at https://github.com/randakar/y-lib
+ */
+ 
 /*! \file y_lib.c
  *  \brief Main y_lib include file.
- *
  * Including this file will cause all common parts of y-lib to be included into your script.
+ * 
+ * Documentation generated from this source code can be found here: http://randakar.github.io/y-lib/
+ * Main git repitory can be found at https://github.com/randakar/y-lib
+ *
  * \note If compile time is a concern, you can elect to just include the parts you wish to use instead, as well.
  * \author Floris Kraak
  */

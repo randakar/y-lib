@@ -18,6 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */ 
 
+/*
+ * Documentation generated from this source code can be found here: http://randakar.github.io/y-lib/
+ * Main git repitory can be found at https://github.com/randakar/y-lib
+ */
+
+ 
 /*!
 \file y_vts.c
 \brief VTS functions for LR 11.5 and above.

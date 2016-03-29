@@ -1,3 +1,8 @@
+/*
+ * Documentation generated from this source code can be found here: http://randakar.github.io/y-lib/
+ * Main git repitory can be found at https://github.com/randakar/y-lib
+ */
+
 /*!
  * \file
  * \brief Standard C function headers
